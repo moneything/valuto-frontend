@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
-import { mockTriviaGames } from '@/lib/mockData';
+import { triviaApi } from '@/lib/api';
 import Link from 'next/link';
 import PageLayout from '@/components/theme/PageLayout';
 import Card from '@/components/theme/Card';
@@ -12,8 +13,36 @@ import { GameControllerIcon } from '@/components/icons';
 
 export default function TriviaHubPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const { isTeacher, isStudent } = useUserProfile();
   const [joinCode, setJoinCode] = useState('');
+  const [sessions, setSessions] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
+
+  // Fetch trivia sessions
+  useEffect(() => {
+    const fetchSessions = async () => {
+      try {
+        const token = await getToken();
+        if (!token) return;
+
+        const response = await triviaApi.getSessions(token);
+        if (response.success && response.data) {
+          setSessions(response.data);
+        } else {
+          setError(response.error || 'Failed to load games');
+        }
+      } catch (err: any) {
+        console.error('Failed to fetch sessions:', err);
+        setError(err.message || 'Failed to load games');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSessions();
+  }, [getToken]);
 
   const handleJoinGame = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,91 +102,159 @@ export default function TriviaHubPage() {
         <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">
           {isTeacher ? 'Your Games' : 'Available Games'}
         </h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {mockTriviaGames.map((game) => (
-            <Card key={game.id} className="h-full flex flex-col">
-              {/* Game Header */}
-              <div className="flex items-start justify-between mb-6">
-                <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{game.title}</h3>
-                  <p className="text-sm text-gray-500">by {game.createdBy}</p>
-                </div>
-                <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                  game.status === 'active' 
-                    ? 'bg-green-100 text-green-700' 
-                    : 'bg-gray-100 text-gray-600'
-                }`}>
-                  {game.status}
-                </span>
-              </div>
 
-              {/* Game Stats */}
-              <div className="flex items-center space-x-6 mb-6 text-sm text-gray-600">
-                <div className="flex items-center space-x-2">
-                  <span>📝</span>
-                  <span>{game.questions.length} questions</span>
-                </div>
-                <div className="flex items-center space-x-2">
-                  <span>👥</span>
-                  <span>{game.participants}</span>
-                </div>
-              </div>
+        {/* Error Message */}
+        {error && (
+          <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
+            <p className="text-sm text-yellow-700">{error}</p>
+          </div>
+        )}
 
-              {/* Game Code */}
-              <div className="mb-6 p-4 bg-gray-100 rounded-xl text-center">
-                <p className="text-xs text-gray-500 mb-2 font-medium">Game Code</p>
-                <p className="text-3xl font-bold text-valuto-green-600 tracking-wider font-numbers">
-                  {game.code}
-                </p>
-              </div>
-
-              {/* Actions */}
-              <div className="flex gap-3 mt-auto">
-                {isStudent && (
-                  <Link href={`/dashboard/trivia/play/${game.code}`} className="flex-1">
-                    <Button className="w-full">
-                      Join Game
-                    </Button>
-                  </Link>
-                )}
-                {isTeacher && (
-                  <>
-                    <Button variant="secondary" className="flex-1">
-                      Edit
-                    </Button>
-                    <Button className="flex-1">
-                      Start
-                    </Button>
-                  </>
-                )}
-              </div>
-            </Card>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {mockTriviaGames.length === 0 && (
+        {/* Loading State */}
+        {loading ? (
+          <div className="text-center py-12">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-valuto-green-600 mx-auto mb-4"></div>
+            <p className="text-gray-600">Loading games...</p>
+          </div>
+        ) : sessions.length === 0 ? (
+          /* Empty State */
           <Card className="text-center py-16">
-            <div className="text-6xl mb-6">🎮</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">No games available</h3>
-            <p className="text-gray-600 mb-8 text-lg">
+            <div className="text-6xl mb-4">🎮</div>
+            <h3 className="text-2xl font-bold text-gray-900 mb-2">
+              {isTeacher ? 'No Games Yet' : 'No Active Games'}
+            </h3>
+            <p className="text-gray-600 mb-6">
               {isTeacher 
-                ? 'Create your first trivia game to get started!' 
-                : 'Check back soon for new games from your teachers'
+                ? 'Create your first trivia game to get started!'
+                : 'Ask your teacher to create a game, or use the join code to enter an active game.'
               }
             </p>
             {isTeacher && (
               <Link href="/dashboard/trivia/create">
-                <Button size="lg">
-                  Create Game
+                <Button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white">
+                  Create Your First Game
                 </Button>
               </Link>
             )}
           </Card>
+        ) : (
+          /* Games Grid */
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {sessions.map((session: any) => (
+              <Card key={session.sessionId} className="h-full flex flex-col">
+                {/* Game Header */}
+                <div className="mb-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <h3 className="text-xl font-bold text-gray-900 flex-1">
+                      {session.title}
+                    </h3>
+                    <span className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                      session.status === 'active' 
+                        ? 'bg-green-100 text-green-700'
+                        : session.status === 'waiting'
+                        ? 'bg-yellow-100 text-yellow-700'
+                        : 'bg-gray-100 text-gray-700'
+                    }`}>
+                      {session.status === 'active' ? '🔴 Live' : 
+                       session.status === 'waiting' ? '⏳ Waiting' : 
+                       '✅ Ended'}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600">
+                    Created by {session.hostName}
+                  </p>
+                </div>
+
+                {/* Game Code */}
+                <div className="bg-valuto-green-50 rounded-lg p-4 mb-4">
+                  <p className="text-xs text-gray-600 mb-1">Game Code</p>
+                  <p className="text-3xl font-mono font-bold text-valuto-green-600 tracking-wider">
+                    {session.joinCode}
+                  </p>
+                </div>
+
+                {/* Game Stats */}
+                <div className="flex gap-4 text-center mb-6 flex-1">
+                  <div className="flex-1 bg-gray-50 rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gray-900">
+                      {session.playerCount || 0}
+                    </p>
+                    <p className="text-xs text-gray-600">Players</p>
+                  </div>
+                  <div className="flex-1 bg-gray-50 rounded-lg p-3">
+                    <p className="text-2xl font-bold text-gray-900">
+                      {session.questionCount || 0}
+                    </p>
+                    <p className="text-xs text-gray-600">Questions</p>
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="mt-auto">
+                  {isTeacher ? (
+                    <div className="flex gap-2">
+                      {session.status === 'waiting' && (
+                        <Button
+                          onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
+                          className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white"
+                        >
+                          Start Game
+                        </Button>
+                      )}
+                      {session.status === 'ended' && (
+                        <Button
+                          onClick={() => router.push(`/dashboard/trivia/session/${session.sessionId}/results`)}
+                          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
+                        >
+                          View Results
+                        </Button>
+                      )}
+                      {session.status === 'active' && (
+                        <Button
+                          onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
+                          className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                        >
+                          Manage
+                        </Button>
+                      )}
+                    </div>
+                  ) : (
+                    <Button
+                      onClick={() => router.push(`/dashboard/trivia/play/${session.joinCode}`)}
+                      disabled={session.status === 'ended'}
+                      className={`w-full ${
+                        session.status === 'ended'
+                          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                          : 'bg-valuto-green-600 hover:bg-valuto-green-700 text-white'
+                      }`}
+                    >
+                      {session.status === 'ended' ? 'Game Ended' : 'Join Game'}
+                    </Button>
+                  )}
+                </div>
+              </Card>
+            ))}
+          </div>
         )}
       </div>
+
+      {/* Info Box */}
+      {!loading && sessions.length > 0 && (
+        <Card className="mt-12 bg-blue-50 border-blue-200">
+          <div className="flex items-start gap-4">
+            <div className="text-4xl">💡</div>
+            <div className="flex-1">
+              <h4 className="font-bold text-gray-900 mb-2">How to Play</h4>
+              <ul className="text-sm text-gray-700 space-y-1">
+                <li>• {isStudent ? 'Click "Join Game" or enter a game code above' : 'Create a game and share the code with students'}</li>
+                <li>• {isStudent ? 'Wait for your teacher to start the game' : 'Wait for students to join, then click "Start Game"'}</li>
+                <li>• {isStudent ? 'Answer questions as fast as you can for bonus points!' : 'Questions will be broadcast to all players automatically'}</li>
+                <li>• Compete on the live leaderboard and track your progress!</li>
+              </ul>
+            </div>
+          </div>
+        </Card>
+      )}
     </PageLayout>
   );
 }
-

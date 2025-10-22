@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@clerk/nextjs';
+import { triviaApi } from '@/lib/api';
 
 interface Question {
   question: string;
@@ -12,10 +14,13 @@ interface Question {
 
 export default function CreateTriviaPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const [gameTitle, setGameTitle] = useState('');
   const [questions, setQuestions] = useState<Question[]>([
     { question: '', options: ['', '', '', ''], correctAnswer: 0, timeLimit: 30 }
   ]);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState('');
 
   const addQuestion = () => {
     setQuestions([
@@ -40,12 +45,64 @@ export default function CreateTriviaPage() {
     setQuestions(questions.filter((_, i) => i !== index));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In real app, this would save to backend
-    const gameCode = Math.random().toString(36).substring(2, 8).toUpperCase();
-    alert(`Game created with code: ${gameCode}`);
-    router.push('/dashboard/trivia');
+    setError('');
+    setSubmitting(true);
+
+    // Validation
+    if (!gameTitle.trim()) {
+      setError('Please enter a game title');
+      setSubmitting(false);
+      return;
+    }
+
+    const validQuestions = questions.filter(q => 
+      q.question.trim() && 
+      q.options.every(opt => opt.trim())
+    );
+
+    if (validQuestions.length === 0) {
+      setError('Please add at least one complete question');
+      setSubmitting(false);
+      return;
+    }
+
+    try {
+      const token = await getToken();
+      if (!token) {
+        setError('Authentication required');
+        setSubmitting(false);
+        return;
+      }
+
+      // Create session via API
+      const response = await triviaApi.createSession(token, {
+        title: gameTitle,
+        questions: validQuestions.map(q => ({
+          question: q.question,
+          options: q.options,
+          correctAnswer: q.correctAnswer,
+          timeLimit: q.timeLimit,
+        })),
+      });
+
+      if (response.success && response.data) {
+        // Show success message with join code
+        const joinCode = response.data.joinCode;
+        alert(`✅ Game created successfully!\n\nJoin Code: ${joinCode}\n\nShare this code with your students.`);
+        
+        // Redirect to trivia hub
+        router.push('/dashboard/trivia');
+      } else {
+        setError(response.error || 'Failed to create game');
+      }
+    } catch (err: any) {
+      console.error('Failed to create session:', err);
+      setError(err.message || 'Failed to create game');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -58,6 +115,22 @@ export default function CreateTriviaPage() {
           Build an engaging Kahoot-style game for your students
         </p>
       </div>
+
+      {/* Error Message */}
+      {error && (
+        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+          <div className="flex">
+            <div className="flex-shrink-0">
+              <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+              </svg>
+            </div>
+            <div className="ml-3">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          </div>
+        </div>
+      )}
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Game Title */}
@@ -186,9 +259,24 @@ export default function CreateTriviaPage() {
           </button>
           <button
             type="submit"
-            className="flex-1 bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all"
+            disabled={submitting}
+            className={`flex-1 px-8 py-4 rounded-lg font-bold text-lg transition-all ${
+              submitting
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 hover:shadow-xl'
+            } text-white`}
           >
-            Create Game 🎮
+            {submitting ? (
+              <span className="flex items-center justify-center">
+                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Creating Game...
+              </span>
+            ) : (
+              'Create Game 🎮'
+            )}
           </button>
         </div>
       </form>

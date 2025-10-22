@@ -1,0 +1,23 @@
+services:
+  # Backend API Service
+  - type: web
+    name: valuto-backend
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: backend
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: MONGODB_URI
+        sync: false
+      - key: CLERK_SECRET_KEY
+        sync: false
+      - key: CLERK_PUBLISHABLE_KEY
+        sync: false
+      - key: PORT
+        value: 5000
+    healthCheckPath: /api/health
+

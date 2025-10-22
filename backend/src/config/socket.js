@@ -6,13 +6,21 @@ const socketAuthMiddleware = require('../middleware/socketAuth');
  * Sets up WebSocket server with CORS and authentication
  */
 const initializeSocketIO = (httpServer) => {
+  // Allowed origins for Socket.IO
+  const allowedOrigins = [
+    'http://localhost:3000',
+    'http://localhost:3001', // Allow alternate port
+    'https://valuto-frontend-test.vercel.app', // Production frontend
+  ];
+
+  // Add FRONTEND_URL from environment if set
+  if (process.env.FRONTEND_URL) {
+    allowedOrigins.push(process.env.FRONTEND_URL);
+  }
+
   const io = new Server(httpServer, {
     cors: {
-      origin: [
-        process.env.FRONTEND_URL || 'http://localhost:3000',
-        'http://localhost:3000',
-        'http://localhost:3001', // Allow alternate port
-      ],
+      origin: allowedOrigins,
       methods: ['GET', 'POST'],
       credentials: true,
     },

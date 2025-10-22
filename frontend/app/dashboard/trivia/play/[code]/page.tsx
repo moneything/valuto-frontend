@@ -19,6 +19,7 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [timeLeft, setTimeLeft] = useState(0);
   const [myScore, setMyScore] = useState(0);
+  const [playerName, setPlayerName] = useState<string>('');
 
   // Resolve params
   useEffect(() => {
@@ -35,6 +36,10 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
 
     console.log('Attempting to join session with code:', resolvedParams.code);
     setGameState('joining');
+
+    // Get player name from localStorage or use socket user
+    const storedName = localStorage.getItem('playerName') || 'Player';
+    setPlayerName(storedName);
 
     // Join session via socket
     socket.emit('join_session', { joinCode: resolvedParams.code }, (response: any) => {
@@ -228,7 +233,9 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
 
   // Game ended
   if (gameState === 'ended') {
-    const myRank = leaderboard.find((p: any) => p.userId === socket?.id);
+    const myEntry = leaderboard.find((p: any) => p.socketId === socket?.id || p.userId === socket?.id);
+    const myRank = myEntry?.rank || 0;
+    const topThree = leaderboard.slice(0, 3);
     
     return (
       <div className="min-h-screen animate-gradient flex items-center justify-center p-4 relative overflow-hidden">
@@ -236,44 +243,138 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
         <div className="absolute top-1/3 left-0 translate-y-12 -translate-x-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-0 right-1/4 translate-y-12 w-80 h-80 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
         
-        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 max-w-2xl w-full text-center relative z-10">
-          <div className="text-6xl md:text-8xl mb-6">
-            {myRank?.rank === 1 ? '🏆' : myRank?.rank === 2 ? '🥈' : myRank?.rank === 3 ? '🥉' : '⭐'}
-          </div>
-          <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
-            Game Over!
-          </h1>
+        <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-2xl p-8 md:p-12 max-w-4xl w-full text-center relative z-10">
+          {/* Your Result */}
           <div className="mb-8">
-            <div className="text-6xl font-bold text-valuto-green-600 mb-2">{myScore}</div>
-            <p className="text-gray-600">points</p>
-            {myRank && <div className="text-2xl font-semibold text-gray-700 mt-2">Rank: #{myRank.rank}</div>}
-          </div>
-
-          <div className="bg-gray-100 rounded-xl p-6 mb-8">
-            <h3 className="font-bold text-lg mb-4">Final Leaderboard</h3>
-            {leaderboard.slice(0, 5).map((player: any, idx: number) => (
-              <div key={idx} className="flex justify-between items-center p-3 border-b last:border-b-0">
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-lg">{player.rank}.</span>
-                  <span>{player.name}</span>
-                </div>
-                <span className="font-bold text-valuto-green-600">{player.score} pts</span>
+            <div className="text-6xl md:text-8xl mb-4 animate-bounce">
+              {myRank === 1 ? '🏆' : myRank === 2 ? '🥈' : myRank === 3 ? '🥉' : '⭐'}
+            </div>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+              {myRank === 1 ? '🎉 Champion!' : myRank === 2 ? 'Great Job!' : myRank === 3 ? 'Well Done!' : 'Game Complete!'}
+            </h1>
+            <div className="inline-block bg-gradient-to-r from-valuto-green-500 to-valuto-green-600 text-white px-8 py-4 rounded-2xl shadow-xl">
+              <div className="text-5xl font-bold mb-1">{myScore}</div>
+              <p className="text-sm opacity-90">points</p>
+            </div>
+            {myRank > 0 && (
+              <div className="mt-4 text-2xl font-bold text-gray-700">
+                You finished <span className="text-valuto-green-600">#{myRank}</span> out of {leaderboard.length} players
               </div>
-            ))}
+            )}
           </div>
 
+          {/* Podium - Top 3 */}
+          {topThree.length > 0 && (
+            <div className="mb-8">
+              <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center justify-center gap-2">
+                🏆 Top Champions
+              </h2>
+              <div className="flex justify-center items-end gap-4 mb-6">
+                {/* 2nd Place */}
+                {topThree[1] && (
+                  <div className="flex flex-col items-center">
+                    <div className="bg-gradient-to-b from-gray-300 to-gray-400 rounded-t-xl p-4 w-32 text-center shadow-xl">
+                      <div className="text-4xl mb-2">🥈</div>
+                      <div className="font-bold text-white text-sm truncate">{topThree[1].name}</div>
+                      <div className="text-2xl font-bold text-white mt-1">{topThree[1].score}</div>
+                    </div>
+                    <div className="bg-gray-400 h-24 w-32 flex items-center justify-center rounded-b-lg">
+                      <span className="text-white text-3xl font-bold">2</span>
+                    </div>
+                  </div>
+                )}
+                
+                {/* 1st Place */}
+                {topThree[0] && (
+                  <div className="flex flex-col items-center -mt-8">
+                    <div className="bg-gradient-to-b from-yellow-300 to-yellow-500 rounded-t-xl p-6 w-36 text-center shadow-2xl border-4 border-yellow-400">
+                      <div className="text-5xl mb-2">👑</div>
+                      <div className="font-bold text-gray-800 text-base truncate">{topThree[0].name}</div>
+                      <div className="text-3xl font-bold text-gray-800 mt-2">{topThree[0].score}</div>
+                    </div>
+                    <div className="bg-yellow-500 h-32 w-36 flex items-center justify-center rounded-b-lg shadow-xl">
+                      <span className="text-white text-4xl font-bold">1</span>
+                    </div>
+                  </div>
+                )}
+                
+                {/* 3rd Place */}
+                {topThree[2] && (
+                  <div className="flex flex-col items-center">
+                    <div className="bg-gradient-to-b from-orange-300 to-orange-500 rounded-t-xl p-4 w-32 text-center shadow-xl">
+                      <div className="text-4xl mb-2">🥉</div>
+                      <div className="font-bold text-white text-sm truncate">{topThree[2].name}</div>
+                      <div className="text-2xl font-bold text-white mt-1">{topThree[2].score}</div>
+                    </div>
+                    <div className="bg-orange-500 h-20 w-32 flex items-center justify-center rounded-b-lg">
+                      <span className="text-white text-3xl font-bold">3</span>
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {/* Full Leaderboard */}
+          <div className="bg-gray-50 rounded-xl p-6 mb-8 max-h-80 overflow-y-auto">
+            <h3 className="font-bold text-xl mb-4 text-gray-800 sticky top-0 bg-gray-50 pb-2">
+              Final Standings
+            </h3>
+            <div className="space-y-2">
+              {leaderboard.map((player: any, idx: number) => {
+                const isMe = player.socketId === socket?.id || player.userId === socket?.id;
+                const medals = ['🥇', '🥈', '🥉'];
+                
+                return (
+                  <div
+                    key={player.userId || idx}
+                    className={`flex justify-between items-center p-4 rounded-lg transition-all ${
+                      isMe 
+                        ? 'bg-gradient-to-r from-valuto-green-100 to-valuto-green-50 border-2 border-valuto-green-500 shadow-lg scale-105' 
+                        : idx < 3 
+                          ? 'bg-yellow-50 border border-yellow-200' 
+                          : 'bg-white border border-gray-200'
+                    }`}
+                  >
+                    <div className="flex items-center gap-4">
+                      <span className={`text-3xl font-bold ${isMe ? 'text-valuto-green-600' : 'text-gray-400'} w-10 text-center`}>
+                        {idx < 3 ? medals[idx] : `#${player.rank}`}
+                      </span>
+                      <div className="text-left">
+                        <div className={`font-bold text-lg ${isMe ? 'text-valuto-green-700' : 'text-gray-800'}`}>
+                          {player.name} {isMe && '(You)'}
+                        </div>
+                        {player.correctAnswers !== undefined && (
+                          <div className="text-sm text-gray-500">
+                            {player.correctAnswers} correct answers
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <span className={`font-bold text-2xl ${
+                      isMe ? 'text-valuto-green-600' : idx < 3 ? 'text-yellow-600' : 'text-gray-600'
+                    }`}>
+                      {player.score}
+                    </span>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Action Buttons */}
           <div className="flex flex-col sm:flex-row gap-4">
             <button
               onClick={() => router.push('/dashboard/trivia')}
               className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800 px-6 py-3 rounded-lg font-semibold transition-colors"
             >
-              Back to Games
+              Play Again
             </button>
             <button
               onClick={() => router.push('/dashboard')}
-              className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
+              className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors shadow-lg"
             >
-              Dashboard
+              Back to Dashboard
             </button>
           </div>
         </div>
@@ -324,31 +425,100 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
                 ))}
               </div>
             ) : (
-              <div className="space-y-4">
-                <div className={`p-8 rounded-2xl text-center ${
-                  result?.isCorrect ? 'bg-green-500' : 'bg-red-500'
-                } text-white`}>
-                  <div className="text-6xl mb-4">
-                    {result?.isCorrect ? '✅' : '❌'}
-                  </div>
-                  <h3 className="text-3xl font-bold mb-2">
-                    {result?.isCorrect ? 'Correct!' : 'Incorrect'}
-                  </h3>
-                  <p className="text-lg">
-                    +{result?.pointsEarned || 0} points
-                  </p>
+              <div className="space-y-6">
+                {/* Show all options with correct answer highlighted */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {currentQuestion.options.map((option: string, index: number) => {
+                    const isCorrect = index === result?.correctIndex;
+                    const wasSelected = index === selectedAnswer;
+                    
+                    let bgColor = 'bg-gray-200';
+                    let borderColor = 'border-gray-300';
+                    let icon = '';
+                    
+                    if (isCorrect) {
+                      bgColor = 'bg-green-500';
+                      borderColor = 'border-green-600';
+                      icon = '✓';
+                    } else if (wasSelected && !isCorrect) {
+                      bgColor = 'bg-red-500';
+                      borderColor = 'border-red-600';
+                      icon = '✗';
+                    }
+                    
+                    return (
+                      <div
+                        key={index}
+                        className={`${bgColor} ${borderColor} border-4 p-6 md:p-8 rounded-xl font-bold text-lg md:text-2xl shadow-xl ${
+                          isCorrect ? 'text-white' : wasSelected ? 'text-white' : 'text-gray-700'
+                        } ${isCorrect || wasSelected ? 'scale-105' : ''} transition-all relative`}
+                      >
+                        {icon && (
+                          <div className="absolute top-2 right-2 text-3xl">
+                            {icon}
+                          </div>
+                        )}
+                        {option}
+                      </div>
+                    );
+                  })}
                 </div>
 
-                {/* Mini Leaderboard */}
+                {/* Result Feedback */}
+                <div className={`p-6 rounded-2xl text-center ${
+                  result?.isCorrect ? 'bg-gradient-to-r from-green-500 to-green-600' : 'bg-gradient-to-r from-red-500 to-red-600'
+                } text-white shadow-2xl`}>
+                  <div className="text-5xl mb-3">
+                    {result?.isCorrect ? '🎉 Awesome!' : '😔 Not quite'}
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">
+                    {result?.isCorrect ? 'You got it right!' : `Correct answer: ${currentQuestion.options[result?.correctIndex]}`}
+                  </h3>
+                  <p className="text-xl font-bold">
+                    +{result?.pointsEarned || 0} points
+                  </p>
+                  {result?.explanation && (
+                    <p className="mt-3 text-sm opacity-90 bg-white/20 rounded-lg p-3">
+                      💡 {result.explanation}
+                    </p>
+                  )}
+                </div>
+
+                {/* Leaderboard */}
                 {leaderboard.length > 0 && (
-                  <div className="bg-white/90 p-6 rounded-xl">
-                    <h3 className="font-bold mb-4">Current Rankings</h3>
-                    {leaderboard.slice(0, 3).map((player: any) => (
-                      <div key={player.userId} className="flex justify-between text-sm mb-2">
-                        <span>#{player.rank} {player.name}</span>
-                        <span className="font-bold">{player.score} pts</span>
-                      </div>
-                    ))}
+                  <div className="bg-white/95 backdrop-blur-sm p-6 rounded-2xl shadow-xl border-2 border-valuto-green-200">
+                    <h3 className="font-bold text-xl mb-4 text-center text-gray-800 flex items-center justify-center gap-2">
+                      🏆 Current Standings
+                    </h3>
+                    <div className="space-y-2">
+                      {leaderboard.slice(0, 5).map((player: any, idx: number) => {
+                        const isMe = player.socketId === socket?.id || player.userId === socket?.id;
+                        const medals = ['🥇', '🥈', '🥉'];
+                        
+                        return (
+                          <div
+                            key={player.userId}
+                            className={`flex justify-between items-center p-3 rounded-lg ${
+                              isMe ? 'bg-valuto-green-100 border-2 border-valuto-green-500' : 'bg-gray-50'
+                            } transition-all`}
+                          >
+                            <div className="flex items-center gap-3">
+                              <span className="text-2xl w-8">
+                                {idx < 3 ? medals[idx] : `#${player.rank}`}
+                              </span>
+                              <span className={`font-semibold ${isMe ? 'text-valuto-green-700' : 'text-gray-700'}`}>
+                                {player.name} {isMe && '(You)'}
+                              </span>
+                            </div>
+                            <span className={`font-bold text-lg ${
+                              isMe ? 'text-valuto-green-600' : 'text-gray-600'
+                            }`}>
+                              {player.score} pts
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 )}
               </div>

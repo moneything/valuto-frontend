@@ -1,0 +1,42 @@
+{
+  "name": "valuto-backend",
+  "version": "1.0.0",
+  "description": "Production-ready backend API for Valuto financial education platform",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "nodemon src/server.js",
+    "format": "prettier --write \"src/**/*.js\"",
+    "format:check": "prettier --check \"src/**/*.js\"",
+    "test": "echo \"Tests coming soon\" && exit 0"
+  },
+  "keywords": [
+    "education",
+    "finance",
+    "api",
+    "mongodb",
+    "clerk"
+  ],
+  "author": "Valuto Team",
+  "license": "MIT",
+  "dependencies": {
+    "@clerk/clerk-sdk-node": "^5.0.45",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "express-validator": "^7.2.0",
+    "helmet": "^8.0.0",
+    "mongoose": "^8.8.1",
+    "morgan": "^1.10.0",
+    "socket.io": "^4.7.2",
+    "socket.io-client": "^4.8.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  }
+}

@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser as useClerkUser } from '@clerk/nextjs';
+import { useUser as useClerkUser, useAuth } from '@clerk/nextjs';
 import { useUser } from '@/lib/userContext';
 import DashboardCard from '@/components/DashboardCard';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import { userApi } from '@/lib/api';
 import { 
   GameControllerIcon, 
   CalculatorIcon, 
@@ -25,8 +26,34 @@ import StatsCard from '@/components/theme/StatsCard';
 
 export default function DashboardPage() {
   const router = useRouter();
+  const { getToken } = useAuth();
   const { user: clerkUser, isLoaded: isClerkLoaded } = useClerkUser();
   const { userProfile, isLoadingProfile, isTeacher, isStudent } = useUser();
+  const [userStats, setUserStats] = useState<any>(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  // Fetch user stats from API
+  useEffect(() => {
+    const fetchStats = async () => {
+      if (!userProfile) return;
+      
+      try {
+        const token = await getToken();
+        if (!token) return;
+        
+        const response = await userApi.getStats(token);
+        if (response.success && response.data) {
+          setUserStats(response.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch user stats:', error);
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, [userProfile, getToken]);
 
   // Redirect to onboarding if user hasn't completed it
   useEffect(() => {
@@ -185,19 +212,19 @@ export default function DashboardPage() {
         {isStudent && (
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
             <StatsCard
-              value="12"
+              value={loadingStats ? '...' : (userStats?.gamesPlayed || 0).toString()}
               label="Games Played"
               icon={<GameControllerIcon className="w-12 h-12 text-valuto-green-600" />}
               color="green"
             />
             <StatsCard
-              value="8/20"
+              value={loadingStats ? '...' : `${userStats?.lessonsCompleted || 0}/20`}
               label="Lessons Completed"
               icon={<BookOpenIcon className="w-12 h-12 text-blue-600" />}
               color="blue"
             />
             <StatsCard
-              value="2,450"
+              value={loadingStats ? '...' : (userStats?.totalPoints || 0).toLocaleString()}
               label="Total Points"
               icon={<TrophyIcon className="w-12 h-12 text-orange-600" />}
               color="orange"

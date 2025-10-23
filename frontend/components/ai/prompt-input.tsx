@@ -20,9 +20,9 @@ export function PromptInput({
   placeholder = "Ask me anything about money, investing, or personal finance...",
   ...props
 }: PromptInputProps) {
-  const textareaRef = React.useRef<HTMLTextareaElement>(null);
+  const textareaRef = React.useRef<HTMLTextAreaElement>(null);
 
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextareaElement>) => {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       if (value.trim() && !isLoading && onSend) {

@@ -6,6 +6,7 @@ import { useUser as useClerkUser, useAuth } from '@clerk/nextjs';
 import { useUser } from '@/lib/userContext';
 import DashboardCard from '@/components/DashboardCard';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import NewsAndEvents from '@/components/NewsAndEvents';
 import { userApi } from '@/lib/api';
 import { 
   GameControllerIcon, 
@@ -105,11 +106,11 @@ export default function DashboardPage() {
       href: '/dashboard/calculator'
     },
     {
-      title: 'Learning Modules',
-      description: 'Explore stocks, bonds, ETFs, and more through gamified lessons',
+      title: 'Interactive Learning Modules',
+      description: 'Master financial concepts through interactive games, simulations, and quizzes',
       icon: <BookOpenIcon className="w-8 h-8" />,
-      href: '/dashboard/learn',
-      badge: 'New'
+      href: '/dashboard/learning-modules',
+      badge: 'Interactive'
     },
     {
       title: 'My Progress',
@@ -166,10 +167,10 @@ export default function DashboardPage() {
       href: '/dashboard/students'
     },
     {
-      title: 'Learning Modules',
-      description: 'Browse and assign learning content to students',
+      title: 'Interactive Learning Modules',
+      description: 'Browse and assign interactive learning content to students',
       icon: <BookOpenIcon className="w-8 h-8" />,
-      href: '/dashboard/learn'
+      href: '/dashboard/learning-modules'
     },
     {
       title: 'Investment Calculator',
@@ -184,6 +185,15 @@ export default function DashboardPage() {
       href: '/dashboard/profile'
     }
   ];
+
+  // Add News & Events as a special card that renders inline
+  const newsAndEventsCard = {
+    title: 'News & Events',
+    description: 'Latest financial news & UK networking events',
+    icon: <span className="text-2xl">📰</span>,
+    href: null, // Special card - no href
+    isSpecial: true
+  };
 
   const cards = isTeacher ? teacherCards : studentCards;
 
@@ -245,6 +255,11 @@ export default function DashboardPage() {
               badge={card.badge || undefined}
             />
           ))}
+        </div>
+
+        {/* News & Events Section */}
+        <div id="news-events" className="mt-16">
+          <NewsAndEvents />
         </div>
 
         {/* Quick Tips Section */}

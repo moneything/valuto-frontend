@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-interface AnnouncementProps extends React.HTMLAttributes<HTMLDivElement> {
+interface AnnouncementProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   href?: string;
   children: React.ReactNode;
 }

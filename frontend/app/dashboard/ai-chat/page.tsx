@@ -114,7 +114,7 @@ export default function AIChatPage() {
   };
 
   return (
-    <div className="h-screen animate-gradient relative overflow-hidden flex flex-col">
+    <div className="min-h-screen animate-gradient relative overflow-hidden flex flex-col">
       {/* Decorative elements - matching landing page */}
       <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 w-72 h-72 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob"></div>
       <div className="absolute top-1/3 left-0 translate-y-12 -translate-x-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2000"></div>
@@ -137,62 +137,64 @@ export default function AIChatPage() {
         </div>
       </div>
 
-      {/* Chat Container */}
-      <Conversation className="relative z-10 max-w-4xl mx-auto px-6">
-        <ConversationContent>
-          {messages.map((message) => (
-            <Message key={message.id} from={message.role}>
-              <MessageContent className={message.role === 'user' ? 'ml-16' : 'mr-16'}>
-                <MessageBubble variant={message.role === 'user' ? 'user' : 'assistant'}>
-                  {message.role === 'user' ? (
-                    <p className="text-sm leading-relaxed font-medium">{message.text}</p>
-                  ) : (
-                    <Response>{message.text}</Response>
-                  )}
-                  
-                  {/* Timestamp */}
-                  <p className={`text-xs mt-2 ${
-                    message.role === 'user' ? 'text-green-100' : 'text-gray-500'
-                  }`}>
-                    {message.timestamp.toLocaleTimeString([], { 
-                      hour: '2-digit', 
-                      minute: '2-digit' 
-                    })}
-                  </p>
-                </MessageBubble>
-              </MessageContent>
-            </Message>
-          ))}
-          
-          {/* Loading indicator */}
-          {isLoading && (
-            <Message from="assistant">
-              <MessageContent className="mr-16">
-                <Loader />
-              </MessageContent>
-            </Message>
+      {/* Chat Container - Fixed height to fit viewport */}
+      <div className="flex-1 flex flex-col min-h-0">
+        <Conversation className="relative z-10 max-w-4xl mx-auto px-6 flex-1 flex flex-col min-h-0">
+          <ConversationContent className="flex-1 min-h-0">
+            {messages.map((message) => (
+              <Message key={message.id} from={message.role}>
+                <MessageContent className={message.role === 'user' ? 'ml-16' : 'mr-16'}>
+                  <MessageBubble variant={message.role === 'user' ? 'user' : 'assistant'}>
+                    {message.role === 'user' ? (
+                      <p className="text-sm leading-relaxed font-medium">{message.text}</p>
+                    ) : (
+                      <Response>{message.text}</Response>
+                    )}
+                    
+                    {/* Timestamp */}
+                    <p className={`text-xs mt-2 ${
+                      message.role === 'user' ? 'text-green-100' : 'text-gray-500'
+                    }`}>
+                      {message.timestamp.toLocaleTimeString([], { 
+                        hour: '2-digit', 
+                        minute: '2-digit' 
+                      })}
+                    </p>
+                  </MessageBubble>
+                </MessageContent>
+              </Message>
+            ))}
+            
+            {/* Loading indicator */}
+            {isLoading && (
+              <Message from="assistant">
+                <MessageContent className="mr-16">
+                  <Loader />
+                </MessageContent>
+              </Message>
+            )}
+          </ConversationContent>
+
+          {/* Suggestions */}
+          {showSuggestions && messages.length === 1 && !isLoading && (
+            <Suggestions 
+              suggestions={suggestions} 
+              onSelect={handleSuggestionSelect}
+              className="mb-2 flex-shrink-0"
+            />
           )}
-        </ConversationContent>
 
-        {/* Suggestions */}
-        {showSuggestions && messages.length === 1 && !isLoading && (
-          <Suggestions 
-            suggestions={suggestions} 
-            onSelect={handleSuggestionSelect}
-            className="mb-2"
-          />
-        )}
-
-        {/* Input Area */}
-        <div className="mb-4">
-          <PromptInput
-            value={inputText}
-            onChange={setInputText}
-            onSend={handleSendMessage}
-            isLoading={isLoading}
-          />
-        </div>
-      </Conversation>
+          {/* Input Area - Fixed at bottom */}
+          <div className="flex-shrink-0 mb-4">
+            <PromptInput
+              value={inputText}
+              onChange={setInputText}
+              onSend={handleSendMessage}
+              isLoading={isLoading}
+            />
+          </div>
+        </Conversation>
+      </div>
 
       {/* Custom Styles */}
       <style jsx global>{`

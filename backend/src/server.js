@@ -29,7 +29,9 @@ app.use(helmet());
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001', // Allow alternate port
-  'https://valuto-frontend-test.vercel.app', // Production frontend
+  'https://valuto-frontend-test.vercel.app', // Test frontend
+  'https://www.valuto.co.uk', // Live production frontend
+  'https://valuto.co.uk', // Live production frontend (without www)
 ];
 
 // Add FRONTEND_URL from environment if set
@@ -51,7 +53,15 @@ const corsOptions = {
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
+  allowedHeaders: [
+    'Content-Type', 
+    'Authorization', 
+    'X-Requested-With',
+    'Accept',
+    'Origin',
+    'Access-Control-Request-Method',
+    'Access-Control-Request-Headers'
+  ],
 };
 app.use(cors(corsOptions));
 

@@ -15,24 +15,28 @@ export function Announcement({
   children, 
   className,
 }: AnnouncementProps) {
-  const Component = href ? Link : "div";
-  const componentProps = href ? { href } : {};
+  const baseClassName = cn(
+    "group relative inline-flex items-center gap-2",
+    "rounded-full border border-valuto-green-200 bg-white/80 backdrop-blur-sm",
+    "px-3 py-1.5 text-sm font-medium text-gray-700",
+    "transition-all duration-300",
+    "hover:border-valuto-green-400 hover:bg-valuto-green-50 hover:shadow-md",
+    href && "cursor-pointer",
+    className
+  );
+
+  if (href) {
+    return (
+      <Link href={href} className={baseClassName}>
+        {children}
+      </Link>
+    );
+  }
 
   return (
-    <Component
-      {...componentProps}
-      className={cn(
-        "group relative inline-flex items-center gap-2",
-        "rounded-full border border-valuto-green-200 bg-white/80 backdrop-blur-sm",
-        "px-3 py-1.5 text-sm font-medium text-gray-700",
-        "transition-all duration-300",
-        "hover:border-valuto-green-400 hover:bg-valuto-green-50 hover:shadow-md",
-        href && "cursor-pointer",
-        className
-      )}
-    >
+    <div className={baseClassName}>
       {children}
-    </Component>
+    </div>
   );
 }
 

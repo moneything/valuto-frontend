@@ -182,12 +182,12 @@ export const AuroraShaders = forwardRef<HTMLDivElement, AuroraShadersProps>(
       if (!canvas) return;
 
       // Initialize WebGL context
-      const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+      const gl = (canvas.getContext('webgl') || canvas.getContext('experimental-webgl')) as WebGLRenderingContext | null;
       if (!gl) {
         console.error('WebGL not supported');
         return;
       }
-      glRef.current = gl as WebGLRenderingContext;
+      glRef.current = gl;
 
       // Compile shader
       const compileShader = (source: string, type: number): WebGLShader | null => {

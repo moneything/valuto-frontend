@@ -17,6 +17,8 @@ services:
         sync: false
       - key: CLERK_PUBLISHABLE_KEY
         sync: false
+      - key: FRONTEND_URL
+        value: https://www.valuto.co.uk
       - key: PORT
         value: 5000
     healthCheckPath: /api/health

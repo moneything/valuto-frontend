@@ -12,7 +12,8 @@ import {
   TargetIcon,
   LightBulbIcon,
   UserIcon,
-  HomeIcon
+  HomeIcon,
+  NewspaperIcon
 } from '@/components/icons';
 
 const dockItems = [
@@ -38,9 +39,16 @@ const dockItems = [
     bgColor: 'bg-blue-100 hover:bg-blue-200',
   },
   {
-    title: 'Learning',
+    title: 'Interactive Modules',
     icon: BookOpenIcon,
-    href: '/dashboard/learn',
+    href: '/dashboard/learning-modules',
+    color: 'text-indigo-600 dark:text-indigo-400',
+    bgColor: 'bg-indigo-100 hover:bg-indigo-200',
+  },
+  {
+    title: 'News & Events',
+    icon: NewspaperIcon,
+    href: '/dashboard#news-events',
     color: 'text-purple-600 dark:text-purple-400',
     bgColor: 'bg-purple-100 hover:bg-purple-200',
   },

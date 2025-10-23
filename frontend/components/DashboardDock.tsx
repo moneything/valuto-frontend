@@ -11,16 +11,17 @@ import {
   CrownIcon, 
   TargetIcon,
   LightBulbIcon,
-  UserIcon
+  UserIcon,
+  HomeIcon
 } from '@/components/icons';
 
 const dockItems = [
   {
-    title: 'My Profile',
-    icon: UserIcon,
-    href: '/dashboard/profile',
-    color: 'text-neutral-600 dark:text-neutral-300',
-    bgColor: 'bg-gray-100 hover:bg-gray-200',
+    title: 'Dashboard',
+    icon: HomeIcon,
+    href: '/dashboard',
+    color: 'text-valuto-green-600 dark:text-valuto-green-400',
+    bgColor: 'bg-valuto-green-100 hover:bg-valuto-green-200',
   },
   {
     title: 'Trivia Games',
@@ -70,6 +71,13 @@ const dockItems = [
     href: '/dashboard/ai-chat',
     color: 'text-indigo-600 dark:text-indigo-400',
     bgColor: 'bg-indigo-100 hover:bg-indigo-200',
+  },
+  {
+    title: 'My Profile',
+    icon: UserIcon,
+    href: '/dashboard/profile',
+    color: 'text-neutral-600 dark:text-neutral-300',
+    bgColor: 'bg-gray-100 hover:bg-gray-200',
   },
 ];
 

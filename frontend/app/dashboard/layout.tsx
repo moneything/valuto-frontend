@@ -37,8 +37,6 @@ export default function DashboardLayout({
     );
   }
 
-  const isMainDashboard = pathname === '/dashboard';
-
   return (
     <div className="min-h-screen animate-gradient relative overflow-hidden">
       {/* Decorative elements - adjusted to avoid dock area */}
@@ -84,22 +82,6 @@ export default function DashboardLayout({
         </div>
       </header>
 
-      {/* Breadcrumb */}
-      {!isMainDashboard && (
-        <div className="relative bg-white/60 backdrop-blur-sm border-b border-valuto-green-200/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:pl-32 lg:pr-8 py-3">
-            <Link 
-              href="/dashboard"
-              className="inline-flex items-center text-sm text-valuto-green-600 hover:text-valuto-green-700 font-medium transition-colors bg-valuto-green-50 hover:bg-valuto-green-100 px-3 py-2 rounded-lg"
-            >
-              <svg className="w-4 h-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-              Back to Dashboard
-            </Link>
-          </div>
-        </div>
-      )}
 
       {/* Dashboard Dock */}
       <DashboardDock />

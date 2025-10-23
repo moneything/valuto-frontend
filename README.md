@@ -1,4 +1,4 @@
-# Valuto - Financial Education Platform
+# Valuto - Financial Education Platform.
 
 A comprehensive financial education platform teaching money skills to young people aged 11-18.
 

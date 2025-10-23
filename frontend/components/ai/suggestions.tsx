@@ -3,7 +3,7 @@
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-interface SuggestionsProps extends React.HTMLAttributes<HTMLDivElement> {
+interface SuggestionsProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
   suggestions: string[];
   onSelect: (suggestion: string) => void;
 }

@@ -4,7 +4,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { PaperAirplaneIcon } from "@/components/icons";
 
-interface PromptInputProps extends Omit<React.TextareaHTMLAttributes<HTMLTextareaElement>, 'onChange'> {
+interface PromptInputProps extends Omit<React.TextareaHTMLAttributes<HTMLTextAreaElement>, 'onChange'> {
   onSend?: (value: string) => void;
   value: string;
   onChange: (value: string) => void;

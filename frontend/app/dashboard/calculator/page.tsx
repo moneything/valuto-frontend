@@ -4,6 +4,8 @@ import { useState } from 'react';
 import PageLayout from '@/components/theme/PageLayout';
 import Card from '@/components/theme/Card';
 import { CalculatorIcon } from '@/components/icons';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 export default function CalculatorPage() {
   const [initialAmount, setInitialAmount] = useState('1000');
@@ -63,11 +65,11 @@ export default function CalculatorPage() {
           
           <div className="space-y-6">
             {/* Initial Amount */}
-            <div>
-              <label className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+            <div className="space-y-2">
+              <Label className="flex justify-between text-sm font-semibold text-gray-700">
                 <span>Initial Investment</span>
                 <span className="text-valuto-green-600">{formatCurrency(parseFloat(initialAmount) || 0)}</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min="0"
@@ -77,21 +79,21 @@ export default function CalculatorPage() {
                 onChange={(e) => setInitialAmount(e.target.value)}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               />
-              <input
+              <Input
                 type="number"
                 value={initialAmount}
                 onChange={(e) => setInitialAmount(e.target.value)}
-                className="mt-2 w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                 placeholder="Initial amount"
               />
             </div>
 
             {/* Monthly Contribution */}
-            <div>
-              <label className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+            <div className="space-y-2">
+              <Label className="flex justify-between text-sm font-semibold text-gray-700">
                 <span>Monthly Contribution</span>
                 <span className="text-valuto-green-600">{formatCurrency(parseFloat(monthlyContribution) || 0)}</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min="0"
@@ -101,21 +103,21 @@ export default function CalculatorPage() {
                 onChange={(e) => setMonthlyContribution(e.target.value)}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               />
-              <input
+              <Input
                 type="number"
                 value={monthlyContribution}
                 onChange={(e) => setMonthlyContribution(e.target.value)}
-                className="mt-2 w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                 placeholder="Monthly contribution"
               />
             </div>
 
             {/* Interest Rate */}
-            <div>
-              <label className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+            <div className="space-y-2">
+              <Label className="flex justify-between text-sm font-semibold text-gray-700">
                 <span>Expected Annual Return</span>
                 <span className="text-valuto-green-600">{interestRate}%</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min="0"
@@ -125,22 +127,22 @@ export default function CalculatorPage() {
                 onChange={(e) => setInterestRate(e.target.value)}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               />
-              <input
+              <Input
                 type="number"
                 value={interestRate}
                 onChange={(e) => setInterestRate(e.target.value)}
-                className="mt-2 w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                 placeholder="Interest rate %"
                 step="0.1"
               />
             </div>
 
             {/* Time Period */}
-            <div>
-              <label className="flex justify-between text-sm font-semibold text-gray-700 mb-2">
+            <div className="space-y-2">
+              <Label className="flex justify-between text-sm font-semibold text-gray-700">
                 <span>Time Period</span>
                 <span className="text-valuto-green-600">{years} years</span>
-              </label>
+              </Label>
               <input
                 type="range"
                 min="1"
@@ -150,11 +152,11 @@ export default function CalculatorPage() {
                 onChange={(e) => setYears(e.target.value)}
                 className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
               />
-              <input
+              <Input
                 type="number"
                 value={years}
                 onChange={(e) => setYears(e.target.value)}
-                className="mt-2 w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                 placeholder="Number of years"
               />
             </div>

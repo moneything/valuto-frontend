@@ -10,6 +10,7 @@ import PageLayout from '@/components/theme/PageLayout';
 import Card from '@/components/theme/Card';
 import Button from '@/components/theme/Button';
 import { GameControllerIcon } from '@/components/icons';
+import { Input } from '@/components/ui/input';
 
 export default function TriviaHubPage() {
   const router = useRouter();
@@ -67,12 +68,12 @@ export default function TriviaHubPage() {
             <h2 className="text-3xl font-bold mb-4">Join a Game</h2>
             <p className="mb-8 text-xl opacity-90">Enter the game code from your teacher to join</p>
             <form onSubmit={handleJoinGame} className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
-              <input
+              <Input
                 type="text"
                 value={joinCode}
                 onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                 placeholder="Enter game code (e.g., ABC123)"
-                className="flex-1 px-6 py-4 rounded-xl text-gray-900 font-semibold text-center text-xl tracking-wider uppercase focus:outline-none focus:ring-4 focus:ring-white/30"
+                className="flex-1 px-6 py-4 h-14 rounded-xl text-gray-900 font-semibold text-center text-xl tracking-wider uppercase focus:outline-none focus:ring-4 focus:ring-white/30"
                 maxLength={6}
               />
               <Button

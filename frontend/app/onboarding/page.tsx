@@ -5,6 +5,24 @@ import { useRouter } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { 
+  Choicebox, 
+  ChoiceboxItem, 
+  ChoiceboxItemHeader, 
+  ChoiceboxItemTitle, 
+  ChoiceboxItemDescription, 
+  ChoiceboxItemContent, 
+  ChoiceboxItemIndicator 
+} from '@/components/ui/choicebox';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export default function OnboardingPage() {
   const router = useRouter();
@@ -84,43 +102,46 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Basic Information</h2>
               
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="space-y-2">
+                <Label htmlFor="name" className="text-sm font-semibold text-gray-700">
                   Full Name *
-                </label>
-                <input
+                </Label>
+                <Input
+                  id="name"
                   type="text"
                   required
                   value={formData.name}
                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   placeholder="Enter your full name"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="space-y-2">
+                <Label htmlFor="email" className="text-sm font-semibold text-gray-700">
                   Email
-                </label>
-                <input
+                </Label>
+                <Input
+                  id="email"
                   type="email"
                   disabled
                   value={formData.email}
-                  className="w-full px-4 py-3 border-2 border-gray-100 rounded-lg bg-gray-50 text-gray-500"
+                  className="w-full px-4 py-3 h-12 border-2 border-gray-100 rounded-lg bg-gray-50 text-gray-500"
                 />
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="space-y-2">
+                <Label htmlFor="age" className="text-sm font-semibold text-gray-700">
                   Age
-                </label>
-                <input
+                </Label>
+                <Input
+                  id="age"
                   type="number"
                   min="11"
                   max="100"
                   value={formData.age}
                   onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   placeholder="Enter your age"
                 />
               </div>
@@ -132,39 +153,41 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">I am a...</h2>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, role: 'student' })}
-                  className={`p-6 border-2 rounded-xl transition-all ${
-                    formData.role === 'student'
-                      ? 'border-valuto-green-600 bg-valuto-green-50'
-                      : 'border-gray-200 hover:border-valuto-green-300'
-                  }`}
-                >
-                  <div className="text-4xl mb-3">🎓</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Student</h3>
-                  <p className="text-sm text-gray-600">
-                    Learn about money and play educational games
-                  </p>
-                </button>
+              <Choicebox 
+                value={formData.role} 
+                onValueChange={(value) => setFormData({ ...formData, role: value as 'student' | 'teacher' })}
+                className="grid grid-cols-1 md:grid-cols-2 gap-4"
+              >
+                <ChoiceboxItem value="student" className="border-2 hover:border-valuto-green-300">
+                  <ChoiceboxItemHeader>
+                    <div className="text-4xl mb-3">🎓</div>
+                    <ChoiceboxItemTitle className="text-xl font-bold text-gray-900">
+                      Student
+                    </ChoiceboxItemTitle>
+                    <ChoiceboxItemDescription className="text-sm text-gray-600">
+                      Learn about money and play educational games
+                    </ChoiceboxItemDescription>
+                  </ChoiceboxItemHeader>
+                  <ChoiceboxItemContent>
+                    <ChoiceboxItemIndicator />
+                  </ChoiceboxItemContent>
+                </ChoiceboxItem>
 
-                <button
-                  type="button"
-                  onClick={() => setFormData({ ...formData, role: 'teacher' })}
-                  className={`p-6 border-2 rounded-xl transition-all ${
-                    formData.role === 'teacher'
-                      ? 'border-valuto-green-600 bg-valuto-green-50'
-                      : 'border-gray-200 hover:border-valuto-green-300'
-                  }`}
-                >
-                  <div className="text-4xl mb-3">👨‍🏫</div>
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">Teacher</h3>
-                  <p className="text-sm text-gray-600">
-                    Create games and teach financial literacy
-                  </p>
-                </button>
-              </div>
+                <ChoiceboxItem value="teacher" className="border-2 hover:border-valuto-green-300">
+                  <ChoiceboxItemHeader>
+                    <div className="text-4xl mb-3">👨‍🏫</div>
+                    <ChoiceboxItemTitle className="text-xl font-bold text-gray-900">
+                      Teacher
+                    </ChoiceboxItemTitle>
+                    <ChoiceboxItemDescription className="text-sm text-gray-600">
+                      Create games and teach financial literacy
+                    </ChoiceboxItemDescription>
+                  </ChoiceboxItemHeader>
+                  <ChoiceboxItemContent>
+                    <ChoiceboxItemIndicator />
+                  </ChoiceboxItemContent>
+                </ChoiceboxItem>
+              </Choicebox>
             </div>
           )}
 
@@ -173,51 +196,56 @@ export default function OnboardingPage() {
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-gray-900 mb-6">Almost Done!</h2>
               
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <div className="space-y-2">
+                <Label htmlFor="school" className="text-sm font-semibold text-gray-700">
                   School/Institution
-                </label>
-                <input
+                </Label>
+                <Input
+                  id="school"
                   type="text"
                   value={formData.school}
                   onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                  className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none transition-colors"
+                  className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   placeholder="Enter your school name"
                 />
               </div>
 
               {formData.role === 'student' && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <div className="space-y-2">
+                  <Label htmlFor="grade" className="text-sm font-semibold text-gray-700">
                     Grade/Year
-                  </label>
-                  <select
+                  </Label>
+                  <Select
                     value={formData.grade}
-                    onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none transition-colors"
+                    onValueChange={(value) => setFormData({ ...formData, grade: value })}
                   >
-                    <option value="">Select your grade</option>
-                    <option value="Year 7">Year 7</option>
-                    <option value="Year 8">Year 8</option>
-                    <option value="Year 9">Year 9</option>
-                    <option value="Year 10">Year 10</option>
-                    <option value="Year 11">Year 11</option>
-                    <option value="Year 12">Year 12</option>
-                    <option value="Year 13">Year 13</option>
-                  </select>
+                    <SelectTrigger className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600">
+                      <SelectValue placeholder="Select your grade" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="Year 7">Year 7</SelectItem>
+                      <SelectItem value="Year 8">Year 8</SelectItem>
+                      <SelectItem value="Year 9">Year 9</SelectItem>
+                      <SelectItem value="Year 10">Year 10</SelectItem>
+                      <SelectItem value="Year 11">Year 11</SelectItem>
+                      <SelectItem value="Year 12">Year 12</SelectItem>
+                      <SelectItem value="Year 13">Year 13</SelectItem>
+                    </SelectContent>
+                  </Select>
                 </div>
               )}
 
               {formData.role === 'teacher' && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">
+                <div className="space-y-2">
+                  <Label htmlFor="subject" className="text-sm font-semibold text-gray-700">
                     Subject
-                  </label>
-                  <input
+                  </Label>
+                  <Input
+                    id="subject"
                     type="text"
                     value={formData.subject}
                     onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                    className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none transition-colors"
+                    className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                     placeholder="e.g., Mathematics, Economics"
                   />
                 </div>

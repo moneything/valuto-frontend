@@ -1,13 +1,17 @@
 "use client";
 
-import { useState } from 'react';
-import { useUser } from '@clerk/nextjs';
+import { useState, useEffect } from 'react';
+import { useUser, useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
 import RoleSwitcher from '@/components/RoleSwitcher';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { userApi } from '@/lib/api';
 
 export default function ProfilePage() {
   const { user } = useUser();
+  const { getToken } = useAuth();
   const { profile, updateProfile, isTeacher, isStudent } = useUserProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -17,6 +21,102 @@ export default function ProfilePage() {
     grade: profile?.grade || '',
     subject: profile?.subject || ''
   });
+
+  // Real data states
+  const [stats, setStats] = useState({
+    gamesPlayed: 0,
+    totalPoints: 0,
+    lessonsCompleted: 0,
+    averageScore: 0,
+    streak: 0,
+    rank: 0
+  });
+  const [achievements, setAchievements] = useState<any[]>([]);
+  const [recentActivity, setRecentActivity] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  // Fetch real user data from API
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      if (!profile) return;
+      
+      try {
+        const token = await getToken();
+        if (!token) return;
+
+        // Fetch user stats
+        const statsResponse = await userApi.getStats(token);
+        if (statsResponse.success && statsResponse.data) {
+          setStats({
+            gamesPlayed: statsResponse.data.gamesPlayed || 0,
+            totalPoints: statsResponse.data.totalPoints || 0,
+            lessonsCompleted: statsResponse.data.lessonsCompleted || 0,
+            averageScore: statsResponse.data.averageScore || 0,
+            streak: statsResponse.data.streak || 0,
+            rank: statsResponse.data.rank || 0
+          });
+        }
+
+        // Fetch achievements
+        const achievementsResponse = await userApi.getAchievements(token);
+        if (achievementsResponse.success && achievementsResponse.data) {
+          setAchievements(achievementsResponse.data);
+        } else {
+          // Default achievements if API doesn't return any
+          setAchievements([
+            { 
+              icon: '🏆', 
+              title: 'First Game', 
+              description: 'Play your first trivia game', 
+              unlocked: statsResponse.data?.gamesPlayed > 0 
+            },
+            { 
+              icon: '📚', 
+              title: 'Knowledge Seeker', 
+              description: 'Complete 5 learning modules', 
+              unlocked: statsResponse.data?.lessonsCompleted >= 5 
+            },
+            { 
+              icon: '💰', 
+              title: 'Investment Pro', 
+              description: 'Reach 1000 total points', 
+              unlocked: statsResponse.data?.totalPoints >= 1000 
+            },
+            { 
+              icon: '🔥', 
+              title: 'On Fire!', 
+              description: 'Maintain a 7-day learning streak', 
+              unlocked: statsResponse.data?.streak >= 7 
+            },
+            { 
+              icon: '⭐', 
+              title: 'Perfect Score', 
+              description: 'Get 100% on a trivia game', 
+              unlocked: statsResponse.data?.averageScore === 100 
+            },
+            { 
+              icon: '👑', 
+              title: 'Top Student', 
+              description: 'Reach #1 on leaderboard', 
+              unlocked: statsResponse.data?.rank === 1 
+            },
+          ]);
+        }
+
+        // Fetch recent activity
+        const activityResponse = await userApi.getActivity(token);
+        if (activityResponse.success && activityResponse.data) {
+          setRecentActivity(activityResponse.data);
+        }
+      } catch (error) {
+        console.error('Failed to fetch profile data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProfileData();
+  }, [profile, getToken]);
 
   const handleSave = () => {
     if (profile) {
@@ -31,24 +131,6 @@ export default function ProfilePage() {
       updateProfile(updatedProfile);
       setIsEditing(false);
     }
-  };
-
-  const achievements = [
-    { icon: '🏆', title: 'First Game', description: 'Played your first trivia game', unlocked: true },
-    { icon: '📚', title: 'Knowledge Seeker', description: 'Completed 5 learning modules', unlocked: true },
-    { icon: '💰', title: 'Investment Pro', description: 'Used the calculator 10 times', unlocked: false },
-    { icon: '🔥', title: 'On Fire!', description: '7-day learning streak', unlocked: false },
-    { icon: '⭐', title: 'Perfect Score', description: 'Got 100% on a trivia game', unlocked: false },
-    { icon: '👑', title: 'Top Student', description: 'Reached #1 on leaderboard', unlocked: false },
-  ];
-
-  const stats = {
-    gamesPlayed: 12,
-    totalPoints: 2450,
-    lessonsCompleted: 8,
-    averageScore: 85,
-    streak: 3,
-    rank: 15
   };
 
   return (
@@ -88,34 +170,51 @@ export default function ProfilePage() {
           {/* Quick Stats */}
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
             <h3 className="font-bold text-gray-900 mb-4">Quick Stats</h3>
-            <div className="space-y-3">
-              <div className="flex justify-between">
-                <span className="text-gray-600">Total Points</span>
-                <span className="font-bold text-valuto-green-600">{stats.totalPoints}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Games Played</span>
-                <span className="font-bold text-gray-900">{stats.gamesPlayed}</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Lessons Done</span>
-                <span className="font-bold text-gray-900">{stats.lessonsCompleted}/20</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Avg. Score</span>
-                <span className="font-bold text-gray-900">{stats.averageScore}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-gray-600">Current Streak</span>
-                <span className="font-bold text-orange-600">{stats.streak} days 🔥</span>
-              </div>
-              {isStudent && (
+            {loading ? (
+              <div className="space-y-3 animate-pulse">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Class Rank</span>
-                  <span className="font-bold text-gray-900">#{stats.rank}</span>
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 rounded w-16"></div>
                 </div>
-              )}
-            </div>
+                <div className="flex justify-between">
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                </div>
+                <div className="flex justify-between">
+                  <div className="h-4 bg-gray-200 rounded w-24"></div>
+                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Total Points</span>
+                  <span className="font-bold text-valuto-green-600">{stats.totalPoints.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Games Played</span>
+                  <span className="font-bold text-gray-900">{stats.gamesPlayed}</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Lessons Done</span>
+                  <span className="font-bold text-gray-900">{stats.lessonsCompleted}/20</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Avg. Score</span>
+                  <span className="font-bold text-gray-900">{stats.averageScore}%</span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-gray-600">Current Streak</span>
+                  <span className="font-bold text-orange-600">{stats.streak} {stats.streak > 0 ? 'days 🔥' : 'days'}</span>
+                </div>
+                {isStudent && stats.rank > 0 && (
+                  <div className="flex justify-between">
+                    <span className="text-gray-600">Class Rank</span>
+                    <span className="font-bold text-gray-900">#{stats.rank}</span>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
         </div>
 
@@ -151,47 +250,47 @@ export default function ProfilePage() {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Name</label>
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">Name</Label>
                 {isEditing ? (
-                  <input
+                  <Input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   />
                 ) : (
                   <p className="text-gray-900">{profile?.name || 'Not set'}</p>
                 )}
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">Email</Label>
                 <p className="text-gray-600">{profile?.email}</p>
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">Age</label>
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">Age</Label>
                 {isEditing ? (
-                  <input
+                  <Input
                     type="number"
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   />
                 ) : (
                   <p className="text-gray-900">{profile?.age || 'Not set'}</p>
                 )}
               </div>
 
-              <div>
-                <label className="block text-sm font-semibold text-gray-700 mb-2">School</label>
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">School</Label>
                 {isEditing ? (
-                  <input
+                  <Input
                     type="text"
                     value={formData.school}
                     onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                    className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   />
                 ) : (
                   <p className="text-gray-900">{profile?.school || 'Not set'}</p>
@@ -199,14 +298,14 @@ export default function ProfilePage() {
               </div>
 
               {isStudent && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Grade</label>
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold text-gray-700">Grade</Label>
                   {isEditing ? (
-                    <input
+                    <Input
                       type="text"
                       value={formData.grade}
                       onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                      className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                      className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                     />
                   ) : (
                     <p className="text-gray-900">{profile?.grade || 'Not set'}</p>
@@ -215,14 +314,14 @@ export default function ProfilePage() {
               )}
 
               {isTeacher && (
-                <div>
-                  <label className="block text-sm font-semibold text-gray-700 mb-2">Subject</label>
+                <div className="space-y-2">
+                  <Label className="text-sm font-semibold text-gray-700">Subject</Label>
                   {isEditing ? (
-                    <input
+                    <Input
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-2 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                      className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                     />
                   ) : (
                     <p className="text-gray-900">{profile?.subject || 'Not set'}</p>
@@ -261,29 +360,43 @@ export default function ProfilePage() {
           {/* Activity Log */}
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
-            <div className="space-y-3">
-              <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
-                <span className="text-2xl">🎮</span>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-gray-900">Completed trivia game</p>
-                  <p className="text-xs text-gray-500">2 hours ago • +250 points</p>
+            {loading ? (
+              <div className="space-y-3 animate-pulse">
+                <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
+                  <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                  <div className="flex-1">
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  </div>
+                </div>
+                <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
+                  <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                  <div className="flex-1">
+                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
+                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                  </div>
                 </div>
               </div>
-              <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
-                <span className="text-2xl">📚</span>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-gray-900">Finished "Stocks & Shares" module</p>
-                  <p className="text-xs text-gray-500">1 day ago</p>
-                </div>
+            ) : recentActivity.length > 0 ? (
+              <div className="space-y-3">
+                {recentActivity.map((activity, index) => (
+                  <div key={index} className={`flex items-start gap-3 ${index < recentActivity.length - 1 ? 'pb-3 border-b border-gray-100' : ''}`}>
+                    <span className="text-2xl">{activity.icon || '✨'}</span>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-gray-900">{activity.title}</p>
+                      <p className="text-xs text-gray-500">
+                        {activity.timeAgo}{activity.points ? ` • +${activity.points} points` : ''}
+                      </p>
+                    </div>
+                  </div>
+                ))}
               </div>
-              <div className="flex items-start gap-3">
-                <span className="text-2xl">💰</span>
-                <div className="flex-1">
-                  <p className="text-sm font-semibold text-gray-900">Used investment calculator</p>
-                  <p className="text-xs text-gray-500">2 days ago</p>
-                </div>
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-500 mb-2">No recent activity yet</p>
+                <p className="text-sm text-gray-400">Start playing games and learning to build your activity log!</p>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>

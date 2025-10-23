@@ -4,23 +4,23 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-interface AnnouncementProps extends Omit<React.HTMLAttributes<HTMLDivElement>, 'onSelect'> {
+interface AnnouncementProps {
   href?: string;
   children: React.ReactNode;
+  className?: string;
 }
 
 export function Announcement({ 
   href, 
   children, 
-  className, 
-  ...props 
+  className,
 }: AnnouncementProps) {
   const Component = href ? Link : "div";
-  const linkProps = href ? { href } : {};
+  const componentProps = href ? { href } : {};
 
   return (
     <Component
-      {...linkProps}
+      {...componentProps}
       className={cn(
         "group relative inline-flex items-center gap-2",
         "rounded-full border border-valuto-green-200 bg-white/80 backdrop-blur-sm",
@@ -30,7 +30,6 @@ export function Announcement({
         href && "cursor-pointer",
         className
       )}
-      {...props}
     >
       {children}
     </Component>

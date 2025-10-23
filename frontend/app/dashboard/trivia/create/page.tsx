@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
 import { triviaApi } from '@/lib/api';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
 
 interface Question {
   question: string;
@@ -135,17 +137,20 @@ export default function CreateTriviaPage() {
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Game Title */}
         <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            Game Title *
-          </label>
-          <input
-            type="text"
-            required
-            value={gameTitle}
-            onChange={(e) => setGameTitle(e.target.value)}
-            className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
-            placeholder="e.g., Introduction to Investing"
-          />
+          <div className="space-y-2">
+            <Label htmlFor="gameTitle" className="text-sm font-semibold text-gray-700">
+              Game Title *
+            </Label>
+            <Input
+              id="gameTitle"
+              type="text"
+              required
+              value={gameTitle}
+              onChange={(e) => setGameTitle(e.target.value)}
+              className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+              placeholder="e.g., Introduction to Investing"
+            />
+          </div>
         </div>
 
         {/* Questions */}
@@ -167,11 +172,12 @@ export default function CreateTriviaPage() {
             </div>
 
             {/* Question Text */}
-            <div className="mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <div className="mb-4 space-y-2">
+              <Label htmlFor={`question-${qIndex}`} className="text-sm font-semibold text-gray-700">
                 Question *
-              </label>
+              </Label>
               <textarea
+                id={`question-${qIndex}`}
                 required
                 value={q.question}
                 onChange={(e) => updateQuestion(qIndex, 'question', e.target.value)}
@@ -182,19 +188,19 @@ export default function CreateTriviaPage() {
             </div>
 
             {/* Answer Options */}
-            <div className="mb-4">
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <div className="mb-4 space-y-2">
+              <Label className="text-sm font-semibold text-gray-700">
                 Answer Options *
-              </label>
+              </Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 {q.options.map((option, oIndex) => (
                   <div key={oIndex} className="relative">
-                    <input
+                    <Input
                       type="text"
                       required
                       value={option}
                       onChange={(e) => updateOption(qIndex, oIndex, e.target.value)}
-                      className={`w-full pl-10 pr-4 py-3 border-2 rounded-lg focus:outline-none ${
+                      className={`w-full pl-10 pr-4 py-3 h-12 border-2 rounded-lg ${
                         q.correctAnswer === oIndex
                           ? 'border-green-500 bg-green-50'
                           : 'border-gray-200 focus:border-valuto-green-600'
@@ -222,10 +228,10 @@ export default function CreateTriviaPage() {
             </div>
 
             {/* Time Limit */}
-            <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+            <div className="space-y-2">
+              <Label className="text-sm font-semibold text-gray-700">
                 Time Limit: {q.timeLimit} seconds
-              </label>
+              </Label>
               <input
                 type="range"
                 min="10"
@@ -233,7 +239,7 @@ export default function CreateTriviaPage() {
                 step="5"
                 value={q.timeLimit}
                 onChange={(e) => updateQuestion(qIndex, 'timeLimit', parseInt(e.target.value))}
-                className="w-full"
+                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
               />
             </div>
           </div>

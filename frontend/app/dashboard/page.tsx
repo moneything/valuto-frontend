@@ -189,7 +189,7 @@ export default function DashboardPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
-      <div className="w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12">
+      <div className="w-full px-4 sm:px-6 lg:px-12 py-8 md:py-12 max-w-[1800px] mx-auto">
         {/* Welcome Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">

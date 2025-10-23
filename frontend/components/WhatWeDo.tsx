@@ -1,24 +1,39 @@
+"use client";
+
+import { useRef } from "react";
+import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
+
 export default function WhatWeDo() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const step1Ref = useRef<HTMLDivElement>(null);
+  const step2Ref = useRef<HTMLDivElement>(null);
+  const step3Ref = useRef<HTMLDivElement>(null);
+  const step4Ref = useRef<HTMLDivElement>(null);
+
   const steps = [
     {
       number: "01",
       title: "Schools Book Valuto",
       description: "We arrange a full-day workshop at your school or college, tailored to your year group's needs.",
+      ref: step1Ref,
     },
     {
       number: "02",
       title: "Interactive Workshop Day",
       description: "Our young team delivers 6 hours of engaging, practical money education with £500+ in prizes to keep everyone motivated.",
+      ref: step2Ref,
     },
     {
       number: "03",
       title: "Year-Round Platform Access",
       description: "Students continue learning through our gamified platform with quizzes, tools, and events throughout the year.",
+      ref: step3Ref,
     },
     {
       number: "04",
       title: "Real-World Skills",
       description: "Students go from 'no idea about money' to confidently handling pay cheques, avoiding debt, and building their future.",
+      ref: step4Ref,
     },
   ];
 
@@ -41,20 +56,51 @@ export default function WhatWeDo() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16">
+        <div ref={containerRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 mb-12 sm:mb-16">
           {steps.map((step, index) => (
-            <div key={index} className="relative px-4 sm:px-0">
+            <div key={index} ref={step.ref} className="relative px-4 sm:px-0 z-10">
               <div className="text-5xl sm:text-6xl font-bold text-valuto-green-100 mb-3 sm:mb-4">{step.number}</div>
               <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2 sm:mb-3">{step.title}</h3>
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{step.description}</p>
-              
-              {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-8 -right-4 text-valuto-green-300 text-3xl">
-                  →
-                </div>
-              )}
             </div>
           ))}
+
+          {/* Animated Beams connecting the steps */}
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={step1Ref}
+            toRef={step2Ref}
+            curvature={-50}
+            duration={3}
+            pathColor="#d1fae5"
+            pathWidth={3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={step2Ref}
+            toRef={step3Ref}
+            curvature={50}
+            duration={3.5}
+            delay={0.2}
+            pathColor="#d1fae5"
+            pathWidth={3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={step3Ref}
+            toRef={step4Ref}
+            curvature={-50}
+            duration={3.2}
+            delay={0.4}
+            pathColor="#d1fae5"
+            pathWidth={3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
         </div>
 
         {/* Financial Planning Image Section */}

@@ -6,6 +6,7 @@ import { useUser } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import Link from 'next/link';
+import DashboardDock from '@/components/DashboardDock';
 
 export default function DashboardLayout({
   children,
@@ -40,14 +41,14 @@ export default function DashboardLayout({
 
   return (
     <div className="min-h-screen animate-gradient relative overflow-hidden">
-      {/* Decorative elements */}
+      {/* Decorative elements - adjusted to avoid dock area */}
       <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 w-72 h-72 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob"></div>
-      <div className="absolute top-1/3 left-0 translate-y-12 -translate-x-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2000"></div>
+      <div className="absolute top-1/3 left-40 translate-y-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
       <div className="absolute bottom-0 right-1/4 translate-y-12 w-80 h-80 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
       
       {/* Header */}
       <header className="relative bg-white/80 backdrop-blur-md shadow-sm border-b border-valuto-green-200/30">
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:pl-32 lg:pr-8">
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href="/dashboard" className="flex items-center group">
@@ -86,7 +87,7 @@ export default function DashboardLayout({
       {/* Breadcrumb */}
       {!isMainDashboard && (
         <div className="relative bg-white/60 backdrop-blur-sm border-b border-valuto-green-200/30">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-3">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:pl-32 lg:pr-8 py-3">
             <Link 
               href="/dashboard"
               className="inline-flex items-center text-sm text-valuto-green-600 hover:text-valuto-green-700 font-medium transition-colors bg-valuto-green-50 hover:bg-valuto-green-100 px-3 py-2 rounded-lg"
@@ -100,8 +101,11 @@ export default function DashboardLayout({
         </div>
       )}
 
-      {/* Main Content */}
-      <main className="relative">
+      {/* Dashboard Dock */}
+      <DashboardDock />
+
+      {/* Main Content - Add left padding to accommodate dock on desktop */}
+      <main className="relative lg:pl-24">
         {children}
       </main>
     </div>

@@ -109,6 +109,25 @@ export const userApi = {
       method: 'GET',
     }, token);
   },
+
+  /**
+   * Get user achievements
+   */
+  async getAchievements(token: string, userId?: string) {
+    const endpoint = userId ? `/api/user/${userId}/achievements` : '/api/user/achievements';
+    return apiRequest(endpoint, {
+      method: 'GET',
+    }, token);
+  },
+
+  /**
+   * Get user activity log
+   */
+  async getActivity(token: string, limit = 10) {
+    return apiRequest(`/api/user/activity?limit=${limit}`, {
+      method: 'GET',
+    }, token);
+  },
 };
 
 // ==================== Trivia API ====================

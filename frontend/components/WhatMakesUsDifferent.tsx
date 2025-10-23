@@ -1,3 +1,8 @@
+"use client";
+
+import { useRef } from "react";
+import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
+
 const Icon = ({ type }: { type: string }) => {
   const icons: { [key: string]: JSX.Element } = {
     users: (
@@ -35,36 +40,50 @@ const Icon = ({ type }: { type: string }) => {
 };
 
 export default function WhatMakesUsDifferent() {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const feature1Ref = useRef<HTMLDivElement>(null);
+  const feature2Ref = useRef<HTMLDivElement>(null);
+  const feature3Ref = useRef<HTMLDivElement>(null);
+  const feature4Ref = useRef<HTMLDivElement>(null);
+  const feature5Ref = useRef<HTMLDivElement>(null);
+  const feature6Ref = useRef<HTMLDivElement>(null);
+
   const features = [
     {
       title: "Youth-Led Team",
       description: "Created by people who remember what it's like to be 16 and unsure about money. We're under 20 and building the education we wish we had.",
       icon: "users",
+      ref: feature1Ref,
     },
     {
       title: "Live Interactive Workshops",
       description: "Full-day engaging sessions hosted directly in schools. Not static booklets or quick assemblies—real, practical learning that sticks.",
       icon: "academic",
+      ref: feature2Ref,
     },
     {
       title: "Gamified Platform",
       description: "Year-round access to quizzes, budgeting tools, investing simulators, and leaderboards that keep students engaged long after the workshop.",
       icon: "gamepad",
+      ref: feature3Ref,
     },
     {
       title: "Real Prizes, Real Impact",
       description: "Minimum £500 invested per year group during a single workshop day. A level of reward never seen before in UK financial education.",
       icon: "trophy",
+      ref: feature4Ref,
     },
     {
       title: "Topics Students Care About",
       description: "Side hustles, first jobs, credit scores, renting, investing early—real-world money skills they'll actually use.",
       icon: "lightbulb",
+      ref: feature5Ref,
     },
     {
       title: "Year-Round Support",
       description: "Students get platform access for the whole year, building skills continuously with events featuring entrepreneurs and young professionals.",
       icon: "calendar",
+      ref: feature6Ref,
     },
   ];
 
@@ -81,11 +100,12 @@ export default function WhatMakesUsDifferent() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
+        <div ref={containerRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 md:gap-8">
           {features.map((feature, index) => (
             <div
               key={index}
-              className="bg-gradient-to-br from-valuto-green-50 to-white p-6 sm:p-8 rounded-xl border border-valuto-green-100 hover:shadow-lg transition-shadow duration-300"
+              ref={feature.ref}
+              className="relative z-10 bg-gradient-to-br from-valuto-green-50 to-white p-6 sm:p-8 rounded-xl border border-valuto-green-100 hover:shadow-lg transition-shadow duration-300"
             >
               <div className="text-valuto-green-600 mb-4">
                 <Icon type={feature.icon} />
@@ -94,6 +114,90 @@ export default function WhatMakesUsDifferent() {
               <p className="text-sm sm:text-base text-gray-600 leading-relaxed">{feature.description}</p>
             </div>
           ))}
+
+          {/* Animated Beams connecting related features */}
+          {/* Top row connections */}
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature1Ref}
+            toRef={feature2Ref}
+            curvature={30}
+            duration={4}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature2Ref}
+            toRef={feature3Ref}
+            curvature={-30}
+            duration={4.5}
+            delay={0.3}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          
+          {/* Diagonal connections */}
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature1Ref}
+            toRef={feature4Ref}
+            curvature={-40}
+            duration={5}
+            delay={0.5}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.2}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature3Ref}
+            toRef={feature6Ref}
+            curvature={40}
+            duration={5.5}
+            delay={0.7}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.2}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          
+          {/* Bottom row connections */}
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature4Ref}
+            toRef={feature5Ref}
+            curvature={-25}
+            duration={4.2}
+            delay={1}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
+          <AnimatedBeam
+            containerRef={containerRef}
+            fromRef={feature5Ref}
+            toRef={feature6Ref}
+            curvature={25}
+            duration={4.8}
+            delay={1.2}
+            pathColor="#d1fae5"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#15a34a"
+            gradientStopColor="#22c55e"
+          />
         </div>
       </div>
     </section>

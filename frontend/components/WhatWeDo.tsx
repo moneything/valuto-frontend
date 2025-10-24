@@ -103,14 +103,13 @@ export default function WhatWeDo() {
           />
         </div>
 
-        {/* Financial Planning Image Section */}
+        {/* Financial Planning Image Section - Clean Design */}
         <div className="mb-12 sm:mb-16 md:mb-20">
-          <div className="max-w-5xl mx-auto">
-            <div className="bg-white rounded-2xl shadow-xl overflow-hidden border-4 border-valuto-green-100">
+          <div className="max-w-6xl mx-auto">
+            <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-lg overflow-hidden border border-gray-100">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
                 {/* Image */}
                 <div className="relative h-64 md:h-auto">
-                  <div className="absolute inset-0 bg-gradient-to-br from-valuto-green-600/10 to-valuto-green-400/10"></div>
                   <img 
                     src="/study2.png" 
                     alt="Student learning budgeting and financial planning" 
@@ -119,21 +118,21 @@ export default function WhatWeDo() {
                 </div>
                 
                 {/* Content */}
-                <div className="p-6 sm:p-8 md:p-10 flex flex-col justify-center bg-gradient-to-br from-white to-valuto-green-50">
-                  <div className="inline-block px-4 py-2 bg-valuto-green-100 text-valuto-green-700 rounded-full text-xs sm:text-sm font-semibold mb-4 w-fit">
+                <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
+                  <div className="inline-block px-3 py-1 bg-valuto-green-50 text-valuto-green-700 rounded-md text-xs font-semibold mb-4 w-fit uppercase tracking-wide">
                     Real-World Skills
                   </div>
-                  <h3 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">
+                  <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
                     Practical Money Management
                   </h3>
-                  <p className="text-sm sm:text-base text-gray-600 leading-relaxed mb-4">
+                  <p className="text-base text-gray-600 leading-relaxed mb-6">
                     Students learn hands-on budgeting, saving, and investing through interactive tools and real-life scenarios. Our platform makes financial literacy engaging and accessible.
                   </p>
                   <div className="flex items-center space-x-2 text-valuto-green-600">
                     <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-sm sm:text-base font-semibold">Interactive budgeting tools included</span>
+                    <span className="text-base font-semibold">Interactive budgeting tools included</span>
                   </div>
                 </div>
               </div>
@@ -141,42 +140,119 @@ export default function WhatWeDo() {
           </div>
         </div>
 
-        {/* Our Promise */}
-        <div className="bg-valuto-green-600 text-white rounded-2xl overflow-hidden">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+        {/* Our Promise - Clean Design */}
+        <div className="bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white rounded-xl shadow-lg overflow-hidden">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-0">
             {/* Left - Image */}
-            <div className="order-2 lg:order-1 flex items-center justify-center p-8 lg:p-12">
+            <div className="order-2 lg:order-1 flex items-center justify-center p-8 lg:p-12 bg-valuto-green-600/50">
               <div className="relative w-full max-w-md">
-                <div className="absolute inset-0 bg-white/10 rounded-2xl transform -rotate-3"></div>
                 <img 
                   src="/study1.png" 
                   alt="Financial growth and investment" 
-                  className="relative rounded-2xl shadow-2xl border-4 border-white/20 w-full"
+                  className="relative rounded-xl shadow-2xl border-4 border-white/20 w-full"
                 />
               </div>
             </div>
 
             {/* Right - Content */}
-            <div className="order-1 lg:order-2 p-8 md:p-12 flex flex-col justify-center">
-              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">Our Promise</h2>
-              <p className="text-lg md:text-xl mb-8 text-valuto-green-50">
+            <div className="order-1 lg:order-2 p-8 md:p-10 lg:p-12 flex flex-col justify-center">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Promise</h2>
+              <p className="text-lg mb-8 text-white/90">
                 Valuto gives students the confidence to:
               </p>
               
-              <div className="grid grid-cols-1 gap-4 mb-10">
+              <div className="grid grid-cols-1 gap-3 mb-8">
                 {outcomes.map((outcome, index) => (
                   <div key={index} className="flex items-start space-x-3">
-                    <svg className="w-6 h-6 text-valuto-green-200 flex-shrink-0 mt-1" fill="currentColor" viewBox="0 0 20 20">
+                    <svg className="w-5 h-5 text-white flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                       <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                     </svg>
-                    <span className="text-base md:text-lg">{outcome}</span>
+                    <span className="text-base">{outcome}</span>
                   </div>
                 ))}
               </div>
 
               <div>
-                <button className="bg-white text-valuto-green-600 hover:bg-gray-50 font-bold px-6 md:px-8 py-3 md:py-4 rounded-lg transition-all duration-200 shadow-lg text-base md:text-lg w-full sm:w-auto">
+                <button className="bg-white text-valuto-green-600 hover:bg-gray-50 font-bold px-8 py-3 rounded-lg transition-all duration-200 shadow-lg text-base w-full sm:w-auto">
                   Book Your Workshop Today
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Pricing Section */}
+        <div id="pricing" className="mt-16 sm:mt-20 md:mt-24">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+              Student Access Pricing
+            </h2>
+            <p className="mx-auto max-w-2xl text-lg text-gray-600">
+              Affordable financial education for every student
+            </p>
+          </div>
+
+          <div className="flex justify-center max-w-md mx-auto">
+            {/* Student Access - Popular */}
+            <div className="w-full bg-white rounded-xl border-2 border-valuto-green-600 shadow-xl hover:shadow-2xl transition-shadow relative">
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                <span className="bg-valuto-green-600 text-white px-6 py-2 rounded-full text-sm font-semibold uppercase tracking-wide">
+                  Popular
+                </span>
+              </div>
+              
+              <div className="p-8 lg:p-10 text-center">
+                <h3 className="font-bold text-2xl text-gray-900 mb-4">
+                  Less than £1
+                </h3>
+                <p className="text-gray-600 mb-8">
+                  Complete financial education platform
+                </p>
+                
+                <div className="space-y-4 mb-10 text-left">
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">Interactive learning modules</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">Gamified challenges & rewards</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">Real-time progress tracking</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">AI-powered financial advisor</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">Competition entry & prizes</span>
+                  </div>
+                  <div className="flex items-start gap-3 text-gray-700">
+                    <svg className="h-6 w-6 text-valuto-green-600 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                      <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                    </svg>
+                    <span className="text-lg">Year-round platform access</span>
+                  </div>
+                </div>
+
+                <button className="w-full bg-valuto-green-600 text-white hover:bg-valuto-green-700 font-bold text-lg px-8 py-4 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+                  Get Started Today
+                  <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </button>
               </div>
             </div>

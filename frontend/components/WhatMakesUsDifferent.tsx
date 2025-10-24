@@ -115,7 +115,7 @@ export default function WhatMakesUsDifferent() {
             </div>
           ))}
 
-          {/* Animated Beams connecting related features */}
+          {/* Animated Beams connecting related features - Black Theme */}
           {/* Top row connections */}
           <AnimatedBeam
             containerRef={containerRef}
@@ -123,11 +123,11 @@ export default function WhatMakesUsDifferent() {
             toRef={feature2Ref}
             curvature={30}
             duration={4}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.3}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           <AnimatedBeam
             containerRef={containerRef}
@@ -136,11 +136,11 @@ export default function WhatMakesUsDifferent() {
             curvature={-30}
             duration={4.5}
             delay={0.3}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.3}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           
           {/* Diagonal connections */}
@@ -151,11 +151,11 @@ export default function WhatMakesUsDifferent() {
             curvature={-40}
             duration={5}
             delay={0.5}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.2}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           <AnimatedBeam
             containerRef={containerRef}
@@ -164,11 +164,11 @@ export default function WhatMakesUsDifferent() {
             curvature={40}
             duration={5.5}
             delay={0.7}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.2}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           
           {/* Bottom row connections */}
@@ -179,11 +179,11 @@ export default function WhatMakesUsDifferent() {
             curvature={-25}
             duration={4.2}
             delay={1}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.3}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           <AnimatedBeam
             containerRef={containerRef}
@@ -192,11 +192,11 @@ export default function WhatMakesUsDifferent() {
             curvature={25}
             duration={4.8}
             delay={1.2}
-            pathColor="#d1fae5"
+            pathColor="#1f2937"
             pathWidth={2}
             pathOpacity={0.3}
-            gradientStartColor="#15a34a"
-            gradientStopColor="#22c55e"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
         </div>
       </div>

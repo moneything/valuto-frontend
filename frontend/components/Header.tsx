@@ -28,8 +28,8 @@ export default function Header() {
             <a href="#impact" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
               Impact
             </a>
-            <a href="#schools" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              For Schools
+            <a href="#pricing" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
+              Pricing
             </a>
           </div>
 
@@ -85,8 +85,8 @@ export default function Header() {
               <a href="#impact" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
                 Impact
               </a>
-                <a href="#schools" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
-                  For Schools
+                <a href="#pricing" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
+                  Pricing
                 </a>
                 <SignedOut>
                   <a href="/auth" className="text-valuto-green-600 font-semibold text-sm text-left sm:hidden">

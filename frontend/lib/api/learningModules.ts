@@ -139,19 +139,19 @@ class LearningModuleAPI {
     });
     
     const queryString = queryParams.toString();
-    const endpoint = `/api/learning-modules${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/learning/modules${queryString ? `?${queryString}` : ''}`;
     
     return this.request<LearningModule[]>(endpoint);
   }
 
   // Get a specific learning module
   async getModule(moduleId: string): Promise<{ success: boolean; data?: LearningModule; error?: string }> {
-    return this.request<LearningModule>(`/api/learning-modules/${moduleId}`);
+    return this.request<LearningModule>(`/api/learning/modules/${moduleId}`);
   }
 
   // Get user's progress for a specific module
   async getModuleProgress(moduleId: string, token: string): Promise<{ success: boolean; data?: LearningProgress; error?: string }> {
-    return this.authenticatedRequest<LearningProgress>(`/api/learning-modules/${moduleId}/progress`, token);
+    return this.authenticatedRequest<LearningProgress>(`/api/learning/progress/${moduleId}`, token);
   }
 
   // Save user progress for a module
@@ -170,9 +170,12 @@ class LearningModuleAPI {
       };
     }
   ): Promise<{ success: boolean; data?: any; error?: string }> {
-    return this.authenticatedRequest(`/api/learning-modules/${moduleId}/progress`, token, {
+    return this.authenticatedRequest(`/api/learning/progress`, token, {
       method: 'POST',
-      body: JSON.stringify(progressData),
+      body: JSON.stringify({ 
+        moduleId,
+        ...progressData 
+      }),
     });
   }
 
@@ -187,7 +190,7 @@ class LearningModuleAPI {
     });
     
     const queryString = queryParams.toString();
-    const endpoint = `/api/learning-modules/user/progress${queryString ? `?${queryString}` : ''}`;
+    const endpoint = `/api/learning/progress${queryString ? `?${queryString}` : ''}`;
     
     return this.authenticatedRequest<{ progress: LearningProgress[]; stats: ProgressStats }>(endpoint, token);
   }
@@ -197,7 +200,7 @@ class LearningModuleAPI {
     token: string,
     moduleData: Omit<LearningModule, 'createdAt' | 'updatedAt' | 'isActive' | 'createdBy'>
   ): Promise<{ success: boolean; data?: LearningModule; error?: string }> {
-    return this.authenticatedRequest<LearningModule>('/api/learning-modules', token, {
+    return this.authenticatedRequest<LearningModule>('/api/learning/modules', token, {
       method: 'POST',
       body: JSON.stringify(moduleData),
     });

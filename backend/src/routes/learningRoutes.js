@@ -9,8 +9,45 @@ const {
   getModuleLeaderboard,
   getLearningStats,
 } = require('../controllers/learningController');
+const {
+  getModules,
+  getModule,
+  createModule,
+  updateModule,
+  deleteModule,
+} = require('../controllers/learningModuleController');
 const { authenticateClerkUser, optionalAuth } = require('../middleware/auth');
 const { validateLearningProgress } = require('../utils/validators');
+
+/**
+ * Learning Module Routes
+ * Handles learning module content management
+ */
+
+// @route   GET /api/learning/modules
+// @desc    Get all learning modules
+// @access  Public
+router.get('/modules', getModules);
+
+// @route   GET /api/learning/modules/:id
+// @desc    Get a specific learning module
+// @access  Public
+router.get('/modules/:id', getModule);
+
+// @route   POST /api/learning/modules
+// @desc    Create a new learning module
+// @access  Private (Teacher only)
+router.post('/modules', authenticateClerkUser, createModule);
+
+// @route   PUT /api/learning/modules/:id
+// @desc    Update a learning module
+// @access  Private (Teacher only)
+router.put('/modules/:id', authenticateClerkUser, updateModule);
+
+// @route   DELETE /api/learning/modules/:id
+// @desc    Delete a learning module
+// @access  Private (Teacher only)
+router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 
 /**
  * Learning Progress Routes

@@ -1,40 +1,117 @@
 "use client";
 
-import { useRef } from "react";
-import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
+import { AppleCardsCarousel, type Card } from "@/components/ui/apple-cards-carousel";
 
 export default function ImpactStats() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const stat1Ref = useRef<HTMLDivElement>(null);
-  const stat2Ref = useRef<HTMLDivElement>(null);
-  const stat3Ref = useRef<HTMLDivElement>(null);
-  const stat4Ref = useRef<HTMLDivElement>(null);
-
-  const stats = [
+  const impactCards: Card[] = [
     {
-      value: "10,000+",
-      label: "Students Reached",
+      src: "https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=400&h=300&fit=crop&crop=center",
+      title: "10,000+",
+      category: "Students Reached",
       description: "Young people learning money skills",
-      ref: stat1Ref,
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-gray-900">10,000+ Students Reached</h3>
+          <p className="text-gray-600">
+            We've successfully reached over 10,000 young people across the UK, 
+            helping them develop essential money management skills that will last a lifetime.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-green-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-green-800">Schools</h4>
+              <p className="text-sm text-green-700">500+ educational institutions</p>
+            </div>
+            <div className="bg-blue-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-blue-800">Workshops</h4>
+              <p className="text-sm text-blue-700">1,000+ sessions delivered</p>
+            </div>
+          </div>
+        </div>
+      )
     },
     {
-      value: "95%",
-      label: "Student Engagement",
+      src: "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=400&h=300&fit=crop&crop=center",
+      title: "95%",
+      category: "Student Engagement",
       description: "Active participation in workshops",
-      ref: stat2Ref,
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-gray-900">95% Student Engagement</h3>
+          <p className="text-gray-600">
+            Our interactive approach and gamified learning methods result in 95% 
+            active participation rates, keeping students engaged throughout the entire workshop.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Interactive learning modules</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Gamified activities and challenges</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Real-world case studies</span>
+            </div>
+          </div>
+        </div>
+      )
     },
     {
-      value: "£500+",
-      label: "Per Workshop",
+      src: "https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=400&h=300&fit=crop&crop=center",
+      title: "£500+",
+      category: "Per Workshop",
       description: "Invested in prizes and rewards",
-      ref: stat3Ref,
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-gray-900">£500+ Per Workshop Investment</h3>
+          <p className="text-gray-600">
+            We invest over £500 per workshop in prizes, rewards, and learning materials 
+            to ensure students have a truly engaging and valuable experience.
+          </p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-yellow-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-yellow-800">Individual Prizes</h4>
+              <p className="text-sm text-yellow-700">Up to £100 per student</p>
+            </div>
+            <div className="bg-purple-50 p-4 rounded-lg">
+              <h4 className="font-semibold text-purple-800">Learning Materials</h4>
+              <p className="text-sm text-purple-700">Workbooks and resources</p>
+            </div>
+          </div>
+        </div>
+      )
     },
     {
-      value: "85%",
-      label: "Confidence Boost",
+      src: "https://images.unsplash.com/photo-1427504494785-3a9ca7044f45?w=400&h=300&fit=crop&crop=center",
+      title: "85%",
+      category: "Confidence Boost",
       description: "Report feeling more confident with money",
-      ref: stat4Ref,
-    },
+      content: (
+        <div className="space-y-4">
+          <h3 className="text-2xl font-bold text-gray-900">85% Confidence Boost</h3>
+          <p className="text-gray-600">
+            85% of students report feeling significantly more confident with money 
+            after completing our workshops, with measurable improvements in their financial knowledge.
+          </p>
+          <div className="space-y-3">
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Pre and post-workshop assessments</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Student feedback surveys</span>
+            </div>
+            <div className="flex items-center space-x-3">
+              <div className="w-2 h-2 bg-green-500 rounded-full"></div>
+              <span className="text-gray-700">Follow-up progress tracking</span>
+            </div>
+          </div>
+        </div>
+      )
+    }
   ];
 
   return (
@@ -47,74 +124,10 @@ export default function ImpactStats() {
           </p>
         </div>
 
-        <div ref={containerRef} className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
-          {stats.map((stat, index) => (
-            <div 
-              key={index}
-              ref={stat.ref}
-              className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-6 sm:p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-            >
-              <div className="text-4xl sm:text-5xl md:text-6xl font-bold mb-2 sm:mb-3 leading-tight">{stat.value}</div>
-              <div className="text-base sm:text-lg font-semibold mb-1 sm:mb-2 text-white">{stat.label}</div>
-              <div className="text-xs sm:text-sm text-valuto-green-100 leading-relaxed">{stat.description}</div>
-            </div>
-          ))}
-
-          {/* Animated Beams connecting the stats in a flowing pattern */}
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={stat1Ref}
-            toRef={stat2Ref}
-            curvature={-60}
-            duration={3}
-            pathColor="#86efac"
-            pathWidth={3}
-            pathOpacity={0.4}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={stat2Ref}
-            toRef={stat3Ref}
-            curvature={60}
-            duration={3.5}
-            delay={0.3}
-            pathColor="#86efac"
-            pathWidth={3}
-            pathOpacity={0.4}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
-          />
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={stat3Ref}
-            toRef={stat4Ref}
-            curvature={-60}
-            duration={3.2}
-            delay={0.6}
-            pathColor="#86efac"
-            pathWidth={3}
-            pathOpacity={0.4}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
-          />
-          {/* Add a reverse beam for visual interest */}
-          <AnimatedBeam
-            containerRef={containerRef}
-            fromRef={stat4Ref}
-            toRef={stat1Ref}
-            curvature={0}
-            duration={5}
-            delay={1}
-            reverse={true}
-            pathColor="#86efac"
-            pathWidth={2}
-            pathOpacity={0.2}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
-          />
-        </div>
+        <AppleCardsCarousel 
+          items={impactCards}
+          className="max-w-7xl mx-auto"
+        />
       </div>
     </section>
   );

@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
+import { ContainerTextFlip } from "@/components/ui/shadcn-io/container-text-flip";
 import { Announcement, AnnouncementBadge } from "@/components/ui/announcement";
 import { Marquee } from "@/components/ui/marquee";
 import Image from "next/image";
@@ -32,11 +33,20 @@ export default function Hero() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center mb-8 md:mb-12">
           {/* Left Content */}
           <div className="text-center lg:text-left space-y-4 animate-in fade-in slide-in-from-left-8 duration-1000">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-relaxed">
               Teaching Money Skills
               <br />
-              <span className="text-valuto-green-600 inline-block mt-1">
-                Before It's Too <em className="italic font-light">Late</em>
+              <span className="text-valuto-green-600 inline-block mt-4">
+                Before It's Too{" "}
+                <span className="inline-block align-middle">
+                  <ContainerTextFlip
+                    words={["Late", "Hard", "Risky", "Costly"]}
+                    interval={2500}
+                    animationDuration={600}
+                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-gradient-to-br from-valuto-green-500 to-valuto-green-700 shadow-lg border-2 border-valuto-green-400"
+                    textClassName="text-gray-900 font-bold italic"
+                  />
+                </span>
               </span>
             </h1>
             
@@ -77,42 +87,42 @@ export default function Hero() {
           </div>
         </div>
 
-        {/* Stats Row with Animated Beams */}
-        <div ref={statsContainerRef} className="relative grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-4 lg:px-0">
+        {/* Stats Row with Animated Beams - Compact Hero Style */}
+        <div ref={statsContainerRef} className="relative grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4 lg:px-0">
           <div 
             ref={stat1Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="text-2xl sm:text-3xl font-bold mb-1">11-18</div>
-            <div className="font-medium text-sm text-valuto-green-50">Age Range</div>
+            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">11-18</div>
+            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Age Range</div>
           </div>
           <div 
             ref={stat2Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="text-2xl sm:text-3xl font-bold mb-1">£500+</div>
-            <div className="font-medium text-sm text-valuto-green-50">Prize Investment</div>
+            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">£500+</div>
+            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Prize Investment</div>
           </div>
           <div 
             ref={stat3Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-5 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
           >
-            <div className="text-2xl sm:text-3xl font-bold mb-1">Full Day</div>
-            <div className="font-medium text-sm text-valuto-green-50">Workshops</div>
+            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">Full Day</div>
+            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Workshops</div>
           </div>
 
-          {/* Animated Beams connecting the stats */}
+          {/* Animated Beams connecting the stats - Black Theme */}
           <AnimatedBeam
             containerRef={statsContainerRef}
             fromRef={stat1Ref}
             toRef={stat2Ref}
             curvature={-60}
             duration={3}
-            pathColor="#86efac"
-            pathWidth={3}
-            pathOpacity={0.4}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
+            pathColor="#1f2937"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           <AnimatedBeam
             containerRef={statsContainerRef}
@@ -121,11 +131,11 @@ export default function Hero() {
             curvature={60}
             duration={3.5}
             delay={0.3}
-            pathColor="#86efac"
-            pathWidth={3}
-            pathOpacity={0.4}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
+            pathColor="#1f2937"
+            pathWidth={2}
+            pathOpacity={0.3}
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
           {/* Add a reverse beam for circular flow */}
           <AnimatedBeam
@@ -136,11 +146,11 @@ export default function Hero() {
             duration={5}
             delay={0.8}
             reverse={true}
-            pathColor="#86efac"
-            pathWidth={2}
+            pathColor="#1f2937"
+            pathWidth={1.5}
             pathOpacity={0.2}
-            gradientStartColor="#22c55e"
-            gradientStopColor="#86efac"
+            gradientStartColor="#374151"
+            gradientStopColor="#1f2937"
           />
         </div>
       </div>

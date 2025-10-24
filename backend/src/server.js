@@ -107,6 +107,7 @@ const leaderboardRoutes = require('./routes/leaderboardRoutes');
 const learningRoutes = require('./routes/learningRoutes');
 const challengeRoutes = require('./routes/challengeRoutes');
 const triviaRoutes = require('./routes/triviaRoutes');
+const newsRoutes = require('./routes/newsRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -115,6 +116,7 @@ app.use('/api/leaderboard', leaderboardRoutes);
 app.use('/api/learning', learningRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/trivia', triviaRoutes);
+app.use('/api/news', newsRoutes);
 
 // ==================== ERROR HANDLING ====================
 

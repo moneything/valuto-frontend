@@ -4,8 +4,9 @@
  * Run this script to add sample learning content to your production database
  */
 
+require('dotenv').config(); // <-- Ensures .env variables are loaded
+
 const mongoose = require('mongoose');
-require('dotenv').config();
 
 // Import models
 const LearningModule = require('../models/LearningModule');
@@ -177,6 +178,7 @@ Building your future:
         savings: 20
       }
     },
+    // ---- START: This section was added ----
     learningSteps: [
       {
         id: "step1",
@@ -219,6 +221,7 @@ Building your future:
         points: 5
       }
     ],
+    // ---- END: This section was added ----
     points: 400,
     difficultyLevel: "beginner",
     timeEstimate: 25,
@@ -471,12 +474,12 @@ async function seedModules() {
   try {
     console.log('🌱 Starting to seed learning modules...');
 
-    // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/valuto');
+    // Connect to MongoDB using the URI from .env or fallback to local
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/valuto'); // Use MONGO_URI from .env if available
     console.log('✅ Connected to MongoDB');
 
     // Clear existing modules (optional - comment out if you want to keep existing)
-    // await LearningModule.deleteMany({});
+    await LearningModule.deleteMany({});
     // console.log('🗑️  Cleared existing modules');
 
     // Insert sample modules
@@ -503,4 +506,3 @@ if (require.main === module) {
 }
 
 module.exports = { seedModules, sampleModules };
-

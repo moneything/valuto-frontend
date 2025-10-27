@@ -18,9 +18,13 @@ interface SimulationActivityProps {
 }
 
 export default function SimulationActivity({ simulation, onComplete, onProgress }: SimulationActivityProps) {
+  // Handle both old simulation format (with scenarios) and new budget simulator format
+  const scenariosCount = simulation.scenarios ? simulation.scenarios.length : 1;
+  const simulationType = simulation.type || 'budget';
+  
   const [currentStep, setCurrentStep] = useState(0);
   const [userChoices, setUserChoices] = useState<any[]>([]);
-  const [currentData, setCurrentData] = useState(simulation.initialData);
+  const [currentData, setCurrentData] = useState(simulation.initialData || {});
   const [showResult, setShowResult] = useState(false);
   const [timeSpent, setTimeSpent] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
@@ -44,12 +48,12 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
     setCurrentData(updatedData);
 
     // Check if simulation is complete
-    if (currentStep >= simulation.scenarios.length - 1) {
+    if (currentStep >= scenariosCount - 1) {
       completeSimulation(newChoices);
     } else {
       setCurrentStep(prev => prev + 1);
       if (onProgress) {
-        onProgress((currentStep + 1) / simulation.scenarios.length);
+        onProgress((currentStep + 1) / scenariosCount);
       }
     }
   };
@@ -137,50 +141,54 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
   };
 
   const renderBudgetSimulation = () => {
-    const scenario = simulation.scenarios[currentStep];
-    const categories = ['rent', 'food', 'transport', 'entertainment', 'savings', 'emergency'];
+    // Handle both old format (with scenarios) and new format (with categories)
+    const scenario = simulation.scenarios?.[currentStep];
+    const categories = simulation.categories || (scenario ? ['rent', 'food', 'transport', 'entertainment', 'savings', 'emergency'] : []);
+    const monthlyIncome = simulation.monthlyIncome || currentData.remaining || 2000;
+    const targetRatios = simulation.targetRatios || { needs: 50, wants: 30, savings: 20 };
     
     return (
       <div className="space-y-6">
         <div className="text-center">
           <h3 className="text-xl font-bold text-gray-900 mb-2">
-            {scenario.title}
+            {simulation.title || scenario?.title || 'Budget Allocation Simulator'}
           </h3>
           <p className="text-gray-600 mb-4">
-            {scenario.description}
+            {simulation.description || scenario?.description || 'Allocate your monthly income across different categories'}
           </p>
           <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-blue-800">
-              <strong>Goal:</strong> Keep £{simulation.rules.targetRemaining} remaining at the end
+            <p className="text-sm text-blue-800 mb-2">
+              <strong>Monthly Income:</strong> £{monthlyIncome.toLocaleString()}
             </p>
             <p className="text-sm text-blue-800">
-              <strong>Current remaining:</strong> £{currentData.remaining}
+              <strong>Target:</strong> {targetRatios.needs}% Needs, {targetRatios.wants}% Wants, {targetRatios.savings}% Savings
             </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
-          {categories.map(category => (
-            <div key={category} className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700 capitalize">
-                {category}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {categories.map((category: any) => (
+            <div key={category.name || category} className="space-y-2">
+              <label className="block text-sm font-medium text-gray-700">
+                {category.name || category}
+                <span className="text-xs text-gray-500 ml-2">({category.type || 'expense'})</span>
               </label>
               <input
                 type="number"
-                min="0"
-                max={currentData.remaining}
+                min={category.min || 0}
+                max={category.max || monthlyIncome}
                 step="10"
+                defaultValue={category.suggested || 0}
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
-                placeholder="£0"
+                placeholder={`£${category.suggested || 0}`}
                 onChange={(e) => {
                   const amount = parseInt(e.target.value) || 0;
-                  if (amount <= currentData.remaining) {
-                    handleChoice({
-                      category,
-                      amount,
-                      step: currentStep
-                    });
-                  }
+                  handleChoice({
+                    category: category.name || category,
+                    amount,
+                    type: category.type,
+                    step: currentStep
+                  });
                 }}
               />
             </div>
@@ -304,19 +312,21 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
       <div className="bg-gray-200 rounded-full h-2">
         <div 
           className="bg-valuto-green-600 h-2 rounded-full transition-all duration-300"
-          style={{ width: `${((currentStep + 1) / simulation.scenarios.length) * 100}%` }}
+          style={{ width: `${((currentStep + 1) / scenariosCount) * 100}%` }}
         />
       </div>
 
       {/* Step Counter */}
-      <div className="text-center text-sm text-gray-600">
-        Step {currentStep + 1} of {simulation.scenarios.length}
-      </div>
+      {scenariosCount > 1 && (
+        <div className="text-center text-sm text-gray-600">
+          Step {currentStep + 1} of {scenariosCount}
+        </div>
+      )}
 
       {/* Simulation Content */}
       <Card className="p-8">
-        {simulation.type === 'budget' && renderBudgetSimulation()}
-        {simulation.type === 'investment' && renderInvestmentSimulation()}
+        {simulationType === 'budget' && renderBudgetSimulation()}
+        {simulationType === 'investment' && renderInvestmentSimulation()}
       </Card>
 
       {/* Timer */}

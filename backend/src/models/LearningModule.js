@@ -96,6 +96,17 @@ learningModuleSchema.index({ topic: 1, difficultyLevel: 1 });
 learningModuleSchema.index({ isActive: 1 });
 learningModuleSchema.index({ createdBy: 1 });
 
+// Virtual for id field
+learningModuleSchema.set('toJSON', {
+  virtuals: true,
+  transform: function(doc, ret) {
+    ret.id = ret._id;
+    delete ret._id;
+    delete ret.__v;
+    return ret;
+  }
+});
+
 // Static method to get modules with filters
 learningModuleSchema.statics.getModules = async function (filters = {}) {
   const query = { isActive: true };

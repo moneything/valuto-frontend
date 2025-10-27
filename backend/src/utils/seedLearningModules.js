@@ -156,27 +156,62 @@ Building your future:
 - Extra debt payments
 - Investment accounts
     `,
-    activityType: "simulation",
+    activityType: "quiz",
     activityData: {
-      title: "Monthly Budget Simulator",
-      description: "You just got your first job earning £2,000 per month after tax. Allocate your income wisely!",
-      monthlyIncome: 2000,
-      categories: [
-        { name: "Rent", type: "need", suggested: 600, min: 400, max: 900 },
-        { name: "Groceries", type: "need", suggested: 200, min: 150, max: 350 },
-        { name: "Transportation", type: "need", suggested: 100, min: 50, max: 200 },
-        { name: "Utilities", type: "need", suggested: 100, min: 80, max: 150 },
-        { name: "Entertainment", type: "want", suggested: 200, min: 0, max: 400 },
-        { name: "Dining Out", type: "want", suggested: 150, min: 0, max: 300 },
-        { name: "Shopping", type: "want", suggested: 150, min: 0, max: 300 },
-        { name: "Savings", type: "savings", suggested: 300, min: 100, max: 800 },
-        { name: "Emergency Fund", type: "savings", suggested: 200, min: 0, max: 500 }
-      ],
-      targetRatios: {
-        needs: 50,
-        wants: 30,
-        savings: 20
-      }
+      questions: [
+        {
+          id: "q1",
+          question: "Using the 50/30/20 rule, how much should you allocate to 'Needs' if you earn £1,000 per month after tax?",
+          options: [
+            "£500",
+            "£300",
+            "£200",
+            "£100"
+          ],
+          correctAnswer: 0,
+          explanation: "According to the 50/30/20 rule, 50% of your income should go to needs. £1,000 × 0.50 = £500.",
+          points: 100
+        },
+        {
+          id: "q2",
+          question: "Which of the following is considered a 'Need' according to budgeting principles?",
+          options: [
+            "Netflix subscription",
+            "Restaurant meals",
+            "Rent/Housing",
+            "Designer clothing"
+          ],
+          correctAnswer: 2,
+          explanation: "Rent/Housing is a basic necessity and falls under 'Needs'. The others are wants or nice-to-haves.",
+          points: 100
+        },
+        {
+          id: "q3",
+          question: "If you earn £1,500 per month and follow the 50/30/20 rule, how much should you save each month?",
+          options: [
+            "£150",
+            "£300",
+            "£450",
+            "£750"
+          ],
+          correctAnswer: 1,
+          explanation: "According to the 50/30/20 rule, 20% should go to savings and debt. £1,500 × 0.20 = £300.",
+          points: 100
+        },
+        {
+          id: "q4",
+          question: "What should you do if you consistently overspend in one category of your budget?",
+          options: [
+            "Give up budgeting entirely",
+            "Use money from your savings allocation",
+            "Reduce spending in another category",
+            "Ignore the problem"
+          ],
+          correctAnswer: 2,
+          explanation: "The best approach is to reduce spending in another category (preferably from 'Wants') to balance your budget. Never touch your savings allocation!",
+          points: 100
+        }
+      ]
     },
     // ---- START: This section was added ----
     learningSteps: [
@@ -262,94 +297,60 @@ Your credit score is a three-digit number (300-850 in the UK) that represents yo
 - Check your credit report regularly
 - Be patient - good credit takes time!
     `,
-    activityType: "scenario",
+    activityType: "quiz",
     activityData: {
-      title: "Credit Decision Scenarios",
-      description: "Make smart credit decisions in these real-world situations",
-      scenarios: [
+      questions: [
         {
-          id: "scenario1",
-          situation: "You have a £1,000 credit card limit and currently owe £800. You need to make a £200 purchase. What should you do?",
-          choices: [
-            {
-              id: "a",
-              text: "Charge it to the credit card - you're still under the limit",
-              isOptimal: false,
-              consequence: "This maxes out your card (100% utilization), which hurts your credit score significantly.",
-              points: 0
-            },
-            {
-              id: "b",
-              text: "Pay down the card first, then make the purchase",
-              isOptimal: true,
-              consequence: "Great choice! This keeps your utilization below 30%, protecting your credit score.",
-              points: 100
-            },
-            {
-              id: "c",
-              text: "Use cash or debit instead",
-              isOptimal: true,
-              consequence: "Perfect! This avoids adding to your debt and keeps utilization low.",
-              points: 100
-            }
+          id: "q1",
+          question: "What percentage of your credit score is determined by payment history?",
+          options: [
+            "15%",
+            "25%",
+            "35%",
+            "50%"
           ],
-          explanation: "Credit utilization above 30% can hurt your score. It's better to pay down debt or use another payment method."
+          correctAnswer: 2,
+          explanation: "Payment history makes up 35% of your credit score - the largest single factor. Always pay your bills on time!",
+          points: 100
         },
         {
-          id: "scenario2",
-          situation: "You just paid off your first credit card after 3 years. The card has no annual fee. What should you do?",
-          choices: [
-            {
-              id: "a",
-              text: "Close the account - you don't need it anymore",
-              isOptimal: false,
-              consequence: "This reduces your available credit and shortens your credit history, hurting your score.",
-              points: 0
-            },
-            {
-              id: "b",
-              text: "Keep it open but don't use it",
-              isOptimal: true,
-              consequence: "Excellent! This maintains your credit history length and keeps your utilization low.",
-              points: 100
-            },
-            {
-              id: "c",
-              text: "Use it occasionally for small purchases you can pay off immediately",
-              isOptimal: true,
-              consequence: "Perfect! This shows active, responsible credit use while maintaining history.",
-              points: 100
-            }
+          id: "q2",
+          question: "What is the recommended credit card utilization rate to maintain a good score?",
+          options: [
+            "Below 30%",
+            "Below 50%",
+            "Below 70%",
+            "Below 90%"
           ],
-          explanation: "Keeping old accounts open helps your credit age and available credit, both good for your score."
+          correctAnswer: 0,
+          explanation: "Keep your credit card balances below 30% of your credit limit to maintain a healthy credit score.",
+          points: 100
         },
         {
-          id: "scenario3",
-          situation: "You need a car loan and three different lenders want to check your credit. What should you do?",
-          choices: [
-            {
-              id: "a",
-              text: "Apply to all three within 14-45 days",
-              isOptimal: true,
-              consequence: "Smart! Multiple inquiries for the same purpose within this window count as ONE inquiry.",
-              points: 100
-            },
-            {
-              id: "b",
-              text: "Apply to one, wait 6 months, then try another",
-              isOptimal: false,
-              consequence: "This spreads out hard inquiries unnecessarily, each potentially lowering your score.",
-              points: 0
-            },
-            {
-              id: "c",
-              text: "Don't apply - credit checks will ruin your score",
-              isOptimal: false,
-              consequence: "Rate shopping is expected and protected! You miss out on finding the best rate.",
-              points: 0
-            }
+          id: "q3",
+          question: "You have a credit card with a £2,000 limit. What's the maximum amount you should owe to maintain good credit?",
+          options: [
+            "£600",
+            "£1,000",
+            "£1,400",
+            "£1,800"
           ],
-          explanation: "Credit bureaus understand rate shopping. Multiple inquiries for the same loan type within 14-45 days are treated as one."
+          correctAnswer: 0,
+          explanation: "To stay below 30% utilization, you should owe no more than £2,000 × 0.30 = £600.",
+          points: 100
+        },
+        {
+          id: "q4",
+          question: "What happens when you close an old credit card account?",
+          options: [
+            "Nothing, it has no effect on your score",
+            "It improves your credit mix",
+            "It shortens your credit history and reduces available credit",
+            "It immediately increases your score"
+          ],
+          correctAnswer: 2,
+          explanation: "Closing old accounts reduces your total available credit and shortens your credit history length, both of which can lower your score.",
+          points: 100
         }
       ]
     },
@@ -480,7 +481,7 @@ async function seedModules() {
 
     // Clear existing modules (optional - comment out if you want to keep existing)
     await LearningModule.deleteMany({});
-    // console.log('🗑️  Cleared existing modules');
+    console.log('🗑️  Cleared existing modules');
 
     // Insert sample modules
     const inserted = await LearningModule.insertMany(sampleModules);

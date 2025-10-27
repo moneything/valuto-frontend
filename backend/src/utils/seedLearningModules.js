@@ -177,6 +177,48 @@ Building your future:
         savings: 20
       }
     },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What is a Budget?",
+        content: "A budget is simply a plan for your money. It helps you see where your money comes from and where it goes, so you can make sure you have enough for the things you need and want.\n\nThink of it like this:\nIf your money was water, a budget would be like having different buckets to catch it - one for rent, one for food, one for fun, and one for saving!",
+        emoji: "🤔",
+        points: 10
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "Needs vs Wants: The Foundation",
+        content: "✅ NEEDS (Must Have)\nRent/Housing\nFood & Groceries\nTransport to work/uni\nPhone bill\nEssential clothing\n\n⚠️ WANTS (Nice to Have)\nNetflix/Spotify subscriptions\nEating out/takeaways\nDesigner clothes\nGaming/entertainment\nHolidays",
+        emoji: "✅",
+        points: 10
+      },
+      {
+        id: "step3",
+        type: "explanation",
+        title: "The 50/30/20 Rule (Perfect for Students!)",
+        content: "The simplest way to budget your money\n\n50% NEEDS\nRent, food, transport, phone\n\n30% WANTS\nFun, eating out, entertainment\n\n20% SAVINGS\nEmergency fund, future goals\n\nExample with £1000/month income:\n• £500 for needs (rent, food, transport)\n• £300 for wants (fun, eating out)\n• £200 for savings",
+        emoji: "📊",
+        points: 15
+      },
+      {
+        id: "step4",
+        type: "explanation",
+        title: "How to Start Budgeting (3 Easy Steps)",
+        content: "1. Track Your Income\nAdd up all money coming in: part-time job, student loan, family support\n\n2. List Your Expenses\nWrite down everything you spend money on for a week\n\n3. Apply the 50/30/20 Rule\nSplit your income and adjust your spending to fit",
+        emoji: "🚀",
+        points: 10
+      },
+      {
+        id: "step5",
+        type: "explanation",
+        title: "💡 Quick Budgeting Tips",
+        content: "• Use apps like Monzo or Starling Bank to track spending automatically\n• Review your budget every month and adjust as needed\n• If you overspend in one category, reduce another (don't touch savings!)\n• Start small - even budgeting £100 builds good habits\n• Remember: budgeting gives you MORE freedom, not less",
+        emoji: "💡",
+        points: 5
+      }
+    ],
     points: 400,
     difficultyLevel: "beginner",
     timeEstimate: 25,

@@ -25,10 +25,19 @@ const getNews = asyncHandler(async (req, res) => {
     .limit(parseInt(limit))
     .lean();
 
+  // Format dates and map fields for frontend
+  const formattedNews = news.map(item => ({
+    ...item,
+    time: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
+    publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  }));
+
   res.status(200).json({
     success: true,
-    count: news.length,
-    data: news,
+    count: formattedNews.length,
+    data: formattedNews,
   });
 });
 
@@ -50,10 +59,19 @@ const getEvents = asyncHandler(async (req, res) => {
     .limit(parseInt(limit))
     .lean();
 
+  // Format dates and map fields for frontend
+  const formattedEvents = events.map(item => ({
+    ...item,
+    date: item.eventDate ? new Date(item.eventDate).toISOString() : null,
+    eventDate: item.eventDate ? new Date(item.eventDate).toISOString() : null,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  }));
+
   res.status(200).json({
     success: true,
-    count: events.length,
-    data: events,
+    count: formattedEvents.length,
+    data: formattedEvents,
   });
 });
 
@@ -76,11 +94,28 @@ const getNewsAndEvents = asyncHandler(async (req, res) => {
       .lean(),
   ]);
 
+  // Format dates and map fields for frontend
+  const formattedNews = news.map(item => ({
+    ...item,
+    time: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
+    publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  }));
+
+  const formattedEvents = events.map(item => ({
+    ...item,
+    date: item.eventDate ? new Date(item.eventDate).toISOString() : null,
+    eventDate: item.eventDate ? new Date(item.eventDate).toISOString() : null,
+    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
+    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
+  }));
+
   res.status(200).json({
     success: true,
     data: {
-      news,
-      events,
+      news: formattedNews,
+      events: formattedEvents,
     },
   });
 });

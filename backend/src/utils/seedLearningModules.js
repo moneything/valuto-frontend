@@ -4,7 +4,8 @@
  * Run this script to add sample learning content to your production database
  */
 
-require('dotenv').config(); // <-- Ensures .env variables are loaded
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 const mongoose = require('mongoose');
 
@@ -466,6 +467,491 @@ Investing is using your money to buy assets that have the potential to grow in v
     difficultyLevel: "intermediate",
     timeEstimate: 35,
     prerequisites: ["Understanding Compound Interest"],
+    isActive: true,
+    createdBy: "system"
+  },
+  {
+    title: "Understanding Student Loans & Debt",
+    description: "Master the art of managing student loans effectively. Learn about repayment plans, interest rates, and how to minimize debt burden.",
+    topic: "Debt Management",
+    lessonContent: `
+# Understanding Student Loans & Debt
+
+Student loans are a common reality for many UK students. Understanding how they work is crucial for your financial future.
+
+## Types of Student Loans (UK)
+
+### 1. Tuition Fee Loans
+- Currently up to £9,250 per year for UK students
+- Paid directly to your university
+- Covers the full cost of your course
+
+### 2. Maintenance Loans
+- Help with living costs
+- Based on household income
+- Typically £3,000 - £12,000 per year
+
+## How Repayment Works
+
+You only start repaying once you earn above the threshold:
+- **Plan 2**: £27,295 per year
+- **Plan 4**: £31,395 per year (Scotland)
+- You pay 9% of earnings above this threshold
+- Written off after 30 years (or when you turn 60)
+
+## Interest Rates
+
+- While studying: RPI (inflation rate) + 3%
+- After graduation: Based on income (RPI + 0% to 3%)
+- Average around 5-6%
+
+## Key Takeaways
+
+- Student loans are more like a tax than traditional debt
+- You only repay what you can afford
+- It gets written off eventually
+- Focus on earning potential over loan amount
+    `,
+    activityType: "quiz",
+    activityData: {
+      questions: [
+        {
+          id: "q1",
+          question: "At what income threshold do UK graduates start repaying Plan 2 student loans?",
+          options: [
+            "£20,000 per year",
+            "£25,000 per year",
+            "£27,295 per year",
+            "£30,000 per year"
+          ],
+          correctAnswer: 2,
+          explanation: "Plan 2 student loan repayments start when you earn £27,295 per year. You pay 9% of earnings above this threshold.",
+          points: 100
+        },
+        {
+          id: "q2",
+          question: "What percentage of income above the threshold do you repay on UK student loans?",
+          options: [
+            "5%",
+            "9%",
+            "12%",
+            "15%"
+          ],
+          correctAnswer: 1,
+          explanation: "You repay 9% of earnings above the repayment threshold (currently £27,295 for Plan 2 loans).",
+          points: 100
+        },
+        {
+          id: "q3",
+          question: "What happens to your student loan if you don't repay it all within 30 years?",
+          options: [
+            "You must continue paying indefinitely",
+            "It gets passed to your family",
+            "It gets written off (cancelled)",
+            "Interest keeps compounding forever"
+          ],
+          correctAnswer: 2,
+          explanation: "Student loans are written off after 30 years (or when you turn 60), regardless of how much you've repaid. This makes them different from regular debt.",
+          points: 100
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "Types of Student Loans",
+        content: "In the UK, there are two main types of student loans:\n\n💰 TUITION FEE LOANS\n• Up to £9,250 per year\n• Covers your course fees\n• Paid directly to your university\n\n🏠 MAINTENANCE LOANS\n• Helps with living costs\n• Based on household income\n• Typically £3,000-£12,000 per year\n\nBoth types work similarly in repayment terms.",
+        emoji: "🎓",
+        points: 10
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "How Repayment Actually Works",
+        content: "📊 KEY FACTS:\n\n💰 You only repay when you earn above the threshold (£27,295/year for Plan 2)\n\n📈 You pay 9% of earnings ABOVE this threshold\n\n📅 Example: If you earn £35,000/year, you repay: (£35,000 - £27,295) × 0.09 = £693/year (£58/month)\n\n⏰ Loan is written off after 30 years\n\n💡 It's more like a tax than traditional debt!",
+        emoji: "📊",
+        points: 15
+      },
+      {
+        id: "step3",
+        type: "explanation",
+        title: "Interest Rates Explained",
+        content: "Interest rates vary based on your situation:\n\n📚 WHILE STUDYING\nRPI (inflation) + 3%\nCurrent: ~8-9%\n\n💼 AFTER GRADUATION\nBased on income:\n• Under threshold: RPI + 0%\n• £27,295-£49,130: Up to RPI + 3%\n• Over £49,130: RPI + 3%\n\n💡 Don't panic about interest - if you earn less, you pay less (or nothing)!",
+        emoji: "💹",
+        points: 10
+      },
+      {
+        id: "step4",
+        type: "explanation",
+        title: "Should You Worry About Student Debt?",
+        content: "✅ DON'T WORRY if:\n• You're on Plan 2 (after 2012)\n• You're earning under £40k\n• You understand how the system works\n\n⚠️ CONSIDER if:\n• You're a high earner (£50k+)\n• You plan to pay off in full\n• You want to reduce lifetime costs\n\n💡 Remember: It's written off after 30 years!",
+        emoji: "🤔",
+        points: 10
+      },
+      {
+        id: "step5",
+        type: "explanation",
+        title: "Smart Student Loan Strategy",
+        content: "💡 FOCUS ON EARNING, NOT OWED\nYour earning potential matters more than the loan amount\n\n🎯 DON'T OVERPAY TOO EARLY\nMoney spent overpaying could be invested instead\n\n📈 WAIT AND SEE\nHigher earners may benefit from overpaying; most won't\n\n💰 BUILD EMERGENCY FUND FIRST\nAlways prioritise emergency savings over student loan overpayments\n\n💼 MAXIMISE YOUR INCOME\nFocus on career development to increase earnings",
+        emoji: "💡",
+        points: 5
+      }
+    ],
+    points: 350,
+    difficultyLevel: "beginner",
+    timeEstimate: 20,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
+  },
+  {
+    title: "Emergency Fund Essentials",
+    description: "Learn why emergency funds are crucial and how to build one. Discover the right amount to save and where to keep it safe.",
+    topic: "Savings",
+    lessonContent: `
+# Emergency Fund Essentials
+
+An emergency fund is money set aside to cover unexpected expenses. It's your financial safety net!
+
+## Why You Need One
+
+Life is full of surprises:
+- Car repairs
+- Medical emergencies
+- Job loss
+- Broken appliances
+- Unexpected bills
+
+Without an emergency fund, you might:
+- Go into debt
+- Raid your savings
+- Lose financial peace of mind
+
+## How Much Should You Save?
+
+**Beginner Level: £500-£1,000**
+- Covers small emergencies
+- Good starting point
+- Build confidence
+
+**Intermediate Level: 3-6 months of expenses**
+- Covers major emergencies
+- Job loss buffer
+- Recommended standard
+
+**Advanced Level: 6-12 months**
+- High security
+- For variable income
+- Career flexibility
+
+## Where to Keep It
+
+### High-Yield Savings Account
+- Separate from your main account
+- Easy to access
+- FDIC insured
+- Earns interest
+
+### What NOT to Do
+- ❌ Invest it in stocks
+- ❌ Lock it up in CDs
+- ❌ Mix it with spending money
+- ❌ Keep it all as cash
+
+## Building Your Fund
+
+1. **Start Small** - Aim for £500 first
+2. **Automate** - Set up automatic transfers
+3. **Save Windfalls** - Tax refunds, bonuses, gifts
+4. **Cut Expenses** - Find easy ways to save
+5. **Be Patient** - It takes time!
+
+## Key Principles
+
+- **Accessibility** - Available when needed
+- **Separate** - Don't mix with spending money
+- **Replenish** - If you use it, build it back
+- **Peace of Mind** - Your financial safety net
+    `,
+    activityType: "quiz",
+    activityData: {
+      questions: [
+        {
+          id: "q1",
+          question: "What is the recommended minimum amount for an emergency fund?",
+          options: [
+            "£100",
+            "£500-£1,000",
+            "£5,000",
+            "£10,000"
+          ],
+          correctAnswer: 1,
+          explanation: "Start with £500-£1,000 for small emergencies. Once you have this, work towards 3-6 months of expenses.",
+          points: 100
+        },
+        {
+          id: "q2",
+          question: "Where should you keep your emergency fund?",
+          options: [
+            "Invested in the stock market",
+            "Locked in a 5-year CD",
+            "In a high-yield savings account",
+            "In your regular checking account"
+          ],
+          correctAnswer: 2,
+          explanation: "Keep it in a separate high-yield savings account that's easily accessible but earns interest. Don't invest it or lock it away!",
+          points: 100
+        },
+        {
+          id: "q3",
+          question: "If your monthly expenses are £1,500, how much should your emergency fund be for optimal coverage?",
+          options: [
+            "£1,500",
+            "£4,500-£9,000",
+            "£15,000",
+            "£30,000"
+          ],
+          correctAnswer: 1,
+          explanation: "For £1,500/month expenses, save £4,500-£9,000 (3-6 months). This gives you a solid buffer for job loss or major emergencies.",
+          points: 100
+        },
+        {
+          id: "q4",
+          question: "What should you do if you use money from your emergency fund?",
+          options: [
+            "Forget about it - it's gone",
+            "Only rebuild it if it's a big amount",
+            "Immediately start rebuilding it back to your target",
+            "Borrow money to refill it"
+          ],
+          correctAnswer: 2,
+          explanation: "Always rebuild your emergency fund after using it. This maintains your financial safety net for future emergencies.",
+          points: 100
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What is an Emergency Fund?",
+        content: "An emergency fund is money you set aside to cover unexpected expenses or financial emergencies.\n\n🛡️ YOUR FINANCIAL SAFETY NET\nPrevents you from going into debt when surprises happen\n\n💡 EXAMPLES OF EMERGENCIES\n• Car repairs or breakdowns\n• Medical bills\n• Job loss\n• Emergency home repairs\n• Unexpected travel\n• Major appliance replacement\n\n💰 IT'S SEPARATE FROM: Regular savings, investments, or spending money\n\n🎯 GOAL: Peace of mind and financial security",
+        emoji: "🏦",
+        points: 10
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "Why It's Absolutely Essential",
+        content: "Without an emergency fund:\n\n❌ You'll likely go into debt\n❌ Raid your retirement savings\n❌ Stress about unexpected bills\n❌ Feel financially insecure\n❌ Make poor financial decisions\n\nWith an emergency fund:\n\n✅ You handle emergencies without stress\n✅ No need to borrow money\n✅ Peace of mind\n✅ Financial security\n✅ Freedom to take calculated risks\n\n💡 ONE EMERGENCY can derail your finances without this safety net!",
+        emoji: "⚠️",
+        points: 15
+      },
+      {
+        id: "step3",
+        type: "explanation",
+        title: "How Much Should You Save?",
+        content: "Start small and build up:\n\n🥉 BEGINNER: £500-£1,000\nCovers small emergencies\nGets you started\n\n🥈 INTERMEDIATE: 3-6 months expenses\nCovers job loss\nMajor emergencies\n🎯 RECOMMENDED TARGET\n\n🥇 ADVANCED: 6-12 months\nMaximum security\nVariable income\nCareer flexibility\n\n💡 EXAMPLE: If you spend £1,500/month, save £4,500-£9,000\n\n💭 Start with £500, then build to 3-6 months worth!",
+        emoji: "💰",
+        points: 10
+      },
+      {
+        id: "step4",
+        type: "explanation",
+        title: "Where to Keep Your Emergency Fund",
+        content: "✅ DO:\n• High-yield savings account\n• Separate from main account\n• Easy access (1-2 days)\n• FDIC/insured bank\n• Can earn interest\n\n❌ DON'T:\n• Invest in stocks/bonds\n• Lock in CDs\n• Keep as cash (home)\n• Mix with spending money\n• Make it hard to access\n\n🏦 BEST OPTIONS:\n• Online savings accounts\n• High-yield checking\n• Money market accounts\n\n💡 Keep it liquid but separate!",
+        emoji: "🏪",
+        points: 10
+      },
+      {
+        id: "step5",
+        type: "explanation",
+        title: "Building Your Emergency Fund: 5 Steps",
+        content: "1️⃣ START SMALL\nSet your first goal at £500\n\n2️⃣ AUTOMATE SAVINGS\nSet up automatic transfers\nMake it effortless\n\n3️⃣ SAVE WINDFALLS\nTax refunds, bonuses, gifts\nDirect to emergency fund\n\n4️⃣ CUT ONE EXPENSE\nCancel unused subscription\nSave that money instead\n\n5️⃣ BE PATIENT\nBuild over 6-12 months\nDon't rush the process\n\n💡 Every £10-20 adds up quickly!",
+        emoji: "🚀",
+        points: 5
+      }
+    ],
+    points: 400,
+    difficultyLevel: "beginner",
+    timeEstimate: 20,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
+  },
+  {
+    title: "Understanding ISAs and Tax-Efficient Savings",
+    description: "Master Individual Savings Accounts (ISAs) and learn how to save money tax-free. Discover Cash ISAs, Stocks & Shares ISAs, and Lifetime ISAs.",
+    topic: "Savings",
+    lessonContent: `
+# Understanding ISAs and Tax-Efficient Savings
+
+ISAs (Individual Savings Accounts) are UK tax-efficient savings and investment accounts. You can save up to £20,000 per year completely tax-free!
+
+## What is an ISA?
+
+An ISA is a tax-free savings or investment account available to UK residents aged 16+.
+
+### Key Benefits:
+- **Tax-Free Interest** - No tax on interest earned
+- **Tax-Free Dividends** - No dividend tax
+- **No Capital Gains Tax** - Sell investments tax-free
+- **£20,000 Annual Allowance** - Save up to this amount per tax year
+
+## Types of ISAs
+
+### 1. Cash ISA
+- Savings account version
+- Safe and easy access
+- Low risk, low returns
+- Good for emergency funds
+
+### 2. Stocks & Shares ISA
+- Invest in stocks, bonds, funds
+- Higher potential returns
+- Higher risk
+- Best for long-term growth
+
+### 3. Lifetime ISA (LISA)
+- For first-time home buyers (under 40)
+- Government adds 25% bonus
+- Up to £4,000 per year
+- Must buy home under £450k or wait until 60
+
+### 4. Innovative Finance ISA
+- For peer-to-peer lending
+- Higher returns, higher risk
+- Less common
+
+## ISA Rules
+
+- **One of Each Type** - Can have one Cash, one Stocks & Shares, etc.
+- **Annual Limit** - Max £20,000 across all ISAs combined
+- **Tax Year** - 6 April to 5 April
+- **No Carry Over** - Unused allowance doesn't roll to next year
+- **Free Transfers** - Can move money between providers
+
+## When to Use ISAs
+
+**Use Cash ISA for:**
+- Emergency fund
+- Short-term savings (<5 years)
+- Low risk tolerance
+
+**Use Stocks & Shares ISA for:**
+- Long-term goals (>5 years)
+- Higher growth potential
+- Retirement savings
+- Risk tolerance
+
+**Use Lifetime ISA for:**
+- First-time home buyers under 40
+- Those comfortable waiting until 60
+    `,
+    activityType: "quiz",
+    activityData: {
+      questions: [
+        {
+          id: "q1",
+          question: "What is the maximum amount you can save in ISAs per tax year?",
+          options: [
+            "£10,000",
+            "£15,000",
+            "£20,000",
+            "£50,000"
+          ],
+          correctAnswer: 2,
+          explanation: "The ISA allowance is £20,000 per tax year (6 April to 5 April). You can split this across different types of ISAs.",
+          points: 100
+        },
+        {
+          id: "q2",
+          question: "Which ISA type gets a 25% government bonus?",
+          options: [
+            "Cash ISA",
+            "Stocks & Shares ISA",
+            "Lifetime ISA",
+            "Innovative Finance ISA"
+          ],
+          correctAnswer: 2,
+          explanation: "The Lifetime ISA (LISA) gets a 25% government bonus on contributions up to £4,000 per year, giving you up to £1,000 free money annually.",
+          points: 100
+        },
+        {
+          id: "q3",
+          question: "Why should you use a Stocks & Shares ISA instead of a regular investment account?",
+          options: [
+            "Lower fees",
+            "Higher returns guaranteed",
+            "No tax on dividends or capital gains",
+            "No minimum investment"
+          ],
+          correctAnswer: 2,
+          explanation: "Stocks & Shares ISAs are completely tax-free - no tax on dividends, interest, or capital gains. This can save thousands in taxes over the years.",
+          points: 100
+        },
+        {
+          id: "q4",
+          question: "What happens to your ISA allowance if you don't use it all in a tax year?",
+          options: [
+            "It rolls over to next year",
+            "It's lost forever",
+            "You can use it anytime in the future",
+            "It doubles the next year"
+          ],
+          correctAnswer: 1,
+          explanation: "ISA allowances don't carry forward. If you don't use your £20,000 allowance by 5 April, you lose it. Use it or lose it!",
+          points: 100
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What is an ISA?",
+        content: "An ISA (Individual Savings Account) is a UK tax-free savings and investment account.\n\n💰 KEY BENEFITS:\n✅ NO TAX on interest earned\n✅ NO TAX on dividends\n✅ NO CAPITAL GAINS TAX when you sell\n✅ £20,000 per year allowance\n✅ Available to anyone 16+\n\n🎯 THINK OF IT AS:\nA special tax-free wrapper for your savings and investments\n\n💡 EXAMPLE:\nIf you earn £100 interest outside an ISA, you might pay £20 tax. In an ISA, you keep all £100!\n\n🏦 TYPES: Cash ISA, Stocks & Shares ISA, Lifetime ISA",
+        emoji: "🏛️",
+        points: 10
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "Types of ISAs Explained",
+        content: "There are four main types:\n\n💷 CASH ISA (Savings)\nSafe, easy access\nLow risk, low returns\nGood for emergency fund\n\n📈 STOCKS & SHARES ISA (Investing)\nHigher potential returns\nHigher risk\nBest for long-term (5+ years)\n\n🏠 LIFETIME ISA (LISA)\nFor first-time home buyers\n25% government bonus\nUp to £4,000/year\nMust be under 40\n\n💰 INNOVATIVE FINANCE ISA\nPeer-to-peer lending\nHigher returns, higher risk\nLess common\n\n💡 You can open one of each type per tax year!",
+        emoji: "🎯",
+        points: 15
+      },
+      {
+        id: "step3",
+        type: "explanation",
+        title: "The £20,000 ISA Allowance",
+        content: "📅 TAX YEAR: 6 April to 5 April\n\n💰 ANNUAL LIMIT: £20,000 total across all ISAs\n\n📊 HOW IT WORKS:\nYou can split your £20k allowance\nExample: £10k Cash ISA + £10k Stocks & Shares ISA\n\n⚠️ KEY RULES:\n• One of each type (not multiple)\n• £20k is shared across all ISAs\n• Unused allowance is lost\n• No carry-over to next year\n• You can transfer between providers\n\n💡 TIP: Use it before 5 April or lose it!",
+        emoji: "📅",
+        points: 10
+      },
+      {
+        id: "step4",
+        type: "explanation",
+        title: "Lifetime ISA: The 25% Bonus",
+        content: "The LISA is special - the government gives you free money!\n\n🎁 HOW IT WORKS:\n• Save up to £4,000/year\n• Government adds 25% bonus\n• Up to £1,000 free money annually\n• Paid monthly after you deposit\n\n✅ WHO IT'S FOR:\n• First-time home buyers under 40\n• Or those comfortable waiting until age 60\n• Home must cost under £450k\n\n⚠️ IMPORTANT:\n• Penalty if withdrawn early (unless for home)\n• Must have account for 12+ months\n\n💰 EXAMPLE: Save £4,000 = Get £5,000 total!",
+        emoji: "🎁",
+        points: 15
+      },
+      {
+        id: "step5",
+        type: "explanation",
+        title: "Cash ISA vs Stocks & Shares ISA",
+        content: "💷 CASH ISA:\n✅ Safe and secure\n✅ Easy access\n✅ FSCS protected\n❌ Low interest rates\n❌ Inflation risk\n💡 Use for: Emergency fund, short-term savings\n\n📈 STOCKS & SHARES ISA:\n✅ Potential for higher returns\n✅ Beat inflation long-term\n✅ Tax-free growth\n❌ Value can go down\n❌ Not guaranteed\n❌ Takes time\n💡 Use for: Long-term goals (5+ years), retirement\n\n💭 Best approach: Use both! Cash for emergencies, Stocks & Shares for growth.",
+        emoji: "⚖️",
+        points: 10
+      }
+    ],
+    points: 450,
+    difficultyLevel: "intermediate",
+    timeEstimate: 25,
+    prerequisites: [],
     isActive: true,
     createdBy: "system"
   }

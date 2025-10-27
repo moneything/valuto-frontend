@@ -4,7 +4,8 @@
  */
 
 const mongoose = require('mongoose');
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '../../.env') });
 
 const News = require('../models/News');
 const Event = require('../models/Event');
@@ -110,13 +111,13 @@ async function seedNewsAndEvents() {
     console.log('🌱 Starting to seed news and events...');
 
     // Connect to MongoDB
-    await mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/valuto');
+    await mongoose.connect(process.env.MONGO_URI || 'mongodb://localhost:27017/valuto');
     console.log('✅ Connected to MongoDB');
 
     // Clear existing data (optional - comment out if you want to keep existing)
-    // await News.deleteMany({});
-    // await Event.deleteMany({});
-    // console.log('🗑️  Cleared existing news and events');
+    await News.deleteMany({});
+    await Event.deleteMany({});
+    console.log('🗑️  Cleared existing news and events');
 
     // Insert sample data
     const [insertedNews, insertedEvents] = await Promise.all([

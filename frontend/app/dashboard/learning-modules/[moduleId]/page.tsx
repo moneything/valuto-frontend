@@ -86,6 +86,132 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
     router.push('/dashboard/learning-modules');
   };
 
+  // Function to render markdown-like content with proper formatting
+  const renderLessonContent = (content: string) => {
+    if (!content) return null;
+    
+    const lines = content.split('\n');
+    const elements: JSX.Element[] = [];
+    let currentList: string[] = [];
+    
+    const flushList = () => {
+      if (currentList.length > 0) {
+        elements.push(
+          <ul key={`list-${elements.length}`} className="list-disc list-inside space-y-2 mb-6 text-gray-700">
+            {currentList.map((item, i) => (
+              <li key={i} className="leading-relaxed">
+                {Array.isArray(item) ? (
+                  item.map((part, pi) => 
+                    part.type === 'bold' ? (
+                      <strong key={part.key} className="font-bold text-gray-900">{part.text}</strong>
+                    ) : (
+                      part
+                    )
+                  )
+                ) : (
+                  item
+                )}
+              </li>
+            ))}
+          </ul>
+        );
+        currentList = [];
+      }
+    };
+    
+    lines.forEach((line, index) => {
+      // Handle headers
+      if (line.startsWith('# ')) {
+        flushList();
+        elements.push(
+          <h1 key={index} className="text-3xl font-bold text-gray-900 mb-6 mt-8 first:mt-0">
+            {line.replace('# ', '')}
+          </h1>
+        );
+      } else if (line.startsWith('## ')) {
+        flushList();
+        elements.push(
+          <h2 key={index} className="text-2xl font-bold text-gray-800 mb-4 mt-6">
+            {line.replace('## ', '')}
+          </h2>
+        );
+      } else if (line.startsWith('### ')) {
+        flushList();
+        elements.push(
+          <h3 key={index} className="text-xl font-semibold text-gray-700 mb-3 mt-4">
+            {line.replace('### ', '')}
+          </h3>
+        );
+      } else if (line.startsWith('- ')) {
+        // Handle bullet points - remove the bullet and process bold text
+        const listContent = line.replace('- ', '');
+        // Process bold text in list items
+        const parts = [];
+        let lastIndex = 0;
+        const boldRegex = /\*\*([^*]+)\*\*/g;
+        let match;
+        let keyCounter = 0;
+        
+        while ((match = boldRegex.exec(listContent)) !== null) {
+          if (match.index > lastIndex) {
+            parts.push(listContent.substring(lastIndex, match.index));
+          }
+          parts.push({ type: 'bold', text: match[1], key: keyCounter++ });
+          lastIndex = match.index + match[0].length;
+        }
+        
+        if (lastIndex < listContent.length) {
+          parts.push(listContent.substring(lastIndex));
+        }
+        
+        currentList.push(parts.length > 0 ? parts : listContent);
+      } else if (line.trim() === '') {
+        // Handle empty lines
+        flushList();
+        elements.push(<div key={index} className="h-4" />);
+      } else {
+        // Handle regular paragraphs
+        flushList();
+        // Process bold text and other formatting
+        const processLine = (text: string) => {
+          const parts = [];
+          let lastIndex = 0;
+          const boldRegex = /\*\*([^*]+)\*\*/g;
+          let match;
+          let keyCounter = 0;
+          
+          while ((match = boldRegex.exec(text)) !== null) {
+            // Add text before the match
+            if (match.index > lastIndex) {
+              parts.push(text.substring(lastIndex, match.index));
+            }
+            // Add the bold text
+            parts.push(<strong key={`bold-${keyCounter++}`} className="font-bold text-gray-900">{match[1]}</strong>);
+            lastIndex = match.index + match[0].length;
+          }
+          
+          // Add remaining text
+          if (lastIndex < text.length) {
+            parts.push(text.substring(lastIndex));
+          }
+          
+          return parts.length > 0 ? parts : [text];
+        };
+        
+        elements.push(
+          <p key={index} className="text-gray-700 mb-4 leading-relaxed">
+            {processLine(line)}
+          </p>
+        );
+      }
+    });
+    
+    // Flush any remaining list items
+    flushList();
+    
+    return elements;
+  };
+
   if (!resolvedParams) {
     return (
       <PageLayout
@@ -298,46 +424,55 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
 
       {/* Content */}
       {currentStep === 'intro' && (
-        <div className="space-y-8">
-          {/* Module Info */}
-          <Card className="p-8">
-            <div className="flex items-start justify-between mb-6">
-              <div>
-                <h2 className="text-2xl font-bold text-gray-900 mb-2">{module.title}</h2>
-                <p className="text-gray-600 leading-relaxed">{module.lessonContent}</p>
+        <Card className="p-8">
+          <div className="space-y-6">
+            {/* Header */}
+            <div className="border-b pb-6">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-3xl font-bold text-gray-900">{module.title}</h2>
+                <div className="flex gap-4">
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <ClockIcon className="w-4 h-4" />
+                    {module.timeEstimate} min
+                  </div>
+                  <div className="flex items-center gap-2 text-sm text-gray-600">
+                    <StarIcon className="w-4 h-4" />
+                    {module.points} pts
+                  </div>
+                </div>
               </div>
-              <div className="flex flex-col gap-2 text-right">
-                <span className="text-sm text-gray-500 flex items-center gap-1">
-                  <ClockIcon className="w-4 h-4" />
-                  {module.timeEstimate} min
+              <p className="text-lg text-gray-600">{module.description}</p>
+              
+              <div className="flex gap-4 mt-4">
+                <span className="text-sm px-3 py-1 bg-blue-100 text-blue-700 rounded-full capitalize">
+                  {module.activityType}
                 </span>
-                <span className="text-sm text-gray-500 flex items-center gap-1">
-                  <StarIcon className="w-4 h-4" />
-                  {module.points} points
+                <span className="text-sm px-3 py-1 bg-green-100 text-green-700 rounded-full capitalize">
+                  {module.difficultyLevel}
+                </span>
+                <span className="text-sm px-3 py-1 bg-purple-100 text-purple-700 rounded-full capitalize">
+                  {module.topic}
                 </span>
               </div>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-              <div className="bg-valuto-green-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Activity Type</h4>
-                <p className="text-sm text-gray-600 capitalize">{module.activityType}</p>
-              </div>
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Difficulty</h4>
-                <p className="text-sm text-gray-600 capitalize">{module.difficultyLevel}</p>
-              </div>
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <h4 className="font-semibold text-gray-900 mb-2">Topic</h4>
-                <p className="text-sm text-gray-600 capitalize">{module.topic}</p>
-              </div>
+            {/* Content */}
+            <div className="space-y-4">
+              {renderLessonContent(module.lessonContent)}
             </div>
 
-            <Button onClick={handleStartLearning} size="lg" className="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white">
-              Let's Learn & Play! 🚀
-            </Button>
-          </Card>
-        </div>
+            {/* CTA */}
+            <div className="pt-6 border-t">
+              <Button 
+                onClick={handleStartLearning} 
+                size="lg" 
+                className="w-full bg-valuto-green-600 hover:bg-valuto-green-700 text-white"
+              >
+                Let's Learn & Play! 🚀
+              </Button>
+            </div>
+          </div>
+        </Card>
       )}
 
       {currentStep === 'learning' && (

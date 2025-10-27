@@ -21,11 +21,18 @@ const getModules = asyncHandler(async (req, res) => {
   if (activityType) filters.activityType = activityType;
 
   const modules = await LearningModule.getModules(filters);
+  
+  // Transform _id to id for each module
+  const transformedModules = modules.map(module => ({
+    ...module,
+    id: module._id,
+    _id: undefined
+  }));
 
   res.status(200).json({
     success: true,
-    count: modules.length,
-    data: modules,
+    count: transformedModules.length,
+    data: transformedModules,
   });
 });
 
@@ -45,9 +52,14 @@ const getModule = asyncHandler(async (req, res) => {
     throw new AppError('This module is currently inactive', 403);
   }
 
+  // Transform _id to id
+  const moduleData = module.toObject ? module.toObject() : module;
+  moduleData.id = moduleData._id;
+  delete moduleData._id;
+
   res.status(200).json({
     success: true,
-    data: module,
+    data: moduleData,
   });
 });
 

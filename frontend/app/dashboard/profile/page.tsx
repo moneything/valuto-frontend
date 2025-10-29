@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useUser, useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
@@ -36,87 +36,109 @@ export default function ProfilePage() {
   const [loading, setLoading] = useState(true);
 
   // Fetch real user data from API
+  const fetchProfileData = useCallback(async () => {
+    if (!profile) return;
+    
+    try {
+      setLoading(true);
+      const token = await getToken();
+      if (!token) return;
+
+      // Fetch user stats
+      const statsResponse = await userApi.getStats(token);
+      if (statsResponse.success && statsResponse.data) {
+        setStats({
+          gamesPlayed: statsResponse.data.gamesPlayed || 0,
+          totalPoints: statsResponse.data.totalPoints || 0,
+          lessonsCompleted: statsResponse.data.lessonsCompleted || 0,
+          averageScore: statsResponse.data.averageScore || 0,
+          streak: statsResponse.data.streak || 0,
+          rank: statsResponse.data.rank || 0
+        });
+      }
+
+      // Fetch achievements
+      const achievementsResponse = await userApi.getAchievements(token);
+      if (achievementsResponse.success && achievementsResponse.data) {
+        setAchievements(achievementsResponse.data);
+      } else {
+        // Default achievements if API doesn't return any
+        setAchievements([
+          { 
+            icon: '🏆', 
+            title: 'First Game', 
+            description: 'Play your first trivia game', 
+            unlocked: statsResponse.data?.gamesPlayed > 0 
+          },
+          { 
+            icon: '📚', 
+            title: 'Knowledge Seeker', 
+            description: 'Complete 5 learning modules', 
+            unlocked: statsResponse.data?.lessonsCompleted >= 5 
+          },
+          { 
+            icon: '💰', 
+            title: 'Investment Pro', 
+            description: 'Reach 1000 total points', 
+            unlocked: statsResponse.data?.totalPoints >= 1000 
+          },
+          { 
+            icon: '🔥', 
+            title: 'On Fire!', 
+            description: 'Maintain a 7-day learning streak', 
+            unlocked: statsResponse.data?.streak >= 7 
+          },
+          { 
+            icon: '⭐', 
+            title: 'Perfect Score', 
+            description: 'Get 100% on a trivia game', 
+            unlocked: statsResponse.data?.averageScore === 100 
+          },
+          { 
+            icon: '👑', 
+            title: 'Top Student', 
+            description: 'Reach #1 on leaderboard', 
+            unlocked: statsResponse.data?.rank === 1 
+          },
+        ]);
+      }
+
+      // Fetch recent activity
+      const activityResponse = await userApi.getActivity(token);
+      if (activityResponse.success && activityResponse.data) {
+        setRecentActivity(activityResponse.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch profile data:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [profile, getToken]);
+
   useEffect(() => {
-    const fetchProfileData = async () => {
-      if (!profile) return;
-      
-      try {
-        const token = await getToken();
-        if (!token) return;
+    fetchProfileData();
+  }, [fetchProfileData]);
 
-        // Fetch user stats
-        const statsResponse = await userApi.getStats(token);
-        if (statsResponse.success && statsResponse.data) {
-          setStats({
-            gamesPlayed: statsResponse.data.gamesPlayed || 0,
-            totalPoints: statsResponse.data.totalPoints || 0,
-            lessonsCompleted: statsResponse.data.lessonsCompleted || 0,
-            averageScore: statsResponse.data.averageScore || 0,
-            streak: statsResponse.data.streak || 0,
-            rank: statsResponse.data.rank || 0
-          });
-        }
-
-        // Fetch achievements
-        const achievementsResponse = await userApi.getAchievements(token);
-        if (achievementsResponse.success && achievementsResponse.data) {
-          setAchievements(achievementsResponse.data);
-        } else {
-          // Default achievements if API doesn't return any
-          setAchievements([
-            { 
-              icon: '🏆', 
-              title: 'First Game', 
-              description: 'Play your first trivia game', 
-              unlocked: statsResponse.data?.gamesPlayed > 0 
-            },
-            { 
-              icon: '📚', 
-              title: 'Knowledge Seeker', 
-              description: 'Complete 5 learning modules', 
-              unlocked: statsResponse.data?.lessonsCompleted >= 5 
-            },
-            { 
-              icon: '💰', 
-              title: 'Investment Pro', 
-              description: 'Reach 1000 total points', 
-              unlocked: statsResponse.data?.totalPoints >= 1000 
-            },
-            { 
-              icon: '🔥', 
-              title: 'On Fire!', 
-              description: 'Maintain a 7-day learning streak', 
-              unlocked: statsResponse.data?.streak >= 7 
-            },
-            { 
-              icon: '⭐', 
-              title: 'Perfect Score', 
-              description: 'Get 100% on a trivia game', 
-              unlocked: statsResponse.data?.averageScore === 100 
-            },
-            { 
-              icon: '👑', 
-              title: 'Top Student', 
-              description: 'Reach #1 on leaderboard', 
-              unlocked: statsResponse.data?.rank === 1 
-            },
-          ]);
-        }
-
-        // Fetch recent activity
-        const activityResponse = await userApi.getActivity(token);
-        if (activityResponse.success && activityResponse.data) {
-          setRecentActivity(activityResponse.data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch profile data:', error);
-      } finally {
-        setLoading(false);
+  // Refetch stats when page becomes visible (e.g., after completing a module)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchProfileData();
       }
     };
 
-    fetchProfileData();
-  }, [profile, getToken]);
+    const handleFocus = () => {
+      fetchProfileData();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [fetchProfileData]);
 
   const handleSave = () => {
     if (profile) {

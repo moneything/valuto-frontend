@@ -71,9 +71,14 @@ const validateGameResult = [
 // Learning progress validation rules
 const validateLearningProgress = [
   body('moduleId').trim().notEmpty().withMessage('Module ID is required'),
-  body('moduleName').trim().notEmpty().withMessage('Module name is required'),
-  body('lessonId').trim().notEmpty().withMessage('Lesson ID is required'),
+  body('moduleName').optional().trim(),
+  body('lessonId').optional().trim(),
   body('lessonName').optional().trim(),
+  body('activityType').optional().isIn(['quiz', 'simulation', 'scenario']).withMessage('Invalid activity type'),
+  body('responses').optional().isArray().withMessage('Responses must be an array'),
+  body('simulationResult').optional().isObject().withMessage('Simulation result must be an object'),
+  body('scenarioResults').optional().isArray().withMessage('Scenario results must be an array'),
+  body('sessionData').optional().isObject().withMessage('Session data must be an object'),
   body('quizScore')
     .optional()
     .isInt({ min: 0, max: 100 })

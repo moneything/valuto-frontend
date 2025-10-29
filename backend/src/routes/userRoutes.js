@@ -9,6 +9,8 @@ const {
   incrementGameCount,
   incrementLessonCount,
   addAchievement,
+  getAchievements,
+  getActivity,
   deleteUser,
 } = require('../controllers/userController');
 const { authenticateClerkUser } = require('../middleware/auth');
@@ -58,6 +60,16 @@ router.post('/lesson-completed', authenticateClerkUser, incrementLessonCount);
 // @desc    Add achievement to user
 // @access  Private
 router.post('/achievement', authenticateClerkUser, addAchievement);
+
+// @route   GET /api/user/achievements
+// @desc    Get user achievements
+// @access  Private
+router.get('/achievements', authenticateClerkUser, getAchievements);
+
+// @route   GET /api/user/activity
+// @desc    Get user activity log
+// @access  Private
+router.get('/activity', authenticateClerkUser, getActivity);
 
 // @route   DELETE /api/user
 // @desc    Delete user account (soft delete)

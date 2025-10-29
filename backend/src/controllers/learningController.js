@@ -39,7 +39,12 @@ const saveProgress = asyncHandler(async (req, res) => {
   }
 
   // Get module to check points
-  const module = await LearningModule.findById(moduleId);
+  // Try to find by _id first (ObjectId), then fall back to string id search
+  let module = await LearningModule.findById(moduleId).catch(() => null);
+  if (!module) {
+    // If not found by ObjectId, try finding by _id as string
+    module = await LearningModule.findOne({ _id: moduleId });
+  }
   if (!module) {
     throw new AppError('Learning module not found', 404);
   }
@@ -229,7 +234,12 @@ const markLessonCompleted = asyncHandler(async (req, res) => {
   }
 
   // Get module to check points
-  const module = await LearningModule.findById(moduleId);
+  // Try to find by _id first (ObjectId), then fall back to string id search
+  let module = await LearningModule.findById(moduleId).catch(() => null);
+  if (!module) {
+    // If not found by ObjectId, try finding by _id as string
+    module = await LearningModule.findOne({ _id: moduleId });
+  }
   if (!module) {
     throw new AppError('Learning module not found', 404);
   }

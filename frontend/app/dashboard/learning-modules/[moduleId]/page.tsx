@@ -101,13 +101,14 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
             {currentList.map((item, i) => (
               <li key={i} className="leading-relaxed">
                 {Array.isArray(item) ? (
-                  item.map((part, pi) => 
-                    typeof part === 'object' && part.type === 'bold' ? (
-                      <strong key={part.key} className="font-bold text-gray-900">{part.text}</strong>
-                    ) : (
-                      part
-                    )
-                  )
+                  <>
+                    {item.map((part, pi) => {
+                      if (typeof part === 'object' && part !== null && 'type' in part && part.type === 'bold') {
+                        return <strong key={`bold-${i}-${pi}`} className="font-bold text-gray-900">{part.text}</strong>;
+                      }
+                      return <span key={`text-${i}-${pi}`}>{part}</span>;
+                    })}
+                  </>
                 ) : (
                   item
                 )}

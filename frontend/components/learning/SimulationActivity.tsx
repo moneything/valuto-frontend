@@ -208,7 +208,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
   };
 
   const renderInvestmentSimulation = () => {
-    const scenario = simulation.scenarios[currentStep];
+    const scenario = simulation.scenarios?.[currentStep];
     const assets = ['stocks', 'bonds', 'real_estate', 'commodities', 'cash'];
     
     return (

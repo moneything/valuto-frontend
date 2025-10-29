@@ -302,6 +302,132 @@ const addAchievement = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get user achievements
+ * @route   GET /api/user/achievements
+ * @access  Private
+ */
+const getAchievements = asyncHandler(async (req, res) => {
+  const clerkUserId = req.clerkUser.id;
+
+  const user = await User.findOne({ clerkUserId });
+
+  if (!user) {
+    throw new AppError('User profile not found', 404);
+  }
+
+  // Return user's achievements with metadata
+  const achievements = user.achievements.map(achievement => ({
+    achievementId: achievement.achievementId,
+    unlockedAt: achievement.unlockedAt,
+    icon: getAchievementIcon(achievement.achievementId),
+    title: getAchievementTitle(achievement.achievementId),
+    description: getAchievementDescription(achievement.achievementId),
+    unlocked: true
+  }));
+
+  res.status(200).json({
+    success: true,
+    data: achievements,
+  });
+});
+
+/**
+ * @desc    Get user activity log
+ * @route   GET /api/user/activity
+ * @access  Private
+ */
+const getActivity = asyncHandler(async (req, res) => {
+  const clerkUserId = req.clerkUser.id;
+  const { limit = 10 } = req.query;
+
+  const user = await User.findOne({ clerkUserId });
+
+  if (!user) {
+    throw new AppError('User profile not found', 404);
+  }
+
+  // For now, return basic activity based on user stats
+  // In the future, you can create a separate Activity model to track detailed activity
+  const activity = [];
+  
+  // Add learning activity
+  if (user.lessonsCompleted > 0) {
+    activity.push({
+      type: 'lesson',
+      title: `Completed ${user.lessonsCompleted} learning module${user.lessonsCompleted > 1 ? 's' : ''}`,
+      date: user.lastActiveDate || user.updatedAt,
+      points: 0
+    });
+  }
+
+  // Add game activity
+  if (user.gamesPlayed > 0) {
+    activity.push({
+      type: 'game',
+      title: `Played ${user.gamesPlayed} trivia game${user.gamesPlayed > 1 ? 's' : ''}`,
+      date: user.lastActiveDate || user.updatedAt,
+      points: 0
+    });
+  }
+
+  // Add achievement activity
+  user.achievements.slice(0, parseInt(limit)).forEach(achievement => {
+    activity.push({
+      type: 'achievement',
+      title: `Unlocked "${getAchievementTitle(achievement.achievementId)}" Achievement`,
+      date: achievement.unlockedAt,
+      points: 10
+    });
+  });
+
+  // Sort by date (newest first) and limit
+  activity.sort((a, b) => new Date(b.date) - new Date(a.date));
+  const limitedActivity = activity.slice(0, parseInt(limit));
+
+  res.status(200).json({
+    success: true,
+    data: limitedActivity,
+  });
+});
+
+// Helper functions for achievement metadata
+function getAchievementIcon(achievementId) {
+  const icons = {
+    'first_game': '🏆',
+    'knowledge_seeker': '📚',
+    'investment_pro': '💰',
+    'on_fire': '🔥',
+    'perfect_score': '⭐',
+    'top_student': '👑',
+  };
+  return icons[achievementId] || '🎯';
+}
+
+function getAchievementTitle(achievementId) {
+  const titles = {
+    'first_game': 'First Game',
+    'knowledge_seeker': 'Knowledge Seeker',
+    'investment_pro': 'Investment Pro',
+    'on_fire': 'On Fire!',
+    'perfect_score': 'Perfect Score',
+    'top_student': 'Top Student',
+  };
+  return titles[achievementId] || 'Achievement';
+}
+
+function getAchievementDescription(achievementId) {
+  const descriptions = {
+    'first_game': 'Play your first trivia game',
+    'knowledge_seeker': 'Complete 5 learning modules',
+    'investment_pro': 'Reach 1000 total points',
+    'on_fire': 'Maintain a 7-day streak',
+    'perfect_score': 'Get 100% on a trivia game',
+    'top_student': 'Reach #1 on leaderboard',
+  };
+  return descriptions[achievementId] || 'Complete a special task';
+}
+
+/**
  * @desc    Delete user account
  * @route   DELETE /api/user
  * @access  Private
@@ -334,5 +460,7 @@ module.exports = {
   incrementGameCount,
   incrementLessonCount,
   addAchievement,
+  getAchievements,
+  getActivity,
   deleteUser,
 };

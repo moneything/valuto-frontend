@@ -92,7 +92,7 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
     
     const lines = content.split('\n');
     const elements: JSX.Element[] = [];
-    let currentList: string[] = [];
+    let currentList: (string | (string | { type: string; text: string; key: number })[])[] = [];
     
     const flushList = () => {
       if (currentList.length > 0) {
@@ -102,7 +102,7 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
               <li key={i} className="leading-relaxed">
                 {Array.isArray(item) ? (
                   item.map((part, pi) => 
-                    part.type === 'bold' ? (
+                    typeof part === 'object' && part.type === 'bold' ? (
                       <strong key={part.key} className="font-bold text-gray-900">{part.text}</strong>
                     ) : (
                       part
@@ -115,7 +115,7 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
             ))}
           </ul>
         );
-        currentList = [];
+        currentList = [] as (string | (string | { type: string; text: string; key: number })[])[];
       }
     };
     

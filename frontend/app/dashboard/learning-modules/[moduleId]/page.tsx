@@ -106,7 +106,11 @@ export default function LearningModulePage({ params }: { params: Promise<{ modul
                       if (typeof part === 'object' && part !== null && 'type' in part && part.type === 'bold') {
                         return <strong key={`bold-${i}-${pi}`} className="font-bold text-gray-900">{part.text}</strong>;
                       }
-                      return <span key={`text-${i}-${pi}`}>{part}</span>;
+                      // Only render if it's a string
+                      if (typeof part === 'string') {
+                        return <span key={`text-${i}-${pi}`}>{part}</span>;
+                      }
+                      return null;
                     })}
                   </>
                 ) : (

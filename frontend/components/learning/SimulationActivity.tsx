@@ -8,7 +8,16 @@ interface SimulationData {
   type: string;
   initialData: any;
   rules: any;
-  scenarios: any[];
+  scenarios?: any[];
+  categories?: string[];
+  monthlyIncome?: number;
+  targetRatios?: {
+    needs: number;
+    wants: number;
+    savings: number;
+  };
+  title?: string;
+  description?: string;
 }
 
 interface SimulationActivityProps {

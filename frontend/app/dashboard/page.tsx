@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser as useClerkUser, useAuth } from '@clerk/nextjs';
 import { useUser } from '@/lib/userContext';
@@ -34,27 +34,49 @@ export default function DashboardPage() {
   const [loadingStats, setLoadingStats] = useState(true);
 
   // Fetch user stats from API
-  useEffect(() => {
-    const fetchStats = async () => {
-      if (!userProfile) return;
+  const fetchStats = useCallback(async () => {
+    if (!userProfile) return;
+    
+    try {
+      setLoadingStats(true);
+      const token = await getToken();
+      if (!token) return;
       
-      try {
-        const token = await getToken();
-        if (!token) return;
-        
-        const response = await userApi.getStats(token);
-        if (response.success && response.data) {
-          setUserStats(response.data);
-        }
-      } catch (error) {
-        console.error('Failed to fetch user stats:', error);
-      } finally {
-        setLoadingStats(false);
+      const response = await userApi.getStats(token);
+      if (response.success && response.data) {
+        setUserStats(response.data);
+      }
+    } catch (error) {
+      console.error('Failed to fetch user stats:', error);
+    } finally {
+      setLoadingStats(false);
+    }
+  }, [userProfile, getToken]);
+
+  useEffect(() => {
+    fetchStats();
+  }, [fetchStats]);
+
+  // Refetch stats when page becomes visible (e.g., after completing a module)
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === 'visible') {
+        fetchStats();
       }
     };
 
-    fetchStats();
-  }, [userProfile, getToken]);
+    const handleFocus = () => {
+      fetchStats();
+    };
+
+    document.addEventListener('visibilitychange', handleVisibilityChange);
+    window.addEventListener('focus', handleFocus);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleVisibilityChange);
+      window.removeEventListener('focus', handleFocus);
+    };
+  }, [fetchStats]);
 
   // Redirect to onboarding if user hasn't completed it
   useEffect(() => {

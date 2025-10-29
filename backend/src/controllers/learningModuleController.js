@@ -22,10 +22,10 @@ const getModules = asyncHandler(async (req, res) => {
 
   const modules = await LearningModule.getModules(filters);
   
-  // Transform _id to id for each module
+  // Transform _id to id for each module and convert ObjectId to string
   const transformedModules = modules.map(module => ({
     ...module,
-    id: module._id,
+    id: module._id.toString(),
     _id: undefined
   }));
 
@@ -52,9 +52,9 @@ const getModule = asyncHandler(async (req, res) => {
     throw new AppError('This module is currently inactive', 403);
   }
 
-  // Transform _id to id
+  // Transform _id to id and convert ObjectId to string
   const moduleData = module.toObject ? module.toObject() : module;
-  moduleData.id = moduleData._id;
+  moduleData.id = moduleData._id.toString();
   delete moduleData._id;
 
   res.status(200).json({

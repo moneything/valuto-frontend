@@ -1,4 +1,5 @@
 const LearningProgress = require('../models/LearningProgress');
+const LearningModule = require('../models/LearningModule');
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
@@ -8,14 +9,27 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 
 /**
- * @desc    Save or update learning progress
+ * @desc    Save or update learning progress (for module completion)
  * @route   POST /api/learning/progress
  * @access  Private
  */
 const saveProgress = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
-  const { moduleId, moduleName, lessonId, lessonName, status, quizScore, timeSpent, quizAnswers } =
-    req.body;
+  const { 
+    moduleId, 
+    moduleName, 
+    lessonId, 
+    lessonName, 
+    status, 
+    quizScore, 
+    timeSpent, 
+    quizAnswers,
+    activityType,
+    responses,
+    simulationResult,
+    scenarioResults,
+    sessionData
+  } = req.body;
 
   // Get user
   const user = await User.findOne({ clerkUserId });
@@ -24,31 +38,81 @@ const saveProgress = asyncHandler(async (req, res) => {
     throw new AppError('User profile not found', 404);
   }
 
+  // Get module to check points
+  const module = await LearningModule.findById(moduleId);
+  if (!module) {
+    throw new AppError('Learning module not found', 404);
+  }
+
+  // For new frontend format (complete module activity)
+  // Treat the whole module as one "lesson"
+  const effectiveLessonId = lessonId || `${moduleId}_main`;
+  const effectiveLessonName = lessonName || module.title;
+  const effectiveModuleName = moduleName || module.title;
+
+  // Calculate score based on activity type
+  let calculatedScore = quizScore;
+  if (!calculatedScore && responses && Array.isArray(responses)) {
+    // Quiz activity
+    const correctAnswers = responses.filter(r => r.isCorrect).length;
+    calculatedScore = responses.length > 0 ? Math.round((correctAnswers / responses.length) * 100) : 0;
+  } else if (!calculatedScore && simulationResult) {
+    // Simulation activity
+    calculatedScore = simulationResult.finalScore || simulationResult.score || 0;
+  } else if (!calculatedScore && scenarioResults) {
+    // Scenario activity
+    const totalScenarios = scenarioResults.length;
+    const optimalChoices = scenarioResults.filter(r => r.isOptimal).length;
+    calculatedScore = totalScenarios > 0 ? Math.round((optimalChoices / totalScenarios) * 100) : 0;
+  }
+
+  // Determine if completed (score >= 70% or explicitly set)
+  const isCompleted = status === 'completed' || (calculatedScore && calculatedScore >= 70);
+  const effectiveStatus = isCompleted ? 'completed' : (status || 'in_progress');
+
   // Check if progress already exists
   let progress = await LearningProgress.findOne({
     userId: user._id.toString(),
     moduleId,
-    lessonId,
+    lessonId: effectiveLessonId,
   });
+
+  let pointsEarned = 0;
+  let isNewCompletion = false;
 
   if (progress) {
     // Update existing progress
-    if (status) progress.status = status;
-    if (quizScore !== undefined) {
-      progress.quizScore = quizScore;
-      progress.quizPassed = quizScore >= 70; // 70% passing grade
+    if (effectiveStatus) progress.status = effectiveStatus;
+    if (calculatedScore !== undefined) {
+      progress.quizScore = calculatedScore;
+      progress.quizPassed = calculatedScore >= 70;
       progress.quizAttempts += 1;
     }
-    if (timeSpent) progress.timeSpent += timeSpent;
+    if (timeSpent || sessionData?.totalTime) {
+      progress.timeSpent += (timeSpent || sessionData?.totalTime || 0);
+    }
     if (quizAnswers) progress.quizAnswers = quizAnswers;
 
     progress.lastAccessedAt = new Date();
 
-    if (status === 'completed' && !progress.completedAt) {
+    // Award points on first completion only
+    if (effectiveStatus === 'completed' && !progress.completedAt) {
       progress.completedAt = new Date();
+      isNewCompletion = true;
 
-      // Update user's lesson count
+      // Calculate points earned based on performance
+      const basePoints = module.points || 100;
+      if (calculatedScore >= 90) {
+        pointsEarned = basePoints; // Full points for excellent performance
+      } else if (calculatedScore >= 80) {
+        pointsEarned = Math.round(basePoints * 0.9); // 90% for good performance
+      } else if (calculatedScore >= 70) {
+        pointsEarned = Math.round(basePoints * 0.8); // 80% for passing
+      }
+
+      // Update user stats
       user.lessonsCompleted += 1;
+      user.totalPoints += pointsEarned;
       user.updateStreak();
       await user.save();
     }
@@ -60,19 +124,30 @@ const saveProgress = asyncHandler(async (req, res) => {
       userId: user._id.toString(),
       clerkUserId,
       moduleId,
-      moduleName,
-      lessonId,
-      lessonName,
-      status: status || 'in_progress',
-      quizScore,
-      quizPassed: quizScore ? quizScore >= 70 : false,
-      timeSpent: timeSpent || 0,
+      moduleName: effectiveModuleName,
+      lessonId: effectiveLessonId,
+      lessonName: effectiveLessonName,
+      status: effectiveStatus,
+      quizScore: calculatedScore,
+      quizPassed: calculatedScore ? calculatedScore >= 70 : false,
+      timeSpent: timeSpent || sessionData?.totalTime || 0,
       quizAnswers: quizAnswers || [],
     });
 
-    // If already completed, update user count
-    if (status === 'completed') {
+    // Award points if completed on first attempt
+    if (effectiveStatus === 'completed') {
+      isNewCompletion = true;
+      const basePoints = module.points || 100;
+      if (calculatedScore >= 90) {
+        pointsEarned = basePoints;
+      } else if (calculatedScore >= 80) {
+        pointsEarned = Math.round(basePoints * 0.9);
+      } else if (calculatedScore >= 70) {
+        pointsEarned = Math.round(basePoints * 0.8);
+      }
+
       user.lessonsCompleted += 1;
+      user.totalPoints += pointsEarned;
       user.updateStreak();
       await user.save();
     }
@@ -82,6 +157,9 @@ const saveProgress = asyncHandler(async (req, res) => {
     success: true,
     message: 'Progress saved successfully',
     data: progress,
+    pointsEarned: isNewCompletion ? pointsEarned : 0,
+    totalPoints: user.totalPoints,
+    lessonsCompleted: user.lessonsCompleted,
   });
 });
 
@@ -150,6 +228,12 @@ const markLessonCompleted = asyncHandler(async (req, res) => {
     throw new AppError('User profile not found', 404);
   }
 
+  // Get module to check points
+  const module = await LearningModule.findById(moduleId);
+  if (!module) {
+    throw new AppError('Learning module not found', 404);
+  }
+
   // Find progress
   let progress = await LearningProgress.findOne({
     userId: user._id.toString(),
@@ -161,12 +245,27 @@ const markLessonCompleted = asyncHandler(async (req, res) => {
     throw new AppError('Progress record not found', 404);
   }
 
+  let pointsEarned = 0;
+
   // Mark as completed if not already
   if (progress.status !== 'completed') {
     await progress.markCompleted();
 
+    // Award points based on quiz score
+    const basePoints = module.points || 100;
+    const score = progress.quizScore || 70; // Default to minimum passing if no score
+    
+    if (score >= 90) {
+      pointsEarned = basePoints;
+    } else if (score >= 80) {
+      pointsEarned = Math.round(basePoints * 0.9);
+    } else if (score >= 70) {
+      pointsEarned = Math.round(basePoints * 0.8);
+    }
+
     // Update user stats
     user.lessonsCompleted += 1;
+    user.totalPoints += pointsEarned;
     user.updateStreak();
     await user.save();
   }
@@ -175,6 +274,9 @@ const markLessonCompleted = asyncHandler(async (req, res) => {
     success: true,
     message: 'Lesson marked as completed',
     data: progress,
+    pointsEarned,
+    totalPoints: user.totalPoints,
+    lessonsCompleted: user.lessonsCompleted,
   });
 });
 

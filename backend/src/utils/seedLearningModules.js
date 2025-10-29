@@ -4469,6 +4469,1206 @@ Take control of your subscriptions today! 💪
     prerequisites: [],
     isActive: true,
     createdBy: "system"
+  },
+
+  // Module 12: Understanding Your Payslip
+  {
+    title: "Understanding Your Payslip",
+    description: "Decode your payslip! Learn what all those numbers mean and where your money actually goes. Essential for your first job! 💼",
+    topic: "Income & Employment",
+    lessonContent: `# Understanding Your Payslip 💼💰
+
+## What's a Payslip?
+Your payslip (or pay stub) is a document that shows:
+- How much you earned
+- What was deducted (taken away)
+- What you actually received (take-home pay)
+
+## Key Sections
+
+### 1️⃣ GROSS PAY
+This is your TOTAL earnings before ANY deductions.
+- Hourly rate × hours worked
+- Or your monthly salary
+- **Example:** £1,000/month or £10/hour × 100 hours
+
+### 2️⃣ DEDUCTIONS (What Gets Taken Out)
+
+**Income Tax** 💷
+- Money the government takes for public services
+- You don't pay tax on your first £12,570/year (Personal Allowance)
+- After that: 20% on earnings up to £50,270
+
+**National Insurance (NI)** 🏥
+- Pays for NHS, state pension, benefits
+- You start paying at £12,570/year
+- Usually around 12% of your earnings
+
+**Pension Contributions** 🎯
+- Money saved for when you retire
+- Your employer might add extra (FREE MONEY!)
+- Usually 3-5% of your salary
+
+**Student Loan** 🎓 (if you have one)
+- Automatic repayments if you earn over £27,295/year
+- About 9% of earnings above that threshold
+
+### 3️⃣ NET PAY (Take-Home)
+This is what actually lands in your bank account!
+- Gross Pay - All Deductions = Net Pay
+- **This is the money you can actually spend**
+
+## Real Example (18-year-old, Part-Time)
+
+**GROSS PAY:** £800/month
+- Hourly rate: £10/hour
+- Hours: 80 hours
+
+**DEDUCTIONS:**
+- Income Tax: £0 (under personal allowance)
+- National Insurance: £0 (under threshold)
+- Pension: £24 (3%)
+
+**NET PAY:** £776/month
+
+## Why This Matters
+
+✅ **Check It's Correct:** Sometimes mistakes happen!
+✅ **Budget Properly:** Use NET pay, not gross
+✅ **Tax Code:** Wrong code = wrong tax amount
+✅ **Track Your Earnings:** For savings goals
+
+## Common Terms Explained
+
+**PAYE** = Pay As You Earn (tax system)
+**NI Number** = Your National Insurance number (like a tax ID)
+**Tax Code** = Determines how much tax you pay (usually 1257L for under-25s)
+**YTD** = Year To Date (total so far this tax year)
+
+## Tax Year
+- Runs April 6 → April 5 (weird, but that's the UK!)
+- Your personal allowance resets each tax year
+
+## Red Flags 🚩
+
+Watch out for:
+- ❌ Wrong hourly rate
+- ❌ Wrong hours
+- ❌ Unexpected deductions
+- ❌ Wrong tax code
+
+**If something looks wrong, ask your employer or HR!**
+
+## Pro Tips 💡
+
+1. **Keep Every Payslip:** You might need them later
+2. **Check First Payslip Carefully:** Common for mistakes
+3. **Understand Tax Codes:** Wrong code = wrong tax
+4. **Pension Contributions:** Free money from employer!
+5. **Calculate Your Hourly Rate:** Know what you're worth
+
+Remember: It's YOUR money - understand where every penny goes! 💪`,
+    activityType: "quiz",
+    activityData: {
+      questions: [
+        {
+          question: "If you earn £1,000 gross pay and have £200 in deductions, what's your net (take-home) pay?",
+          options: [
+            "£1,000",
+            "£800",
+            "£200",
+            "£1,200"
+          ],
+          correctAnswer: 1,
+          explanation: "Net pay = Gross pay - Deductions. £1,000 - £200 = £800. This is what actually goes into your bank account!"
+        },
+        {
+          question: "What is the Personal Allowance in the UK (2024)?",
+          options: [
+            "£10,000",
+            "£12,570",
+            "£15,000",
+            "£20,000"
+          ],
+          correctAnswer: 1,
+          explanation: "The Personal Allowance is £12,570. You don't pay income tax on the first £12,570 you earn each year!"
+        },
+        {
+          question: "National Insurance (NI) contributions pay for:",
+          options: [
+            "Just the NHS",
+            "Your employer's profits",
+            "NHS, state pension, and benefits",
+            "Your personal savings account"
+          ],
+          correctAnswer: 2,
+          explanation: "National Insurance pays for the NHS, your future state pension, and various benefits. It's like a social insurance system."
+        },
+        {
+          question: "You work 50 hours at £12/hour. What's your gross pay?",
+          options: [
+            "£500",
+            "£550",
+            "£600",
+            "£650"
+          ],
+          correctAnswer: 2,
+          explanation: "Gross pay = Hours × Hourly rate. 50 hours × £12 = £600. This is before any deductions!"
+        },
+        {
+          question: "Why should you contribute to your workplace pension?",
+          options: [
+            "It's legally required",
+            "Your employer adds free money on top",
+            "You pay less income tax",
+            "Both B and C"
+          ],
+          correctAnswer: 3,
+          explanation: "Pensions are amazing because: 1) Your employer typically matches/adds to your contribution (free money!), and 2) Pension contributions are tax-free. It's literally the best deal in personal finance!"
+        },
+        {
+          question: "What does 'YTD' mean on your payslip?",
+          options: [
+            "Your Total Deductions",
+            "Year To Date",
+            "Yesterday's Total Details",
+            "Your Tax Declaration"
+          ],
+          correctAnswer: 1,
+          explanation: "YTD means 'Year To Date' - it shows your total earnings, tax, and deductions from the start of the tax year (April 6) until now."
+        },
+        {
+          question: "The UK tax year runs from:",
+          options: [
+            "January 1 - December 31",
+            "April 1 - March 31",
+            "April 6 - April 5",
+            "September 1 - August 31"
+          ],
+          correctAnswer: 2,
+          explanation: "The UK tax year runs from April 6 to April 5. Yes, it's weird! This is when your Personal Allowance resets."
+        },
+        {
+          question: "If your payslip shows incorrect hours, you should:",
+          options: [
+            "Ignore it - they'll fix it eventually",
+            "Contact HR or your manager immediately",
+            "Wait until next month",
+            "Assume it's correct"
+          ],
+          correctAnswer: 1,
+          explanation: "Always contact HR or your manager RIGHT AWAY if you spot errors. It's your money - don't be shy about making sure you're paid correctly!"
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "The Three Key Numbers",
+        content: "Every payslip has 3 crucial numbers:\n\n💰 GROSS PAY: Total earned\n📉 DEDUCTIONS: What's taken out\n💵 NET PAY: What you get\n\nAlways use NET PAY for budgeting!",
+        emoji: "📊",
+        points: 5
+      },
+      {
+        id: "step2",
+        type: "interactive",
+        title: "Calculate Take-Home Pay",
+        content: "Practice: Gross £1,200, Tax £100, NI £80, Pension £36.\n\nWhat's your net pay?\n\nAnswer: £984!\n\n(£1,200 - £100 - £80 - £36 = £984)",
+        emoji: "🧮",
+        points: 10
+      },
+      {
+        id: "step3",
+        type: "example",
+        title: "Real Teen Payslip",
+        content: "18-year-old barista:\n• £10/hour × 80 hours = £800\n• Tax: £0 (under threshold)\n• NI: £0 (under threshold)\n• Pension: £24 (3%)\n• TAKE HOME: £776\n\nBudget with £776, not £800!",
+        emoji: "☕",
+        points: 5
+      }
+    ],
+    points: 400,
+    difficultyLevel: "beginner",
+    timeEstimate: 18,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
+  },
+
+  // Module 13: S&P 500 & Stock Market Basics
+  {
+    title: "S&P 500 & Stock Market Basics",
+    description: "What's the S&P 500? Learn how the stock market works and why people invest in it. Your first step into the investing world! 📈",
+    topic: "Investing Basics",
+    lessonContent: `# S&P 500 & Stock Market Basics 📈🚀
+
+## What Is a Stock?
+When you buy a stock, you're buying a tiny piece of a company!
+- You become a **shareholder** (part-owner)
+- If the company does well, your stock value goes up 📈
+- If it struggles, your stock value goes down 📉
+
+**Example:** Buying 1 Apple share = owning a teeny tiny piece of Apple!
+
+## What Is the Stock Market?
+A marketplace where people buy and sell stocks.
+- Think of it like eBay, but for company shares
+- Prices change constantly based on supply and demand
+- Open Monday-Friday (closed weekends)
+
+## What Is the S&P 500? 🌟
+
+**S&P 500 = Standard & Poor's 500**
+
+It's a list of the **500 biggest U.S. companies**, including:
+- 🍎 Apple
+- 🧃 Microsoft  
+- 😎 Amazon
+- 🚗 Tesla
+- 🥤 Coca-Cola
+- And 495 more!
+
+### Why It's Important
+
+The S&P 500 is like a "health check" for the U.S. economy:
+- 📊 If S&P 500 goes up → Economy is strong
+- 📉 If S&P 500 goes down → Economy is struggling
+
+**It's the most watched stock market index in the world!**
+
+## How Does the S&P 500 Work?
+
+### The Math
+- Average of 500 company stock prices
+- Bigger companies have more impact (weighted by size)
+- Tracks overall market performance
+
+### Example Numbers
+- January: S&P 500 at 4,000 points
+- December: S&P 500 at 4,400 points
+- **Growth: 10% that year!** 🎉
+
+## Historical Performance 📊
+
+**Long-Term Average:** About 10% per year
+- Some years: +30% 🚀
+- Some years: -20% 📉
+- Over 20-30 years: Averages out to ~10%
+
+**£1,000 invested in S&P 500 for 30 years** (10% average):
+- Year 10: ~£2,594
+- Year 20: ~£6,727
+- Year 30: ~£17,449
+
+*That's the power of compound growth!*
+
+## How to Invest in the S&P 500
+
+### Option 1: Index Funds 🎯
+- Buy one fund that owns ALL 500 companies
+- Instant diversification!
+- Low fees (0.03% - 0.20% per year)
+- Examples: Vanguard S&P 500 ETF (VOO), SPDR S&P 500 (SPY)
+
+### Option 2: Individual Stocks 🎲
+- Pick and buy specific companies
+- Higher risk, higher potential reward
+- Requires research and monitoring
+- More expensive (multiple trades)
+
+**Beginners: Start with Index Funds!**
+
+## Why Invest in S&P 500?
+
+✅ **Diversification:** One investment = 500 companies
+✅ **Proven Track Record:** 10% average since 1926
+✅ **Low Cost:** Cheap index funds available
+✅ **Simple:** No need to pick individual stocks
+✅ **Automatic Rebalancing:** Bad companies get removed
+
+## Risks to Know ⚠️
+
+❌ **Short-Term Volatility:** Can drop 20-50% in bad years
+❌ **No Guarantees:** Past performance ≠ future results
+❌ **U.S. Only:** All American companies (no international)
+❌ **Takes Time:** Need years to see real growth
+
+## Key Terms 📚
+
+**Bull Market** 🐂 = Prices going up (good times!)
+**Bear Market** 🐻 = Prices going down 20%+ (scary times)
+**Dividend** 💵 = Company pays you just for owning stock
+**ETF** = Exchange Traded Fund (like a basket of stocks)
+**Portfolio** = All your investments combined
+
+## When Should You Start?
+
+**YESTERDAY!** But today is good too. 😄
+
+- Start at 18 with £50/month
+- By age 65: Could have £500,000+
+- Thanks to compound interest!
+
+## Investing Rules for Teens 🎯
+
+1. **Only Invest Extra Money** - Not emergency fund!
+2. **Think Long-Term** - At least 5-10 years
+3. **Don't Panic Sell** - Ride out the bad times
+4. **Invest Regularly** - £20/month beats £0/month
+5. **Learn Continuously** - Understanding = confidence
+
+## How to Get Started (UK)
+
+### Age 18+
+- Open a Stocks & Shares ISA
+- Choose an S&P 500 index fund
+- Set up automatic monthly investments
+- Leave it alone and let it grow!
+
+### Under 18
+- Junior ISA (parents set up)
+- Learn and practice with virtual trading
+- Save cash for now, invest at 18
+
+## The Bottom Line
+
+**S&P 500 investing is:**
+- 🎯 Simple for beginners
+- 💪 Historically reliable (10% avg)
+- ⏰ Requires patience (years, not days)
+- 🎓 Great learning tool
+- 🚀 Powerful wealth-building tool
+
+**Remember:** Time in the market beats timing the market!
+
+Start small, stay consistent, think long-term. Your future self will thank you! 💰`,
+    activityType: "simulation",
+    activityData: {
+      type: "investment",
+      title: "S&P 500 Simulator: 10-Year Journey",
+      description: "Experience what it's like to invest in the S&P 500 over 10 years. See how different strategies perform!",
+      initialData: {
+        balance: 10000,
+        invested: 0,
+        year: 1
+      },
+      scenarios: [
+        {
+          title: "Year 1: Market is up 15%! 🚀",
+          description: "The economy is booming and the S&P 500 gained 15% this year. Your investment grew!",
+          currentYear: 1,
+          marketReturn: 15,
+          choices: [
+            {
+              id: "hold",
+              text: "Hold steady - stick to the plan",
+              outcome: "Smart! You stayed disciplined. Your investment grew by 15%."
+            },
+            {
+              id: "buy_more",
+              text: "Invest more - it's going up!",
+              outcome: "Good thinking! You invested more at a reasonable price."
+            },
+            {
+              id: "sell",
+              text: "Sell everything - take profits!",
+              outcome: "Bad move! You just started. Long-term investing means riding out ups AND downs."
+            }
+          ]
+        },
+        {
+          title: "Year 3: Market crashes -25%! 📉",
+          description: "Oh no! Economic crisis. The S&P 500 dropped 25%. Your investment is down.",
+          currentYear: 3,
+          marketReturn: -25,
+          choices: [
+            {
+              id: "panic_sell",
+              text: "Sell everything - cut losses!",
+              outcome: "Worst move! You locked in losses. The market ALWAYS recovers long-term."
+            },
+            {
+              id: "hold",
+              text: "Hold steady - this is temporary",
+              outcome: "Perfect! This is when real investors are made. Crashes are normal."
+            },
+            {
+              id: "buy_dip",
+              text: "Buy more - it's on sale!",
+              outcome: "Excellent! Buying during crashes = buying at a discount. Legendary move!"
+            }
+          ]
+        },
+        {
+          title: "Year 5: Market up 22%! 🎉",
+          description: "Recovery! The market bounced back strong with a 22% gain.",
+          currentYear: 5,
+          marketReturn: 22,
+          choices: [
+            {
+              id: "hold",
+              text: "Hold steady - let it compound",
+              outcome: "Great! Compound growth is your best friend."
+            },
+            {
+              id: "add_monthly",
+              text: "Start monthly £100 contributions",
+              outcome: "Smart! Regular contributions = dollar-cost averaging. You're a pro!"
+            }
+          ]
+        },
+        {
+          title: "Year 10: Your Results! 🏆",
+          description: "10 years later... let's see how you did!",
+          currentYear: 10,
+          marketReturn: 8,
+          final: true
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What Is the S&P 500?",
+        content: "The S&P 500 is the top 500 U.S. companies combined into one index.\n\n🏢 Includes: Apple, Microsoft, Amazon, Tesla, etc.\n\n📊 Like a 'health check' for the U.S. economy!\n\n💡 You can invest in ALL 500 at once!",
+        emoji: "📈",
+        points: 5
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "Historical Returns",
+        content: "S&P 500 average: ~10% per year (since 1926)\n\n💷 £1,000 invested for 30 years:\n• 10% growth = £17,449!\n\n⚠️ Some years up, some down\n⏰ Long-term = key to success",
+        emoji: "📊",
+        points: 5
+      },
+      {
+        id: "step3",
+        type: "interactive",
+        title: "Index Fund vs Individual Stocks",
+        content: "S&P 500 Index Fund:\n✅ 500 companies instantly\n✅ Low fees (0.03%)\n✅ Automatic rebalancing\n\nIndividual Stocks:\n⚠️ Pick each company\n⚠️ More research needed\n⚠️ Higher risk\n\n🎯 Beginners: Choose index funds!",
+        emoji: "🎯",
+        points: 10
+      }
+    ],
+    points: 450,
+    difficultyLevel: "intermediate",
+    timeEstimate: 22,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
+  },
+
+  // Module 14: Credit Scores Explained
+  {
+    title: "Credit Scores Explained",
+    description: "What's a credit score and why does it matter? Learn how to build excellent credit from day one! Your financial reputation! 🌟",
+    topic: "Credit & Borrowing",
+    lessonContent: `# Credit Scores Explained 🌟💳
+
+## What Is a Credit Score?
+
+Think of it as your **financial reputation score**.
+- A number between 300-850 (UK: 0-999 depending on agency)
+- Shows how trustworthy you are with borrowed money
+- Lenders check it before giving you loans/credit cards
+
+**Good score = "This person pays back loans"**
+**Bad score = "This person might not pay back"**
+
+## Why It Matters 🎯
+
+Your credit score affects:
+- ✅ **Loan Approval:** Can you get a car loan? Mortgage?
+- 💰 **Interest Rates:** Good score = lower rates = save thousands!
+- 🏠 **Renting:** Landlords check before renting to you
+- 📱 **Phone Contracts:** Getting that iPhone on contract
+- 💳 **Credit Cards:** Better cards need better scores
+
+**Example:**
+- Good score: £10,000 loan at 3% = £300 interest
+- Bad score: £10,000 loan at 15% = £1,500 interest
+- **You save £1,200 just by having good credit!**
+
+## UK Credit Score Ranges
+
+### Experian (0-999)
+- 961-999: Excellent 🌟
+- 881-960: Good ✅
+- 721-880: Fair ⚠️
+- 561-720: Poor ❌
+- 0-560: Very Poor 🚫
+
+### Equifax (0-700)
+- 466-700: Excellent
+- 420-465: Good
+- 380-419: Fair
+- 280-379: Poor
+- 0-279: Very Poor
+
+### TransUnion (0-710)
+- 628-710: Excellent
+- 604-627: Good
+- 566-603: Fair
+- 551-565: Poor
+- 0-550: Very Poor
+
+## What Affects Your Score? 📊
+
+### 1️⃣ Payment History (35%)
+**Most important!**
+- Do you pay bills on time?
+- Late payment = score drops
+- Missed payment = score crashes
+
+### 2️⃣ Credit Utilization (30%)
+- How much credit you're using vs. limit
+- Using £200 of £1,000 limit = 20% (good!)
+- Using £900 of £1,000 limit = 90% (bad!)
+- **Aim for under 30%**
+
+### 3️⃣ Length of Credit History (15%)
+- How long you've had credit
+- Older accounts = better
+- Don't close old credit cards!
+
+### 4️⃣ Types of Credit (10%)
+- Mix is good: credit card + loan + phone contract
+- Shows you can handle different types
+
+### 5️⃣ New Credit (10%)
+- Don't apply for lots at once
+- Each application = "hard inquiry" = temporary score drop
+
+## How to Build Credit (Starting at 18) 🏗️
+
+### Step 1: Get on Electoral Roll
+- Register to vote at your address
+- Free and instant credit boost!
+
+### Step 2: Get a Beginner Credit Card
+- Look for "credit builder" cards
+- Limit might be just £250-500
+- **Use it, but pay in FULL each month**
+
+### Step 3: Pay Everything On Time
+- Phone bill
+- Credit card
+- Any subscription
+- **Set up automatic payments!**
+
+### Step 4: Keep Balances Low
+- Don't max out cards
+- Under 30% of limit is ideal
+- Under 10% is perfect
+
+### Step 5: Be Patient
+- Good credit takes time (6-12 months minimum)
+- Can't rush it
+- Consistent good behavior = excellent score
+
+## Credit Building Strategy (18-21) 💪
+
+**Month 1-3:**
+- Register to vote
+- Open student/beginner credit card
+- Use for small purchases (£10-20)
+- Pay in FULL monthly
+
+**Month 4-12:**
+- Continue perfect payment record
+- Maybe add phone contract
+- Monitor your score monthly
+- Keep utilization under 30%
+
+**Year 2+:**
+- Score should be "Good" range
+- Can apply for better cards
+- Build toward "Excellent"
+
+## Common Mistakes to AVOID! ⚠️
+
+❌ **Missing Payments:** Biggest score killer
+❌ **Maxing Out Cards:** Looks desperate
+❌ **Applying for Lots of Credit:** Multiple hard inquiries hurt
+❌ **Closing Old Accounts:** Shortens credit history
+❌ **Only Making Minimum Payments:** High utilization hurts
+❌ **Ignoring Credit Reports:** Check for errors!
+
+## How to Check Your Score (Free!) 📱
+
+### UK Free Credit Check Sites:
+- **ClearScore** (Equifax)
+- **Credit Karma** (TransUnion)
+- **Experian App** (free tier)
+- **TotallyMoney**
+
+**Check monthly** - it doesn't hurt your score!
+
+## Pro Tips for Perfect Credit 🎯
+
+1. **Set Up Auto-Pay:** Never miss a payment
+2. **Pay Before Statement:** Lowers reported utilization
+3. **Keep Old Cards:** Even if unused
+4. **Request Credit Limit Increases:** After 6 months
+5. **Dispute Errors:** Check reports annually
+6. **Be Consistent:** Takes time, be patient
+
+## What If You Have Bad Credit? 🔧
+
+### Recovery Plan:
+1. **Stop the bleeding:** No new late payments
+2. **Pay down balances:** Get under 30%
+3. **Set up auto-pay:** For everything
+4. **Wait:** Bad marks fall off after 6 years
+5. **Build new positive history:** Slow and steady
+
+**Improvement timeline:**
+- 3 months: Small improvements
+- 6 months: Noticeable boost
+- 12 months: Significant improvement
+- 2+ years: Can reach "Good" or "Excellent"
+
+## Credit Myths Busted! 💥
+
+**Myth:** "Checking my score hurts it"
+**Truth:** Checking your OWN score = "soft inquiry" = no impact!
+
+**Myth:** "I need debt to build credit"
+**Truth:** You need to USE credit, not carry debt. Pay in full!
+
+**Myth:** "Closing cards helps my score"
+**Truth:** It usually HURTS (reduces available credit & history)
+
+**Myth:** "I can't get credit with no history"
+**Truth:** Credit builder cards exist specifically for this!
+
+**Myth:** "Income affects credit score"
+**Truth:** Income doesn't matter - only payment behavior!
+
+## The Bottom Line 💡
+
+**Good credit = financial superpower!**
+
+Start building NOW:
+- 18 years old = perfect time
+- Small responsible steps
+- Pay on time, every time
+- Low utilization
+- Be patient
+
+**Your 25-year-old self will thank you** when buying that first car or home! 🚗🏠`,
+    activityType: "scenario",
+    activityData: {
+      scenarios: [
+        {
+          title: "First Credit Card Decision",
+          description: "You just turned 18 and want to start building credit. You have a few credit card offers.",
+          background: "Your score starts at 0 because you have no credit history yet.",
+          choices: [
+            {
+              text: "Apply for 5 different cards to see which approves me",
+              consequence: "Bad move! Multiple applications = multiple hard inquiries = score drop. You got rejected by most and your score dropped 30 points.",
+              isOptimal: false
+            },
+            {
+              text: "Get a 'credit builder' card designed for beginners",
+              consequence: "Perfect! You got approved for a £500 limit card. Use it wisely and your score will grow steadily.",
+              isOptimal: true
+            },
+            {
+              text: "Wait until I'm older to build credit",
+              consequence: "Missed opportunity! Building credit takes time. Starting later means it takes longer to build excellent credit.",
+              isOptimal: false
+            }
+          ]
+        },
+        {
+          title: "Managing Your New Card",
+          description: "You have your first credit card with a £500 limit. How do you use it?",
+          background: "Your credit score is 550 (starting level).",
+          choices: [
+            {
+              text: "Max it out buying clothes and shoes - I'll pay it off eventually",
+              consequence: "Bad choice! Using £500/£500 = 100% utilization. Score dropped to 520. Plus you'll struggle to pay it back.",
+              isOptimal: false
+            },
+            {
+              text: "Use £50-100/month for regular purchases, pay in FULL each month",
+              consequence: "Excellent! 10-20% utilization + perfect payment history. After 6 months, your score is up to 650!",
+              isOptimal: true
+            },
+            {
+              text: "Don't use it at all - I'll keep it for emergencies only",
+              consequence: "Not great! Unused credit doesn't build history. Your score stayed at 550 - no improvement.",
+              isOptimal: false
+            }
+          ]
+        },
+        {
+          title: "The Late Payment Temptation",
+          description: "Your credit card bill is due tomorrow but you're short on cash. You owe £85.",
+          background: "Your score is now 650 and growing.",
+          choices: [
+            {
+              text: "Skip this payment - just one late payment won't matter",
+              consequence: "WRONG! Even ONE late payment can drop your score 100+ points. Your score crashed to 540. Takes months to recover!",
+              isOptimal: false
+            },
+            {
+              text: "Pay the minimum £15 to avoid late payment, pay rest next week",
+              consequence: "Smart compromise! You avoided late payment (score safe) but you'll pay a little interest. Score stayed at 650.",
+              isOptimal: true
+            },
+            {
+              text: "Call the card company and ask for a payment extension",
+              consequence: "Great thinking! Many companies offer one-time extensions. No late payment, no score damage. Professional approach!",
+              isOptimal: true
+            }
+          ]
+        },
+        {
+          title: "Credit Limit Increase Offer",
+          description: "After 8 months of perfect payments, your card company offers to increase your limit from £500 to £1,500.",
+          background: "Your score is 680 and you consistently use £100/month.",
+          choices: [
+            {
+              text: "Accept it - more available credit helps my score!",
+              consequence: "Perfect! Your utilization dropped from 20% to 6.7% (£100/£1,500). Score jumped to 720. Plus more emergency buffer!",
+              isOptimal: true
+            },
+            {
+              text: "Decline - I might be tempted to overspend",
+              consequence: "If you're worried about temptation, this shows good self-awareness. But you missed an easy score boost. Score stayed at 680.",
+              isOptimal: false
+            },
+            {
+              text: "Accept and increase spending to £400/month",
+              consequence: "Bad! You took the limit increase but now using £400/£1,500 = 27%. Better than before but spending more than you should. Score went to 695.",
+              isOptimal: false
+            }
+          ]
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What's a Credit Score?",
+        content: "Your credit score is like your financial report card!\n\n📊 Range: 300-850 (or 0-999 UK)\n⭐ Higher = Better\n💡 Shows how responsible you are with money\n\n🏦 Lenders check it before lending you money!",
+        emoji: "⭐",
+        points: 5
+      },
+      {
+        id: "step2",
+        type: "explanation",
+        title: "Why It Matters",
+        content: "Good credit score gets you:\n\n✅ Approved for loans\n💰 Lower interest rates\n🏠 Easier time renting\n📱 Phone contracts\n💳 Better credit cards\n\n💷 Can save you thousands in interest!",
+        emoji: "💡",
+        points: 5
+      },
+      {
+        id: "step3",
+        type: "interactive",
+        title: "Building Credit at 18",
+        content: "Your action plan:\n\n1️⃣ Register to vote (free boost!)\n2️⃣ Get beginner credit card\n3️⃣ Use for small purchases\n4️⃣ Pay in FULL each month\n5️⃣ Never pay late!\n\n⏰ Takes 6-12 months to build 'Good' credit\n\n🎯 Start NOW - your future self will thank you!",
+        emoji: "🏗️",
+        points: 10
+      }
+    ],
+    points: 400,
+    difficultyLevel: "beginner",
+    timeEstimate: 20,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
+  },
+
+  // Module 15: How Loans Work
+  {
+    title: "How Loans Work: The Real Cost",
+    description: "Student loans, car loans, personal loans - understand how they work and what they REALLY cost you! 💰",
+    topic: "Credit & Borrowing",
+    lessonContent: `# How Loans Work: The Real Cost 💰📋
+
+## What Is a Loan?
+
+A loan is when someone (usually a bank) lends you money, and you promise to pay it back **plus interest**.
+
+**Simple example:**
+- You borrow: £1,000
+- Interest rate: 10% per year
+- You pay back: £1,100 (£1,000 + £100 interest)
+
+**You're renting money!** Interest is the rental fee.
+
+## Key Loan Terms 📚
+
+**Principal:** The amount you borrow (£5,000)
+**Interest Rate:** The cost to borrow (5% per year)
+**Term:** How long to repay (3 years)
+**Monthly Payment:** What you pay each month (£150)
+**APR:** Annual Percentage Rate (true cost including fees)
+
+## Types of Loans (What Teens Should Know)
+
+### 1️⃣ Student Loans 🎓
+**Purpose:** Pay for university
+**UK Specific:**
+- Plan 5 (England, after Sept 2023): Pay back 9% of earnings over £25,000
+- Forgiven after 40 years
+- Interest: RPI + 0-3% (based on earnings)
+
+**Example:**
+- £50,000 student loan
+- Earn £30,000/year
+- Pay: 9% of (£30,000 - £25,000) = £450/year = £37.50/month
+
+**Good news:** Only pay what you can afford!
+
+### 2️⃣ Car Loans 🚗
+**Purpose:** Buy a vehicle
+**Typical terms:**
+- 3-5 years
+- 5-10% interest
+- Requires down payment (10-20%)
+
+**Example:**
+- Car costs: £10,000
+- Down payment: £2,000
+- Loan: £8,000 at 7% for 4 years
+- Monthly payment: ~£192
+- **Total paid: £9,216 (£1,216 in interest!)**
+
+### 3️⃣ Personal Loans 💳
+**Purpose:** Any legal purpose
+**Terms:**
+- 1-7 years
+- 5-20% interest (depends on credit score)
+- Fixed monthly payments
+
+**When to use:** Emergency, debt consolidation, large purchase
+**When NOT to use:** Wants, holidays, daily expenses
+
+### 4️⃣ Payday Loans ⚠️ **AVOID!**
+**EXTREMELY DANGEROUS!**
+- 400-1,500% APR (!!)
+- Short term (weeks)
+- Trap people in debt cycle
+
+**Example of horror:**
+- Borrow: £500
+- APR: 1,000%
+- Owe after 1 year: £5,000+
+
+**NEVER use payday loans!**
+
+## How Interest Works 📊
+
+### Simple Interest
+Interest only on original amount.
+- £1,000 at 10% for 3 years
+- Interest each year: £100
+- Total: £1,300
+
+### Compound Interest (Common on Loans)
+Interest on interest!
+- £1,000 at 10% for 3 years
+- Year 1: £1,100
+- Year 2: £1,210
+- Year 3: £1,331
+- **Total: £1,331 (more than simple!)**
+
+## Real Cost Examples 💷
+
+### Example 1: Small Car Loan
+- Loan: £5,000
+- Rate: 8% APR
+- Term: 3 years
+- Monthly: £157
+- **Total paid: £5,652**
+- **Interest cost: £652**
+
+### Example 2: Larger Car Loan
+- Loan: £15,000
+- Rate: 8% APR
+- Term: 5 years
+- Monthly: £304
+- **Total paid: £18,240**
+- **Interest cost: £3,240**
+
+**That's a whole extra car's worth of interest!**
+
+### Example 3: Credit Score Impact
+**Same £10,000 loan over 4 years:**
+
+**Good credit (5% APR):**
+- Monthly: £230
+- Total: £11,040
+- Interest: £1,040
+
+**Bad credit (15% APR):**
+- Monthly: £279
+- Total: £13,392
+- Interest: £3,392
+
+**Difference: £2,352!** Good credit saves THOUSANDS!
+
+## How to Decide: Should I Get a Loan? 🤔
+
+### Good Reasons ✅
+- **Education:** Investing in yourself
+- **Reliable Car for Work:** Need it to earn money
+- **Emergency:** Medical, urgent home repair
+- **Consolidate High-Interest Debt:** Lower your rate
+
+### Bad Reasons ❌
+- **Holiday:** Save first, then go
+- **Wedding:** Don't start marriage in debt
+- **Latest iPhone:** Wants, not needs
+- **Shopping Spree:** Absolutely not
+- **"Everyone else has one":** Peer pressure
+
+### The Test: Ask Yourself
+1. **Is it essential?** Need vs. want
+2. **Can I afford monthly payment?** Calculate carefully
+3. **Will this help me earn more?** Investment or expense
+4. **Can I save instead?** Patience = free money (no interest!)
+5. **What's the total cost?** Monthly × months
+
+## How to Get the Best Loan 💡
+
+### Step 1: Check Your Credit Score
+- Higher score = better rates
+- Build credit before applying
+
+### Step 2: Shop Around
+- Compare 3-5 lenders
+- Check banks, credit unions, online lenders
+- Don't just take first offer
+
+### Step 3: Understand APR
+- APR = true cost (includes fees)
+- Lower APR = better deal
+- 5% vs 7% = big difference over time
+
+### Step 4: Read the Fine Print
+- ⚠️ Early repayment fees?
+- ⚠️ Late payment penalties?
+- ⚠️ Hidden charges?
+
+### Step 5: Calculate Total Cost
+- Monthly payment × number of months
+- Subtract original loan amount
+- = Total interest paid
+
+## Paying Off Loans Faster 🚀
+
+### Strategy 1: Pay Extra Monthly
+- Add £50-100 to each payment
+- Goes straight to principal
+- Saves interest, finish early!
+
+**Example:**
+- £10,000 loan, 5%, 5 years
+- Normal: £189/month, £1,332 interest
+- +£50/month: Paid off in 3.5 years, £912 interest
+- **Saves £420!**
+
+### Strategy 2: Bi-Weekly Payments
+- Pay half your monthly payment every 2 weeks
+- = 26 payments/year = 13 months worth
+- Cuts years off loan!
+
+### Strategy 3: Lump Sum Payments
+- Tax refund, bonus, birthday money
+- Apply directly to principal
+- Major interest savings
+
+## Red Flags to Watch For 🚩
+
+❌ **"No credit check needed!"** = Super high interest
+❌ **"Approval guaranteed!"** = Predatory lender
+❌ **Pressure to sign today** = Scam likely
+❌ **APR over 30%** = Avoid!
+❌ **Can't explain terms clearly** = Walk away
+
+## Student Loan Special Rules (UK) 🎓
+
+### Plan 5 (England, from Sept 2023):
+- Start repaying at £25,000 income
+- Pay 9% of income above threshold
+- Forgiven after 40 years
+- Interest: RPI + 0-3%
+
+### Example Repayments:
+- Earn £25,000: £0/year
+- Earn £30,000: £450/year (£37.50/month)
+- Earn £40,000: £1,350/year (£112.50/month)
+- Earn £50,000: £2,250/year (£187.50/month)
+
+**Key point:** It's more like a graduate tax than a traditional loan!
+
+## Loans vs. Saving 🎯
+
+### Scenario: Need £5,000 for a car
+
+**Option A: Take Loan**
+- Get car today
+- Pay £5,652 total (£652 interest)
+- Pay £157/month for 3 years
+
+**Option B: Save First**
+- Save £157/month for 2 years, 4 months
+- Buy car with £5,000 saved
+- Save £652 (no interest!)
+
+**Patience = Money saved!**
+
+## The Bottom Line 💡
+
+**Loans are tools, not toys.**
+
+✅ Use for: Needs, investments in yourself
+❌ Avoid for: Wants, lifestyle, pressure
+
+**Smart loan rules:**
+1. **Only borrow what you need**
+2. **Shop around for best rate**
+3. **Understand total cost**
+4. **Have repayment plan**
+5. **Pay off early if possible**
+
+**Best loan? The one you don't need to take!**
+
+Saving up = interest-free = winner! 🏆`,
+    activityType: "quiz",
+    activityData: {
+      questions: [
+        {
+          question: "You borrow £2,000 at 10% interest for 1 year. How much interest will you pay?",
+          options: [
+            "£100",
+            "£200",
+            "£300",
+            "£400"
+          ],
+          correctAnswer: 1,
+          explanation: "£2,000 × 10% = £200 interest. You'll pay back £2,200 total (£2,000 principal + £200 interest)."
+        },
+        {
+          question: "What is APR?",
+          options: [
+            "Average Payment Rate",
+            "Annual Percentage Rate - the true cost of the loan",
+            "Approved Payment Required",
+            "After Payment Refund"
+          ],
+          correctAnswer: 1,
+          explanation: "APR = Annual Percentage Rate. It's the true cost of borrowing, including interest AND fees. Always compare APRs when loan shopping!"
+        },
+        {
+          question: "Which type of loan should you NEVER use?",
+          options: [
+            "Student loan",
+            "Car loan",
+            "Payday loan",
+            "Personal loan"
+          ],
+          correctAnswer: 2,
+          explanation: "Payday loans have INSANE interest rates (400-1,500% APR!) and trap people in debt. ALWAYS avoid them! If you need emergency money, try family, credit union, or even a credit card first."
+        },
+        {
+          question: "With UK Plan 5 student loans, when do you start repaying?",
+          options: [
+            "As soon as you graduate",
+            "When you turn 25",
+            "When you earn over £25,000/year",
+            "After 2 years of working"
+          ],
+          correctAnswer: 2,
+          explanation: "Plan 5 student loans: You start repaying when you earn over £25,000/year. You pay 9% of anything above that threshold. Earn under £25K? Pay £0!"
+        },
+        {
+          question: "What's the benefit of paying extra on your loan each month?",
+          options: [
+            "It looks good on your credit report",
+            "You pay less interest and finish early",
+            "The bank gives you a reward",
+            "Your credit score goes up"
+          ],
+          correctAnswer: 1,
+          explanation: "Paying extra goes directly to the principal (the amount you borrowed), which means you pay less interest overall and finish the loan faster. It can save you hundreds or thousands!"
+        },
+        {
+          question: "A £10,000 car loan at 8% for 4 years costs about £240/month. What's the total amount you'll pay?",
+          options: [
+            "£10,000",
+            "£10,800",
+            "£11,520",
+            "£12,000"
+          ],
+          correctAnswer: 2,
+          explanation: "£240/month × 48 months = £11,520 total. You paid £1,520 in interest! This is why interest matters - you're paying for the same car but it costs 15% more because you borrowed."
+        },
+        {
+          question: "How does your credit score affect loan interest rates?",
+          options: [
+            "It doesn't - everyone gets the same rate",
+            "Better credit score = lower interest rate",
+            "Better credit score = higher interest rate",
+            "Only affects if you can get approved, not the rate"
+          ],
+          correctAnswer: 1,
+          explanation: "Better credit score = lower interest rate! Good credit can save you THOUSANDS. Example: £10K loan - 5% (good credit) costs £1,040 interest vs. 15% (bad credit) costs £3,392. That's £2,352 difference!"
+        },
+        {
+          question: "What's a good reason to take out a loan?",
+          options: [
+            "Your friends are going on holiday",
+            "There's a sale on new trainers",
+            "You need a reliable car to get to work",
+            "You want the latest gaming console"
+          ],
+          correctAnswer: 2,
+          explanation: "A reliable car for WORK is a good reason - it helps you earn money! Holidays, trainers, and gaming consoles are WANTS. Save up for those instead of paying interest!"
+        }
+      ]
+    },
+    learningSteps: [
+      {
+        id: "step1",
+        type: "explanation",
+        title: "What Is a Loan?",
+        content: "A loan = You borrow money and pay it back + INTEREST\n\n💷 Borrow: £1,000\n📈 Interest: 10%\n💰 Pay back: £1,100\n\n🏦 Interest = cost of renting money\n\nThe longer you take, the more interest you pay!",
+        emoji: "💰",
+        points: 5
+      },
+      {
+        id: "step2",
+        type: "interactive",
+        title: "Calculate Total Cost",
+        content: "Car loan example:\n\n💷 Loan: £8,000\n📊 Rate: 7% APR\n⏰ Term: 4 years\n💳 Monthly: £192\n\n📍 Total paid = £192 × 48 months = £9,216\n\n❗ Interest = £9,216 - £8,000 = £1,216\n\nYou paid £1,216 just to borrow!",
+        emoji: "🧮",
+        points: 10
+      },
+      {
+        id: "step3",
+        type: "example",
+        title: "Good vs Bad Reasons",
+        content: "✅ GOOD LOAN REASONS:\n• Education (invest in yourself)\n• Car for work (earn money)\n• Emergency repair\n\n❌ BAD LOAN REASONS:\n• Holiday\n• Latest phone\n• Shopping spree\n• Peer pressure\n\n💡 If it's a WANT, SAVE for it!",
+        emoji: "🎯",
+        points: 5
+      }
+    ],
+    points: 400,
+    difficultyLevel: "intermediate",
+    timeEstimate: 20,
+    prerequisites: [],
+    isActive: true,
+    createdBy: "system"
   }
 ];
 

@@ -21,7 +21,8 @@ import {
   ChartBarIcon,
   CogIcon,
   AcademicCapIcon,
-  UserIcon
+  UserIcon,
+  TrendingUpIcon
 } from '@/components/icons';
 import StatsCard from '@/components/theme/StatsCard';
 
@@ -128,6 +129,13 @@ export default function DashboardPage() {
       href: '/dashboard/calculator'
     },
     {
+      title: 'Investment Simulation',
+      description: 'Practice investing in a risk-free environment with real market scenarios',
+      icon: <TrendingUpIcon className="w-8 h-8" />,
+      href: '/dashboard/investment-simulation',
+      badge: 'New'
+    },
+    {
       title: 'Interactive Learning Modules',
       description: 'Master financial concepts through interactive games, simulations, and quizzes',
       icon: <BookOpenIcon className="w-8 h-8" />,
@@ -199,6 +207,13 @@ export default function DashboardPage() {
       description: 'Demonstrate investment concepts with interactive tools',
       icon: <CalculatorIcon className="w-8 h-8" />,
       href: '/dashboard/calculator'
+    },
+    {
+      title: 'Investment Simulation',
+      description: 'Teach investing concepts through interactive market simulations',
+      icon: <TrendingUpIcon className="w-8 h-8" />,
+      href: '/dashboard/investment-simulation',
+      badge: 'New'
     },
     {
       title: 'My Profile',

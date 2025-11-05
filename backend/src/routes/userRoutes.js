@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const {
+  getOrCreateUser,
+  completeOnboarding,
   createOrUpdateUser,
   getUserProfile,
   updateUserProfile,
@@ -20,6 +22,24 @@ const { validateUserCreation, validateUserUpdate } = require('../utils/validator
  * User Routes
  * All routes are protected with Clerk authentication
  */
+
+// --------------------------------------------------------------------
+// 🔹 Clerk → Mongo sync
+// --------------------------------------------------------------------
+
+// @route   GET /api/users/me
+// @desc    Ensure user exists in MongoDB and return profile
+// @access  Private
+router.get('/me', authenticateClerkUser, getOrCreateUser);
+
+// @route   POST /api/users/onboarding
+// @desc    Complete onboarding (update role, school, etc.)
+// @access  Private
+router.post('/onboarding', authenticateClerkUser, completeOnboarding);
+
+// --------------------------------------------------------------------
+// 🔹 Existing profile / stats / gamification routes
+// --------------------------------------------------------------------
 
 // @route   POST /api/user
 // @desc    Create or update user profile

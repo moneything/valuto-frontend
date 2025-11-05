@@ -59,6 +59,31 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     syncUser();
   }, [user, isLoaded, getToken]);
 
+  useEffect(() => {
+    async function fetchUserProfile() {
+      if (user && profile?.completedOnboarding) {
+        try {
+          const token = await getToken(); // Clerk-provided method
+          const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5001'}/api/user`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          if (res.ok) {
+            const data = await res.json();
+            if (data?.data) {
+              setProfile(data.data);
+              saveUserProfile(data.data);
+            }
+          }
+        } catch (err) {
+          console.error("Failed to fetch latest user profile:", err);
+        }
+      }
+    }
+
+    fetchUserProfile();
+  }, [user, profile?.completedOnboarding]);
+
+
   // 🔹 Update user profile both locally + on backend (used in onboarding)
   const updateProfile = async (newProfile: UserProfile) => {
     try {

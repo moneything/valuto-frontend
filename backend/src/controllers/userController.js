@@ -7,31 +7,78 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 
 /**
- * @desc    Create or sync user profile with Clerk
- * @route   POST /api/user
- * @access  Private
+ * @desc Ensure user exists after Clerk login
+ * @route GET /api/users/me
+ * @access Private
+ */
+const getOrCreateUser = asyncHandler(async (req, res) => {
+  const { userId, emailAddress } = req.auth;
+
+  const user = await User.findOneAndUpdate(
+    { clerkUserId: userId },
+    {
+      clerkUserId: userId,
+      email: emailAddress,
+      isActive: true,
+      lastActiveDate: new Date(),
+    },
+    { new: true, upsert: true }
+  );
+
+  res.status(200).json({
+    success: true,
+    data: user,
+  });
+});
+
+/**
+ * @desc Complete onboarding (update role, school, etc.)
+ * @route POST /api/users/onboarding
+ * @access Private
+ */
+const completeOnboarding = asyncHandler(async (req, res) => {
+  const { userId } = req.auth;
+  const updates = req.body;
+
+  const user = await User.findOneAndUpdate(
+    { clerkUserId: userId },
+    {
+      ...updates,
+      completedOnboarding: true,
+      updatedAt: new Date(),
+    },
+    { new: true }
+  );
+
+  if (!user) throw new AppError('User not found', 404);
+
+  res.status(200).json({
+    success: true,
+    message: 'Onboarding completed successfully',
+    data: user,
+  });
+});
+
+/**
+ * @desc Create or update user profile (generic sync)
+ * @route POST /api/user
+ * @access Private
  */
 const createOrUpdateUser = asyncHandler(async (req, res) => {
   const { name, email, role, age, school, grade, subject, completedOnboarding } = req.body;
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
 
-  // Check if user already exists
-  let user = await User.findOne({ clerkUserId });
+  let user = await User.findOne({ clerkUserId: userId });
 
   if (user) {
-    // Update existing user
     user.name = name || user.name;
     user.email = email || user.email;
     user.role = role || user.role;
-
-    // Update optional fields only if provided
     if (age !== undefined) user.age = age;
     if (school !== undefined) user.school = school;
     if (grade !== undefined) user.grade = grade;
     if (subject !== undefined) user.subject = subject;
     if (completedOnboarding !== undefined) user.completedOnboarding = completedOnboarding;
-
-    // Update streak on activity
     user.updateStreak();
 
     await user.save();
@@ -42,11 +89,10 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
       data: user,
     });
   } else {
-    // Create new user
     user = await User.create({
-      clerkUserId,
-      name: name || req.clerkUser.fullName,
-      email: email || req.clerkUser.email,
+      clerkUserId: userId,
+      name,
+      email,
       role: role || 'student',
       age,
       school,
@@ -64,18 +110,15 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get current user profile
- * @route   GET /api/user
- * @access  Private
+ * @desc Get current user profile
+ * @route GET /api/user
+ * @access Private
  */
 const getUserProfile = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
+  const user = await User.findOne({ clerkUserId: userId });
 
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  if (!user) throw new AppError('User profile not found', 404);
 
   res.status(200).json({
     success: true,
@@ -84,28 +127,22 @@ const getUserProfile = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Update user profile
- * @route   PUT /api/user
- * @access  Private
+ * @desc Update user profile
+ * @route PUT /api/user
+ * @access Private
  */
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
   const { name, age, school, grade, subject } = req.body;
 
-  const user = await User.findOne({ clerkUserId });
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Update fields
   if (name) user.name = name;
   if (age !== undefined) user.age = age;
   if (school !== undefined) user.school = school;
   if (grade !== undefined) user.grade = grade;
   if (subject !== undefined) user.subject = subject;
-
-  // Update activity
   user.updateStreak();
 
   await user.save();
@@ -118,31 +155,28 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Get user statistics
- * @route   GET /api/user/stats
- * @access  Private
+ * @desc Get user statistics
+ * @route GET /api/user/stats
+ * @access Private
  */
 const getUserStats = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
+  let user = await User.findOne({ clerkUserId: userId });
 
-  let user = await User.findOne({ clerkUserId });
-
-  // Auto-create user if doesn't exist
+  // Auto-create user if missing
   if (!user) {
-    // Fetch full user data from Clerk
     const { clerkClient } = require('@clerk/clerk-sdk-node');
-    const clerkUser = await clerkClient.users.getUser(clerkUserId);
-    
+    const clerkUser = await clerkClient.users.getUser(userId);
+
     user = await User.create({
-      clerkUserId,
+      clerkUserId: userId,
       name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || 'User',
-      email: clerkUser.emailAddresses[0]?.emailAddress || `user_${clerkUserId}@placeholder.com`,
-      role: 'student', // Default role
+      email: clerkUser.emailAddresses[0]?.emailAddress || `user_${userId}@placeholder.com`,
+      role: 'student',
       completedOnboarding: false,
     });
   }
 
-  // Get additional stats from other models
   const GameResult = require('../models/GameResult');
   const LearningProgress = require('../models/LearningProgress');
   const Challenge = require('../models/Challenge');
@@ -179,23 +213,18 @@ const getUserStats = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Add points to user
- * @route   POST /api/user/points
- * @access  Private
+ * @desc Add points to user
+ * @route POST /api/user/points
+ * @access Private
  */
 const addPoints = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
   const { points, source } = req.body;
 
-  if (!points || points < 0) {
-    throw new AppError('Invalid points value', 400);
-  }
+  if (!points || points < 0) throw new AppError('Invalid points value', 400);
 
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
   user.totalPoints += points;
   user.updateStreak();
@@ -205,88 +234,64 @@ const addPoints = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: `${points} points added successfully`,
-    data: {
-      totalPoints: user.totalPoints,
-      pointsAdded: points,
-      source,
-    },
+    data: { totalPoints: user.totalPoints, pointsAdded: points, source },
   });
 });
 
 /**
- * @desc    Update user game count
- * @route   POST /api/user/game-played
- * @access  Private
+ * @desc Increment game count
+ * @route POST /api/user/game-played
+ * @access Private
  */
 const incrementGameCount = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  const { userId } = req.auth;
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
   user.gamesPlayed += 1;
   user.updateStreak();
-
   await user.save();
 
   res.status(200).json({
     success: true,
     message: 'Game count updated',
-    data: {
-      gamesPlayed: user.gamesPlayed,
-    },
+    data: { gamesPlayed: user.gamesPlayed },
   });
 });
 
 /**
- * @desc    Update user lesson count
- * @route   POST /api/user/lesson-completed
- * @access  Private
+ * @desc Increment lesson count
+ * @route POST /api/user/lesson-completed
+ * @access Private
  */
 const incrementLessonCount = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  const { userId } = req.auth;
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
   user.lessonsCompleted += 1;
   user.updateStreak();
-
   await user.save();
 
   res.status(200).json({
     success: true,
     message: 'Lesson count updated',
-    data: {
-      lessonsCompleted: user.lessonsCompleted,
-    },
+    data: { lessonsCompleted: user.lessonsCompleted },
   });
 });
 
 /**
- * @desc    Add achievement to user
- * @route   POST /api/user/achievement
- * @access  Private
+ * @desc Add achievement to user
+ * @route POST /api/user/achievement
+ * @access Private
  */
 const addAchievement = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
   const { achievementId } = req.body;
+  if (!achievementId) throw new AppError('Achievement ID is required', 400);
 
-  if (!achievementId) {
-    throw new AppError('Achievement ID is required', 400);
-  }
-
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
   user.addAchievement(achievementId);
   await user.save();
@@ -294,154 +299,119 @@ const addAchievement = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     message: 'Achievement unlocked!',
-    data: {
-      achievementId,
-      totalAchievements: user.achievements.length,
-    },
+    data: { achievementId, totalAchievements: user.achievements.length },
   });
 });
 
 /**
- * @desc    Get user achievements
- * @route   GET /api/user/achievements
- * @access  Private
+ * @desc Get achievements
+ * @route GET /api/user/achievements
+ * @access Private
  */
 const getAchievements = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Return user's achievements with metadata
-  const achievements = user.achievements.map(achievement => ({
-    achievementId: achievement.achievementId,
-    unlockedAt: achievement.unlockedAt,
-    icon: getAchievementIcon(achievement.achievementId),
-    title: getAchievementTitle(achievement.achievementId),
-    description: getAchievementDescription(achievement.achievementId),
-    unlocked: true
+  const achievements = user.achievements.map((a) => ({
+    achievementId: a.achievementId,
+    unlockedAt: a.unlockedAt,
+    icon: getAchievementIcon(a.achievementId),
+    title: getAchievementTitle(a.achievementId),
+    description: getAchievementDescription(a.achievementId),
+    unlocked: true,
   }));
 
-  res.status(200).json({
-    success: true,
-    data: achievements,
-  });
+  res.status(200).json({ success: true, data: achievements });
 });
 
 /**
- * @desc    Get user activity log
- * @route   GET /api/user/activity
- * @access  Private
+ * @desc Get activity summary
+ * @route GET /api/user/activity
+ * @access Private
  */
 const getActivity = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
   const { limit = 10 } = req.query;
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // For now, return basic activity based on user stats
-  // In the future, you can create a separate Activity model to track detailed activity
   const activity = [];
-  
-  // Add learning activity
-  if (user.lessonsCompleted > 0) {
+
+  if (user.lessonsCompleted > 0)
     activity.push({
       type: 'lesson',
       title: `Completed ${user.lessonsCompleted} learning module${user.lessonsCompleted > 1 ? 's' : ''}`,
       date: user.lastActiveDate || user.updatedAt,
-      points: 0
+      points: 0,
     });
-  }
 
-  // Add game activity
-  if (user.gamesPlayed > 0) {
+  if (user.gamesPlayed > 0)
     activity.push({
       type: 'game',
       title: `Played ${user.gamesPlayed} trivia game${user.gamesPlayed > 1 ? 's' : ''}`,
       date: user.lastActiveDate || user.updatedAt,
-      points: 0
+      points: 0,
     });
-  }
 
-  // Add achievement activity
-  user.achievements.slice(0, parseInt(limit)).forEach(achievement => {
+  user.achievements.slice(0, parseInt(limit)).forEach((a) =>
     activity.push({
       type: 'achievement',
-      title: `Unlocked "${getAchievementTitle(achievement.achievementId)}" Achievement`,
-      date: achievement.unlockedAt,
-      points: 10
-    });
-  });
+      title: `Unlocked "${getAchievementTitle(a.achievementId)}"`,
+      date: a.unlockedAt,
+      points: 10,
+    })
+  );
 
-  // Sort by date (newest first) and limit
   activity.sort((a, b) => new Date(b.date) - new Date(a.date));
-  const limitedActivity = activity.slice(0, parseInt(limit));
-
-  res.status(200).json({
-    success: true,
-    data: limitedActivity,
-  });
+  res.status(200).json({ success: true, data: activity.slice(0, limit) });
 });
 
-// Helper functions for achievement metadata
-function getAchievementIcon(achievementId) {
+// Metadata helpers
+function getAchievementIcon(id) {
   const icons = {
-    'first_game': '🏆',
-    'knowledge_seeker': '📚',
-    'investment_pro': '💰',
-    'on_fire': '🔥',
-    'perfect_score': '⭐',
-    'top_student': '👑',
+    first_game: '🏆',
+    knowledge_seeker: '📚',
+    investment_pro: '💰',
+    on_fire: '🔥',
+    perfect_score: '⭐',
+    top_student: '👑',
   };
-  return icons[achievementId] || '🎯';
+  return icons[id] || '🎯';
 }
-
-function getAchievementTitle(achievementId) {
+function getAchievementTitle(id) {
   const titles = {
-    'first_game': 'First Game',
-    'knowledge_seeker': 'Knowledge Seeker',
-    'investment_pro': 'Investment Pro',
-    'on_fire': 'On Fire!',
-    'perfect_score': 'Perfect Score',
-    'top_student': 'Top Student',
+    first_game: 'First Game',
+    knowledge_seeker: 'Knowledge Seeker',
+    investment_pro: 'Investment Pro',
+    on_fire: 'On Fire!',
+    perfect_score: 'Perfect Score',
+    top_student: 'Top Student',
   };
-  return titles[achievementId] || 'Achievement';
+  return titles[id] || 'Achievement';
 }
-
-function getAchievementDescription(achievementId) {
+function getAchievementDescription(id) {
   const descriptions = {
-    'first_game': 'Play your first trivia game',
-    'knowledge_seeker': 'Complete 5 learning modules',
-    'investment_pro': 'Reach 1000 total points',
-    'on_fire': 'Maintain a 7-day streak',
-    'perfect_score': 'Get 100% on a trivia game',
-    'top_student': 'Reach #1 on leaderboard',
+    first_game: 'Play your first trivia game',
+    knowledge_seeker: 'Complete 5 learning modules',
+    investment_pro: 'Reach 1000 total points',
+    on_fire: 'Maintain a 7-day streak',
+    perfect_score: 'Get 100% on a trivia game',
+    top_student: 'Reach #1 on leaderboard',
   };
-  return descriptions[achievementId] || 'Complete a special task';
+  return descriptions[id] || 'Complete a special task';
 }
 
 /**
- * @desc    Delete user account
- * @route   DELETE /api/user
- * @access  Private
+ * @desc Soft delete user account
+ * @route DELETE /api/user
+ * @access Private
  */
 const deleteUser = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
+  const { userId } = req.auth;
+  const user = await User.findOne({ clerkUserId: userId });
+  if (!user) throw new AppError('User profile not found', 404);
 
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Soft delete by marking as inactive
   user.isActive = false;
   await user.save();
 
@@ -452,6 +422,8 @@ const deleteUser = asyncHandler(async (req, res) => {
 });
 
 module.exports = {
+  getOrCreateUser,
+  completeOnboarding,
   createOrUpdateUser,
   getUserProfile,
   updateUserProfile,

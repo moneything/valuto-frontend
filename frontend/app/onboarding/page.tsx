@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUser } from '@clerk/nextjs';
+import { useUser, useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
+import { createOrUpdateUser } from '@/lib/api/user';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { 
@@ -48,9 +49,12 @@ export default function OnboardingPage() {
     if (step > 1) setStep(step - 1);
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { getToken } = useAuth()
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+    console.log("Submitting onboarding form...");
+
     const profile: UserProfile = {
       userId: user?.id || '',
       name: formData.name,
@@ -61,12 +65,21 @@ export default function OnboardingPage() {
       grade: formData.role === 'student' ? formData.grade : undefined,
       subject: formData.role === 'teacher' ? formData.subject : undefined,
       completedOnboarding: true,
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
     };
 
-    updateProfile(profile);
-    router.push('/dashboard');
+    try {
+      // const token = await getToken({ template: 'integration_fallback' }); // ✅ get token properly
+      const token = await getToken(); // ✅ get token properly
+
+      await createOrUpdateUser(profile, token); // pass it in
+      updateProfile(profile);
+      router.push('/dashboard');
+    } catch (error) {
+      console.error('❌ Failed to sync user profile:', error);
+    }
   };
+
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50 flex items-center justify-center p-4">
@@ -155,7 +168,8 @@ export default function OnboardingPage() {
               
               <Choicebox 
                 value={formData.role} 
-                onValueChange={(value) => setFormData({ ...formData, role: value as 'student' | 'teacher' })}
+                // onValueChange={(value) => setFormData({ ...formData, role: value as 'student' | 'teacher' })}
+                onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value as 'student' | 'teacher' }))}
                 className="grid grid-cols-1 md:grid-cols-2 gap-4"
               >
                 <ChoiceboxItem value="student" className="border-2 hover:border-valuto-green-300">

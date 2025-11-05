@@ -206,6 +206,10 @@ const startServer = async () => {
   }
 };
 
+const webhookRoutes = require("./routes/webhookRoutes");
+app.use("/api/webhooks", webhookRoutes);
+
+
 // Start the server
 startServer();
 

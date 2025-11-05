@@ -40,12 +40,22 @@ const authenticateClerkUser = async (req, res, next) => {
 
       // Attach user information from JWT payload
       req.clerkUser = {
-        id: payload.sub, // Clerk user ID
+        id: payload.sub,
         email: payload.email,
         firstName: payload.first_name,
         lastName: payload.last_name,
         fullName: `${payload.first_name || ''} ${payload.last_name || ''}`.trim(),
       };
+
+      // 👇 Add this line for compatibility with the controller
+      req.auth = {
+        userId: payload.sub,
+        emailAddress: payload.email,
+        firstName: payload.first_name,
+        lastName: payload.last_name,
+        fullName: `${payload.first_name || ''} ${payload.last_name || ''}`.trim(),
+      };
+
 
       // Continue to next middleware/controller
       next();

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUser, useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
@@ -27,19 +27,31 @@ import {
 
 export default function OnboardingPage() {
   const router = useRouter();
-  const { user } = useUser();
+  const { user, isLoaded } = useUser(); // ✅ include isLoaded
   const { updateProfile } = useUserProfile();
-  
+  const { getToken } = useAuth();
+
   const [step, setStep] = useState(1);
   const [formData, setFormData] = useState({
-    name: user?.fullName || '',
-    email: user?.primaryEmailAddress?.emailAddress || '',
+    name: '',
+    email: '',
     role: 'student' as 'student' | 'teacher',
     age: '',
     school: '',
     grade: '',
     subject: ''
   });
+
+  // ✅ Wait for Clerk to load before setting initial form data
+  useEffect(() => {
+    if (isLoaded && user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.fullName || '',
+        email: user.primaryEmailAddress?.emailAddress || '',
+      }));
+    }
+  }, [isLoaded, user]);
 
   const handleNext = () => {
     if (step < 3) setStep(step + 1);
@@ -48,8 +60,6 @@ export default function OnboardingPage() {
   const handleBack = () => {
     if (step > 1) setStep(step - 1);
   };
-
-  const { getToken } = useAuth()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -69,10 +79,8 @@ export default function OnboardingPage() {
     };
 
     try {
-      // const token = await getToken({ template: 'integration_fallback' }); // ✅ get token properly
-      const token = await getToken(); // ✅ get token properly
-
-      await createOrUpdateUser(profile, token); // pass it in
+      const token = await getToken();
+      await createOrUpdateUser(profile, token);
       updateProfile(profile);
       router.push('/dashboard');
     } catch (error) {
@@ -80,6 +88,14 @@ export default function OnboardingPage() {
     }
   };
 
+  // ✅ Defensive UX: show loading screen while Clerk initializes
+  if (!isLoaded) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
+        <p className="text-gray-600 text-lg">Loading your profile...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50 flex items-center justify-center p-4">
@@ -140,6 +156,7 @@ export default function OnboardingPage() {
                   disabled
                   value={formData.email}
                   className="w-full px-4 py-3 h-12 border-2 border-gray-100 rounded-lg bg-gray-50 text-gray-500"
+                  placeholder="Loading email..."
                 />
               </div>
 
@@ -167,8 +184,7 @@ export default function OnboardingPage() {
               <h2 className="text-2xl font-bold text-gray-900 mb-6">I am a...</h2>
               
               <Choicebox 
-                value={formData.role} 
-                // onValueChange={(value) => setFormData({ ...formData, role: value as 'student' | 'teacher' })}
+                value={formData.role}
                 onValueChange={(value) => setFormData((prev) => ({ ...prev, role: value as 'student' | 'teacher' }))}
                 className="grid grid-cols-1 md:grid-cols-2 gap-4"
               >
@@ -301,5 +317,3 @@ export default function OnboardingPage() {
     </div>
   );
 }
-
-

@@ -37,6 +37,8 @@ export default function DashboardLayout({
     );
   }
 
+  console.log('User profile in layout:', profile);
+
   return (
     <div className="min-h-screen animate-gradient relative overflow-hidden">
       {/* Decorative elements - adjusted to avoid dock area */}

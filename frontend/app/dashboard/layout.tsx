@@ -1,3 +1,5 @@
+// frontend/app/dashboard/layout.tsx
+
 "use client";
 
 import { useEffect } from 'react';
@@ -19,12 +21,19 @@ export default function DashboardLayout({
   const { profile, loading } = useUserProfile();
 
   useEffect(() => {
-    if (isLoaded && !isSignedIn) {
+    if (!isLoaded || loading) return; // wait for both Clerk and profile to load
+
+    if (!isSignedIn) {
       router.push('/');
-    } else if (isLoaded && isSignedIn && profile && !profile.completedOnboarding) {
+      return;
+    }
+
+    // only redirect if the user definitely has completedOnboarding === false
+    if (profile && profile.completedOnboarding === false) {
       router.push('/onboarding');
     }
-  }, [isLoaded, isSignedIn, profile, router]);
+  }, [isLoaded, isSignedIn, loading, profile, router]);
+
 
   if (!isLoaded || loading) {
     return (

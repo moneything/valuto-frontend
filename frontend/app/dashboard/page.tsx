@@ -1,19 +1,19 @@
 "use client";
 
-import { useEffect, useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
-import { useUser as useClerkUser, useAuth } from '@clerk/nextjs';
-import { useUser } from '@/lib/userContext';
-import DashboardCard from '@/components/DashboardCard';
-import RoleSwitcher from '@/components/RoleSwitcher';
-import NewsAndEvents from '@/components/NewsAndEvents';
-import { userApi } from '@/lib/api';
-import { 
-  GameControllerIcon, 
-  CalculatorIcon, 
-  BookOpenIcon, 
-  TrophyIcon, 
-  CrownIcon, 
+import { useEffect, useState, useCallback } from "react";
+import { useRouter } from "next/navigation";
+import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
+import { useUser } from "@/lib/userContext"; // ✅ same hook
+import DashboardCard from "@/components/DashboardCard";
+import RoleSwitcher from "@/components/RoleSwitcher";
+import NewsAndEvents from "@/components/NewsAndEvents";
+import { userApi } from "@/lib/api";
+import {
+  GameControllerIcon,
+  CalculatorIcon,
+  BookOpenIcon,
+  TrophyIcon,
+  CrownIcon,
   TargetIcon,
   LightBulbIcon,
   PlusIcon,
@@ -22,73 +22,67 @@ import {
   CogIcon,
   AcademicCapIcon,
   UserIcon,
-  TrendingUpIcon
-} from '@/components/icons';
-import StatsCard from '@/components/theme/StatsCard';
+  TrendingUpIcon,
+} from "@/components/icons";
+import StatsCard from "@/components/theme/StatsCard";
 
 export default function DashboardPage() {
   const router = useRouter();
   const { getToken } = useAuth();
   const { user: clerkUser, isLoaded: isClerkLoaded } = useClerkUser();
-  const { userProfile, isLoadingProfile, isTeacher, isStudent } = useUser();
+
+  // ✅ align names with userContext
+  const { profile, isLoadingProfile, isTeacher, isStudent } = useUser();
+
   const [userStats, setUserStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(true);
 
-  // Fetch user stats from API
   const fetchStats = useCallback(async () => {
-    if (!userProfile) return;
-    
+    if (!profile) return;
+
     try {
       setLoadingStats(true);
       const token = await getToken();
       if (!token) return;
-      
+
       const response = await userApi.getStats(token);
       if (response.success && response.data) {
         setUserStats(response.data);
       }
     } catch (error) {
-      console.error('Failed to fetch user stats:', error);
+      console.error("Failed to fetch user stats:", error);
     } finally {
       setLoadingStats(false);
     }
-  }, [userProfile, getToken]);
+  }, [profile, getToken]);
 
   useEffect(() => {
     fetchStats();
   }, [fetchStats]);
 
-  // Refetch stats when page becomes visible (e.g., after completing a module)
   useEffect(() => {
     const handleVisibilityChange = () => {
-      if (document.visibilityState === 'visible') {
+      if (document.visibilityState === "visible") {
         fetchStats();
       }
     };
-
-    const handleFocus = () => {
-      fetchStats();
-    };
-
-    document.addEventListener('visibilitychange', handleVisibilityChange);
-    window.addEventListener('focus', handleFocus);
-
+    window.addEventListener("focus", fetchStats);
+    document.addEventListener("visibilitychange", handleVisibilityChange);
     return () => {
-      document.removeEventListener('visibilitychange', handleVisibilityChange);
-      window.removeEventListener('focus', handleFocus);
+      window.removeEventListener("focus", fetchStats);
+      document.removeEventListener("visibilitychange", handleVisibilityChange);
     };
   }, [fetchStats]);
 
-  // Redirect to onboarding if user hasn't completed it
+  // ✅ redirect logic stays same
   useEffect(() => {
-    if (isClerkLoaded && !isLoadingProfile) {
-      if (clerkUser && !userProfile) {
-        router.push('/onboarding');
-      }
+    if (!isClerkLoaded || isLoadingProfile) return;
+    if (clerkUser && profile?.completedOnboarding === false) {
+      router.push("/onboarding");
     }
-  }, [isClerkLoaded, isLoadingProfile, clerkUser, userProfile, router]);
+  }, [isClerkLoaded, isLoadingProfile, clerkUser, profile, router]);
 
-  // Show loading state
+  // ✅ loading state (consistent)
   if (!isClerkLoaded || isLoadingProfile) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -100,12 +94,8 @@ export default function DashboardPage() {
     );
   }
 
-  // If no profile yet, don't render (will redirect)
-  if (!userProfile) {
-    return null;
-  }
-
-  const profile = userProfile;
+  // ✅ this now works correctly
+  if (!profile) return null;
 
   const studentCards: Array<{
     title: string;

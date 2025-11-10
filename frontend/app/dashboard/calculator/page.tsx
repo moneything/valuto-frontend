@@ -1,280 +1,695 @@
+// frontend/app/dashboard/calculator/page.tsx (or your current path)
+// "use client" must be at top for hooks.
 "use client";
 
-import { useState } from 'react';
-import PageLayout from '@/components/theme/PageLayout';
-import Card from '@/components/theme/Card';
-import { CalculatorIcon } from '@/components/icons';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import { useMemo, useState } from "react";
+import PageLayout from "@/components/theme/PageLayout";
+import Card from "@/components/theme/Card";
+import Button from "@/components/theme/Button";
+import { CalculatorIcon } from "@/components/icons";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
-export default function CalculatorPage() {
-  const [initialAmount, setInitialAmount] = useState('1000');
-  const [monthlyContribution, setMonthlyContribution] = useState('100');
-  const [interestRate, setInterestRate] = useState('7');
-  const [years, setYears] = useState('10');
-  
-  const calculateInvestment = () => {
-    const initial = parseFloat(initialAmount) || 0;
-    const monthly = parseFloat(monthlyContribution) || 0;
-    const rate = parseFloat(interestRate) / 100 || 0;
-    const time = parseInt(years) || 0;
-    
-    // Compound interest calculation
-    const monthlyRate = rate / 12;
-    const months = time * 12;
-    
-    // Future value of initial investment
-    const futureValueInitial = initial * Math.pow(1 + monthlyRate, months);
-    
-    // Future value of monthly contributions
-    const futureValueMonthly = monthly * ((Math.pow(1 + monthlyRate, months) - 1) / monthlyRate);
-    
-    const totalValue = futureValueInitial + futureValueMonthly;
-    const totalContributed = initial + (monthly * months);
-    const totalInterest = totalValue - totalContributed;
-    
+type TabKey = "compound" | "retirement" | "goal";
+
+export default function InvestmentCalculatorPage() {
+  // -------------------- UI State --------------------
+  const [activeTab, setActiveTab] = useState<TabKey>("compound");
+  const [tip, setTip] = useState<string | null>(null);
+
+  // -------------------- Inputs ----------------------
+  // Compound Interest
+  const [compound, setCompound] = useState({
+    principal: 1000,
+    monthlyContribution: 100,
+    annualRate: 7,
+    years: 10,
+  });
+
+  // Retirement
+  const [retirement, setRetirement] = useState({
+    currentAge: 18,
+    retirementAge: 65,
+    currentSavings: 0,
+    monthlyContribution: 200,
+    expectedReturn: 7,
+    inflationRate: 3,
+  });
+
+  // Goal
+  const [goal, setGoal] = useState({
+    targetAmount: 10000,
+    timeframe: 5,
+    expectedReturn: 7,
+    initialAmount: 500,
+  });
+
+  // -------------------- Calculations ----------------
+  const compoundResults = useMemo(() => {
+    const { principal, monthlyContribution, annualRate, years } = compound;
+    const r = (annualRate / 100) / 12;
+    const n = Math.max(0, years) * 12;
+
+    const principalFV = principal * Math.pow(1 + r, n);
+    const contributionsFV = r === 0
+      ? monthlyContribution * n
+      : monthlyContribution * ((Math.pow(1 + r, n) - 1) / r);
+
+    const totalValue = principalFV + contributionsFV;
+    const totalContributions = principal + monthlyContribution * n;
+    const totalGrowth = Math.max(0, totalValue - totalContributions);
+    const growthPct = totalContributions > 0 ? Math.round((totalGrowth / totalContributions) * 100) : 0;
+
     return {
-      totalValue,
-      totalContributed,
-      totalInterest
+      totalValue: Math.round(totalValue),
+      totalContributions: Math.round(totalContributions),
+      totalGrowth: Math.round(totalGrowth),
+      growthPct,
+      barPct: totalValue > 0 ? (totalContributions / totalValue) * 100 : 0,
     };
+  }, [compound]);
+
+  const retirementResults = useMemo(() => {
+    const {
+      currentAge,
+      retirementAge,
+      currentSavings,
+      monthlyContribution,
+      expectedReturn,
+      inflationRate,
+    } = retirement;
+
+    const yearsToRetirement = Math.max(0, retirementAge - currentAge);
+    const r = (expectedReturn / 100) / 12;
+    const n = yearsToRetirement * 12;
+
+    const currentSavingsFV = currentSavings * Math.pow(1 + r, n);
+    const contributionsFV = r === 0
+      ? monthlyContribution * n
+      : monthlyContribution * ((Math.pow(1 + r, n) - 1) / r);
+
+    const totalFund = currentSavingsFV + contributionsFV;
+    const monthlyIncome = (totalFund * 0.04) / 12;
+    const realValue = totalFund / Math.pow(1 + inflationRate / 100, yearsToRetirement);
+
+    return {
+      totalFund: Math.round(totalFund),
+      monthlyIncome: Math.round(monthlyIncome),
+      realValue: Math.round(realValue),
+      yearsToRetirement,
+    };
+  }, [retirement]);
+
+  const goalResults = useMemo(() => {
+    const { targetAmount, timeframe, expectedReturn, initialAmount } = goal;
+    const r = (expectedReturn / 100) / 12;
+    const n = Math.max(0, timeframe) * 12;
+
+    const factor = Math.pow(1 + r, n);
+    const initialAmountFV = initialAmount * factor;
+    const remaining = Math.max(0, targetAmount - initialAmountFV);
+
+    const monthlyPayment = r === 0
+      ? remaining / n
+      : remaining / ((factor - 1) / r);
+
+    const totalContributions = initialAmount + (monthlyPayment * n);
+    return {
+      monthlyPayment: Math.round(Math.max(0, monthlyPayment || 0)),
+      totalContributions: Math.round(Math.max(0, totalContributions)),
+      interestEarned: Math.round(Math.max(0, targetAmount - totalContributions)),
+    };
+  }, [goal]);
+
+  // -------------------- Tips ------------------------
+  const tips: Record<TabKey, string[]> = {
+    compound: [
+      "Start early—time in the market is your biggest ally.",
+      "Increase your monthly contribution by 1–2% each year.",
+      "Stay the course; avoid panic selling during dips.",
+      "Use tax-advantaged accounts (e.g. ISA) when possible.",
+    ],
+    retirement: [
+      "Aim to cover 70–80% of pre-retirement income.",
+      "The 4% rule: withdraw ~4% yearly to help preserve capital.",
+      "Inflation matters—plan with 2–3% per year.",
+      "Consistency beats intensity—invest every month.",
+    ],
+    goal: [
+      "Set SMART goals: specific, measurable, achievable, relevant, time-bound.",
+      "Automate transfers so saving happens on autopilot.",
+      "Review & adjust annually as circumstances change.",
+      "Break big goals into milestones to stay motivated.",
+    ],
   };
 
-  const result = calculateInvestment();
-
-  const formatCurrency = (value: number) => {
-    return new Intl.NumberFormat('en-GB', {
-      style: 'currency',
-      currency: 'GBP',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(value);
+  const handleGetTip = () => {
+    const arr = tips[activeTab];
+    const random = arr[Math.floor(Math.random() * arr.length)];
+    setTip(random);
+    // Hide after a while
+    setTimeout(() => setTip(null), 5000);
   };
 
+  // -------------------- Helpers ---------------------
+  const fmtGBP = (v: number) =>
+    new Intl.NumberFormat("en-GB", {
+      style: "currency",
+      currency: "GBP",
+      maximumFractionDigits: 0,
+    }).format(isFinite(v) ? v : 0);
+
+  const Pill = ({ children }: { children: React.ReactNode }) => (
+    <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+      {children}
+    </span>
+  );
+
+  const TabButton = ({ value, label, icon }: { value: TabKey; label: string; icon: React.ReactNode }) => {
+    const active = activeTab === value;
+    return (
+      <button
+        onClick={() => setActiveTab(value)}
+        className={`flex items-center justify-center gap-2 rounded-lg border px-4 py-2 text-sm font-semibold transition
+          ${active ? "bg-white text-valuto-green-700 border-valuto-green-600 shadow-sm" : "bg-gray-50 hover:bg-gray-100 border-gray-200 text-gray-700"}`}
+      >
+        {icon}
+        {label}
+      </button>
+    );
+  };
+
+  // -------------------- UI --------------------------
   return (
     <PageLayout
       title="Investment Calculator"
-      subtitle="See how your money can grow over time with compound interest"
+      subtitle="Plan your financial future with smart calculations"
       icon={<CalculatorIcon className="w-16 h-16 text-valuto-green-600" />}
     >
+      {/* Header banner with Get Tip */}
+      <Card className="mb-6 bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 text-white border-0">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold">Investment Calculator</h1>
+            <p className="opacity-90">Plan your financial future with smart calculations</p>
+          </div>
+          <Button onClick={handleGetTip} variant="secondary" className="bg-white/15 hover:bg-white/25 text-white">
+            💡 Get Tip
+          </Button>
+        </div>
+        {tip && (
+          <div className="mt-4 rounded-lg bg-white/10 px-4 py-3 text-sm">
+            {tip}
+          </div>
+        )}
+      </Card>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* Input Section */}
-        <Card padding="lg">
-          <h2 className="text-2xl font-bold text-gray-900 mb-6">Your Investment Details</h2>
-          
-          <div className="space-y-6">
-            {/* Initial Amount */}
-            <div className="space-y-2">
-              <Label className="flex justify-between text-sm font-semibold text-gray-700">
-                <span>Initial Investment</span>
-                <span className="text-valuto-green-600">{formatCurrency(parseFloat(initialAmount) || 0)}</span>
-              </Label>
-              <input
-                type="range"
-                min="0"
-                max="50000"
-                step="100"
-                value={initialAmount}
-                onChange={(e) => setInitialAmount(e.target.value)}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-              />
-              <Input
-                type="number"
-                value={initialAmount}
-                onChange={(e) => setInitialAmount(e.target.value)}
-                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
-                placeholder="Initial amount"
-              />
-            </div>
-
-            {/* Monthly Contribution */}
-            <div className="space-y-2">
-              <Label className="flex justify-between text-sm font-semibold text-gray-700">
-                <span>Monthly Contribution</span>
-                <span className="text-valuto-green-600">{formatCurrency(parseFloat(monthlyContribution) || 0)}</span>
-              </Label>
-              <input
-                type="range"
-                min="0"
-                max="2000"
-                step="10"
-                value={monthlyContribution}
-                onChange={(e) => setMonthlyContribution(e.target.value)}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-              />
-              <Input
-                type="number"
-                value={monthlyContribution}
-                onChange={(e) => setMonthlyContribution(e.target.value)}
-                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
-                placeholder="Monthly contribution"
-              />
-            </div>
-
-            {/* Interest Rate */}
-            <div className="space-y-2">
-              <Label className="flex justify-between text-sm font-semibold text-gray-700">
-                <span>Expected Annual Return</span>
-                <span className="text-valuto-green-600">{interestRate}%</span>
-              </Label>
-              <input
-                type="range"
-                min="0"
-                max="20"
-                step="0.5"
-                value={interestRate}
-                onChange={(e) => setInterestRate(e.target.value)}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-              />
-              <Input
-                type="number"
-                value={interestRate}
-                onChange={(e) => setInterestRate(e.target.value)}
-                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
-                placeholder="Interest rate %"
-                step="0.1"
-              />
-            </div>
-
-            {/* Time Period */}
-            <div className="space-y-2">
-              <Label className="flex justify-between text-sm font-semibold text-gray-700">
-                <span>Time Period</span>
-                <span className="text-valuto-green-600">{years} years</span>
-              </Label>
-              <input
-                type="range"
-                min="1"
-                max="40"
-                step="1"
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider"
-              />
-              <Input
-                type="number"
-                value={years}
-                onChange={(e) => setYears(e.target.value)}
-                className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
-                placeholder="Number of years"
-              />
+      {/* How to Use */}
+      <Card className="mb-6">
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-emerald-600 text-xl">📖</span>
+          <h2 className="text-xl font-semibold">How to Use This Calculator Properly</h2>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          <div className="flex gap-3">
+            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">1</div>
+            <div>
+              <div className="font-medium text-sm">Be Realistic</div>
+              <p className="text-xs text-gray-600">
+                Use conservative returns (5–8% for stocks, 2–4% for bonds). Markets fluctuate—don’t assume constant high returns.
+              </p>
             </div>
           </div>
+          <div className="flex gap-3">
+            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">2</div>
+            <div>
+              <div className="font-medium text-sm">Account for Inflation</div>
+              <p className="text-xs text-gray-600">
+                £1 today won’t buy the same in 20 years. Factor in ~2–3% annual inflation.
+              </p>
+            </div>
+          </div>
+          <div className="flex gap-3">
+            <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">3</div>
+            <div>
+              <div className="font-medium text-sm">Start Small</div>
+              <p className="text-xs text-gray-600">
+                Even £10–50/month compounds into meaningful wealth over time.
+              </p>
+            </div>
+          </div>
+        </div>
+      </Card>
 
-          {/* Info Box */}
-          <div className="mt-6 p-4 bg-valuto-green-50 rounded-lg border border-valuto-green-200">
-            <div className="flex items-start space-x-2">
-              <span className="text-xl">💡</span>
-              <div>
-                <p className="text-sm font-semibold text-valuto-green-900 mb-1">
-                  Historical Average Returns
-                </p>
-                <p className="text-xs text-valuto-green-700">
-                  The stock market historically returns about 7-10% annually over the long term. Remember, past performance doesn't guarantee future results!
+      {/* Tabs */}
+      <div className="mb-6 flex flex-col gap-2">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+          <TabButton value="compound" label="Compound Interest" icon={<span>📈</span>} />
+          <TabButton value="retirement" label="Retirement" icon={<span>🐷</span>} />
+          <TabButton value="goal" label="Savings Goal" icon={<span>🎯</span>} />
+        </div>
+      </div>
+
+      {/* Tab Panels */}
+      {activeTab === "compound" && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Left: Inputs */}
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-emerald-600">💲</span>
+              <h3 className="text-lg font-bold">Investment Details</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">
+              Enter your investment parameters to see how compound interest works
+            </p>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Initial Investment (£)</Label>
+                <Input
+                  type="number"
+                  value={compound.principal}
+                  onChange={(e) => setCompound({ ...compound, principal: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Monthly Contribution (£)</Label>
+                <Input
+                  type="number"
+                  value={compound.monthlyContribution}
+                  onChange={(e) => setCompound({ ...compound, monthlyContribution: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Annual Return (%)</Label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={compound.annualRate}
+                  onChange={(e) => setCompound({ ...compound, annualRate: Number(e.target.value) })}
+                />
+                <p className="text-xs text-gray-500">
+                  Historical stock market average: 7–10%. Be conservative with estimates.
                 </p>
               </div>
-            </div>
-          </div>
-        </Card>
-
-        {/* Results Section */}
-        <div className="space-y-6">
-          {/* Total Value Card */}
-          <Card className="bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white border-0">
-            <h3 className="text-lg font-semibold mb-2 opacity-90">Total Value After {years} Years</h3>
-            <p className="text-5xl font-bold mb-4 font-numbers">{formatCurrency(result.totalValue)}</p>
-            <div className="pt-4 border-t border-valuto-green-500">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm opacity-75 mb-1">Total Contributed</p>
-                  <p className="text-xl font-bold font-numbers">{formatCurrency(result.totalContributed)}</p>
-                </div>
-                <div>
-                  <p className="text-sm opacity-75 mb-1">Total Interest</p>
-                  <p className="text-xl font-bold font-numbers">{formatCurrency(result.totalInterest)}</p>
-                </div>
+              <div className="space-y-2">
+                <Label>Investment Period (Years)</Label>
+                <Input
+                  type="number"
+                  value={compound.years}
+                  onChange={(e) => setCompound({ ...compound, years: Number(e.target.value) })}
+                />
               </div>
             </div>
           </Card>
 
-          {/* Breakdown Cards */}
-          <div className="grid grid-cols-2 gap-4">
-            <Card>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-semibold text-gray-600">Your Money</p>
-                <span className="text-2xl">💵</span>
-              </div>
-              <p className="text-2xl font-bold text-gray-900 font-numbers">{formatCurrency(result.totalContributed)}</p>
-              <p className="text-xs text-gray-500 mt-1">
-                {((result.totalContributed / result.totalValue) * 100).toFixed(1)}% of total
-              </p>
-            </Card>
+          {/* Right: Results */}
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-emerald-600">📊</span>
+              <h3 className="text-lg font-bold">Results</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">See how your money grows over time</p>
 
-            <Card>
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm font-semibold text-gray-600">Interest Earned</p>
-                <span className="text-2xl">📈</span>
+            <div className="grid grid-cols-2 gap-4">
+              <div className="rounded-lg bg-emerald-50 p-4 text-center">
+                <div className="text-2xl font-bold text-emerald-700">{fmtGBP(compoundResults.totalValue)}</div>
+                <div className="text-xs text-gray-600 mt-1">Final Value</div>
               </div>
-              <p className="text-2xl font-bold text-valuto-green-600 font-numbers">{formatCurrency(result.totalInterest)}</p>
-              <p className="text-xs text-gray-500 mt-1">
-                {((result.totalInterest / result.totalValue) * 100).toFixed(1)}% of total
-              </p>
-            </Card>
-          </div>
-
-          {/* Achievement */}
-          {result.totalValue > 50000 && (
-            <Card className="bg-gradient-to-r from-yellow-400 to-yellow-500 text-white border-0">
-              <div className="flex items-center space-x-3">
-                <span className="text-3xl">🏆</span>
-                <div>
-                  <h4 className="font-bold text-lg">Achievement Unlocked!</h4>
-                  <p className="text-sm opacity-90">Future Millionaire - On track to £50K+</p>
-                </div>
+              <div className="rounded-lg bg-emerald-50 p-4 text-center">
+                <div className="text-2xl font-bold text-emerald-700">{fmtGBP(compoundResults.totalGrowth)}</div>
+                <div className="text-xs text-gray-600 mt-1">Interest Earned</div>
               </div>
-            </Card>
-          )}
+            </div>
 
-          {/* Educational Content */}
-          <Card>
-            <h3 className="text-lg font-bold text-gray-900 mb-3">🎓 Understanding Compound Interest</h3>
-            <p className="text-sm text-gray-600 leading-relaxed mb-3">
-              Compound interest means earning interest on your interest! The earlier you start investing, 
-              the more time your money has to grow exponentially.
-            </p>
-            <div className="bg-valuto-green-50 rounded-lg p-4">
-              <p className="text-xs font-semibold text-valuto-green-900 mb-2">The Power of Time</p>
-              <p className="text-xs text-valuto-green-700">
-                If you started with £{initialAmount} and added £{monthlyContribution}/month at {interestRate}% 
-                for {years} years, you'd earn £{formatCurrency(result.totalInterest).replace('£', '')} in interest alone!
+            {/* Progress (Your money vs interest) */}
+            <div className="mt-5 space-y-2">
+              <div className="flex justify-between text-xs">
+                <span>Your Contributions: {fmtGBP(compoundResults.totalContributions)}</span>
+                <span>Growth: {compoundResults.growthPct}%</span>
+              </div>
+              <div className="h-3 w-full rounded-full bg-gray-200 overflow-hidden">
+                <div
+                  className="h-full bg-emerald-600"
+                  style={{ width: `${Math.min(100, Math.max(0, compoundResults.barPct))}%` }}
+                />
+              </div>
+              <div className="flex justify-between text-[11px] text-gray-500">
+                <span>Your Money</span>
+                <span>Interest Earned</span>
+              </div>
+            </div>
+
+            {/* Inline “alert” */}
+            <div className="mt-5 flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm">
+              <span className="mt-0.5">✅</span>
+              <p>
+                Your money would grow by <strong>{fmtGBP(compoundResults.totalGrowth)}</strong> through compound
+                interest — that’s <strong>{compoundResults.growthPct}%</strong> growth on your contributions!
               </p>
             </div>
           </Card>
         </div>
-      </div>
+      )}
 
-      {/* CSS for slider */}
-      <style jsx>{`
-        .slider::-webkit-slider-thumb {
-          appearance: none;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #16a34a;
-          cursor: pointer;
-        }
-        
-        .slider::-moz-range-thumb {
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #16a34a;
-          cursor: pointer;
-          border: none;
-        }
-      `}</style>
+      {activeTab === "retirement" && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-amber-600">📆</span>
+              <h3 className="text-lg font-bold">Retirement Planning</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">Plan for a comfortable retirement starting today</p>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Current Age</Label>
+                <Input
+                  type="number"
+                  value={retirement.currentAge}
+                  onChange={(e) => setRetirement({ ...retirement, currentAge: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Retirement Age</Label>
+                <Input
+                  type="number"
+                  value={retirement.retirementAge}
+                  onChange={(e) => setRetirement({ ...retirement, retirementAge: Number(e.target.value) })}
+                />
+              </div>
+            </div>
+
+            <div className="space-y-2 mt-4">
+              <Label>Current Savings (£)</Label>
+              <Input
+                type="number"
+                value={retirement.currentSavings}
+                onChange={(e) => setRetirement({ ...retirement, currentSavings: Number(e.target.value) })}
+              />
+            </div>
+
+            <div className="space-y-2 mt-4">
+              <Label>Monthly Contribution (£)</Label>
+              <Input
+                type="number"
+                value={retirement.monthlyContribution}
+                onChange={(e) => setRetirement({ ...retirement, monthlyContribution: Number(e.target.value) })}
+              />
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+              <div className="space-y-2">
+                <Label>Expected Return (%)</Label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={retirement.expectedReturn}
+                  onChange={(e) => setRetirement({ ...retirement, expectedReturn: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Inflation Rate (%)</Label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={retirement.inflationRate}
+                  onChange={(e) => setRetirement({ ...retirement, inflationRate: Number(e.target.value) })}
+                />
+              </div>
+            </div>
+          </Card>
+
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-amber-600">🐷</span>
+              <h3 className="text-lg font-bold">Retirement Projections</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">Your estimated retirement fund and income</p>
+
+            <div className="rounded-lg bg-amber-50 p-5 text-center">
+              <div className="text-3xl font-bold text-amber-700">{fmtGBP(retirementResults.totalFund)}</div>
+              <div className="text-xs text-gray-600">Total Retirement Fund</div>
+              <div className="text-[11px] text-gray-500 mt-1">
+                In {retirementResults.yearsToRetirement} years
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 gap-4 mt-4">
+              <div className="rounded-lg bg-emerald-50 p-4 text-center">
+                <div className="text-xl font-bold text-emerald-700">{fmtGBP(retirementResults.monthlyIncome)}</div>
+                <div className="text-xs text-gray-600">Monthly Income</div>
+                <div className="text-[11px] text-gray-500">(4% rule)</div>
+              </div>
+              <div className="rounded-lg bg-blue-50 p-4 text-center">
+                <div className="text-xl font-bold text-blue-700">{fmtGBP(retirementResults.realValue)}</div>
+                <div className="text-xs text-gray-600">Today's Value</div>
+                <div className="text-[11px] text-gray-500">(inflation-adjusted)</div>
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm">
+              <span className="mt-0.5">ℹ️</span>
+              <p>
+                Based on the 4% rule, you could withdraw <strong>{fmtGBP(retirementResults.monthlyIncome)}</strong> per
+                month in retirement while helping to preserve your capital.
+              </p>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {activeTab === "goal" && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-indigo-600">🎯</span>
+              <h3 className="text-lg font-bold">Savings Goal</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">Calculate how much to save monthly for your goal</p>
+
+            <div className="space-y-4">
+              <div className="space-y-2">
+                <Label>Target Amount (£)</Label>
+                <Input
+                  type="number"
+                  value={goal.targetAmount}
+                  onChange={(e) => setGoal({ ...goal, targetAmount: Number(e.target.value) })}
+                />
+                <p className="text-xs text-gray-500">e.g. £5,000 emergency fund, £20,000 house deposit</p>
+              </div>
+              <div className="space-y-2">
+                <Label>Timeframe (Years)</Label>
+                <Input
+                  type="number"
+                  value={goal.timeframe}
+                  onChange={(e) => setGoal({ ...goal, timeframe: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Expected Return (%)</Label>
+                <Input
+                  type="number"
+                  step="0.1"
+                  value={goal.expectedReturn}
+                  onChange={(e) => setGoal({ ...goal, expectedReturn: Number(e.target.value) })}
+                />
+              </div>
+              <div className="space-y-2">
+                <Label>Starting Amount (£)</Label>
+                <Input
+                  type="number"
+                  value={goal.initialAmount}
+                  onChange={(e) => setGoal({ ...goal, initialAmount: Number(e.target.value) })}
+                />
+              </div>
+            </div>
+          </Card>
+
+          <Card padding="lg">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="text-indigo-600">➡️</span>
+              <h3 className="text-lg font-bold">Monthly Savings Required</h3>
+            </div>
+            <p className="text-xs text-gray-600 mb-4">Here's what you need to save each month</p>
+
+            <div className="rounded-lg bg-indigo-50 p-5 text-center">
+              <div className="text-3xl font-bold text-indigo-700">{fmtGBP(goalResults.monthlyPayment)}</div>
+              <div className="text-xs text-gray-600">Per Month</div>
+              <div className="text-[11px] text-gray-500 mt-1">For {goal.timeframe} years</div>
+            </div>
+
+            <div className="mt-4 space-y-3">
+              <div className="flex items-center justify-between rounded-lg bg-gray-50 p-3">
+                <span className="text-sm">Total Contributions</span>
+                <span className="font-medium">{fmtGBP(goalResults.totalContributions)}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-lg bg-emerald-50 p-3">
+                <span className="text-sm">Interest Earned</span>
+                <span className="font-medium text-emerald-700">{fmtGBP(goalResults.interestEarned)}</span>
+              </div>
+              <div className="flex items-center justify-between rounded-lg bg-blue-50 p-3">
+                <span className="text-sm font-medium">Final Amount</span>
+                <span className="font-bold text-blue-700">{fmtGBP(goal.targetAmount)}</span>
+              </div>
+            </div>
+
+            <div className="mt-5 flex items-start gap-3 rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm">
+              <span className="mt-0.5">✅</span>
+              <p>
+                By saving <strong>{fmtGBP(goalResults.monthlyPayment)}</strong> monthly for {goal.timeframe} years,
+                you'll reach <strong>{fmtGBP(goal.targetAmount)}</strong> with{" "}
+                <strong>{fmtGBP(goalResults.interestEarned)}</strong> in interest!
+              </p>
+            </div>
+          </Card>
+        </div>
+      )}
+
+      {/* Historical Averages */}
+      <Card className="mt-6">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-emerald-600">📈</span>
+          <h3 className="text-lg font-bold">Historical Average Returns Reference</h3>
+        </div>
+        <p className="text-xs text-gray-600 mb-4">
+          Use these long-term averages as guidance (past performance doesn’t guarantee future results).
+        </p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          <RefCard title="S&P 500 (US Stocks)" tag="High Risk" value="~10%" tone="emerald">
+            Historical average since 1926 (incl. dividends). High volatility but strong long-term growth.
+          </RefCard>
+          <RefCard title="FTSE 100 (UK Stocks)" tag="High Risk" value="~7–8%" tone="emerald">
+            Historical average including dividends. UK’s largest 100 companies by market cap.
+          </RefCard>
+          <RefCard title="Global Index Funds" tag="Medium-High Risk" value="~7–9%" tone="emerald">
+            Diversified across global markets. More stable than single-country investing.
+          </RefCard>
+          <RefCard title="UK Government Bonds" tag="Low Risk" value="~2–4%" tone="amber">
+            Lower returns but more stable. Useful for conservative portfolios & emergencies.
+          </RefCard>
+          <RefCard title="High-Yield Savings" tag="Very Low Risk" value="~1–3%" tone="blue">
+            Rates vary. FSCS protected up to £85k. Great for emergency funds.
+          </RefCard>
+          <RefCard title="Property (REITs)" tag="Medium Risk" value="~6–8%" tone="primary">
+            Real-estate exposure without direct ownership.
+          </RefCard>
+        </div>
+
+        <div className="mt-4 rounded-lg border border-gray-200 bg-gray-50 p-3 text-sm">
+          <span className="mr-2">⚠️</span>
+          <span>
+            These are long-term averages (10+ years). Short-term returns vary. Consider using conservative estimates (5–7%) for planning.
+          </span>
+        </div>
+
+        {/* Portfolio Allocation Examples */}
+        <div className="mt-4 rounded-lg bg-emerald-50/40 p-4">
+          <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
+            <span>💡</span> Smart Portfolio Allocation Examples
+          </h4>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+            <AllocCard
+              title="Conservative (Age 50+)"
+              lines={["• 60% Bonds/Cash: ~3%", "• 40% Stocks: ~8%"]}
+              overall="≈ 5.2% overall"
+            />
+            <AllocCard
+              title="Balanced (Age 30–50)"
+              lines={["• 40% Bonds/Cash: ~3%", "• 60% Stocks: ~8%"]}
+              overall="≈ 6.0% overall"
+            />
+            <AllocCard
+              title="Aggressive (Age 18–30)"
+              lines={["• 20% Bonds/Cash: ~3%", "• 80% Stocks: ~8%"]}
+              overall="≈ 7.0% overall"
+            />
+          </div>
+        </div>
+      </Card>
+
+      {/* Key Principles */}
+      <Card className="mt-6">
+        <div className="flex items-center gap-2 mb-2">
+          <span className="text-emerald-600">🔑</span>
+          <h3 className="text-lg font-bold">Key Investment Principles</h3>
+        </div>
+        <p className="text-xs text-gray-600 mb-4">Essential rules for successful long-term investing</p>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <PrincipleCard title="Time in Market">
+            Staying invested long-term beats timing the market. Through ups and downs, patience typically wins.
+          </PrincipleCard>
+          <PrincipleCard title="Diversification">
+            Don’t put all eggs in one basket. Spread across assets, sectors, and regions to reduce risk.
+          </PrincipleCard>
+          <PrincipleCard title="Dollar-Cost Averaging">
+            Invest the same amount regularly regardless of market conditions to reduce volatility impact.
+          </PrincipleCard>
+          <PrincipleCard title="Understand Risk">
+            Higher potential returns come with higher risk. Don’t invest money you’ll need within 5 years.
+          </PrincipleCard>
+        </div>
+      </Card>
     </PageLayout>
   );
 }
 
+/* ---------- Small presentational helpers (keep all in this file) ---------- */
+function RefCard({
+  title,
+  tag,
+  value,
+  tone = "emerald",
+  children,
+}: {
+  title: string;
+  tag: string;
+  value: string;
+  tone?: "emerald" | "amber" | "blue" | "primary";
+  children: React.ReactNode;
+}) {
+  const toneMap: Record<string, string> = {
+    emerald: "text-emerald-600",
+    amber: "text-amber-600",
+    blue: "text-blue-600",
+    primary: "text-valuto-green-600",
+  };
+  return (
+    <div className="p-4 border rounded-lg space-y-2">
+      <div className="flex items-center justify-between">
+        <span className="font-medium text-sm">{title}</span>
+        <span className="rounded-full bg-gray-100 px-2.5 py-1 text-[11px] font-semibold text-gray-700">
+          {tag}
+        </span>
+      </div>
+      <div className={`text-2xl font-bold ${toneMap[tone]}`}>{value}</div>
+      <p className="text-xs text-gray-600">{children}</p>
+    </div>
+  );
+}
+
+function AllocCard({ title, lines, overall }: { title: string; lines: string[]; overall: string }) {
+  return (
+    <div className="space-y-1">
+      <div className="font-medium">{title}</div>
+      {lines.map((l, i) => (
+        <div key={i}>{l}</div>
+      ))}
+      <div className="text-valuto-green-700 font-semibold">{overall}</div>
+    </div>
+  );
+}
+
+function PrincipleCard({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="p-4 border rounded-lg space-y-2">
+      <div className="flex items-center gap-2">
+        <span className="text-valuto-green-600">•</span>
+        <span className="font-medium text-sm">{title}</span>
+      </div>
+      <p className="text-xs text-gray-600">{children}</p>
+    </div>
+  );
+}

@@ -16,37 +16,28 @@ const createSession = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
   const { title, questions, settings } = req.body;
 
-  // Get or create user
   const User = require('../models/User');
   let user = await User.findOne({ clerkUserId });
 
   if (!user) {
-    // Fetch full user data from Clerk
     const { clerkClient } = require('@clerk/clerk-sdk-node');
     const clerkUser = await clerkClient.users.getUser(clerkUserId);
-    
-    // Auto-create user with teacher role (can be updated via onboarding)
     user = await User.create({
       clerkUserId,
       name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || 'User',
       email: clerkUser.emailAddresses[0]?.emailAddress || `user_${clerkUserId}@placeholder.com`,
-      role: 'teacher', // Default to teacher since they're creating a game
+      role: 'teacher',
       completedOnboarding: false,
     });
   }
 
-  // Verify user is a teacher
   if (user.role !== 'teacher') {
     throw new AppError('Only teachers can create trivia sessions', 403);
   }
 
-  // Generate unique join code
   const joinCode = await Session.generateJoinCode();
-
-  // Generate session ID
   const sessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 
-  // Create session
   const session = await Session.create({
     sessionId,
     joinCode,
@@ -88,12 +79,10 @@ const getSessionByCode = asyncHandler(async (req, res) => {
   const { joinCode } = req.params;
 
   const session = await Session.findOne({ joinCode: joinCode.toUpperCase() })
-    .select('-questions.correctIndex -questions.explanation') // Hide answers
+    .select('-questions.correctIndex -questions.explanation')
     .lean();
 
-  if (!session) {
-    throw new AppError('Session not found', 404);
-  }
+  if (!session) throw new AppError('Session not found', 404);
 
   res.status(200).json({
     success: true,
@@ -118,20 +107,13 @@ const getSession = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
 
   const session = await Session.findOne({ sessionId });
+  if (!session) throw new AppError('Session not found', 404);
 
-  if (!session) {
-    throw new AppError('Session not found', 404);
-  }
-
-  // Check if user is host or player
   const isHost = session.hostId === clerkUserId;
   const isPlayer = session.players.some((p) => p.userId === clerkUserId);
 
-  if (!isHost && !isPlayer) {
-    throw new AppError('Access denied to this session', 403);
-  }
+  if (!isHost && !isPlayer) throw new AppError('Access denied to this session', 403);
 
-  // If not host, hide correct answers
   const sessionData = session.toObject();
   if (!isHost) {
     sessionData.questions = sessionData.questions.map((q) => ({
@@ -158,27 +140,16 @@ const getUserSessions = asyncHandler(async (req, res) => {
 
   const User = require('../models/User');
   const user = await User.findOne({ clerkUserId });
+  if (!user) throw new AppError('User profile not found', 404);
 
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
+  let query = user.role === 'teacher'
+    ? { hostId: clerkUserId }
+    : { 'players.userId': clerkUserId };
 
-  let query = {};
-
-  if (user.role === 'teacher') {
-    // Get sessions created by this teacher
-    query.hostId = clerkUserId;
-  } else {
-    // Get sessions this student participated in
-    query['players.userId'] = clerkUserId;
-  }
-
-  if (status) {
-    query.status = status;
-  }
+  if (status) query.status = status;
 
   const sessions = await Session.find(query)
-    .select('sessionId joinCode title hostName status players.length createdAt startedAt endedAt')
+    .select('sessionId joinCode title hostName status players createdAt startedAt endedAt')
     .sort({ createdAt: -1 })
     .limit(50)
     .lean();
@@ -191,7 +162,7 @@ const getUserSessions = asyncHandler(async (req, res) => {
       title: s.title,
       hostName: s.hostName,
       status: s.status,
-      playerCount: s.players ? s.players.length : 0,
+      playerCount: s.players?.length || 0,
       createdAt: s.createdAt,
       startedAt: s.startedAt,
       endedAt: s.endedAt,
@@ -208,32 +179,18 @@ const getSessionResults = asyncHandler(async (req, res) => {
   const { sessionId } = req.params;
   const clerkUserId = req.clerkUser.id;
 
-  // Get session
   const session = await Session.findOne({ sessionId });
+  if (!session) throw new AppError('Session not found', 404);
 
-  if (!session) {
-    throw new AppError('Session not found', 404);
-  }
-
-  // Check access
   const isHost = session.hostId === clerkUserId;
   const isPlayer = session.players.some((p) => p.userId === clerkUserId);
+  if (!isHost && !isPlayer) throw new AppError('Access denied to these results', 403);
 
-  if (!isHost && !isPlayer) {
-    throw new AppError('Access denied to these results', 403);
-  }
-
-  // Get results
   const results = await SessionResult.getSessionResults(sessionId);
+  if (!results) throw new AppError('Results not found. Game may not be finished yet.', 404);
 
-  if (!results) {
-    throw new AppError('Results not found. Game may not be finished yet.', 404);
-  }
-
-  // If player, only return their own detailed results
   if (!isHost) {
     const playerResult = results.results.find((r) => r.userId === clerkUserId);
-
     return res.status(200).json({
       success: true,
       data: {
@@ -250,11 +207,7 @@ const getSessionResults = asyncHandler(async (req, res) => {
     });
   }
 
-  // Host gets full results
-  res.status(200).json({
-    success: true,
-    data: results,
-  });
+  res.status(200).json({ success: true, data: results });
 });
 
 /**
@@ -294,13 +247,8 @@ const getUserHistory = asyncHandler(async (req, res) => {
  */
 const getUserTriviaStats = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
-
   const stats = await SessionResult.getUserStats(clerkUserId);
-
-  res.status(200).json({
-    success: true,
-    data: stats,
-  });
+  res.status(200).json({ success: true, data: stats });
 });
 
 /**
@@ -313,26 +261,56 @@ const deleteSession = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
 
   const session = await Session.findOne({ sessionId });
-
-  if (!session) {
-    throw new AppError('Session not found', 404);
-  }
-
-  // Only host can delete
-  if (session.hostId !== clerkUserId) {
-    throw new AppError('Only the host can delete this session', 403);
-  }
-
-  // Can only delete if not active
-  if (session.status === 'active') {
-    throw new AppError('Cannot delete active session', 400);
-  }
+  if (!session) throw new AppError('Session not found', 404);
+  if (session.hostId !== clerkUserId) throw new AppError('Only the host can delete this session', 403);
+  if (session.status === 'active') throw new AppError('Cannot delete active session', 400);
 
   await Session.deleteOne({ sessionId });
+  res.status(200).json({ success: true, message: 'Session deleted successfully' });
+});
 
-  res.status(200).json({
+/**
+ * @desc    Restart a finished trivia session (duplicate questions, new code)
+ * @route   POST /api/trivia/session/:sessionId/restart
+ * @access  Private (Host only)
+ */
+const restartSession = asyncHandler(async (req, res) => {
+  const { sessionId } = req.params;
+  const clerkUserId = req.clerkUser.id;
+
+  const session = await Session.findOne({ sessionId });
+  if (!session) throw new AppError('Session not found', 404);
+  if (session.hostId !== clerkUserId) throw new AppError('Only the host can restart this session', 403);
+  if (session.status !== 'ended') throw new AppError('Only ended games can be restarted', 400);
+
+  // ✅ Archive old session to prevent background timers from running
+  session.status = 'archived';
+  await session.save();
+
+  // ✅ Create a fresh new session
+  const newJoinCode = await Session.generateJoinCode();
+  const newSessionId = `session_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+
+  const newSession = await Session.create({
+    sessionId: newSessionId,
+    joinCode: newJoinCode,
+    title: session.title,
+    hostId: session.hostId,
+    hostName: session.hostName,
+    questions: session.questions,
+    status: 'waiting',
+    players: [],
+    settings: session.settings || {},
+  });
+
+  res.status(201).json({
     success: true,
-    message: 'Session deleted successfully',
+    message: 'Session restarted successfully',
+    data: {
+      sessionId: newSession.sessionId,
+      joinCode: newSession.joinCode,
+      title: newSession.title,
+    },
   });
 });
 
@@ -345,4 +323,5 @@ module.exports = {
   getUserHistory,
   getUserTriviaStats,
   deleteSession,
+  restartSession,
 };

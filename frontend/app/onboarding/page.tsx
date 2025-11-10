@@ -56,7 +56,7 @@ export default function OnboardingPage() {
     console.log("🚀 Submitting onboarding form...");
 
     try {
-      const token = await getToken();
+      const token = await getToken({ template: "default" });
       if (!token) throw new Error("No Clerk token found!");
 
       const profile: UserProfile = {

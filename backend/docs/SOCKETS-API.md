@@ -972,7 +972,7 @@ export function useTrivia() {
   
   useEffect(() => {
     const initSocket = async () => {
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
       
       const newSocket = io('http://localhost:5000', {
         auth: { token }

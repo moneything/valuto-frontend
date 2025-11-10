@@ -13,7 +13,8 @@ export default function LeaderboardPage() {
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const token = await getToken();
+        const token = await getToken({ template: "default" });
+
         if (!token) {
           setError('Authentication required');
           return;

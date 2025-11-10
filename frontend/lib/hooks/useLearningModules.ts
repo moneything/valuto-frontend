@@ -84,7 +84,7 @@ export const useLearningProgress = (moduleId: string) => {
     if (!moduleId) return;
     
     try {
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
       if (!token) return;
       
       setLoading(true);
@@ -105,7 +105,7 @@ export const useLearningProgress = (moduleId: string) => {
 
   const saveProgress = useCallback(async (progressData: any) => {
     try {
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
       if (!token) throw new Error('No authentication token');
       
       const result = await learningModuleAPI.saveProgress(moduleId, token, progressData);
@@ -150,7 +150,7 @@ export const useUserLearningProgress = (filters: { topic?: string; status?: stri
 
   const fetchUserProgress = useCallback(async () => {
     try {
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
       if (!token) return;
       
       setLoading(true);

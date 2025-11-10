@@ -1,3 +1,5 @@
+// frontend/app/dashboard/trivia/page.tsx
+
 "use client";
 
 import { useState, useEffect } from 'react';
@@ -25,7 +27,7 @@ export default function TriviaHubPage() {
   useEffect(() => {
     const fetchSessions = async () => {
       try {
-        const token = await getToken();
+        const token = await getToken({ template: "default" }); 
         if (!token) return;
 
         const response = await triviaApi.getSessions(token);
@@ -78,7 +80,8 @@ export default function TriviaHubPage() {
               />
               <Button
                 type="submit"
-                className="bg-white text-valuto-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-bold"
+                className="px-8 py-4 text-lg font-bold"
+                variant='primary'
               >
                 Join Game
               </Button>
@@ -203,12 +206,37 @@ export default function TriviaHubPage() {
                         </Button>
                       )}
                       {session.status === 'ended' && (
-                        <Button
-                          onClick={() => router.push(`/dashboard/trivia/session/${session.sessionId}/results`)}
-                          className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
-                        >
-                          View Results
-                        </Button>
+                        <div className="flex gap-2 w-full">
+                          <Button
+                            onClick={() => router.push(`/dashboard/trivia/session/${session.sessionId}/results`)}
+                            className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
+                          >
+                            View Results
+                          </Button>
+                          <Button
+                            onClick={async () => {
+                              try {
+                                console.log("🟢 Restart button clicked:", session.sessionId); // <-- add this
+
+                                const token = await getToken({ template: "default" });
+                                if (!token) return;
+                                console.log("token:", token);
+                                const res = await triviaApi.restartSession(token, session.sessionId);
+                                console.log("Restart response:", res);
+                                if (res.success && res.data) {
+                                  router.push(`/dashboard/trivia/host/${res.data.sessionId}`);
+                                } else {
+                                  console.log("Restart response:", res);
+                                }
+                              } catch (err) {
+                                console.error("Failed to restart:", err);
+                              }
+                            }}
+                            className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white"
+                          >
+                            🔁 Restart
+                          </Button>
+                        </div>
                       )}
                       {session.status === 'active' && (
                         <Button

@@ -71,7 +71,7 @@ export default function CreateTriviaPage() {
     }
 
     try {
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
       if (!token) {
         setError('Authentication required');
         setSubmitting(false);

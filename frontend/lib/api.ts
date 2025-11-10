@@ -133,6 +133,16 @@ export const userApi = {
 // ==================== Trivia API ====================
 
 export const triviaApi = {
+
+  /**
+   * Restart a finished trivia session (host only)
+   */
+  async restartSession(token: string, sessionId: string) {
+    return apiRequest(`/api/trivia/session/${sessionId}/restart`, {
+      method: 'POST',
+    }, token);
+  },
+
   /**
    * Create trivia session
    */

@@ -1,9 +1,11 @@
+// frontend/app/dashboard/page.tsx
+
 "use client";
 
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
-import { useUser } from "@/lib/userContext"; // ✅ same hook
+import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import RoleSwitcher from "@/components/RoleSwitcher";
 import NewsAndEvents from "@/components/NewsAndEvents";
@@ -42,13 +44,19 @@ export default function DashboardPage() {
 
     try {
       setLoadingStats(true);
-      const token = await getToken();
+      const token = await getToken({ template: "default" });
+
       if (!token) return;
 
       const response = await userApi.getStats(token);
       if (response.success && response.data) {
-        setUserStats(response.data);
+        // Flatten the structure for easy access
+        setUserStats({
+          ...response.data.stats,
+          user: response.data.user,
+        });
       }
+
     } catch (error) {
       console.error("Failed to fetch user stats:", error);
     } finally {

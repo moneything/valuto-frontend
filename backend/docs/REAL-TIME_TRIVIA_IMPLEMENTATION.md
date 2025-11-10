@@ -167,7 +167,8 @@ DELETE /api/trivia/session/:id        - Delete session
      
      const socket = io('http://localhost:5000', {
        auth: async () => ({
-         token: await getToken()
+         token: await getToken({ template: "default" });
+
        })
      });
      

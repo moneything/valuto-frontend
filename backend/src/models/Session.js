@@ -48,7 +48,7 @@ const sessionSchema = new mongoose.Schema(
     // Session Status
     status: {
       type: String,
-      enum: ['waiting', 'active', 'ended'],
+      enum: ['waiting', 'active', 'ended', 'archived'],
       default: 'waiting',
       index: true,
     },
@@ -66,76 +66,32 @@ const sessionSchema = new mongoose.Schema(
     // Questions Array
     questions: [
       {
-        id: {
-          type: String,
-          required: true,
-        },
-        question: {
-          type: String,
-          required: true,
-        },
+        id: { type: String, required: true },
+        question: { type: String, required: true },
         options: {
           type: [String],
           required: true,
           validate: {
-            validator: function (arr) {
-              return arr.length === 4;
-            },
+            validator: (arr) => arr.length === 4,
             message: 'Must have exactly 4 options',
           },
         },
-        correctIndex: {
-          type: Number,
-          required: true,
-          min: 0,
-          max: 3,
-        },
-        timeLimit: {
-          type: Number,
-          required: true,
-          min: 10,
-          max: 120,
-        },
-        points: {
-          type: Number,
-          default: 100,
-          min: 0,
-        },
-        explanation: {
-          type: String,
-        },
+        correctIndex: { type: Number, required: true, min: 0, max: 3 },
+        timeLimit: { type: Number, required: true, min: 10, max: 120 },
+        points: { type: Number, default: 100, min: 0 },
+        explanation: { type: String },
       },
     ],
 
     // Players Array
     players: [
       {
-        userId: {
-          type: String,
-          required: true,
-        },
-        name: {
-          type: String,
-          required: true,
-        },
-        socketId: {
-          type: String,
-        },
-        score: {
-          type: Number,
-          default: 0,
-          min: 0,
-        },
-        answeredQuestions: {
-          type: Number,
-          default: 0,
-          min: 0,
-        },
-        correctAnswers: {
-          type: Number,
-          default: 0,
-          min: 0,
-        },
+        userId: { type: String, required: true },
+        name: { type: String, required: true },
+        socketId: { type: String },
+        score: { type: Number, default: 0, min: 0 },
+        answeredQuestions: { type: Number, default: 0, min: 0 },
+        correctAnswers: { type: Number, default: 0, min: 0 },
         answers: [
           {
             questionId: String,
@@ -146,169 +102,110 @@ const sessionSchema = new mongoose.Schema(
             answeredAt: Date,
           },
         ],
-        joinedAt: {
-          type: Date,
-          default: Date.now,
-        },
-        isConnected: {
-          type: Boolean,
-          default: true,
-        },
+        joinedAt: { type: Date, default: Date.now },
+        isConnected: { type: Boolean, default: true },
       },
     ],
 
     // Game Settings
     settings: {
-      pointsPerCorrect: {
-        type: Number,
-        default: 100,
-      },
-      speedBonusEnabled: {
-        type: Boolean,
-        default: true,
-      },
-      maxSpeedBonus: {
-        type: Number,
-        default: 50,
-      },
+      pointsPerCorrect: { type: Number, default: 100 },
+      speedBonusEnabled: { type: Boolean, default: true },
+      maxSpeedBonus: { type: Number, default: 50 },
     },
 
-    // Timestamps
-    startedAt: {
-      type: Date,
-    },
-    endedAt: {
-      type: Date,
-    },
+    startedAt: { type: Date },
+    endedAt: { type: Date },
   },
-  {
-    timestamps: true, // Adds createdAt and updatedAt
-  }
+  { timestamps: true }
 );
 
-// Indexes for performance
+// Indexes
 sessionSchema.index({ joinCode: 1 });
 sessionSchema.index({ hostId: 1, status: 1 });
 sessionSchema.index({ status: 1, createdAt: -1 });
 
-// Instance method to generate unique join code
+// Static method to generate unique join code
 sessionSchema.statics.generateJoinCode = async function () {
-  const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-  let code;
-  let exists = true;
-
-  while (exists) {
-    code = '';
-    for (let i = 0; i < 6; i++) {
-      code += characters.charAt(Math.floor(Math.random() * characters.length));
-    }
-
-    // Check if code already exists
-    const existing = await this.findOne({ joinCode: code });
-    exists = !!existing;
-  }
-
+  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  let code, exists;
+  do {
+    code = Array.from({ length: 6 }, () =>
+      chars.charAt(Math.floor(Math.random() * chars.length))
+    ).join('');
+    exists = await this.findOne({ joinCode: code });
+  } while (exists);
   return code;
 };
 
-// Instance method to add player
+// === Player Methods ===
 sessionSchema.methods.addPlayer = function (playerData) {
-  const existingPlayer = this.players.find((p) => p.userId === playerData.userId);
-
-  if (existingPlayer) {
-    // Update existing player (reconnection)
-    existingPlayer.socketId = playerData.socketId;
-    existingPlayer.isConnected = true;
-    return existingPlayer;
-  } else {
-    // Add new player
-    this.players.push({
-      userId: playerData.userId,
-      name: playerData.name,
-      socketId: playerData.socketId,
-      score: 0,
-      answeredQuestions: 0,
-      correctAnswers: 0,
-      answers: [],
-      joinedAt: new Date(),
-      isConnected: true,
-    });
-    return this.players[this.players.length - 1];
+  const existing = this.players.find((p) => p.userId === playerData.userId);
+  if (existing) {
+    existing.socketId = playerData.socketId;
+    existing.isConnected = true;
+    return existing;
   }
-};
-
-// Instance method to remove player
-sessionSchema.methods.removePlayer = function (userId) {
-  const playerIndex = this.players.findIndex((p) => p.userId === userId);
-  if (playerIndex !== -1) {
-    this.players[playerIndex].isConnected = false;
-    this.players[playerIndex].socketId = null;
-  }
-};
-
-// Instance method to submit answer
-sessionSchema.methods.submitAnswer = function (userId, questionId, answerData) {
-  const player = this.players.find((p) => p.userId === userId);
-
-  if (!player) {
-    throw new Error('Player not found in session');
-  }
-
-  // Check if already answered this question
-  const alreadyAnswered = player.answers.some((a) => a.questionId === questionId);
-  if (alreadyAnswered) {
-    throw new Error('Question already answered');
-  }
-
-  // Find the question
-  const question = this.questions.find((q) => q.id === questionId);
-  if (!question) {
-    throw new Error('Question not found');
-  }
-
-  // Calculate if correct
-  const isCorrect = answerData.selectedIndex === question.correctIndex;
-
-  // Calculate points with speed bonus
-  let pointsEarned = 0;
-  if (isCorrect) {
-    pointsEarned = question.points;
-
-    // Add speed bonus if enabled
-    if (this.settings.speedBonusEnabled && answerData.timeSpentMs) {
-      const timeLimit = question.timeLimit * 1000; // Convert to ms
-      const remainingTime = timeLimit - answerData.timeSpentMs;
-      const speedBonus = Math.floor((remainingTime / timeLimit) * this.settings.maxSpeedBonus);
-      pointsEarned += Math.max(0, speedBonus);
-    }
-  }
-
-  // Add answer to player
-  player.answers.push({
-    questionId,
-    selectedIndex: answerData.selectedIndex,
-    isCorrect,
-    timeSpentMs: answerData.timeSpentMs,
-    pointsEarned,
-    answeredAt: new Date(),
+  this.players.push({
+    ...playerData,
+    score: 0,
+    answeredQuestions: 0,
+    correctAnswers: 0,
+    answers: [],
+    joinedAt: new Date(),
+    isConnected: true,
   });
-
-  // Update player stats
-  player.answeredQuestions += 1;
-  if (isCorrect) {
-    player.correctAnswers += 1;
-  }
-  player.score += pointsEarned;
-
-  return {
-    isCorrect,
-    pointsEarned,
-    correctIndex: question.correctIndex,
-    explanation: question.explanation,
-  };
+  return this.players[this.players.length - 1];
 };
 
-// Instance method to get leaderboard
+sessionSchema.methods.removePlayer = function (userId) {
+  const player = this.players.find((p) => p.userId === userId);
+  if (player) {
+    player.isConnected = false;
+    player.socketId = null;
+  }
+};
+
+// === Game Logic ===
+
+// ✅ SAFE: no crash when called after game ended
+sessionSchema.methods.nextQuestion = function () {
+  if (this.status !== 'active') {
+    console.warn(`⚠️ Skipping nextQuestion() — session ${this.sessionId} not active.`);
+    return null;
+  }
+
+  this.currentQuestionIndex += 1;
+
+  if (this.currentQuestionIndex >= this.questions.length) {
+    this.status = 'ended';
+    this.endedAt = new Date();
+    return null;
+  }
+
+  this.questionStartTime = new Date();
+  return this.questions[this.currentQuestionIndex];
+};
+
+sessionSchema.methods.startGame = function () {
+  if (this.status !== 'waiting') throw new Error('Game already started or ended');
+  if (this.questions.length === 0) throw new Error('No questions in session');
+
+  this.status = 'active';
+  this.currentQuestionIndex = 0;
+  this.startedAt = new Date();
+  this.questionStartTime = new Date();
+};
+
+sessionSchema.methods.endGame = function () {
+  // 🧹 Gracefully mark the session ended
+  if (this.status !== 'ended') {
+    this.status = 'ended';
+    this.endedAt = new Date();
+  }
+};
+
+// === Leaderboard ===
 sessionSchema.methods.getLeaderboard = function () {
   return this.players
     .filter((p) => p.isConnected || p.answeredQuestions > 0)
@@ -319,69 +216,62 @@ sessionSchema.methods.getLeaderboard = function () {
       correctAnswers: p.correctAnswers,
       answeredQuestions: p.answeredQuestions,
       accuracy:
-        p.answeredQuestions > 0 ? Math.round((p.correctAnswers / p.answeredQuestions) * 100) : 0,
+        p.answeredQuestions > 0
+          ? Math.round((p.correctAnswers / p.answeredQuestions) * 100)
+          : 0,
     }))
     .sort((a, b) => b.score - a.score)
-    .map((p, index) => ({
-      rank: index + 1,
-      ...p,
-    }));
+    .map((p, i) => ({ rank: i + 1, ...p }));
 };
 
-// Instance method to start game
-sessionSchema.methods.startGame = function () {
-  if (this.status !== 'waiting') {
-    throw new Error('Game already started or ended');
+// === Answer Logic ===
+sessionSchema.methods.submitAnswer = function (userId, questionId, data) {
+  const player = this.players.find((p) => p.userId === userId);
+  if (!player) throw new Error('Player not found in session');
+  if (player.answers.some((a) => a.questionId === questionId))
+    throw new Error('Question already answered');
+
+  const question = this.questions.find((q) => q.id === questionId);
+  if (!question) throw new Error('Question not found');
+
+  const isCorrect = data.selectedIndex === question.correctIndex;
+  let points = 0;
+  if (isCorrect) {
+    points = question.points;
+    if (this.settings.speedBonusEnabled && data.timeSpentMs) {
+      const timeLimit = question.timeLimit * 1000;
+      const remaining = timeLimit - data.timeSpentMs;
+      const bonus = Math.floor((remaining / timeLimit) * this.settings.maxSpeedBonus);
+      points += Math.max(0, bonus);
+    }
   }
 
-  if (this.questions.length === 0) {
-    throw new Error('No questions in session');
-  }
+  player.answers.push({
+    questionId,
+    selectedIndex: data.selectedIndex,
+    isCorrect,
+    timeSpentMs: data.timeSpentMs,
+    pointsEarned: points,
+    answeredAt: new Date(),
+  });
 
-  this.status = 'active';
-  this.currentQuestionIndex = 0;
-  this.startedAt = new Date();
-  this.questionStartTime = new Date();
+  player.answeredQuestions += 1;
+  if (isCorrect) player.correctAnswers += 1;
+  player.score += points;
+
+  return { isCorrect, pointsEarned: points, correctIndex: question.correctIndex, explanation: question.explanation };
 };
 
-// Instance method to advance to next question
-sessionSchema.methods.nextQuestion = function () {
-  if (this.status !== 'active') {
-    throw new Error('Game not active');
-  }
-
-  this.currentQuestionIndex += 1;
-
-  if (this.currentQuestionIndex >= this.questions.length) {
-    // Game over
-    this.status = 'ended';
-    this.endedAt = new Date();
-    return null;
-  }
-
-  this.questionStartTime = new Date();
-  return this.questions[this.currentQuestionIndex];
-};
-
-// Instance method to end game
-sessionSchema.methods.endGame = function () {
-  this.status = 'ended';
-  this.endedAt = new Date();
-};
-
-// Static method to get active sessions
+// === Static ===
 sessionSchema.statics.getActiveSessions = async function (hostId = null) {
   const query = { status: { $in: ['waiting', 'active'] } };
-  if (hostId) {
-    query.hostId = hostId;
-  }
+  if (hostId) query.hostId = hostId;
 
   return this.find(query)
-    .select('sessionId joinCode title hostName status players.length createdAt')
+    .select('sessionId joinCode title hostName status players createdAt')
     .sort({ createdAt: -1 })
     .lean();
 };
 
 const Session = mongoose.model('Session', sessionSchema);
-
 module.exports = Session;

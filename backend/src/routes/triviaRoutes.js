@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const {
+  restartSession,
   createSession,
   getSessionByCode,
   getSession,
@@ -36,6 +37,13 @@ const validateSessionCreation = [
     .withMessage('Time limit must be between 10 and 120 seconds'),
   handleValidationErrors,
 ];
+
+
+// @route   POST /api/trivia//session/:sessionId/restart
+// @desc    Reset game progress and restart it
+// @access  Private (Teacher)
+router.post('/session/:sessionId/restart', authenticateClerkUser, restartSession);
+
 
 // @route   POST /api/trivia/session
 // @desc    Create new trivia session
@@ -76,5 +84,6 @@ router.get('/stats', authenticateClerkUser, getUserTriviaStats);
 // @desc    Delete session
 // @access  Private (Host)
 router.delete('/session/:sessionId', authenticateClerkUser, deleteSession);
+
 
 module.exports = router;

@@ -41,7 +41,8 @@ export default function ProfilePage() {
     
     try {
       setLoading(true);
-      const token = await getToken();
+      const token = await getToken({ template: "default" }); 
+
       if (!token) return;
 
       // Fetch user stats

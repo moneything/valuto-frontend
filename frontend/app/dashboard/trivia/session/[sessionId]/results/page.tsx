@@ -1,8 +1,6 @@
-// frontend/app/dashboard/trivia/session/[sessionId]/results/page.tsx
-
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
@@ -27,20 +25,19 @@ export default function TriviaResultsPage() {
         }
 
         const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000";
+          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
 
         const res = await axios.get(
           `${baseUrl}/api/trivia/session/${sessionId}/results`,
           {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
+            headers: { Authorization: `Bearer ${token}` },
             withCredentials: true,
           }
         );
 
         if (res.data.success) {
           setResults(res.data.data);
+          // console.log("🧩 Raw results from backend:", res.data.data);
         } else {
           setError(res.data.error || "Failed to load results");
         }
@@ -59,15 +56,46 @@ export default function TriviaResultsPage() {
     if (sessionId) fetchResults();
   }, [sessionId, getToken]);
 
-  if (loading) {
+  // 🔹 Deduplicate leaderboard entries (no score summing)
+  const uniqueLeaderboard = useMemo(() => {
+    if (!results) return [];
+
+    const leaderboard = results?.leaderboard || results?.results || [];
+
+    // console.log("🧩 Raw leaderboard from backend:", leaderboard);
+
+    const uniqueMap = new Map();
+
+    leaderboard.forEach((player: any) => {
+      const key = `${player.userId}-${player.sessionId}`;
+
+      if (!uniqueMap.has(key)) {
+        uniqueMap.set(key, player);
+      } else {
+        console.log(`⚠️ Duplicate found for ${player.userName} (${key}) — keeping first`);
+      }
+    });
+
+    const deduped = Array.from(uniqueMap.values()).sort(
+      (a, b) => b.score - a.score
+    );
+
+    // console.log("✅ Deduplicated leaderboard:", deduped);
+    return deduped;
+  }, [results]);
+
+
+  const playerResult = results?.playerResult;
+
+  // 🔹 UI states
+  if (loading)
     return (
       <div className="flex h-screen items-center justify-center text-gray-500">
         Loading results...
       </div>
     );
-  }
 
-  if (error) {
+  if (error)
     return (
       <div className="flex flex-col h-screen items-center justify-center text-center px-6">
         <h1 className="text-2xl font-bold mb-4 text-red-600">{error}</h1>
@@ -79,35 +107,26 @@ export default function TriviaResultsPage() {
         </button>
       </div>
     );
-  }
-
-  // Handle both host & player result structures
-  const leaderboard =
-    results?.leaderboard || results?.results || [];
-
-  const playerResult = results?.playerResult;
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center p-8 bg-gray-50">
       <h1 className="text-4xl font-bold mb-2 text-center">
-        {results.sessionTitle || "Trivia Results"}
+        {results?.sessionTitle || "Trivia Results"}
       </h1>
 
       <p className="text-gray-600 mb-8 text-center">
         {playerResult
           ? "Your performance summary"
-          : "Full session leaderboard"}
+          : "Final Leaderboard"}
       </p>
 
-      {/* Player personal summary */}
+      {/* Player Summary */}
       {playerResult && (
         <div className="bg-white shadow rounded-xl p-6 w-full max-w-md mb-10 text-center">
           <h2 className="text-2xl font-semibold mb-2">
             {playerResult.userName}
           </h2>
-          <p className="text-gray-600 mb-1">
-            Rank: #{playerResult.rank}
-          </p>
+          <p className="text-gray-600 mb-1">Rank: #{playerResult.rank}</p>
           <p className="text-gray-600 mb-1">
             Score: {playerResult.score} pts
           </p>
@@ -122,15 +141,16 @@ export default function TriviaResultsPage() {
         <h2 className="text-2xl font-semibold mb-4 text-center">
           Final Leaderboard 🏆
         </h2>
-        {leaderboard.length === 0 ? (
+
+        {uniqueLeaderboard.length === 0 ? (
           <p className="text-gray-500 text-center">
             No results available yet.
           </p>
         ) : (
           <ul className="space-y-2">
-            {leaderboard.map((player: any, i: number) => (
+            {uniqueLeaderboard.map((player: any, i: number) => (
               <li
-                key={player.userId || i}
+                key={player.userId || player.userName || i}
                 className={`flex justify-between border-b border-gray-200 py-2 ${
                   playerResult?.userId === player.userId
                     ? "bg-green-50 font-semibold"
@@ -138,7 +158,7 @@ export default function TriviaResultsPage() {
                 }`}
               >
                 <span>
-                  #{player.rank || i + 1} {player.userName || player.name}
+                  #{i + 1} {player.userName || player.name}
                 </span>
                 <span className="font-semibold">{player.score} pts</span>
               </li>

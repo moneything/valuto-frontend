@@ -7,7 +7,6 @@ import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
-import RoleSwitcher from "@/components/RoleSwitcher";
 import NewsAndEvents from "@/components/NewsAndEvents";
 import { userApi } from "@/lib/api";
 import {
@@ -246,11 +245,6 @@ export default function DashboardPage() {
               : 'Ready to level up your financial knowledge today?'
             }
           </p>
-        </div>
-
-        {/* Role Switcher */}
-        <div className="flex justify-center mb-16">
-          <RoleSwitcher />
         </div>
 
         {/* Stats Row (for students) */}

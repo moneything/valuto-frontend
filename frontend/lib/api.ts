@@ -273,6 +273,77 @@ export const leaderboardApi = {
       method: 'GET',
     }, token);
   },
+
+  /**
+   * Get enriched leaderboard data for teacher/student dashboards (used by StudentsPage)
+   * Combines leaderboard info with grade + calculated average scores + stats
+   */
+  async getEnrichedLeaderboard(token: string) {
+    // 1️⃣ Fetch leaderboard
+    const leaderboardRes = await apiRequest('/api/leaderboard?limit=100', { method: 'GET' }, token);
+    if (!leaderboardRes.success || !leaderboardRes.data?.leaderboard) {
+      console.error('Failed to fetch leaderboard:', leaderboardRes);
+      return [];
+    }
+
+    const leaderboard = leaderboardRes.data.leaderboard;
+
+    // 2️⃣ Fetch additional user info in parallel (grade, stats)
+    const enriched = await Promise.allSettled(
+      leaderboard.map(async (student: any) => {
+        try {
+          // Each user in leaderboard corresponds to a MongoDB _id field
+          const userId = student._id;
+
+          // Hit /api/user/{id}/stats to get detailed info
+          const statsRes = await apiRequest(`/api/user/${userId}/stats`, { method: 'GET' }, token);
+
+          const userProfile = statsRes?.data?.user || {};
+          const userStats = statsRes?.data?.stats || {};
+
+          // 3️⃣ Compute avgScore fallback if not in stats
+          const avgScore =
+            userStats?.avgScore ??
+            (student.gamesPlayed > 0
+              ? Math.round((student.totalPoints / student.gamesPlayed) * 10) / 10
+              : 0);
+
+          return {
+            rank: student.rank,
+            name: userProfile.name || student.name || 'Unknown',
+            grade: userProfile.grade || student.grade || 'N/A',
+            school: userProfile.school || student.school || '—',
+            gamesPlayed: userStats.gamesPlayed ?? student.gamesPlayed ?? 0,
+            lessonsCompleted: userStats.lessonsCompleted ?? student.lessonsCompleted ?? 0,
+            avgScore,
+            points: userStats.totalPoints ?? student.totalPoints ?? 0,
+          };
+        } catch (err) {
+          console.error('Error enriching student:', err);
+          return {
+            rank: student.rank,
+            name: student.name || 'Unknown',
+            grade: student.grade || 'N/A',
+            school: student.school || '—',
+            gamesPlayed: student.gamesPlayed || 0,
+            lessonsCompleted: student.lessonsCompleted || 0,
+            avgScore:
+              student.gamesPlayed > 0
+                ? Math.round((student.totalPoints / student.gamesPlayed) * 10) / 10
+                : 0,
+            points: student.totalPoints || 0,
+          };
+        }
+      })
+    );
+
+    // 4️⃣ Filter resolved values and flatten
+    return enriched
+      .filter((r) => r.status === 'fulfilled')
+      .map((r: any) => r.value);
+  },
+
+
 };
 
 // ==================== Learning API ====================

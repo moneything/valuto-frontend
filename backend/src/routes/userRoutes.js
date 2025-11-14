@@ -14,6 +14,7 @@ const {
   getAchievements,
   getActivity,
   deleteUser,
+  getUserStatsById,
 } = require('../controllers/userController');
 const { authenticateClerkUser } = require('../middleware/auth');
 const { validateUserCreation, validateUserUpdate } = require('../utils/validators');
@@ -60,6 +61,11 @@ router.put('/', authenticateClerkUser, validateUserUpdate, updateUserProfile);
 // @desc    Get user statistics
 // @access  Private
 router.get('/stats', authenticateClerkUser, getUserStats);
+
+// @route   GET /api/user/stats
+// @desc    Get user statistics
+// @access  Teacher
+router.get("/:id/stats", authenticateClerkUser, getUserStatsById);
 
 // @route   POST /api/user/points
 // @desc    Add points to user

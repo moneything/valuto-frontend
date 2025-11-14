@@ -1,6 +1,7 @@
 "use client";
 
 import { Company } from "./../logic/gameLogic";
+import "../investment.css";
 
 export default function InvestSection({
   company,
@@ -37,6 +38,7 @@ export default function InvestSection({
             {
               "--fill-percent": `${(invested / totalBalance) * 100}%`,
               "--fill-color": isMax ? "#3B82F6" : "#16A34A",
+              "width": "-webkit-fill-available",
             } as React.CSSProperties
           }
         />

@@ -4,7 +4,6 @@ import { useState, useEffect, useCallback } from 'react';
 import { useUser, useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
-import RoleSwitcher from '@/components/RoleSwitcher';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { userApi } from '@/lib/api';
@@ -166,11 +165,6 @@ export default function ProfilePage() {
         <p className="text-lg text-gray-600">
           View your progress and manage your account settings
         </p>
-      </div>
-
-      {/* Role Switcher */}
-      <div className="mb-8">
-        <RoleSwitcher />
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

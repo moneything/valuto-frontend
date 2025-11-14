@@ -7,6 +7,7 @@ import {
   getRiskExplanation,
   getRiskIcon,
 } from "../logic/riskHelpers";
+import "../investment.css";
 
 export default function RiskRow({ company }: { company: Company }) {
   return (

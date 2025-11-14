@@ -13,7 +13,8 @@ import {
   LightBulbIcon,
   UserIcon,
   HomeIcon,
-  NewspaperIcon
+  NewspaperIcon,
+  TrendingUpIcon
 } from '@/components/icons';
 
 const dockItems = [
@@ -46,18 +47,18 @@ const dockItems = [
     bgColor: 'bg-indigo-100 hover:bg-indigo-200',
   },
   {
+    title: 'Investment Simulation',
+    icon: TrendingUpIcon,
+    href: '/dashboard/investment',
+    color: 'text-emerald-600 dark:text-emerald-400',
+    bgColor: 'bg-emerald-100 hover:bg-emerald-200',
+  },
+  {
     title: 'News & Events',
     icon: NewspaperIcon,
     href: '/dashboard#news-events',
     color: 'text-purple-600 dark:text-purple-400',
     bgColor: 'bg-purple-100 hover:bg-purple-200',
-  },
-  {
-    title: 'Progress',
-    icon: TrophyIcon,
-    href: '/dashboard/profile',
-    color: 'text-orange-600 dark:text-orange-400',
-    bgColor: 'bg-orange-100 hover:bg-orange-200',
   },
   {
     title: 'Leaderboard',

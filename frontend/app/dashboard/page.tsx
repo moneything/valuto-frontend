@@ -129,7 +129,7 @@ export default function DashboardPage() {
       title: 'Investment Simulation',
       description: 'Practice investing in a risk-free environment with real market scenarios',
       icon: <TrendingUpIcon className="w-8 h-8" />,
-      href: '/dashboard/investment-simulation',
+      href: '/dashboard/investment',
       badge: 'New'
     },
     {
@@ -138,12 +138,6 @@ export default function DashboardPage() {
       icon: <BookOpenIcon className="w-8 h-8" />,
       href: '/dashboard/learning-modules',
       badge: 'Interactive'
-    },
-    {
-      title: 'My Progress',
-      description: 'Track your achievements, badges, and learning journey',
-      icon: <TrophyIcon className="w-8 h-8" />,
-      href: '/dashboard/profile'
     },
     {
       title: 'Leaderboard',
@@ -188,12 +182,6 @@ export default function DashboardPage() {
       href: '/dashboard/trivia'
     },
     {
-      title: 'Student Progress',
-      description: 'Monitor student learning and participation',
-      icon: <ChartBarIcon className="w-8 h-8" />,
-      href: '/dashboard/students'
-    },
-    {
       title: 'Interactive Learning Modules',
       description: 'Browse and assign interactive learning content to students',
       icon: <BookOpenIcon className="w-8 h-8" />,
@@ -209,7 +197,7 @@ export default function DashboardPage() {
       title: 'Investment Simulation',
       description: 'Teach investing concepts through interactive market simulations',
       icon: <TrendingUpIcon className="w-8 h-8" />,
-      href: '/dashboard/investment-simulation',
+      href: '/dashboard/investment',
       badge: 'New'
     },
     {

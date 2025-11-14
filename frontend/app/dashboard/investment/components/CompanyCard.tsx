@@ -7,6 +7,7 @@ import PriceRow from "./PriceRow";
 import RiskRow from "./RiskRow";
 import InvestSection from "./InvestSection";
 import NewsModal from "./NewsModal";
+import "../investment.css";
 
 interface Props {
   company: Company;

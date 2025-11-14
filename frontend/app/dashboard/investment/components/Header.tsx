@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Company } from "../logic/gameLogic";
 import { Newspaper } from "lucide-react";
+import "../investment.css";
 
 export default function Header({
   company,

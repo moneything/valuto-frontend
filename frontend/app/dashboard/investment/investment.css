@@ -1,0 +1,57 @@
+/* ===============================
+   Investment Slider - blue only when maxed
+   =============================== */
+input[type="range"].investment-slider {
+  width: 100%;
+  appearance: none;
+  height: 8px;
+  border-radius: 9999px;
+  background: linear-gradient(
+    to right,
+    var(--fill-color, #16A34A) 0%,
+    var(--fill-color, #16A34A) var(--fill-percent, 0%),
+    #D1FAE5 var(--fill-percent, 0%),
+    #D1FAE5 100%
+  );
+  outline: none;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+/* Thumb (Chrome/Safari/Edge) */
+input[type="range"].investment-slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--fill-color, #16A34A);
+  cursor: grab;
+  transition: border-color 0.3s ease, transform 0.2s ease;
+}
+
+input[type="range"].investment-slider::-webkit-slider-thumb:active {
+  transform: scale(1.2);
+}
+
+/* Firefox */
+input[type="range"].investment-slider::-moz-range-thumb {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  border: 3px solid var(--fill-color, #16A34A);
+  cursor: grab;
+}
+
+input[type="range"].investment-slider::-moz-range-track {
+  background: linear-gradient(
+    to right,
+    var(--fill-color, #16A34A) 0%,
+    var(--fill-color, #16A34A) var(--fill-percent, 0%),
+    #D1FAE5 var(--fill-percent, 0%),
+    #D1FAE5 100%
+  );
+  height: 8px;
+  border-radius: 9999px;
+}

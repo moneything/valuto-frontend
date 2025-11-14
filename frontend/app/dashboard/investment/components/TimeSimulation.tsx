@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import "../investment.css";
 
 interface Props {
   duration?: number; // how long to show the screen (ms)

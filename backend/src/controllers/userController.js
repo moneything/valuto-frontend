@@ -421,6 +421,59 @@ const deleteUser = asyncHandler(async (req, res) => {
   });
 });
 
+
+/**
+ * @desc Get user statistics by database ID (for teachers/admins)
+ * @route GET /api/user/:id/stats
+ * @access Private (Teacher/Admin only)
+ */
+const getUserStatsById = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const clerkUserId = req.clerkUser?.id; // auth context
+
+  const requestingUser = await User.findOne({ clerkUserId });
+  if (!requestingUser || requestingUser.role !== "teacher") {
+    throw new AppError("Only teachers can view student stats", 403);
+  }
+
+  const targetUser = await User.findById(id);
+  if (!targetUser) throw new AppError("Student not found", 404);
+
+  const GameResult = require("../models/GameResult");
+  const LearningProgress = require("../models/LearningProgress");
+  const Challenge = require("../models/Challenge");
+
+  const [gameStats, learningStats, challengeStats] = await Promise.all([
+    GameResult.getUserStats(targetUser._id.toString()),
+    LearningProgress.getUserProgress(targetUser._id.toString()),
+    Challenge.getUserChallengeStats(targetUser._id.toString()),
+  ]);
+
+  res.status(200).json({
+    success: true,
+    data: {
+      user: {
+        name: targetUser.name,
+        email: targetUser.email,
+        role: targetUser.role,
+        school: targetUser.school,
+        grade: targetUser.grade,
+      },
+      stats: {
+        totalPoints: targetUser.totalPoints,
+        gamesPlayed: targetUser.gamesPlayed,
+        lessonsCompleted: targetUser.lessonsCompleted,
+        currentStreak: targetUser.currentStreak,
+        longestStreak: targetUser.longestStreak,
+      },
+      gameStats,
+      learningStats,
+      challengeStats,
+    },
+  });
+});
+
+
 module.exports = {
   getOrCreateUser,
   completeOnboarding,
@@ -428,6 +481,7 @@ module.exports = {
   getUserProfile,
   updateUserProfile,
   getUserStats,
+  getUserStatsById,
   addPoints,
   incrementGameCount,
   incrementLessonCount,

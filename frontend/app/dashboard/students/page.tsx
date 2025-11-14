@@ -1,11 +1,28 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { leaderboardApi } from "@/lib/api";
+import { useAuth } from "@clerk/nextjs";
+
 export default function StudentsPage() {
-  const students = [
-    { name: "John Smith", grade: "Year 10", gamesPlayed: 8, avgScore: 85, points: 1200 },
-    { name: "Emily Brown", grade: "Year 10", gamesPlayed: 12, avgScore: 92, points: 1850 },
-    { name: "Alex Johnson", grade: "Year 11", gamesPlayed: 6, avgScore: 78, points: 950 },
-  ];
+  const { getToken } = useAuth();
+  const [students, setStudents] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const loadStudents = async () => {
+      setLoading(true);
+      const token = await getToken({ template: "default" });
+      const data = await leaderboardApi.getEnrichedLeaderboard(token!);
+      setStudents(Array.isArray(data) ? data : []);
+      setLoading(false);
+    };
+    loadStudents();
+  }, [getToken]);
+
+  if (loading) {
+    return <div className="text-center py-12 text-gray-600">Loading students...</div>;
+  }
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
@@ -22,21 +39,25 @@ export default function StudentsPage() {
         <table className="w-full">
           <thead className="bg-gray-50">
             <tr>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Rank</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Student</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Grade</th>
               <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Games</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Avg Score</th>
-              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Points</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Avg Score per Game</th>
+              <th className="px-6 py-3 text-left text-sm font-semibold text-gray-700">Total Points</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
             {students.map((student, index) => (
               <tr key={index} className="hover:bg-gray-50">
+                <td className="px-6 py-4 text-gray-600">{student.rank}</td>
                 <td className="px-6 py-4 text-gray-900 font-medium">{student.name}</td>
                 <td className="px-6 py-4 text-gray-600">{student.grade}</td>
                 <td className="px-6 py-4 text-gray-600">{student.gamesPlayed}</td>
-                <td className="px-6 py-4 text-gray-600">{student.avgScore}%</td>
-                <td className="px-6 py-4 text-valuto-green-600 font-semibold">{student.points}</td>
+                <td className="px-6 py-4 text-gray-600">{student.avgScore}</td>
+                <td className="px-6 py-4 text-valuto-green-600 font-semibold">
+                  {student.points.toLocaleString()}
+                </td>
               </tr>
             ))}
           </tbody>
@@ -45,5 +66,3 @@ export default function StudentsPage() {
     </div>
   );
 }
-
-

@@ -1,6 +1,6 @@
 "use client";
 
-import { Company } from "../../logic/gameLogic";
+import { Company } from "./../logic/gameLogic";
 
 export default function InvestSection({
   company,

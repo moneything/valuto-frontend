@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -13,7 +14,8 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <a href="/" className="flex items-center">
-              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent">Valuto</span>
+              <Image src="favicon.svg" alt="Valuto Logo" width={40} height={40} />
+              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end" style={{'height': "-webkit-fill-available"}}>aluto</span>
             </a>
           </div>
 

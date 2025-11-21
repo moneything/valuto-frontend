@@ -1,4 +1,5 @@
 import { Company } from "../logic/gameLogic";
+import "../investment.css";
 
 export default function PriceRow({ company }: { company: Company }) {
   return (

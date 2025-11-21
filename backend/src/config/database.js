@@ -1,94 +1,73 @@
 const mongoose = require('mongoose');
 
 /**
- * MongoDB Connection Configuration
- * Establishes connection to MongoDB database with proper error handling
+ * Establish a connection to MongoDB (Production Ready)
  */
-const connectDatabase = async () => {
+async function connectDatabase() {
+  const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
+
+  if (!mongoUri) {
+    throw new Error('❌ MONGO_URI or MONGODB_URI is not defined in environment variables');
+  }
+
+  const options = {
+    maxPoolSize: 10,   // tune for your workload
+    minPoolSize: 2,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+    retryWrites: true,
+    w: 'majority',
+  };
+
   try {
-    const mongoUri = process.env.MONGO_URI || process.env.MONGODB_URI;
-
-    if (!mongoUri) {
-      throw new Error('MONGO_URI or MONGODB_URI environment variable is not defined');
-    }
-
-    // Connection options
-    const options = {
-      // Use new URL parser
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-
-      // Connection pool settings
-      maxPoolSize: 10,
-      minPoolSize: 2,
-
-      // Timeout settings
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-
-      // Retry settings
-      retryWrites: true,
-      w: 'majority',
-    };
-
-    // Connect to MongoDB
     const connection = await mongoose.connect(mongoUri, options);
 
-    console.log(`✅ MongoDB Connected: ${connection.connection.host}`);
-    console.log(`📊 Database: ${connection.connection.name}`);
-
-    // Connection event listeners
-    mongoose.connection.on('connected', () => {
-      console.log('✅ Mongoose connected to MongoDB');
-    });
-
-    mongoose.connection.on('error', (err) => {
-      console.error('❌ Mongoose connection error:', err);
-    });
-
-    mongoose.connection.on('disconnected', () => {
-      console.log('⚠️ Mongoose disconnected from MongoDB');
-    });
-
-    // Handle process termination
-    process.on('SIGINT', async () => {
-      await mongoose.connection.close();
-      console.log('🛑 Mongoose connection closed due to app termination');
-      process.exit(0);
-    });
+    console.log(`✅ MongoDB Connected`);
+    console.log(`   📡 Host: ${connection.connection.host}`);
+    console.log(`   📊 Database: ${connection.connection.name}`);
 
     return connection;
-  } catch (error) {
-    console.error('❌ MongoDB Connection Error:', error.message);
-    console.error('Stack:', error.stack);
-
-    // Exit process with failure
-    process.exit(1);
+  } catch (err) {
+    console.error('❌ MongoDB initial connection failure:');
+    console.error(err);
+    throw err; // <-- Let the caller decide whether to exit
   }
-};
+}
 
 /**
- * Check if database is connected
+ * Graceful shutdown handler
  */
-const isDatabaseConnected = () => {
-  return mongoose.connection.readyState === 1;
-};
+async function disconnectDatabase() {
+  await mongoose.connection.close();
+  console.log('🛑 MongoDB connection closed gracefully');
+}
 
 /**
- * Close database connection
+ * Attach signal listeners (SIGINT, SIGTERM, SIGQUIT)
+ * Best practice for Docker/Kubernetes/Cloud deployments
  */
-const closeDatabaseConnection = async () => {
-  try {
-    await mongoose.connection.close();
-    console.log('🛑 Database connection closed successfully');
-  } catch (error) {
-    console.error('❌ Error closing database connection:', error);
-    throw error;
-  }
-};
+function setupGracefulShutdown() {
+  const signals = ['SIGINT', 'SIGTERM', 'SIGQUIT'];
+
+  signals.forEach((signal) => {
+    process.on(signal, async () => {
+      console.log(`⚠️  Received ${signal}. Closing MongoDB connection...`);
+      await disconnectDatabase();
+      process.exit(0);
+    });
+  });
+}
+
+/**
+ * Check connection state
+ */
+function isDatabaseConnected() {
+  return mongoose.connection.readyState === 1; // 1 = connected
+}
 
 module.exports = {
   connectDatabase,
+  disconnectDatabase,
   isDatabaseConnected,
-  closeDatabaseConnection,
+  setupGracefulShutdown,
 };

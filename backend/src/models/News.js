@@ -1,50 +1,70 @@
 const mongoose = require('mongoose');
 
-/**
- * News Schema
- * Stores financial news articles
- */
-const newsSchema = new mongoose.Schema(
+const NewsSchema = new mongoose.Schema(
   {
-    title: {
+    headline: {
       type: String,
       required: true,
       trim: true,
     },
+
     summary: {
-      type: String,
+      type: [String], // <-- array of bullet points
       required: true,
     },
-    link: {
-      type: String,
-      required: true,
-    },
+
     source: {
       type: String,
-      default: 'Financial Times',
+      required: true,
+      trim: true,
     },
+
+    sourceUrl: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+
     category: {
       type: String,
-      enum: ['stocks', 'crypto', 'economy', 'business', 'personal-finance', 'general'],
-      default: 'general',
+      enum: [
+        "Bills",
+        "Benefits",
+        "Jobs",
+        "Savings",
+        "Investing",
+        "Property",
+        "Scams",
+        "All",
+      ],
+      required: true,
     },
+
+    badge: {
+      type: String,
+      enum: ["Explainer", "Alert", "Saving Tip"],
+      default: null,
+    },
+
     publishedAt: {
       type: Date,
-      default: Date.now,
+      required: true,
     },
+
+    isPinned: {
+      type: Boolean,
+      default: false,
+    },
+
+    // Admin-specific control (optional)
     isActive: {
       type: Boolean,
       default: true,
     },
   },
   {
-    timestamps: true,
+    timestamps: true, // createdAt, updatedAt
   }
 );
 
-// Indexes
-newsSchema.index({ publishedAt: -1 });
-newsSchema.index({ category: 1, isActive: 1 });
-
-module.exports = mongoose.model('News', newsSchema);
-
+module.exports = mongoose.model("News", NewsSchema);

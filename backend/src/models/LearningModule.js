@@ -1,128 +1,126 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-/**
- * LearningModule Schema
- * Stores the actual learning module content, activities, and metadata
- */
 const learningModuleSchema = new mongoose.Schema(
   {
     // Basic Info
-    title: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    description: {
-      type: String,
-      required: true,
-    },
-    topic: {
-      type: String,
-      required: true,
-      trim: true,
-      index: true,
+    title: { type: String, required: true, trim: true },
+    description: { type: String, required: true },
+
+    // Category (Learn Hub)
+    category: {
+      id: String,           // e.g. "core-money-skills"
+      name: String,         // e.g. "Core Money Skills"
+      icon: String,         // lucide icon name
+      color: String,        // e.g. "blue"
     },
 
-    // Lesson Content
-    lessonContent: {
-      type: String,
-      required: true,
+    // Topic (search/filter)
+    topic: { type: String, required: true, index: true },
+
+    // Visual Metadata for lesson header
+    visual: {
+      icon: String,          // lucide icon name
+      iconColor: String,     // e.g. "blue", "green"
+      badge: String,         // "Essential", "Beginner Friendly"
+      readTime: Number,      // minutes
     },
 
-    // Learning Steps (for interactive learning)
-    learningSteps: [{
-      id: String,
-      type: {
-        type: String,
-        enum: ['explanation', 'interactive', 'example', 'mini-game'],
+    // Structured Content Sections
+    contentSections: [
+      {
+        id: String,
+        type: {
+          type: String,
+          enum: [
+            "header",
+            "explanation",
+            "example",
+            "warning",
+            "tip",
+            "comparison",
+            "list",
+            "steps",
+          ],
+        },
+        title: String,
+        content: String, // rich text or markdown
+        icon: String,
+        colorScheme: String, // matches UI cards
+        metadata: mongoose.Schema.Types.Mixed, // lists, comparisons, etc.
       },
-      title: String,
-      content: String,
-      interactiveData: mongoose.Schema.Types.Mixed,
-      emoji: String,
-      points: Number,
-    }],
+    ],
 
-    // Activity Configuration
-    activityType: {
-      type: String,
-      enum: ['quiz', 'simulation', 'scenario'],
-      required: true,
+    // Quiz (3-question style)
+    quiz: {
+      questions: [
+        {
+          question: String,
+          options: [String], // exactly 4 choices
+          correctAnswer: Number, // index (0-3)
+          explanation: String,
+        },
+      ],
+      passingScore: Number, // e.g., 2
     },
-    activityData: {
-      type: mongoose.Schema.Types.Mixed,
-      required: true,
-    },
+
+    // Related Lessons
+    relatedLessons: [
+      {
+        moduleId: String,
+        title: String,
+        relationship: {
+          type: String,
+          enum: ["prerequisite", "next-step", "related", "advanced"],
+        },
+      },
+    ],
 
     // Metadata
-    points: {
-      type: Number,
-      default: 100,
-      min: 0,
-    },
+    points: { type: Number, default: 100 },
     difficultyLevel: {
       type: String,
-      enum: ['beginner', 'intermediate', 'advanced'],
-      default: 'beginner',
+      enum: ["beginner", "intermediate", "advanced"],
+      default: "beginner",
     },
-    timeEstimate: {
-      type: Number, // in minutes
-      default: 30,
-      min: 1,
-    },
-    prerequisites: [{
-      type: String, // moduleIds
-    }],
+    timeEstimate: { type: Number, default: 5 }, // UI uses 3–5 min read
+
+    // Ordering
+    order: { type: Number, default: 0 },
 
     // Status
-    isActive: {
-      type: Boolean,
-      default: true,
-    },
+    isActive: { type: Boolean, default: true },
 
     // Creator
-    createdBy: {
-      type: String,
-      required: true,
-    },
+    createdBy: { type: String, required: true },
   },
-  {
-    timestamps: true,
-  }
+  { timestamps: true }
 );
 
 // Indexes
+learningModuleSchema.index({ "category.id": 1, order: 1 });
 learningModuleSchema.index({ topic: 1, difficultyLevel: 1 });
 learningModuleSchema.index({ isActive: 1 });
-learningModuleSchema.index({ createdBy: 1 });
 
-// Virtual for id field
-learningModuleSchema.set('toJSON', {
+// Mongoose JSON cleanup
+learningModuleSchema.set("toJSON", {
   virtuals: true,
-  transform: function(doc, ret) {
+  transform: (doc, ret) => {
     ret.id = ret._id;
     delete ret._id;
     delete ret.__v;
     return ret;
-  }
+  },
 });
 
-// Static method to get modules with filters
+// Static method to filter lessons
 learningModuleSchema.statics.getModules = async function (filters = {}) {
   const query = { isActive: true };
-  
-  if (filters.topic) {
-    query.topic = filters.topic;
-  }
-  if (filters.difficulty) {
-    query.difficultyLevel = filters.difficulty;
-  }
-  if (filters.activityType) {
-    query.activityType = filters.activityType;
-  }
 
-  return this.find(query).sort({ createdAt: -1 }).lean();
+  if (filters.categoryId) query["category.id"] = filters.categoryId;
+  if (filters.topic) query.topic = filters.topic;
+  if (filters.difficulty) query.difficultyLevel = filters.difficulty;
+
+  return this.find(query).sort({ order: 1 }).lean();
 };
 
-module.exports = mongoose.model('LearningModule', learningModuleSchema);
-
+module.exports = mongoose.model("LearningModule", learningModuleSchema);

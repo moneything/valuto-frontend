@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { RoundResult } from "../logic/gameLogic";
 import { companies } from "../data/companies";
+import "../investment.css";
 
 interface Props {
   result: RoundResult;

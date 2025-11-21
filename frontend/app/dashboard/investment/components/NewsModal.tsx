@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Company } from "../logic/gameLogic";
 import { FiExternalLink, FiInfo } from "react-icons/fi";
+import "../investment.css";
 
 export default function NewsModal({
   company,

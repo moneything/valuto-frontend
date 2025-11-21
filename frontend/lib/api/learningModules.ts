@@ -85,7 +85,7 @@ export interface ScenarioResult {
   pointsEarned: number;
   consequences: any;
   timeSpent: number;
-}
+} 
 
 class LearningModuleAPI {
   private async request<T>(

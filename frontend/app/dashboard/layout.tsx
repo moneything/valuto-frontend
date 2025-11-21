@@ -9,6 +9,7 @@ import { UserButton } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import Link from 'next/link';
 import DashboardDock from '@/components/DashboardDock';
+import Image from 'next/image';
 
 export default function DashboardLayout({
   children,
@@ -19,12 +20,22 @@ export default function DashboardLayout({
   const pathname = usePathname();
   const { isSignedIn, isLoaded } = useUser();
   const { profile, loading } = useUserProfile();
+console.log("🔍 DEBUG: profile =", profile);
+console.log("🔍 DEBUG: loading =", loading);
+console.log("🔍 DEBUG: isLoaded =", isLoaded);
+console.log("🔍 DEBUG: isSignedIn =", isSignedIn);
 
   useEffect(() => {
+
     if (!isLoaded || loading) return; // wait for both Clerk and profile to load
 
     if (!isSignedIn) {
       router.push('/');
+      return;
+    }
+
+    if (!loading && isLoaded && profile == null) {
+      router.push('/onboarding');
       return;
     }
 
@@ -61,17 +72,12 @@ export default function DashboardLayout({
           <div className="flex h-16 items-center justify-between">
             {/* Logo */}
             <Link href="/dashboard" className="flex items-center group">
-              <div className="flex items-center space-x-2">
-                <div className="w-8 h-8 bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 rounded-lg flex items-center justify-center shadow-md group-hover:shadow-lg transition-shadow">
-                  <span className="text-white font-bold text-sm">V</span>
-                </div>
-                <span className="text-2xl font-bold font-serif green-text-gradient">
-                  Valuto
-                </span>
+              <div className="flex items-center">
+                  <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end" style={{'height': "-webkit-fill-available"}}>{profile?.role === 'teacher' ? ' Teacher' : '🎓 Student'}</span>
+                  <span className="`text-2xl font-bold font-cursive text-black flex items-end ml-2 mr-2  ${cursiveFont.className}` " style={{'height': "-webkit-fill-available"}} >for</span>
+                  <Image src="/favicon.svg" alt="Valuto Logo" width={40} height={40} />
+                  <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end" style={{'height': "-webkit-fill-available"}}>aluto </span>
               </div>
-              <span className="ml-3 text-sm text-valuto-green-600 font-medium bg-valuto-green-50 px-3 py-1 rounded-full">
-                {profile?.role === 'teacher' ? '👨‍🏫 Teacher' : '🎓 Student'}
-              </span>
             </Link>
 
             {/* User Info */}

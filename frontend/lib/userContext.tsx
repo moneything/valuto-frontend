@@ -31,31 +31,29 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
 
       try {
         const token = await getToken({ template: "default" });
+
+        // 🔥 Correct endpoint that auto-creates user
         const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5001"}/api/user`,
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/user/me`,
+          { headers: { Authorization: `Bearer ${token}` } }
         );
 
         if (res.ok) {
           const data = await res.json();
-          if (data.success && data.data) {
-            setProfile(data.data);
-            saveUserProfile(data.data);
-          }
+          setProfile(data.data);
+          saveUserProfile(data.data);
         } else {
-          console.warn("⚠️ Failed to sync backend user:", res.status);
+          console.warn("⚠️ User sync failed:", res.status);
         }
       } catch (err) {
-        console.error("Failed to sync user with backend:", err);
+        console.error("Failed to sync user:", err);
       } finally {
         setLoading(false);
       }
     }
 
     syncUser();
-  }, [user, isLoaded, getToken]);
+  }, [user, isLoaded]);
 
   // ✅ Update user profile both locally + on backend
   const updateProfile = async (newProfile: UserProfile) => {

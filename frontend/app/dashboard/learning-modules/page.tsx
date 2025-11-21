@@ -6,7 +6,7 @@ import { useLearningModules, useUserLearningProgress } from '@/lib/hooks/useLear
 import PageLayout from '@/components/theme/PageLayout';
 import Card from '@/components/theme/Card';
 import Button from '@/components/theme/Button';
-import { BookOpenIcon, TrophyIcon, ClockIcon, StarIcon } from '@/components/icons';
+import { BookOpenIcon, ClockIcon, StarIcon } from '@/components/icons';
 
 const difficultyColors = {
   beginner: { bg: 'bg-green-100', text: 'text-green-700', border: 'border-green-200' },
@@ -68,8 +68,8 @@ export default function LearningModulesPage() {
 
   return (
     <PageLayout
-      title="🎮 Interactive Learning Hub"
-      subtitle="Level up your money skills with epic games, challenges, and real-world scenarios!"
+      title="Learn Money Skills"
+      subtitle="Master essential financial skills with our student-friendly guides. Each topic takes just 2-3 minutes to read!"
       icon={<BookOpenIcon className="w-16 h-16 text-valuto-green-600" />}
     >
       {/* Progress Overview */}
@@ -101,55 +101,6 @@ export default function LearningModulesPage() {
         </Card>
       )}
 
-      {/* Filters */}
-      <Card className="mb-8">
-        <h3 className="text-lg font-semibold text-gray-900 mb-4">Filter Modules</h3>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Topic</label>
-            <select
-              value={filters.topic}
-              onChange={(e) => setFilters(prev => ({ ...prev, topic: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
-            >
-              <option value="">All Topics</option>
-              <option value="budgeting">Budgeting</option>
-              <option value="saving">Saving</option>
-              <option value="investing">Investing</option>
-              <option value="debt">Debt</option>
-              <option value="credit">Credit</option>
-              <option value="insurance">Insurance</option>
-              <option value="retirement">Retirement</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Difficulty</label>
-            <select
-              value={filters.difficulty}
-              onChange={(e) => setFilters(prev => ({ ...prev, difficulty: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
-            >
-              <option value="">All Levels</option>
-              <option value="beginner">Beginner</option>
-              <option value="intermediate">Intermediate</option>
-              <option value="advanced">Advanced</option>
-            </select>
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">Activity Type</label>
-            <select
-              value={filters.activityType}
-              onChange={(e) => setFilters(prev => ({ ...prev, activityType: e.target.value }))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
-            >
-              <option value="">All Types</option>
-              <option value="quiz">Quiz</option>
-              <option value="simulation">Simulation</option>
-              <option value="scenario">Scenario</option>
-            </select>
-          </div>
-        </div>
-      </Card>
 
       {/* Modules Grid */}
       {loading ? (
@@ -165,12 +116,6 @@ export default function LearningModulesPage() {
           <Button onClick={() => window.location.reload()}>
             Try Again
           </Button>
-        </Card>
-      ) : !modules || modules.length === 0 ? (
-        <Card className="text-center py-12">
-          <div className="text-6xl mb-4">📚</div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">No Modules Found</h3>
-          <p className="text-gray-600">Try adjusting your filters to see more modules.</p>
         </Card>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

@@ -1,34 +1,32 @@
+// backend/src/models/LearningModule.js
 const mongoose = require("mongoose");
 
 const learningModuleSchema = new mongoose.Schema(
   {
-    // Basic Info
     title: { type: String, required: true, trim: true },
     description: { type: String, required: true },
 
-    // Category (Learn Hub)
-    category: {
-      id: String,           // e.g. "core-money-skills"
-      name: String,         // e.g. "Core Money Skills"
-      icon: String,         // lucide icon name
-      color: String,        // e.g. "blue"
+    // Category link
+    categoryId: {
+      type: String, // e.g. "saving-and-budgeting"
+      required: true,
+      index: true,
     },
 
-    // Topic (search/filter)
-    topic: { type: String, required: true, index: true },
+    topic: { type: String, required: true, unique: true }, // URL slug, e.g. "budgeting-basics"
 
-    // Visual Metadata for lesson header
+    // Lesson header UI metadata
     visual: {
-      icon: String,          // lucide icon name
-      iconColor: String,     // e.g. "blue", "green"
-      badge: String,         // "Essential", "Beginner Friendly"
+      icon: String,          // "Wallet", "PiggyBank"
+      iconColor: String,     // "bg-blue-500"
+      badge: String,         // "Beginner Friendly"
       readTime: Number,      // minutes
     },
 
-    // Structured Content Sections
+    // Core lesson content (multiple cards)
     contentSections: [
       {
-        id: String,
+        id: String, // unique for card
         type: {
           type: String,
           enum: [
@@ -43,27 +41,27 @@ const learningModuleSchema = new mongoose.Schema(
           ],
         },
         title: String,
-        content: String, // rich text or markdown
+        content: String,
         icon: String,
-        colorScheme: String, // matches UI cards
-        metadata: mongoose.Schema.Types.Mixed, // lists, comparisons, etc.
+        colorScheme: String,
+        metadata: mongoose.Schema.Types.Mixed,
       },
     ],
 
-    // Quiz (3-question style)
+    // Mini quiz
     quiz: {
       questions: [
         {
           question: String,
-          options: [String], // exactly 4 choices
-          correctAnswer: Number, // index (0-3)
+          options: [String],
+          correctAnswer: Number, // index
           explanation: String,
         },
       ],
-      passingScore: Number, // e.g., 2
+      passingScore: Number,
     },
 
-    // Related Lessons
+    // Next Steps
     relatedLessons: [
       {
         moduleId: String,
@@ -75,52 +73,22 @@ const learningModuleSchema = new mongoose.Schema(
       },
     ],
 
-    // Metadata
     points: { type: Number, default: 100 },
     difficultyLevel: {
       type: String,
       enum: ["beginner", "intermediate", "advanced"],
       default: "beginner",
     },
-    timeEstimate: { type: Number, default: 5 }, // UI uses 3–5 min read
+    timeEstimate: { type: Number, default: 5 },
 
-    // Ordering
     order: { type: Number, default: 0 },
-
-    // Status
     isActive: { type: Boolean, default: true },
 
-    // Creator
     createdBy: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-// Indexes
-learningModuleSchema.index({ "category.id": 1, order: 1 });
-learningModuleSchema.index({ topic: 1, difficultyLevel: 1 });
-learningModuleSchema.index({ isActive: 1 });
-
-// Mongoose JSON cleanup
-learningModuleSchema.set("toJSON", {
-  virtuals: true,
-  transform: (doc, ret) => {
-    ret.id = ret._id;
-    delete ret._id;
-    delete ret.__v;
-    return ret;
-  },
-});
-
-// Static method to filter lessons
-learningModuleSchema.statics.getModules = async function (filters = {}) {
-  const query = { isActive: true };
-
-  if (filters.categoryId) query["category.id"] = filters.categoryId;
-  if (filters.topic) query.topic = filters.topic;
-  if (filters.difficulty) query.difficultyLevel = filters.difficulty;
-
-  return this.find(query).sort({ order: 1 }).lean();
-};
+learningModuleSchema.index({ categoryId: 1, order: 1 });
 
 module.exports = mongoose.model("LearningModule", learningModuleSchema);

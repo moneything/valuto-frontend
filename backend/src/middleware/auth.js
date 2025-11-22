@@ -1,3 +1,4 @@
+// backend/src/middleware/auth.js
 const { clerkClient, verifyToken } = require('@clerk/clerk-sdk-node');
 
 /**

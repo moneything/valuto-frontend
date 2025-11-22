@@ -1,7 +1,7 @@
 // Local storage helper functions for development
 
 export interface UserProfile {
-  userId: string;
+  clerkUserId: string;
   name: string;
   email: string;
   role: 'student' | 'teacher';

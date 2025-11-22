@@ -1,14 +1,17 @@
+// backend/src/routes/learningRoutes.js
+
 const express = require('express');
 const router = express.Router();
+
 const {
   saveProgress,
   getModuleProgress,
   getAllProgress,
-  markLessonCompleted,
   updateTimeSpent,
   getModuleLeaderboard,
   getLearningStats,
 } = require('../controllers/learningController');
+
 const {
   getModules,
   getModule,
@@ -16,13 +19,14 @@ const {
   updateModule,
   deleteModule,
 } = require('../controllers/learningModuleController');
+
 const { authenticateClerkUser, optionalAuth } = require('../middleware/auth');
 const { validateLearningProgress } = require('../utils/validators');
 
-/**
- * Learning Module Routes
- * Handles learning module content management
- */
+/* ============================================================
+ * Learning Module Content Routes
+ * These handle CRUD operations for the actual lesson content
+ * ============================================================ */
 
 // @route   GET /api/learning/modules
 // @desc    Get all learning modules
@@ -49,15 +53,21 @@ router.put('/modules/:id', authenticateClerkUser, updateModule);
 // @access  Private (Teacher only)
 router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 
-/**
- * Learning Progress Routes
- * Handles learning module and lesson progress tracking
- */
+/* ============================================================
+ * Learning Progress Routes (Single-module progress tracking)
+ * New schema = 1 module = 1 progress record
+ * moduleId = module.topic (string)
+ * ============================================================ */
 
 // @route   POST /api/learning/progress
-// @desc    Save or update learning progress
+// @desc    Save or update progress for a module
 // @access  Private
-router.post('/progress', authenticateClerkUser, validateLearningProgress, saveProgress);
+router.post('/progress', (req, res, next) => {
+  console.log("🚨 ROUTE HIT BEFORE VALIDATOR");
+  console.log("🧪 RAW BODY RECEIVED BY BACKEND:");
+  console.log(req.body);
+  next();
+}, authenticateClerkUser, validateLearningProgress, saveProgress);
 
 // @route   GET /api/learning/progress/:moduleId
 // @desc    Get user's progress for a specific module
@@ -69,23 +79,18 @@ router.get('/progress/:moduleId', authenticateClerkUser, getModuleProgress);
 // @access  Private
 router.get('/progress', authenticateClerkUser, getAllProgress);
 
-// @route   PUT /api/learning/complete/:moduleId/:lessonId
-// @desc    Mark lesson as completed
+// @route   PUT /api/learning/time/:moduleId
+// @desc    Update time spent on a module
 // @access  Private
-router.put('/complete/:moduleId/:lessonId', authenticateClerkUser, markLessonCompleted);
-
-// @route   PUT /api/learning/time/:moduleId/:lessonId
-// @desc    Update time spent on lesson
-// @access  Private
-router.put('/time/:moduleId/:lessonId', authenticateClerkUser, updateTimeSpent);
+router.put('/time/:moduleId', authenticateClerkUser, updateTimeSpent);
 
 // @route   GET /api/learning/leaderboard/:moduleId
-// @desc    Get module leaderboard
-// @access  Public
+// @desc    Get leaderboard for a module
+// @access  Public (auth optional)
 router.get('/leaderboard/:moduleId', optionalAuth, getModuleLeaderboard);
 
 // @route   GET /api/learning/stats
-// @desc    Get learning statistics
+// @desc    Get learning statistics for the authenticated user
 // @access  Private
 router.get('/stats', authenticateClerkUser, getLearningStats);
 

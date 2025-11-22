@@ -67,7 +67,7 @@ app.use(cors(corsOptions));
 
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ extended: true, limit: '10mb' }));
+// app.use(express.urlencoded({ extended: true, limit: '10mb' }));
 
 // Logging middleware (only in development)
 if (process.env.NODE_ENV === 'development') {
@@ -108,6 +108,7 @@ const learningRoutes = require('./routes/learningRoutes');
 const challengeRoutes = require('./routes/challengeRoutes');
 const triviaRoutes = require('./routes/triviaRoutes');
 const newsRoutes = require('./routes/newsRoutes');
+const categoryRoutes = require("./routes/categoryRoutes");
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -117,6 +118,7 @@ app.use('/api/learning', learningRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/trivia', triviaRoutes);
 app.use('/api/news', newsRoutes);
+app.use("/api/categories", categoryRoutes);
 
 // ==================== ERROR HANDLING ====================
 
@@ -212,6 +214,7 @@ app.use("/api/webhooks", webhookRoutes);
 
 // Start the server
 startServer();
+console.log("🔥 USING MIDDLEWARE:", app._router.stack.length);
 
 // Export app for testing
 module.exports = app;

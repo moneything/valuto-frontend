@@ -1,11 +1,8 @@
 /**
- * Centralized Error Handling Utilities
- * Provides consistent error responses across the application
+ * Improved Central Error Handling
+ * Fully aligned with new Mongoose models & validators
  */
 
-/**
- * Custom Application Error Class
- */
 class AppError extends Error {
   constructor(message, statusCode = 500, errors = null) {
     super(message);
@@ -17,72 +14,82 @@ class AppError extends Error {
   }
 }
 
-/**
- * Global Error Handler Middleware
- */
 const errorHandler = (err, req, res, next) => {
-  let error = { ...err };
-  error.message = err.message;
+  // Don't clone error — preserve Mongoose / Error props
+  let error = err;
 
-  // Log error to console in development
-  if (process.env.NODE_ENV === 'development') {
-    console.error('Error:', err);
+  // Dev logging
+  if (process.env.NODE_ENV === "development") {
+    console.error("❌ Error:", err);
   }
 
-  // Mongoose bad ObjectId
-  if (err.name === 'CastError') {
-    const message = 'Resource not found';
-    error = new AppError(message, 404);
+  /** ------------------------------------
+   * Mongoose: CastError (invalid ObjectId)
+   * ------------------------------------ */
+  if (err.name === "CastError") {
+    error = new AppError(`Invalid ID: ${err.value}`, 400);
   }
 
-  // Mongoose duplicate key
+  /** ------------------------------------
+   * Mongoose: Duplicate Key
+   * ------------------------------------ */
   if (err.code === 11000) {
-    const field = Object.keys(err.keyPattern)[0];
-    const message = `${field.charAt(0).toUpperCase() + field.slice(1)} already exists`;
-    error = new AppError(message, 400);
+    const fields = Object.keys(err.keyPattern);
+    error = new AppError(
+      `Duplicate value for: ${fields.join(", ")}`,
+      400,
+      fields
+    );
   }
 
-  // Mongoose validation error
-  if (err.name === 'ValidationError') {
-    const errors = Object.values(err.errors).map((e) => e.message);
-    const message = 'Validation failed';
-    error = new AppError(message, 400, errors);
+  /** ------------------------------------
+   * Mongoose: Validation Errors
+   * ------------------------------------ */
+  if (err.name === "ValidationError") {
+    const formattedErrors = Object.values(err.errors).map((e) => ({
+      field: e.path,
+      message: e.message,
+    }));
+
+    error = new AppError("Validation failed", 400, formattedErrors);
   }
 
-  // JWT errors
-  if (err.name === 'JsonWebTokenError') {
-    const message = 'Invalid token';
-    error = new AppError(message, 401);
+  /** ------------------------------------
+   * JWT Errors
+   * ------------------------------------ */
+  if (err.name === "JsonWebTokenError") {
+    error = new AppError("Invalid token", 401);
   }
 
-  if (err.name === 'TokenExpiredError') {
-    const message = 'Token expired';
-    error = new AppError(message, 401);
+  if (err.name === "TokenExpiredError") {
+    error = new AppError("Token has expired", 401);
   }
 
-  // Send error response
+  /** ------------------------------------
+   * Express-validator Recognition
+   * ------------------------------------ */
+  if (err.errors && Array.isArray(err.errors)) {
+    error = new AppError("Validation failed", 400, err.errors);
+  }
+
+  /** ------------------------------------
+   * Final Safe Response
+   * ------------------------------------ */
   res.status(error.statusCode || 500).json({
     success: false,
-    message: error.message || 'Internal Server Error',
+    message: error.message || "Internal Server Error",
     errors: error.errors || undefined,
-    stack: process.env.NODE_ENV === 'development' ? err.stack : undefined,
+    stack: process.env.NODE_ENV === "development" ? err.stack : undefined,
   });
 };
 
-/**
- * Async Handler Wrapper
- * Wraps async route handlers to catch errors automatically
- */
-const asyncHandler = (fn) => (req, res, next) => {
+/** Async wrapper */
+const asyncHandler = (fn) => (req, res, next) =>
   Promise.resolve(fn(req, res, next)).catch(next);
-};
 
-/**
- * Not Found Handler
- */
+/** Not found */
 const notFound = (req, res, next) => {
-  const error = new AppError(`Route not found: ${req.originalUrl}`, 404);
-  next(error);
+  next(new AppError(`Route not found: ${req.originalUrl}`, 404));
 };
 
 module.exports = {

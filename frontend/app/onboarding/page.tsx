@@ -60,7 +60,7 @@ export default function OnboardingPage() {
       if (!token) throw new Error("No Clerk token found!");
 
       const profile: UserProfile = {
-        userId: user?.id || "",
+        clerkUserId: user?.id || "",
         name: formData.name,
         email: formData.email,
         role: formData.role,

@@ -1,28 +1,61 @@
-const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
+// frontend/lib/api/learningModules.ts
+const API_BASE_URL =
+  process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5001";
 
-export interface LearningStep {
+/* ============================================================
+ * BACKEND-ACCURATE TYPES
+ * ============================================================ */
+
+export interface ContentSection {
   id: string;
-  type: 'explanation' | 'interactive' | 'example' | 'mini-game';
+  type: string;
   title: string;
   content: string;
-  interactiveData?: any;
-  emoji: string;
-  points: number;
+  icon?: string;
+  colorScheme?: string;
+  metadata?: any;
+}
+
+export interface QuizQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+  explanation: string;
+}
+
+export interface QuizData {
+  questions: QuizQuestion[];
+  passingScore: number;
 }
 
 export interface LearningModule {
-  id: string;
+  _id: string;
+  topic: string;
   title: string;
   description: string;
-  topic: string;
-  lessonContent: string;
-  activityType: 'quiz' | 'simulation' | 'scenario';
-  activityData: any;
-  learningSteps?: LearningStep[];
+  categoryId: string;
+
+  visual: {
+    icon: string;
+    iconColor: string;
+    badge: string;
+    readTime: number;
+  };
+
+  contentSections: ContentSection[];
+
+  quiz?: QuizData;
+
+  activityType: "quiz" | "simulation" | "scenario";
+  activityData?: any;
+
+  relatedLessons?: any[];
+
   points: number;
-  difficultyLevel: 'beginner' | 'intermediate' | 'advanced';
+  difficultyLevel: "beginner" | "intermediate" | "advanced";
   timeEstimate: number;
-  prerequisites?: string[];
+  order?: number;
+
   isActive: boolean;
   createdBy: string;
   createdAt: string;
@@ -30,181 +63,204 @@ export interface LearningModule {
 }
 
 export interface LearningProgress {
+  _id?: string;
   userId: string;
+  clerkUserId: string;
   moduleId: string;
-  status: 'not_started' | 'in_progress' | 'completed';
-  score: number;
-  maxScore: number;
-  completionTime?: number;
-  attempts: number;
-  lastAttempt: string;
-  quizResults?: any[];
-  simulationResult?: any;
-  scenarioResults?: any[];
-  progressPercentage: number;
-  strengths?: string[];
-  areasForImprovement?: string[];
-  recommendedNextModules?: string[];
+  moduleName: string;
+  status: "not_started" | "in_progress" | "completed";
+
+  quizScore?: number;
+  quizPassed?: boolean;
+  quizAttempts: number;
+  timeSpent: number;
+
+  startedAt?: string;
+  completedAt?: string;
+  lastAccessedAt?: string;
+
+  quizAnswers?: any[];
 }
 
 export interface ProgressStats {
   totalModules: number;
   completedModules: number;
   inProgressModules: number;
-  averageScore: number;
-  totalPoints: number;
+  completionPercentage: number;
+  totalTimeSpent: number;
+  averageQuizScore: number;
+  modulesStarted: number;
 }
 
-export interface ModuleFilters {
-  topic?: string;
-  difficulty?: string;
-  activityType?: string;
-}
+/* ============================================================
+ * SAVE PROGRESS PAYLOAD + RESPONSE
+ * ============================================================ */
 
 export interface QuizResponse {
-  questionId: string;
+  question: string;
   selectedAnswer: number;
   isCorrect: boolean;
-  pointsEarned: number;
-  timeSpent: number;
-  timestamp: string;
 }
 
 export interface SimulationResult {
-  finalScore: number;
-  choices: any[];
-  outcomes: any;
-  efficiency: number;
-  timeSpent: number;
+  finalScore?: number;
+  score?: number;
 }
 
 export interface ScenarioResult {
   scenarioId: string;
-  selectedChoice: string;
   isOptimal: boolean;
+}
+
+export interface SaveProgressPayload {
+  moduleId: string;
+
+  responses?: QuizResponse[];
+  simulationResult?: SimulationResult;
+  scenarioResults?: ScenarioResult[];
+
+  sessionData?: {
+    startTime: string;
+    endTime: string;
+    totalTime: number;
+  };
+}
+
+export interface SaveProgressResponse {
+  data: LearningProgress;
   pointsEarned: number;
-  consequences: any;
-  timeSpent: number;
-} 
+  totalPoints: number;
+  lessonsCompleted: number;
+}
+
+/* ============================================================
+ * API RESPONSE WRAPPER (FIXES TS ERRORS)
+ * ============================================================ */
+
+export type ApiResponse<T> = {
+  success: boolean;
+  data?: T;
+  error?: string;
+
+  // Optional fields the backend may include
+  message?: string;
+  pointsEarned?: number;
+  totalPoints?: number;
+  lessonsCompleted?: number;
+};
+
+/* ============================================================
+ * API CLASS
+ * ============================================================ */
 
 class LearningModuleAPI {
+  /* ---------------------------
+   * INTERNAL REQUEST WRAPPER
+   * --------------------------- */
   private async request<T>(
-    endpoint: string, 
+    endpoint: string,
     options: RequestInit = {}
-  ): Promise<{ success: boolean; data?: T; error?: string }> {
+  ): Promise<ApiResponse<T>> {
     try {
+      console.log("🔥 OUTGOING REQUEST:", {
+        endpoint,
+        method: options.method || "GET",
+        headers: options.headers,
+        body: options.body,
+      });
+
       const response = await fetch(`${API_BASE_URL}${endpoint}`, {
         headers: {
-          'Content-Type': 'application/json',
-          ...options.headers,
+          "Content-Type": "application/json",
+          ...(options.headers || {}),
         },
         ...options,
       });
 
-      const data = await response.json();
-      
+      const json = await response.json();
+
       if (!response.ok) {
-        throw new Error(data.error || 'Request failed');
+        return {
+          success: false,
+          error: json.error || "Request failed",
+          ...json,               // keep backend error details if present
+        };
       }
 
-      return data;
-    } catch (error) {
-      console.error('API request failed:', error);
+      return {
+        success: true,
+        ...json,                 // <-- THIS FIXES EVERYTHING
+      };
+    } catch (err: any) {
       return {
         success: false,
-        error: error instanceof Error ? error.message : 'Unknown error'
+        error: err.message || "Unknown error",
       };
     }
   }
 
-  private async authenticatedRequest<T>(
-    endpoint: string, 
+
+  private async authRequest<T>(
+    endpoint: string,
     token: string,
     options: RequestInit = {}
-  ): Promise<{ success: boolean; data?: T; error?: string }> {
+  ): Promise<ApiResponse<T>> {
     return this.request<T>(endpoint, {
       ...options,
       headers: {
-        'Authorization': `Bearer ${token}`,
-        ...options.headers,
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        ...(options.headers || {}),
       },
     });
   }
 
-  // Get all learning modules
-  async getModules(filters: ModuleFilters = {}): Promise<{ success: boolean; data?: LearningModule[]; error?: string }> {
-    const queryParams = new URLSearchParams();
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) queryParams.append(key, value);
-    });
-    
-    const queryString = queryParams.toString();
-    const endpoint = `/api/learning/modules${queryString ? `?${queryString}` : ''}`;
-    
-    return this.request<LearningModule[]>(endpoint);
+  /* ----------------------------------------------
+   * MODULES
+   * ---------------------------------------------- */
+
+  async getModules() {
+    return this.request<LearningModule[]>("/api/learning/modules");
   }
 
-  // Get a specific learning module
-  async getModule(moduleId: string): Promise<{ success: boolean; data?: LearningModule; error?: string }> {
-    return this.request<LearningModule>(`/api/learning/modules/${moduleId}`);
+  async getModule(topic: string) {
+    return this.request<LearningModule>(`/api/learning/modules/${topic}`);
   }
 
-  // Get user's progress for a specific module
-  async getModuleProgress(moduleId: string, token: string): Promise<{ success: boolean; data?: LearningProgress; error?: string }> {
-    return this.authenticatedRequest<LearningProgress>(`/api/learning/progress/${moduleId}`, token);
+  /* ----------------------------------------------
+   * PROGRESS
+   * ---------------------------------------------- */
+
+  async getModuleProgress(moduleId: string, token: string) {
+    return this.authRequest<LearningProgress>(
+      `/api/learning/progress/${moduleId}`,
+      token
+    );
   }
 
-  // Save user progress for a module
-  async saveProgress(
-    moduleId: string, 
-    token: string, 
-    progressData: {
-      activityType: 'quiz' | 'simulation' | 'scenario';
-      responses?: QuizResponse[];
-      simulationResult?: SimulationResult;
-      scenarioResults?: ScenarioResult[];
-      sessionData?: {
-        startTime: string;
-        endTime: string;
-        totalTime: number;
-      };
-    }
-  ): Promise<{ success: boolean; data?: any; error?: string }> {
-    return this.authenticatedRequest(`/api/learning/progress`, token, {
-      method: 'POST',
-      body: JSON.stringify({ 
-        moduleId,
-        ...progressData 
-      }),
+  async getUserProgress(token: string) {
+    return this.authRequest<LearningProgress[]>(`/api/learning/progress`, token);
+  }
+
+  async getStats(token: string) {
+    return this.authRequest<ProgressStats>(`/api/learning/stats`, token);
+  }
+
+  async saveProgress(payload: SaveProgressPayload, token: string) {
+    console.log("📤 FRONTEND SENDING PAYLOAD TO BACKEND:", JSON.stringify(payload, null, 2));
+    return this.authRequest<SaveProgressResponse>(`/api/learning/progress`, token, {
+      method: "POST",
+      body: JSON.stringify(payload),
     });
   }
 
-  // Get user's overall learning progress
-  async getUserProgress(
-    token: string, 
-    filters: { topic?: string; status?: string } = {}
-  ): Promise<{ success: boolean; data?: { progress: LearningProgress[]; stats: ProgressStats }; error?: string }> {
-    const queryParams = new URLSearchParams();
-    Object.entries(filters).forEach(([key, value]) => {
-      if (value) queryParams.append(key, value);
-    });
-    
-    const queryString = queryParams.toString();
-    const endpoint = `/api/learning/progress${queryString ? `?${queryString}` : ''}`;
-    
-    return this.authenticatedRequest<{ progress: LearningProgress[]; stats: ProgressStats }>(endpoint, token);
+  /* ----------------------------------------------
+  * CATEGORIES
+  * ---------------------------------------------- */
+  async getCategories() {
+    return this.request(`/api/categories`);
   }
 
-  // Create a new learning module (admin/teacher only)
-  async createModule(
-    token: string,
-    moduleData: Omit<LearningModule, 'createdAt' | 'updatedAt' | 'isActive' | 'createdBy'>
-  ): Promise<{ success: boolean; data?: LearningModule; error?: string }> {
-    return this.authenticatedRequest<LearningModule>('/api/learning/modules', token, {
-      method: 'POST',
-      body: JSON.stringify(moduleData),
-    });
-  }
 }
 
 export const learningModuleAPI = new LearningModuleAPI();

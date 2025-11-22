@@ -2,8 +2,11 @@ const mongoose = require('mongoose');
 
 /**
  * LearningProgress Schema
- * Tracks user progress through learning modules and lessons
+ * (Updated for SINGLE-LESSON MODULES)
+ *
+ * Each user has exactly ONE progress document per module.
  */
+
 const learningProgressSchema = new mongoose.Schema(
   {
     // User Reference
@@ -12,33 +15,25 @@ const learningProgressSchema = new mongoose.Schema(
       required: true,
       index: true,
     },
+
     clerkUserId: {
       type: String,
       required: true,
       index: true,
     },
 
-    // Module Information
+    // Module Identifier
     moduleId: {
       type: String,
       required: true,
       trim: true,
       index: true,
     },
+
+    // Display Name
     moduleName: {
       type: String,
       required: true,
-      trim: true,
-    },
-
-    // Lesson Information
-    lessonId: {
-      type: String,
-      required: true,
-      trim: true,
-    },
-    lessonName: {
-      type: String,
       trim: true,
     },
 
@@ -54,15 +49,18 @@ const learningProgressSchema = new mongoose.Schema(
       type: Number,
       min: 0,
       max: 100,
+      default: null,
     },
-    quizAttempts: {
-      type: Number,
-      default: 1,
-      min: 1,
-    },
+
     quizPassed: {
       type: Boolean,
       default: false,
+    },
+
+    quizAttempts: {
+      type: Number,
+      default: 0,
+      min: 0,
     },
 
     // Time Tracking
@@ -72,26 +70,28 @@ const learningProgressSchema = new mongoose.Schema(
       min: 0,
     },
 
-    // Activity Timestamps
+    // Timestamps
     startedAt: {
       type: Date,
       default: Date.now,
     },
+
     lastAccessedAt: {
       type: Date,
       default: Date.now,
     },
+
     completedAt: {
       type: Date,
+      default: null,
     },
 
-    // Quiz Details (optional)
+    // Optional: detailed correctness / answers
     quizAnswers: [
       {
-        questionId: String,
+        question: String,
         selectedAnswer: Number,
         isCorrect: Boolean,
-        attemptNumber: Number,
       },
     ],
   },
@@ -100,74 +100,76 @@ const learningProgressSchema = new mongoose.Schema(
   }
 );
 
-// Compound indexes
-learningProgressSchema.index({ userId: 1, moduleId: 1 }); // User's module progress
-learningProgressSchema.index({ userId: 1, moduleId: 1, lessonId: 1 }, { unique: true }); // Unique progress per lesson
-learningProgressSchema.index({ userId: 1, status: 1 }); // Filter by progress status
+/* -------------------------
+   INDEXES
+-------------------------- */
 
-// Instance method to mark as completed
+// One progress document per module per user
+learningProgressSchema.index(
+  { userId: 1, moduleId: 1 },
+  { unique: true }
+);
+
+/* -------------------------
+   INSTANCE METHODS
+-------------------------- */
+
 learningProgressSchema.methods.markCompleted = function () {
   this.status = 'completed';
   this.completedAt = new Date();
   return this.save();
 };
 
-// Instance method to update time spent
 learningProgressSchema.methods.addTimeSpent = function (seconds) {
   this.timeSpent += seconds;
   this.lastAccessedAt = new Date();
   return this.save();
 };
 
-// Static method to get user's module summary
-learningProgressSchema.statics.getModuleSummary = async function (userId, moduleId) {
-  const lessons = await this.find({ userId, moduleId }).sort({ lessonId: 1 }).lean();
+/* -------------------------
+   STATIC METHODS
+-------------------------- */
 
-  const totalLessons = lessons.length;
-  const completedLessons = lessons.filter((l) => l.status === 'completed').length;
-  const totalTimeSpent = lessons.reduce((acc, l) => acc + (l.timeSpent || 0), 0);
-  const averageQuizScore =
-    lessons.filter((l) => l.quizScore != null).reduce((acc, l) => acc + l.quizScore, 0) /
-      lessons.filter((l) => l.quizScore != null).length || 0;
+// Single-module summary
+learningProgressSchema.statics.getModuleSummary = async function (userId, moduleId) {
+  const progress = await this.findOne({ userId, moduleId }).lean();
+
+  if (!progress) {
+    return {
+      moduleId,
+      totalLessons: 1,
+      completedLessons: 0,
+      completionPercentage: 0,
+      totalTimeSpent: 0,
+      averageQuizScore: 0,
+      lessons: [],
+    };
+  }
 
   return {
     moduleId,
-    totalLessons,
-    completedLessons,
-    completionPercentage: totalLessons > 0 ? (completedLessons / totalLessons) * 100 : 0,
-    totalTimeSpent,
-    averageQuizScore: Math.round(averageQuizScore * 100) / 100,
-    lessons,
+    totalLessons: 1,
+    completedLessons: progress.status === 'completed' ? 1 : 0,
+    completionPercentage: progress.status === 'completed' ? 100 : 0,
+    totalTimeSpent: progress.timeSpent,
+    averageQuizScore: progress.quizScore ?? 0,
+    lessons: [progress],
   };
 };
 
-// Static method to get all user progress
+// All modules for user
 learningProgressSchema.statics.getUserProgress = async function (userId) {
-  const progress = await this.find({ userId }).sort({ lastAccessedAt: -1 }).lean();
+  const progress = await this.find({ userId })
+    .sort({ lastAccessedAt: -1 })
+    .lean();
 
-  // Group by module
-  const modules = {};
-  progress.forEach((p) => {
-    if (!modules[p.moduleId]) {
-      modules[p.moduleId] = {
-        moduleId: p.moduleId,
-        moduleName: p.moduleName,
-        lessons: [],
-        completed: 0,
-        total: 0,
-      };
-    }
-    modules[p.moduleId].lessons.push(p);
-    modules[p.moduleId].total += 1;
-    if (p.status === 'completed') {
-      modules[p.moduleId].completed += 1;
-    }
-  });
-
-  return Object.values(modules);
+  return progress;
 };
 
-// Static method to get leaderboard by module completion
+/* -------------------------
+   LEADERBOARD (unchanged)
+-------------------------- */
+
 learningProgressSchema.statics.getModuleLeaderboard = async function (moduleId, limit = 10) {
   const results = await this.aggregate([
     { $match: { moduleId, status: 'completed' } },
@@ -176,17 +178,14 @@ learningProgressSchema.statics.getModuleLeaderboard = async function (moduleId, 
         _id: '$userId',
         totalTimeSpent: { $sum: '$timeSpent' },
         avgQuizScore: { $avg: '$quizScore' },
-        lessonsCompleted: { $sum: 1 },
         completedAt: { $max: '$completedAt' },
       },
     },
-    { $sort: { lessonsCompleted: -1, avgQuizScore: -1 } },
+    { $sort: { avgQuizScore: -1, totalTimeSpent: 1 } },
     { $limit: limit },
   ]);
 
   return results;
 };
 
-const LearningProgress = mongoose.model('LearningProgress', learningProgressSchema);
-
-module.exports = LearningProgress;
+module.exports = mongoose.model('LearningProgress', learningProgressSchema);

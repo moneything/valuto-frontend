@@ -7,6 +7,7 @@ import Link from "next/link";
 
 import PageLayout from "@/components/theme/PageLayout";
 import Card from "@/components/theme/Card";
+import {  Card as UICard } from "@/components/ui/card" ;
 import Button from "@/components/theme/Button";
 
 import QuizActivity from "@/components/learning/QuizActivity";
@@ -19,6 +20,7 @@ import {
 
 import SectionRenderer from "@/components/learning/sections/SectionRenderer";
 import * as LucideIcons from "lucide-react";
+import LessonPageLayout from "@/components/learning/LessonPageLayout";
 
 type StepState = "intro" | "quiz" | "complete";
 
@@ -119,16 +121,17 @@ export default function LearningModulePage({
     if (!module.relatedLessons?.length) return null;
 
     return (
-      <Card className="mt-8 p-5">
-        <h3 className="text-lg font-semibold text-gray-900 mb-3">
-          Continue Learning
-        </h3>
-        <div className="flex flex-wrap gap-2">
+      <UICard className="mt-8 p-5">
+        <h1 className="text-3xl font-bold text-gray-900 mb-3">
+          What's Next?
+        </h1>
+        <p>Now that you understand budgeting basics, explore these related topics:</p>
+        <div className="flex flex-wrap gap-2 mt-3">
           {module.relatedLessons.map((lesson: any) => (
             <Link
               key={lesson.moduleId}
               href={`/dashboard/learning-modules/${lesson.moduleId}`}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-gray-100 hover:bg-gray-200 text-sm text-gray-800 transition"
+              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-gray-50 border border-gray-200 text-sm text-gray-800 hover:bg-green-200 hover:opacity-75 transition"
             >
               <span className="text-xs uppercase tracking-wide text-gray-500">
                 {lesson.relationship?.replace("-", " ")}
@@ -137,112 +140,69 @@ export default function LearningModulePage({
             </Link>
           ))}
         </div>
-      </Card>
+      </UICard>
     );
   };
 
   /* ----------------- MAIN RENDER ----------------- */
 
   return (
-    <PageLayout
+    <LessonPageLayout
       title={module.title}
       subtitle={module.description}
-      icon={<BookOpenIcon className="w-16 h-16 text-valuto-green-600" />}
-    >
-      {/* Back button */}
-      <div className="mb-4">
-        <Button
-          variant="ghost"
-          onClick={() => router.push("/dashboard/learning-modules")}
-        >
-          ← Back to all lessons
-        </Button>
-      </div>
-
-      {/* Header / Summary Card */}
-      <Card className="mb-8 p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              {module.visual?.badge && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-green-50 text-xs font-medium text-green-700">
-                  {module.visual.badge}
-                </span>
-              )}
-              {module.difficultyLevel && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-700 capitalize">
-                  {module.difficultyLevel}
-                </span>
-              )}
-            </div>
-
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              {module.title}
-            </h1>
-            <p className="text-gray-600 mb-4 max-w-2xl">
-              {module.description}
-            </p>
-
-            <div className="flex flex-wrap items-center gap-4 text-sm text-gray-700">
-              <span className="inline-flex items-center gap-1">
-                <ClockIcon className="w-4 h-4" />
-                <span>{module.visual?.readTime || module.timeEstimate} min read</span>
-              </span>
-
-              <span className="inline-flex items-center gap-1">
-                <StarIcon className="w-4 h-4" />
-                <span>{module.points} points</span>
-              </span>
-            </div>
-          </div>
-
-          {VisualIcon && (
-            <div className="flex-shrink-0">
-              <div
-                className={`w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center ${visualColorClass}`}
-              >
-                <VisualIcon className="w-10 h-10 text-white" />
-              </div>
-            </div>
+      icon={
+        <VisualIcon className="w-24 h-24 text-white" />
+      }
+      badges={
+        <>
+          {module.visual?.readTime && (
+            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm flex items-center gap-1">
+              <ClockIcon className="w-4 h-4" />
+              {module.visual.readTime} min read
+            </span>
           )}
-        </div>
-      </Card>
+
+          {module.visual?.badge && (
+            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm">
+              {module.visual.badge}
+            </span>
+          )}
+
+          {module.difficultyLevel && (
+            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm capitalize">
+              {module.difficultyLevel}
+            </span>
+          )}
+        </>
+      }
+    >
+
 
       {/* CONTENT / QUIZ / COMPLETE FLOW */}
       {step === "intro" && (
         <>
-          <Card className="p-6 md:p-8 mb-6">
-            {/* Content sections */}
-            <div className="space-y-4">
-              {module.contentSections?.map((section: any) => (
-                <SectionRenderer key={section.id} section={section} />
-              ))}
-            </div>
+          {/* Content sections */}
+          <div className="grid gap-6">
+            {module.contentSections?.map((section: any) => (
+              <SectionRenderer key={section.id} section={section} />
+            ))}
+          </div>
 
-            {/* Quiz CTA */}
-            {module.quiz && (
-              <div className="mt-8 pt-5 border-t border-gray-100">
-                <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
-                  <div>
-                    <h3 className="text-lg font-semibold text-gray-900">
-                      Ready to test yourself?
-                    </h3>
-                    <p className="text-sm text-gray-600">
-                      Answer a few quick questions to lock in what you&apos;ve
-                      learned and earn points.
-                    </p>
-                  </div>
-                  <Button
-                    onClick={() => setStep("quiz")}
-                    size="lg"
-                    className="w-full md:w-auto bg-valuto-green-600 text-white"
-                  >
-                    Start Quiz 🚀
-                  </Button>
-                </div>
-              </div>
-            )}
-          </Card>
+
+          {/* Quiz CTA */}
+          {module.quiz && (
+            <UICard className="mt-8 p-4">
+              <h1 className="text-3xl">Test Your Knowledge</h1>
+              <p className="text-gray-500">Quick question to check your understanding</p>
+              <Button
+                onClick={() => setStep("quiz")}
+                className="bg-valuto-green-600 text-white min-w-[-webkit-fill-available] rounded-[0.4em] mt-6"
+              >
+                Take Mini Quiz
+              </Button>
+            </UICard>
+            
+          )}
 
           {renderRelatedLessons()}
         </>
@@ -313,6 +273,6 @@ export default function LearningModulePage({
           {renderRelatedLessons()}
         </>
       )}
-    </PageLayout>
+    </LessonPageLayout>
   );
 }

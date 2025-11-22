@@ -1,4 +1,4 @@
-// backend/src/seeds/categories.seed.js
+// backend/src/seeds/seedsCategories.js
 const mongoose = require("mongoose");
 require("dotenv").config({ path: __dirname + "/../../.env" });
 const Category = require('../models/Category');

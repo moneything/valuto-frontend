@@ -6,7 +6,7 @@ const LearningModule = require("../../models/LearningModule");
  * Category ID: earning-income
  *
  * Includes:
- * 1. Understanding Payslips
+ * 1. How Pay Works
  * 2. Different Types of Income
  * 3. Taxes 101
  * 4. Side Hustles & Freelancing
@@ -15,99 +15,255 @@ const LearningModule = require("../../models/LearningModule");
 
 const earningIncomeModules = [
   // =====================================================
-  // 1. Understanding Payslips
+  // 1. How Pay Works
   // =====================================================
   {
-    title: "Understanding Payslips",
-    description:
-      "Learn how to read your payslip and understand deductions like tax, NI, and pensions.",
+    title: "How Pay Works",
+    description: "Understand gross pay, net pay, payslips, deductions, and different types of pay structures.",
     categoryId: "earning-income",
-    topic: "understanding-payslips",
+    topic: "how-pay-works",
 
     visual: {
-      icon: "FileText",
-      iconColor: "bg-green-400",
-      badge: "Practical Skill",
-      readTime: 5,
+      icon: "TrendingUp",
+      iconColor: "bg-green-500",
+      badge: "Earning & Income",
+      readTime: 3
     },
 
     contentSections: [
+      /* ------------------------------------------------------------ */
+      /* 1. GROSS VS NET PAY (twoColumn feature cards like Banking101) */
+      /* ------------------------------------------------------------ */
       {
         id: "gross-vs-net",
-        type: "comparison",
-        title: "Gross Pay vs Net Pay",
-        content: "",
-        icon: "Scale",
+        type: "list",
+        title: "Gross vs Net Pay: The Big Difference",
+        icon: "Calculator",
+        metadata: {
+          variant: "accountComparisonTwo",
+          left: {
+            title: "💰 Gross Pay",
+            color: "green",
+            subtitle: "Your pay BEFORE deductions",
+            items: [
+              "The amount advertised in job ads",
+              "Your hourly rate × hours worked",
+              "What you earn before anything is taken off",
+              "Example: £10/hour × 20 hours = £200 gross"
+            ]
+          },
+          right: {
+            title: "💳 Net Pay",
+            color: "blue",
+            subtitle: "Your pay AFTER deductions",
+            items: [
+              "The money that actually hits your bank",
+              "Gross pay minus taxes and deductions",
+              "Also called 'take-home pay'",
+              "Example: £200 gross - £15 tax = £185 net"
+            ]
+          }
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 2. NET PAY INSIGHT TIP BOX                                    */
+      /* ------------------------------------------------------------ */
+      {
+        id: "net-budget-tip",
+        type: "tip",
+        title: "Key Insight",
+        icon: "Lightbulb",
+        metadata: {
+          variant: "lightbulb",
+          tips: [
+            "Always budget using your NET pay, not gross pay. That's the real money you can spend!"
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 3. PAYSLIP (payslip)                                          */
+      /* ------------------------------------------------------------ */
+      {
+        id: "payslip-breakdown",
+        type: "payslip",
+        title: "Understanding Your Payslip",
+        content: "Breaking down every section",
+        icon: "FileText",
+        metadata: {
+          header: "📄 SAMPLE PAYSLIP",
+          summaryRows: [
+            { left: "Employee: Alex Johnson", right: "Pay Period: 01/01/24 - 31/01/24" }
+          ],
+          breakdown: [
+            { left: "Basic Pay (£8.50 × 60 hours)", right: "£510.00" },
+            { left: "Overtime (£12.75 × 5 hours)", right: "£63.75" },
+            { left: "GROSS PAY", right: "£573.75", highlight: true }
+          ],
+          deductions: [
+            { left: "Income Tax", right: "-£28.69" },
+            { left: "National Insurance", right: "-£22.95" },
+            { left: "Pension Contribution", right: "-£17.21" }
+          ],
+          netPay: {
+            left: "NET PAY",
+            right: "£504.90"
+          }
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 4. MINI INFO GRID (Income Tax, NI, Pension)                   */
+      /* ------------------------------------------------------------ */
+      {
+        id: "payslip-mini-info",
+        type: "miniInfoGrid",
+        title: "Payslip Deductions Explained",
+        metadata: {
+          items: [
+            {
+              title: "Income Tax",
+              description: "Tax on your earnings (starts at £12,570/year)",
+              color: "blue"
+            },
+            {
+              title: "National Insurance",
+              description: "Contributes to NHS & pension (starts at £12,570)",
+              color: "orange"
+            },
+            {
+              title: "Pension",
+              description: "Automatic retirement saving (3% minimum)",
+              color: "purple"
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 5. STUDENT TAX RULES (explanation + warning-style list)       */
+      /* ------------------------------------------------------------ */
+      {
+        id: "student-tax-rules-info",
+        type: "warning",
+        title: "Special Rules for Student Jobs",
         colorScheme: "green",
         metadata: {
-          comparisonTable: [
-            { label: "Gross Pay", value: "Your pay before any deductions" },
-            { label: "Net Pay", value: "Your take-home pay after deductions" },
-          ],
-        },
+          warnings: [
+            "If you earn under £12,570/year, you pay NO income tax",
+            "If you earn under £12,570/year, you pay NO National Insurance",
+            "Most part-time student jobs fall under these limits"
+          ]
+        }
       },
+
       {
-        id: "deductions",
+        id: "student-tax-details",
         type: "list",
-        title: "Common Payslip Deductions",
-        content: "",
-        icon: "Receipt",
-        colorScheme: "blue",
+        title: "Annual Tax-Free Allowances (2024)",
         metadata: {
           listItems: [
-            "Income Tax",
-            "National Insurance (NI)",
-            "Pension Contributions",
-            "Student Loan Repayments (if applicable)",
-          ],
-        },
+            "Income Tax: £12,570",
+            "National Insurance: £12,570",
+            "Both calculated yearly, not monthly"
+          ]
+        }
       },
+
       {
-        id: "tax-codes",
-        type: "explanation",
-        title: "What Is a Tax Code?",
-        content:
-          "Your tax code determines how much tax you pay. A common one is 1257L, meaning you're entitled to the standard personal tax-free allowance.",
-        icon: "Hash",
-        colorScheme: "purple",
+        id: "weekly-meaning",
+        type: "list",
+        title: "What this means weekly",
+        metadata: {
+          listItems: [
+            "£242/week tax-free",
+            "About 30 hours at minimum wage",
+            "Perfect for most student jobs!"
+          ]
+        }
       },
+
+      /* ------------------------------------------------------------ */
+      /* 6. TYPES OF PAY STRUCTURE (stacked cards)                     */
+      /* ------------------------------------------------------------ */
+      {
+        id: "pay-types",
+        type: "payTypesStack",
+        title: "Types of Pay Structure",
+        metadata: {
+          items: [
+            {
+              title: "💰 Hourly Pay",
+              color: "blue",
+              description: "Most common for students. Pay = hours × hourly rate",
+              footer: "Example: 15 hours × £8.50 = £127.50"
+            },
+            {
+              title: "📅 Salary",
+              color: "green",
+              description: "Fixed annual amount, paid monthly regardless of hours",
+              footer: "Example: £25,000/year = £2,083/month"
+            },
+            {
+              title: "📈 Commission",
+              color: "purple",
+              description: "Earn based on sales or performance",
+              footer: "Example: £200 base + 5% of sales"
+            },
+            {
+              title: "💪 Piece Rate",
+              color: "orange",
+              description: "Paid per item/task completed",
+              footer: "Example: £2 per delivery completed"
+            }
+          ]
+        }
+      }
     ],
 
+    /* ------------------------------------------------------------ */
+    /* QUIZ                                                         */
+    /* ------------------------------------------------------------ */
     quiz: {
+      passingScore: 1,
       questions: [
         {
-          question: "Which is your take-home pay?",
-          options: ["Gross Pay", "Net Pay", "Bonus Pay", "Holiday Pay"],
-          correctAnswer: 1,
-        },
-        {
-          question: "What does NI stand for?",
-          options: ["National Insurance", "Net Income", "New Income", "Normal Interest"],
+          question: "What is the term for your pay BEFORE any deductions?",
+          options: ["Gross pay", "Net pay", "Take-home pay", "Basic pay"],
           correctAnswer: 0,
-        },
-      ],
-      passingScore: 2,
+          explanation: "Gross pay is the amount you earn before any deductions."
+        }
+      ]
     },
 
+    /* ------------------------------------------------------------ */
+    /* RELATED LESSONS                                              */
+    /* ------------------------------------------------------------ */
     relatedLessons: [
       {
-        moduleId: "income-streams",
-        title: "Different Types of Income",
-        relationship: "next-step",
+        moduleId: "part-time-jobs",
+        title: "Part-Time Jobs Guide",
+        relationship: "next-step"
       },
       {
-        moduleId: "taxes-101",
-        title: "Taxes 101",
-        relationship: "related",
+        moduleId: "tax-basics",
+        title: "Tax Basics",
+        relationship: "related"
       },
+      {
+        moduleId: "budgeting-basics",
+        title: "Budgeting with Your Pay",
+        relationship: "next-step"
+      }
     ],
 
     points: 100,
     difficultyLevel: "beginner",
-    timeEstimate: 5,
+    timeEstimate: 3,
     order: 1,
     isActive: true,
-    createdBy: "system",
+    createdBy: "system"
   },
 
   // =====================================================

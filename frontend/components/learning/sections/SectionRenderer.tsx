@@ -98,7 +98,7 @@ type ContentSection = {
     | "tip"
     | "warning"
     | "comparison"
-    | "payslipBlock"
+    | "payslip"
     | "miniInfoGrid"
     | "payTypesStack";
   title: string;
@@ -173,7 +173,6 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
     ) || [];
 
   /* ---------------- VARIANT: INFO (Budgeting Basics) ---------------- */
-
   if (variant === "info") {
     // Matches: BudgetingBasics "What is a Budget?" style
     return (
@@ -233,8 +232,68 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
     );
   }
 
-  /* ---------------- VARIANT: introThreeCards (Why Save Money?) ------ */
+  /* ---------------- VARIANT: gradientInfoTwoColumn (Apprenticeships) ------- */
+  if (variant === "gradientInfoTwoColumn") {
+    const heading: string | undefined = section.metadata?.heading;
+    const description: string | undefined = section.metadata?.description;
+    const columns: Array<{
+      title: string;
+      color?: "green" | "blue" | "purple" | "orange";
+      items: string[];
+    }> = section.metadata?.columns || [];
 
+    const titleColorFor = (c?: string) => {
+      if (c === "green") return "text-green-700";
+      if (c === "blue") return "text-blue-700";
+      if (c === "purple") return "text-purple-700";
+      if (c === "orange") return "text-orange-700";
+      return "text-gray-900";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {section.icon && (
+              <SectionIcon
+                name={section.icon}
+                className={`h-5 w-5 ${scheme.text}`}
+              />
+            )}
+            <span>{section.title}</span>
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent>
+          <div className="bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg space-y-4">
+            {heading && <h3 className="text-xl font-bold">{heading}</h3>}
+            {description && (
+              <p className="text-md text-gray-800 leading-relaxed">
+                {description}
+              </p>
+            )}
+
+            <div className="grid md:grid-cols-2 gap-6">
+              {columns.map((col, idx) => (
+                <div key={idx}>
+                  <h4 className={`font-semibold mb-2 ${titleColorFor(col.color)}`}>
+                    {col.title}
+                  </h4>
+                  <ul className="space-y-1 text-md text-gray-800">
+                    {col.items.map((item, i) => (
+                      <li key={i}>• {item}</li>
+                    ))}
+                  </ul>
+                </div>
+              ))}
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- VARIANT: introThreeCards (Why Save Money?) ------ */
   if (variant === "introThreeCards") {
     const cards: Array<{
       title: string;
@@ -298,7 +357,6 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
   }
 
   /* ---------------- VARIANT: featureWithList (Pay Yourself First) --- */
-
   if (variant === "featureWithList") {
     const feature = section.metadata?.featureBox as
       | { title: string; text: string }
@@ -355,7 +413,6 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
   }
 
   /* ---------------- VARIANT: emergencyFund layout ------------------- */
-
   if (variant === "emergencyFund") {
     const emergencyTitle: string | undefined = section.metadata?.emergencyTitle;
     const emergencyItems: string[] = section.metadata?.emergencyItems || [];
@@ -443,7 +500,6 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
   }
 
   /* ---------------- VARIANT: smartGoals (SMART + horizons) ---------- */
-
   if (variant === "smartGoals") {
     const smartTitle: string | undefined = section.metadata?.smartTitle;
     const smartItems: Array<{
@@ -533,7 +589,6 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
   }
 
   /* ---------------- VARIANT: actionPlan (Ready to Start Saving?) ---- */
-
   if (variant === "actionPlan") {
     const boxTitle: string | undefined = section.metadata?.boxTitle;
     const steps: string[] = section.metadata?.steps || [];
@@ -563,6 +618,7 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
       </Card>
     );
   }
+
 
   /* ---------------- DEFAULT EXPLANATION ----------------------------- */
 
@@ -674,6 +730,103 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
   // Generic items (used by default + pastel)
   const items: string[] = section.metadata?.listItems || [];
 
+  /* ---------- variant: hustleCardGrid (Side Hustles cards) ---------- */
+  if (variant === "hustleCardGrid") {
+    const hustles: Array<{
+      title: string;
+      emoji?: string;
+      color?: "blue" | "green" | "purple" | "orange";
+      description?: string;
+      platformsLabel?: string; // e.g. "Platforms" or "Apps" or "Find clients"
+      platforms?: string;      // e.g. "Tutor.com, Preply, Wyzant"
+      pay?: string;            // e.g. "£10–20/hour"
+      requirements?: string;   // e.g. "Good grades, patience"
+      extra?: string;          // any extra note
+    }> = section.metadata?.hustles || [];
+
+    const titleColorFor = (c?: string) => {
+      if (c === "blue") return "text-blue-600";
+      if (c === "green") return "text-green-600";
+      if (c === "purple") return "text-purple-600";
+      if (c === "orange") return "text-orange-600";
+      return "text-gray-900";
+    };
+
+    const borderFor = (c?: string) => {
+      if (c === "blue") return "border-blue-200";
+      if (c === "green") return "border-green-200";
+      if (c === "purple") return "border-purple-200";
+      if (c === "orange") return "border-orange-200";
+      return "border-gray-200";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+
+        <CardContent>
+          <div className="grid gap-4">
+            {hustles.map((hustle, idx) => (
+              <div
+                key={idx}
+                className={`p-4 rounded-lg border ${borderFor(hustle.color)}`}
+              >
+                <h4
+                  className={`font-semibold mb-2 flex items-center gap-1 ${titleColorFor(
+                    hustle.color
+                  )}`}
+                >
+                  {hustle.emoji && <span>{hustle.emoji}</span>}
+                  <span>{hustle.title}</span>
+                </h4>
+
+                <div className="grid md:grid-cols-2 gap-4 text-md">
+                  <div>
+                    {hustle.description && (
+                      <p className="mb-2">{hustle.description}</p>
+                    )}
+
+                    {hustle.platforms && (
+                      <p className="text-md">
+                        <strong>
+                          {hustle.platformsLabel || "Platforms"}:
+                        </strong>{" "}
+                        {hustle.platforms}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="space-y-1 text-md">
+                    {hustle.pay && (
+                      <p>
+                        <strong>Pay:</strong> {hustle.pay}
+                      </p>
+                    )}
+                    {hustle.requirements && (
+                      <p>
+                        <strong>Requirements:</strong> {hustle.requirements}
+                      </p>
+                    )}
+                    {hustle.extra && (
+                      <p className="text-md text-muted-foreground">
+                        {hustle.extra}
+                      </p>
+                    )}
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
   /* ---------- variant: accountFeatureCards (Banking 101) ---------- */
   if (variant === "accountFeatureCards") {
     const cards: Array<{
@@ -731,7 +884,7 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
                   </p>
                 )}
 
-                <ul className="space-y-2 text-sm">
+                <ul className="space-y-2 text-md">
                   {c.items.map((i, j) => (
                     <li key={j}>• {i}</li>
                   ))}
@@ -768,7 +921,7 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
                 </div>
                 <div>
                   <h4 className="font-semibold">{item.title}</h4>
-                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                  <p className="text-md text-muted-foreground">{item.description}</p>
                 </div>
               </div>
             ))}
@@ -813,7 +966,7 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
                 >
                   {c.title}
                 </h4>
-                <ul className="text-sm mt-2 space-y-1">
+                <ul className="text-md mt-2 space-y-1">
                   {c.items.map((item, j) => (
                     <li key={j}>• {item}</li>
                   ))}
@@ -990,7 +1143,7 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
                 className={`text-center p-4 rounded-lg ${ag.bgColor}`}
               >
                 <h4 className={`font-semibold ${ag.textColor}`}>{ag.name}</h4>
-                <p className="text-sm mt-1">{ag.description}</p>
+                <p className="text-md mt-1">{ag.description}</p>
               </div>
             ))}
           </div>
@@ -998,7 +1151,7 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
           {section.metadata?.tips && (
             <div className="mt-4 p-4 bg-accent rounded-lg">
               <h4 className="font-semibold mb-2">💡 Pro Tips:</h4>
-              <ul className="text-sm space-y-1">
+              <ul className="text-md space-y-1">
                 {section.metadata.tips.map((tip: string, i: number) => (
                   <li key={i}>• {tip}</li>
                 ))}
@@ -1108,14 +1261,23 @@ const TipSection: React.FC<{ section: ContentSection }> = ({ section }) => {
                 className={`w-5 h-5 ${scheme.text}`}
               />
             </div>
-            <div>
-              {tips.length > 0 ? (
+            <div className="self-center">
+              {tips.length > 1 ? (
                 <ul className="list-disc list-inside text-md text-gray-800 space-y-1">
                   {tips.map((tip, i) => (
                     <li key={i}>{tip}</li>
                   ))}
                 </ul>
-              ) : (
+              )
+              : tips.length == 1 ? (
+                <>
+                  {tips.map((tip, i) => (
+                    <p className="self-end">{tip}</p>
+                  ))}
+                </>
+              ) 
+              : 
+              (
                 section.content && (
                   <p className="text-md text-gray-800">{section.content}</p>
                 )
@@ -1142,10 +1304,12 @@ const WarningSection: React.FC<{ section: ContentSection }> = ({
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <SectionIcon
-            name={section.icon || "AlertTriangle"}
-            className={`w-5 h-5  ${scheme.text}`}
-          />
+          {section.icon !== "none" && 
+            <SectionIcon
+              name={section.icon || "AlertTriangle"}
+              className={`w-5 h-5  ${scheme.text}`}
+            />
+          }
           <span>{section.title}</span>
         </CardTitle>
         {section.content && (
@@ -1179,19 +1343,13 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
   const scheme = getColorScheme(section.colorScheme || "blue");
   const variant: string = section.metadata?.variant || "gridCards";
 
-  const rows: { label: string; value: string }[] =
-    section.metadata?.comparisonTable || [];
+  const rows = section.metadata?.comparisonTable || [];
 
-
-  /* ---------- variant: gridCards ---------- */
+  /* ============================================================
+     VARIANT: gridCards (50/30/20 layout etc.)
+  ============================================================ */
   if (variant === "gridCards") {
-    // Matches 50/30/20-style comparison blocks
-    const columns: Array<{
-      title: string; // e.g. "50%"
-      subtitle?: string; // e.g. "NEEDS"
-      description?: string;
-      color?: "green" | "blue" | "purple" | "yellow";
-    }> = section.metadata?.columns || [];
+    const columns = section.metadata?.columns || [];
 
     const bgFor = (c?: string) => {
       if (c === "green") return "bg-green-50 border-green-200";
@@ -1233,29 +1391,34 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
             <CardDescription>{section.content}</CardDescription>
           )}
         </CardHeader>
+
         <CardContent className="space-y-4">
           <div className="grid md:grid-cols-3 gap-4">
-            {columns.map((col, i) => (
+            {columns.map((col: any, i: number) => (
               <div
                 key={i}
                 className={`p-4 rounded-lg border ${bgFor(col.color)}`}
               >
-                <h3
-                  className={`text-xl font-bold mb-1 ${titleColorFor(
-                    col.color
-                  )}`}
-                >
-                  {col.title}
-                </h3>
+                {col.title && (
+                  <h3
+                    className={`text-xl font-bold mb-1 ${titleColorFor(
+                      col.color
+                    )}`}
+                  >
+                    {col.title}
+                  </h3>
+                )}
+
                 {col.subtitle && (
                   <h4
-                    className={`font-semibold mb-1 uppercase text-xs tracking-wide ${subtitleColorFor(
+                    className={`font-semibold mb-1 uppercase text-md tracking-wide ${subtitleColorFor(
                       col.color
                     )}`}
                   >
                     {col.subtitle}
                   </h4>
                 )}
+
                 {col.description && (
                   <p className="text-md text-gray-800">{col.description}</p>
                 )}
@@ -1263,71 +1426,122 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
             ))}
           </div>
 
-          {section.metadata?.exampleList && Array.isArray(section.metadata.exampleList) && (
-          <div className="mt-4 p-4 bg-accent rounded-lg">
-            <h4 className="font-semibold mb-2">
-              {section.metadata.exampleTitle || "Example"}
-            </h4>
-            <ul className="space-y-1 text-md">
-              {section.metadata.exampleList.map((item: string, idx: number) => (
-                <li key={idx}>• {item}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-
-        {!section.metadata?.exampleList && section.metadata?.example && (
-          <div className="mt-4 p-4 bg-accent rounded-lg">
-            {section.metadata.exampleTitle && (
+          {/* Optional: example box */}
+          {section.metadata?.exampleList && (
+            <div className="mt-4 p-4 bg-accent rounded-lg">
               <h4 className="font-semibold mb-2">
-                {section.metadata.exampleTitle}
+                {section.metadata.exampleTitle || "Example"}
               </h4>
+              <ul className="space-y-1 text-md">
+                {section.metadata.exampleList.map(
+                  (item: string, idx: number) => (
+                    <li key={idx}>• {item}</li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
+
+          {!section.metadata?.exampleList &&
+            section.metadata?.example && (
+              <div className="mt-4 p-4 bg-accent rounded-lg">
+                {section.metadata.exampleTitle && (
+                  <h4 className="font-semibold mb-2">
+                    {section.metadata.exampleTitle}
+                  </h4>
+                )}
+                <p className="text-md">{section.metadata.example}</p>
+              </div>
             )}
-            <p className="text-md">
-              {section.metadata.example as string}
-            </p>
-          </div>
-        )}
         </CardContent>
       </Card>
     );
   }
 
-  /* ---------- variant: scoreRangeGrid (Credit Score Ranges 300–850 grid) ---------- */
+  /* ============================================================
+     VARIANT: scoreRangeGrid 
+       - supports BOTH:
+         A) { label, range }
+         B) { label, score, description }
+  ============================================================ */
   if (variant === "scoreRangeGrid") {
     const ranges = section.metadata?.ranges || [];
+
+    const hasRichMode = ranges.some(
+      (r: any) => r.score || r.description
+    );
 
     return (
       <Card>
         <CardHeader>
           <CardTitle>{section.title}</CardTitle>
-          {section.content && <CardDescription>{section.content}</CardDescription>}
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
         </CardHeader>
+
         <CardContent>
-          <div className="grid md:grid-cols-5 gap-2 text-center text-sm">
+          <div
+            className={`grid ${
+              hasRichMode ? "md:grid-cols-3" : "md:grid-cols-5"
+            } gap-4`}
+          >
             {ranges.map((r: any, idx: number) => (
               <div
                 key={idx}
-                className={`p-3 rounded ${r.bgColor}`}
+                className={`p-4 rounded-lg border ${r.bgColor}`}
               >
-                <div className={`font-bold ${r.textColor}`}>{r.label}</div>
-                <div>{r.range}</div>
+                <h3 className={`text-xl font-bold ${r.textColor}`}>
+                  {r.label}
+                </h3>
+
+                {/* MODE A — simple */}
+                {r.range && !hasRichMode && (
+                  <p className="mt-1 text-md">{r.range}</p>
+                )}
+
+                {/* MODE B — rich */}
+                {hasRichMode && (
+                  <>
+                    {r.score && (
+                      <p className="font-semibold text-md mt-1">{r.score}</p>
+                    )}
+                    {r.description && (
+                      <p className="text-md mt-1 text-gray-800">
+                        {r.description}
+                      </p>
+                    )}
+                  </>
+                )}
               </div>
             ))}
           </div>
+
+          {/* Optional note + list */}
+          {section.metadata?.note && (
+            <div className="mt-4 p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold mb-2">
+                {section.metadata.note.title}
+              </h4>
+              <ul className="space-y-1 text-md">
+                {section.metadata.note.items.map(
+                  (item: string, i: number) => (
+                    <li key={i}>• {item}</li>
+                  )
+                )}
+              </ul>
+            </div>
+          )}
         </CardContent>
       </Card>
     );
   }
 
-  /* ---------- variant: twoFeatureCards ---------- */
+  /* ============================================================
+     VARIANT: twoFeatureCards 
+  ============================================================ */
   if (variant === "twoFeatureCards") {
-    const cards: Array<{
-      title: string;
-      subtitle?: string;
-      color?: "blue" | "green" | "purple" | "yellow";
-      bullets?: string[];
-    }> = section.metadata?.cards || [];
+    const cards = section.metadata?.cards || [];
 
     const bgFor = (c?: string) => {
       if (c === "green") return "bg-green-50 border-green-200";
@@ -1353,22 +1567,12 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
     return (
       <Card>
         <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            {section.icon && (
-              <SectionIcon
-                name={section.icon}
-                className={`h-5 w-5 ${scheme.text}`}
-              />
-            )}
-            <span>{section.title}</span>
-          </CardTitle>
-          {section.content && (
-            <CardDescription>{section.content}</CardDescription>
-          )}
+          <CardTitle>{section.title}</CardTitle>
         </CardHeader>
+
         <CardContent>
           <div className="grid md:grid-cols-2 gap-6">
-            {cards.map((card, idx) => (
+            {cards.map((card: any, idx: number) => (
               <div
                 key={idx}
                 className={`p-6 rounded-lg border ${bgFor(card.color)}`}
@@ -1380,16 +1584,16 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
                 >
                   {card.title}
                 </h3>
+
                 {card.subtitle && (
-                  <p
-                    className={`text-md mb-3 ${subtitleColorFor(card.color)}`}
-                  >
+                  <p className={`text-md mb-3 ${subtitleColorFor(card.color)}`}>
                     {card.subtitle}
                   </p>
                 )}
+
                 {card.bullets && (
-                  <ul className="space-y-1 text-sm text-gray-800">
-                    {card.bullets.map((item, i) => (
+                  <ul className="space-y-1 text-md text-gray-800">
+                    {card.bullets.map((item: string, i: number) => (
                       <li key={i}>• {item}</li>
                     ))}
                   </ul>
@@ -1402,7 +1606,9 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
     );
   }
 
-  // Fallback simple comparison grid (not heavily used yet)
+  /* ============================================================
+     DEFAULT — fallback 2-column key-value comparison
+  ============================================================ */
   return (
     <Card>
       <CardHeader>
@@ -1417,9 +1623,10 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
           <CardDescription>{section.content}</CardDescription>
         )}
       </CardHeader>
+
       <CardContent>
         <div className="grid gap-3 md:grid-cols-2">
-          {rows.map((row, i) => (
+          {rows.map((row: any, i: number) => (
             <div
               key={i}
               className={`rounded-xl border ${scheme.border} ${scheme.bg} p-4`}
@@ -1435,6 +1642,7 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
     </Card>
   );
 };
+
 
 /* ------------------------------------------------------------------ */
 /*                         PAYSLIP BLOCK (NEW)                        */
@@ -1462,7 +1670,7 @@ const PayslipBlockSection: React.FC<{ section: ContentSection }> = ({ section })
           )}
 
           {/* Top Rows */}
-          <div className="space-y-3 text-sm">
+          <div className="space-y-3 text-md">
             {Array.isArray(data.summaryRows) &&
               data.summaryRows.map((row: any, idx: number) => (
                 <div key={idx} className="flex justify-between">
@@ -1494,7 +1702,7 @@ const PayslipBlockSection: React.FC<{ section: ContentSection }> = ({ section })
               data.deductions.map((row: any, idx: number) => (
                 <div
                   key={idx}
-                  className="flex justify-between text-red-600 text-sm"
+                  className="flex justify-between text-red-600 text-md"
                 >
                   <span>{row.left}</span>
                   <span>{row.right}</span>
@@ -1557,7 +1765,7 @@ const MiniInfoGridSection: React.FC<{ section: ContentSection }> = ({ section })
               className={`text-center p-4 rounded-lg ${colorClasses(item.color)}`}
             >
               <h4 className="font-semibold">{item.title}</h4>
-              <p className="text-sm mt-1 text-gray-700">{item.description}</p>
+              <p className="text-md mt-1 text-gray-700">{item.description}</p>
             </div>
           ))}
         </div>
@@ -1606,10 +1814,10 @@ const PayTypesStackSection: React.FC<{ section: ContentSection }> = ({ section }
               <h4 className={`font-semibold ${colorClasses(item.color)}`}>
                 {item.title}
               </h4>
-              <p className="text-sm mt-1">{item.description}</p>
+              <p className="text-md mt-1">{item.description}</p>
 
               {item.footer && (
-                <p className="text-xs text-muted-foreground mt-1">
+                <p className="text-md text-muted-foreground mt-1">
                   {item.footer}
                 </p>
               )}
@@ -1653,7 +1861,7 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({ section }) => {
     case "miniInfoGrid":
       return <MiniInfoGridSection section={section} />;
     
-    case "payslipBlock":
+    case "payslip":
       return <PayslipBlockSection section={section}/>;
 
     case "payTypesStack":

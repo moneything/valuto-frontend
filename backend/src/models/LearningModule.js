@@ -38,7 +38,7 @@ const learningModuleSchema = new mongoose.Schema(
             "comparison",
             "list",
             "steps",
-            "payslipBlock",
+            "payslip",
             "miniInfoGrid",
             "payTypesStack",
           ],

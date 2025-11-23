@@ -97,7 +97,10 @@ type ContentSection = {
     | "list"
     | "tip"
     | "warning"
-    | "comparison";
+    | "comparison"
+    | "payslipBlock"
+    | "miniInfoGrid"
+    | "payTypesStack";
   title: string;
   content?: string;
   icon?: string;
@@ -1434,6 +1437,193 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
 };
 
 /* ------------------------------------------------------------------ */
+/*                         PAYSLIP BLOCK (NEW)                        */
+/* ------------------------------------------------------------------ */
+const PayslipBlockSection: React.FC<{ section: ContentSection }> = ({ section }) => {
+  // All UI comes from metadata
+  const data = section.metadata || {};
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center gap-2">
+          {section.icon && (
+            <SectionIcon name={section.icon} className="h-5 w-5 text-gray-700" />
+          )}
+          <span>{section.title}</span>
+        </CardTitle>
+        {section.content && <CardDescription>{section.content}</CardDescription>}
+      </CardHeader>
+
+      <CardContent>
+        <div className="bg-gray-50 p-6 rounded-lg border border-gray-200 mb-4">
+          {data.header && (
+            <h4 className="font-bold text-center mb-4">{data.header}</h4>
+          )}
+
+          {/* Top Rows */}
+          <div className="space-y-3 text-sm">
+            {Array.isArray(data.summaryRows) &&
+              data.summaryRows.map((row: any, idx: number) => (
+                <div key={idx} className="flex justify-between">
+                  <span>{row.left}</span>
+                  <span>{row.right}</span>
+                </div>
+              ))}
+
+            <hr />
+
+            {/* Pay Breakdown */}
+            {Array.isArray(data.breakdown) &&
+              data.breakdown.map((row: any, idx: number) => (
+                <div
+                  key={idx}
+                  className={`flex justify-between ${
+                    row.highlight ? "font-bold text-green-600" : ""
+                  }`}
+                >
+                  <span>{row.left}</span>
+                  <span>{row.right}</span>
+                </div>
+              ))}
+
+            <hr />
+
+            {/* Deductions */}
+            {Array.isArray(data.deductions) &&
+              data.deductions.map((row: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="flex justify-between text-red-600 text-sm"
+                >
+                  <span>{row.left}</span>
+                  <span>{row.right}</span>
+                </div>
+              ))}
+
+            <hr />
+
+            {/* Final Net Pay */}
+            {data.netPay && (
+              <div className="flex justify-between font-bold text-blue-600 text-lg">
+                <span>{data.netPay.left}</span>
+                <span>{data.netPay.right}</span>
+              </div>
+            )}
+          </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/*                      MINI INFO GRID (NEW)                          */
+/* ------------------------------------------------------------------ */
+const MiniInfoGridSection: React.FC<{ section: ContentSection }> = ({ section }) => {
+  const items: Array<{
+    title: string;
+    description: string;
+    color?: string; // e.g. "blue", "green", "purple"
+  }> = section.metadata?.items || [];
+
+  const colorClasses = (c?: string) => {
+    switch (c) {
+      case "blue":
+        return "bg-blue-50 text-blue-700";
+      case "green":
+        return "bg-green-50 text-green-700";
+      case "purple":
+        return "bg-purple-50 text-purple-700";
+      case "orange":
+        return "bg-orange-50 text-orange-700";
+      default:
+        return "bg-gray-50 text-gray-700";
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{section.title}</CardTitle>
+        {section.content && <CardDescription>{section.content}</CardDescription>}
+      </CardHeader>
+
+      <CardContent>
+        <div className="grid md:grid-cols-3 gap-4">
+          {items.map((item, idx) => (
+            <div
+              key={idx}
+              className={`text-center p-4 rounded-lg ${colorClasses(item.color)}`}
+            >
+              <h4 className="font-semibold">{item.title}</h4>
+              <p className="text-sm mt-1 text-gray-700">{item.description}</p>
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/*                     PAY TYPES STACK (NEW)                          */
+/* ------------------------------------------------------------------ */
+const PayTypesStackSection: React.FC<{ section: ContentSection }> = ({ section }) => {
+  const items: Array<{
+    title: string;
+    color?: string; // blue, green, purple, orange
+    description: string;
+    footer?: string;
+  }> = section.metadata?.items || [];
+
+  const colorClasses = (c?: string) => {
+    switch (c) {
+      case "blue":
+        return "text-blue-600";
+      case "green":
+        return "text-green-600";
+      case "purple":
+        return "text-purple-600";
+      case "orange":
+        return "text-orange-600";
+      default:
+        return "text-gray-800";
+    }
+  };
+
+  return (
+    <Card>
+      <CardHeader>
+        <CardTitle>{section.title}</CardTitle>
+        {section.content && <CardDescription>{section.content}</CardDescription>}
+      </CardHeader>
+
+      <CardContent>
+        <div className="grid gap-4">
+          {items.map((item, i) => (
+            <div key={i} className="p-4 border rounded-lg">
+              <h4 className={`font-semibold ${colorClasses(item.color)}`}>
+                {item.title}
+              </h4>
+              <p className="text-sm mt-1">{item.description}</p>
+
+              {item.footer && (
+                <p className="text-xs text-muted-foreground mt-1">
+                  {item.footer}
+                </p>
+              )}
+            </div>
+          ))}
+        </div>
+      </CardContent>
+    </Card>
+  );
+};
+
+
+
+/* ------------------------------------------------------------------ */
 /*                           MAIN RENDERER                            */
 /* ------------------------------------------------------------------ */
 
@@ -1459,6 +1649,15 @@ const SectionRenderer: React.FC<SectionRendererProps> = ({ section }) => {
 
     case "comparison":
       return <ComparisonSection section={section} />;
+
+    case "miniInfoGrid":
+      return <MiniInfoGridSection section={section} />;
+    
+    case "payslipBlock":
+      return <PayslipBlockSection section={section}/>;
+
+    case "payTypesStack":
+      return <PayTypesStackSection section={section}/>;
 
     default:
       // Very simple fallback block

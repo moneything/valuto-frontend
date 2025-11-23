@@ -169,6 +169,8 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
       typeof e === "string" ? e : e.value || e.label
     ) || [];
 
+  /* ---------------- VARIANT: INFO (Budgeting Basics) ---------------- */
+
   if (variant === "info") {
     // Matches: BudgetingBasics "What is a Budget?" style
     return (
@@ -227,6 +229,339 @@ const ExplanationSection: React.FC<{ section: ContentSection }> = ({
       </Card>
     );
   }
+
+  /* ---------------- VARIANT: introThreeCards (Why Save Money?) ------ */
+
+  if (variant === "introThreeCards") {
+    const cards: Array<{
+      title: string;
+      emoji?: string;
+      color?: "blue" | "green" | "purple";
+      description: string;
+    }> = section.metadata?.cards || [];
+
+    const bgFor = (c?: string) => {
+      if (c === "blue") return "bg-blue-50";
+      if (c === "green") return "bg-green-50";
+      if (c === "purple") return "bg-purple-50";
+      return "bg-gray-50";
+    };
+
+    const titleColorFor = (c?: string) => {
+      if (c === "blue") return "text-blue-700";
+      if (c === "green") return "text-green-700";
+      if (c === "purple") return "text-purple-700";
+      return "text-gray-800";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {section.icon && (
+              <SectionIcon
+                name={section.icon}
+                className={`h-5 w-5 ${scheme.text}`}
+              />
+            )}
+            <span>{section.title}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {section.content && (
+            <p className="text-lg text-gray-800 leading-relaxed">
+              {section.content}
+            </p>
+          )}
+
+          <div className="grid md:grid-cols-3 gap-4">
+            {cards.map((card, i) => (
+              <div
+                key={i}
+                className={`${bgFor(
+                  card.color
+                )} p-4 rounded-lg h-full flex flex-col`}
+              >
+                <h4 className={`font-semibold mb-1 ${titleColorFor(card.color)}`}>
+                  {card.emoji ? `${card.emoji} ${card.title}` : card.title}
+                </h4>
+                <p className="text-md text-gray-800">{card.description}</p>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- VARIANT: featureWithList (Pay Yourself First) --- */
+
+  if (variant === "featureWithList") {
+    const feature = section.metadata?.featureBox as
+      | { title: string; text: string }
+      | undefined;
+    const listTitle: string | undefined = section.metadata?.listTitle;
+    const listItems: string[] = section.metadata?.listItems || [];
+    const proTipTitle: string | undefined = section.metadata?.proTipTitle;
+    const proTipText: string | undefined = section.metadata?.proTipText;
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {section.icon && (
+              <SectionIcon
+                name={section.icon}
+                className={`h-5 w-5 ${scheme.text}`}
+              />
+            )}
+            <span>{section.title}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {feature && (
+            <div className="bg-primary/10 p-6 rounded-lg mb-2">
+              <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
+              <p className="text-lg">{feature.text}</p>
+            </div>
+          )}
+
+          {listTitle && (
+            <h4 className="font-semibold text-gray-900">{listTitle}</h4>
+          )}
+
+          {listItems.length > 0 && (
+            <ol className="space-y-2 list-decimal list-inside text-md text-gray-900">
+              {listItems.map((item, i) => (
+                <li key={i}>{item}</li>
+              ))}
+            </ol>
+          )}
+
+          {(proTipTitle || proTipText) && (
+            <div className="mt-4 p-4 bg-accent rounded-lg">
+              {proTipTitle && (
+                <p className="font-semibold mb-1">{proTipTitle}</p>
+              )}
+              {proTipText && <p>{proTipText}</p>}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- VARIANT: emergencyFund layout ------------------- */
+
+  if (variant === "emergencyFund") {
+    const emergencyTitle: string | undefined = section.metadata?.emergencyTitle;
+    const emergencyItems: string[] = section.metadata?.emergencyItems || [];
+
+    const amountBlocks: Array<{
+      label: string;
+      value: string;
+      color?: "green" | "blue";
+    }> = section.metadata?.amountBlocks || [];
+
+    const whereTitle: string | undefined = section.metadata?.whereTitle;
+    const whereItems: string[] = section.metadata?.whereItems || [];
+
+    const amountBg = (c?: string) => {
+      if (c === "green") return "bg-green-50";
+      if (c === "blue") return "bg-blue-50";
+      return "bg-gray-50";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {section.icon && (
+              <SectionIcon
+                name={section.icon}
+                className={`h-5 w-5 ${scheme.text}`}
+              />
+            )}
+            <span>{section.title}</span>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {section.content && (
+            <p className="text-gray-800 leading-relaxed">{section.content}</p>
+          )}
+
+          {emergencyItems.length > 0 && (
+            <div className="bg-red-50 border-l-4 border-red-400 p-4 rounded-md">
+              {emergencyTitle && (
+                <h4 className="font-semibold text-red-700">
+                  {emergencyTitle}
+                </h4>
+              )}
+              <ul className="mt-2 space-y-1 text-md text-red-800">
+                {emergencyItems.map((item, i) => (
+                  <li key={i}>• {item}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+
+          <div className="grid md:grid-cols-2 gap-4">
+            <div className="space-y-3">
+              <h4 className="font-semibold text-gray-900">How much to save:</h4>
+              <div className="space-y-2">
+                {amountBlocks.map((block, i) => (
+                  <div
+                    key={i}
+                    className={`flex justify-between p-2 rounded ${amountBg(
+                      block.color
+                    )}`}
+                  >
+                    <span>{block.label}</span>
+                    <span className="font-semibold">{block.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              {whereTitle && (
+                <h4 className="font-semibold text-gray-900">{whereTitle}</h4>
+              )}
+              <ul className="space-y-1 text-md text-gray-800">
+                {whereItems.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ul>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- VARIANT: smartGoals (SMART + horizons) ---------- */
+
+  if (variant === "smartGoals") {
+    const smartTitle: string | undefined = section.metadata?.smartTitle;
+    const smartItems: Array<{
+      letter: string;
+      color?: "blue" | "green" | "orange" | "red" | "purple";
+      text: string;
+    }> = section.metadata?.smartItems || [];
+
+    const horizonsTitle: string | undefined = section.metadata?.horizonsTitle;
+    const horizons: Array<{
+      title: string;
+      color?: "green" | "blue" | "purple";
+      text: string;
+    }> = section.metadata?.horizons || [];
+
+    const letterColor = (c?: string) => {
+      if (c === "blue") return "text-blue-600";
+      if (c === "green") return "text-green-600";
+      if (c === "orange") return "text-orange-600";
+      if (c === "red") return "text-red-600";
+      if (c === "purple") return "text-purple-600";
+      return "text-gray-800";
+    };
+
+    const horizonBg = (c?: string) => {
+      if (c === "green") return "bg-green-50";
+      if (c === "blue") return "bg-blue-50";
+      if (c === "purple") return "bg-purple-50";
+      return "bg-gray-50";
+    };
+
+    const horizonTitleColor = (c?: string) => {
+      if (c === "green") return "text-green-700";
+      if (c === "blue") return "text-blue-700";
+      if (c === "purple") return "text-purple-700";
+      return "text-gray-900";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {section.content && (
+            <p className="text-gray-800 leading-relaxed">{section.content}</p>
+          )}
+
+          <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg space-y-3">
+            {smartTitle && (
+              <h4 className="font-bold text-xl mb-2">{smartTitle}</h4>
+            )}
+            <div className="grid gap-3 text-lg">
+              {smartItems.map((item, i) => (
+                <div key={i}>
+                  <span className={`font-semibold ${letterColor(item.color)}`}>
+                    {item.letter}
+                  </span>
+                  <span>{item.text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {horizons.length > 0 && (
+            <div className="grid md:grid-cols-3 gap-4 mt-2">
+              {horizons.map((h, i) => (
+                <div
+                  key={i}
+                  className={`text-center p-4 rounded-lg ${horizonBg(
+                    h.color
+                  )}`}
+                >
+                  <h5
+                    className={`font-semibold ${horizonTitleColor(h.color)}`}
+                  >
+                    {h.title}
+                  </h5>
+                  <p className="text-md mt-1 text-gray-800">{h.text}</p>
+                </div>
+              ))}
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- VARIANT: actionPlan (Ready to Start Saving?) ---- */
+
+  if (variant === "actionPlan") {
+    const boxTitle: string | undefined = section.metadata?.boxTitle;
+    const steps: string[] = section.metadata?.steps || [];
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+        <CardContent>
+          <div className="bg-primary/10 p-4 rounded-lg">
+            {boxTitle && (
+              <h4 className="font-semibold mb-2 text-gray-900">
+                {boxTitle}
+              </h4>
+            )}
+            <ol className="space-y-1 text-md list-decimal list-inside text-gray-900">
+              {steps.map((step, i) => (
+                <li key={i}>{step}</li>
+              ))}
+            </ol>
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------------- DEFAULT EXPLANATION ----------------------------- */
 
   // default explanation = generic "info card" like many sections in Banking/other lessons
   return (
@@ -336,8 +671,212 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
   // Generic items (used by default + pastel)
   const items: string[] = section.metadata?.listItems || [];
 
-  /* ---------- variant: twoColumn (e.g. Needs vs Wants) ---------- */
+  /* ---------- variant: accountFeatureCards (Banking 101) ---------- */
+  if (variant === "accountFeatureCards") {
+    const cards: Array<{
+      title: string;
+      subtitle?: string;
+      color: "blue" | "green";
+      emoji?: string;
+      items: string[];
+    }> = section.metadata?.cards || [];
 
+    const bgFor = (c: string) =>
+      c === "blue"
+        ? "bg-blue-50 border-blue-200"
+        : c === "green"
+        ? "bg-green-50 border-green-200"
+        : "bg-gray-50 border-gray-300";
+
+    const titleColorFor = (c: string) =>
+      c === "blue"
+        ? "text-blue-700"
+        : c === "green"
+        ? "text-green-700"
+        : "text-gray-900";
+
+    const subtitleColorFor = (c: string) =>
+      c === "blue"
+        ? "text-blue-600"
+        : c === "green"
+        ? "text-green-600"
+        : "text-gray-700";
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6">
+            {cards.map((c, idx) => (
+              <div
+                key={idx}
+                className={`p-6 rounded-lg border ${bgFor(c.color)}`}
+              >
+                <h3 className={`text-xl font-bold mb-2 ${titleColorFor(c.color)}`}>
+                  {c.emoji ? `${c.emoji} ` : ""}
+                  {c.title}
+                </h3>
+
+                {c.subtitle && (
+                  <p className={`mb-3 text-md ${subtitleColorFor(c.color)}`}>
+                    {c.subtitle}
+                  </p>
+                )}
+
+                <ul className="space-y-2 text-sm">
+                  {c.items.map((i, j) => (
+                    <li key={j}>• {i}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: percentListCards (stacked 35% / 30% / etc cards) ---------- */
+  if (variant === "percentListCards") {
+    const items = section.metadata?.items || [];
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && <CardDescription>{section.content}</CardDescription>}
+        </CardHeader>
+        <CardContent>
+          <div className="grid gap-4">
+            {items.map((item: any, idx: number) => (
+              <div
+                key={idx}
+                className="flex items-center gap-4 p-4 border rounded-lg"
+              >
+                <div
+                  className={`w-16 h-16 rounded-full flex items-center justify-center font-bold text-lg ${item.bgColor}`}
+                >
+                  {item.percent}
+                </div>
+                <div>
+                  <h4 className="font-semibold">{item.title}</h4>
+                  <p className="text-sm text-muted-foreground">{item.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: bankListCards (Student Bank Accounts List) ---------- */
+  if (variant === "bankListCards") {
+    const cards: Array<{
+      title: string;
+      color: "blue" | "green" | "purple";
+      items: string[];
+    }> = section.metadata?.cards || [];
+
+    const titleColorFor = (c: string) =>
+      c === "blue"
+        ? "text-blue-600"
+        : c === "green"
+        ? "text-green-600"
+        : c === "purple"
+        ? "text-purple-600"
+        : "text-gray-900";
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+
+        <CardContent>
+          <div className="grid gap-4">
+            {cards.map((c, idx) => (
+              <div key={idx} className="p-4 border rounded-lg">
+                <h4
+                  className={`font-semibold text-md ${titleColorFor(c.color)}`}
+                >
+                  {c.title}
+                </h4>
+                <ul className="text-sm mt-2 space-y-1">
+                  {c.items.map((item, j) => (
+                    <li key={j}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: cardsStack (stacked card list, e.g. student bank accounts) ---------- */
+  if (variant === "cardsStack") {
+    const cards: Array<{
+      title: string;
+      color?: "blue" | "green" | "purple" | "yellow";
+      items: string[];
+    }> = section.metadata?.cards || [];
+
+    const borderFor = (c?: string) => {
+      if (c === "green") return "border-green-200";
+      if (c === "purple") return "border-purple-200";
+      if (c === "yellow") return "border-yellow-200";
+      return "border-blue-200";
+    };
+
+    const titleColorFor = (c?: string) => {
+      if (c === "green") return "text-green-600";
+      if (c === "purple") return "text-purple-600";
+      if (c === "yellow") return "text-purple-600";
+      return "text-blue-600";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+        <CardContent>
+          <div className="space-y-4">
+            {cards.map((card, idx) => (
+              <div
+                key={idx}
+                className={`p-4 rounded-lg border ${borderFor(card.color)}`}
+              >
+                <h4 className={`font-semibold ${titleColorFor(card.color)}`}>
+                  {card.title}
+                </h4>
+                <ul className="text-md mt-2 space-y-1">
+                  {card.items.map((item, i) => (
+                    <li key={i}>• {item}</li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: twoColumn (e.g. Needs vs Wants) ---------- */
   if (variant === "twoColumn") {
     // Expect metadata.columns: [{ title, color, iconName, items[] }, ...]
     const columns: Array<{
@@ -410,7 +949,6 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
   }
 
   /* ---------- variant: pastel (e.g. Quick Budgeting Tips) ---------- */
-
   if (variant === "pastel") {
     return (
       <Card className="bg-gradient-to-r from-primary/10 to-secondary/10">
@@ -431,8 +969,46 @@ const ListSection: React.FC<{ section: ContentSection }> = ({ section }) => {
     );
   }
 
-  /* ---------- variant: danger (general red-warning card list) ---------- */
+  /* ---------- variant: agencyGrid (Experian / Equifax / TransUnion boxes) ---------- */
+  if (variant === "agencyGrid") {
+    const agencies = section.metadata?.agencies || [];
 
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && <CardDescription>{section.content}</CardDescription>}
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-3 gap-4">
+            {agencies.map((ag: any, idx: number) => (
+              <div
+                key={idx}
+                className={`text-center p-4 rounded-lg ${ag.bgColor}`}
+              >
+                <h4 className={`font-semibold ${ag.textColor}`}>{ag.name}</h4>
+                <p className="text-sm mt-1">{ag.description}</p>
+              </div>
+            ))}
+          </div>
+
+          {section.metadata?.tips && (
+            <div className="mt-4 p-4 bg-accent rounded-lg">
+              <h4 className="font-semibold mb-2">💡 Pro Tips:</h4>
+              <ul className="text-sm space-y-1">
+                {section.metadata.tips.map((tip: string, i: number) => (
+                  <li key={i}>• {tip}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </CardContent>
+      </Card>
+    );
+  }
+
+
+  /* ---------- variant: danger (general red-warning card list) ---------- */
   if (variant === "danger") {
     // Think "warning-heavy list" – red-tinted card with list items
     return (
@@ -565,7 +1141,7 @@ const WarningSection: React.FC<{ section: ContentSection }> = ({
         <CardTitle className="flex items-center gap-2">
           <SectionIcon
             name={section.icon || "AlertTriangle"}
-            className={`w-5 h-5 ${scheme.text}`}
+            className={`w-5 h-5  ${scheme.text}`}
           />
           <span>{section.title}</span>
         </CardTitle>
@@ -574,15 +1150,17 @@ const WarningSection: React.FC<{ section: ContentSection }> = ({
         )}
       </CardHeader>
       <CardContent>
-        <div
-          className={`rounded-2xl border ${scheme.border} ${scheme.bg} p-4 md:p-5`}
-        >
-          <ul className="list-disc list-inside text-md text-gray-800 space-y-1">
-            {warnings.map((warn, i) => (
-              <li key={i}>{warn}</li>
-            ))}
-          </ul>
-        </div>
+        {warnings.length !== 0 && 
+          <div
+            className={`rounded-2xl border ${scheme.border} ${scheme.bg} p-4 md:p-5`}
+          >
+            <ul className="list-disc list-inside text-md text-gray-800 space-y-1">
+              {warnings.map((warn, i) => (
+                <li key={i}>{warn}</li>
+              ))}
+            </ul>
+          </div>
+        }
       </CardContent>
     </Card>
   );
@@ -601,6 +1179,8 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
   const rows: { label: string; value: string }[] =
     section.metadata?.comparisonTable || [];
 
+
+  /* ---------- variant: gridCards ---------- */
   if (variant === "gridCards") {
     // Matches 50/30/20-style comparison blocks
     const columns: Array<{
@@ -705,6 +1285,115 @@ const ComparisonSection: React.FC<{ section: ContentSection }> = ({
             </p>
           </div>
         )}
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: scoreRangeGrid (Credit Score Ranges 300–850 grid) ---------- */
+  if (variant === "scoreRangeGrid") {
+    const ranges = section.metadata?.ranges || [];
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>{section.title}</CardTitle>
+          {section.content && <CardDescription>{section.content}</CardDescription>}
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-5 gap-2 text-center text-sm">
+            {ranges.map((r: any, idx: number) => (
+              <div
+                key={idx}
+                className={`p-3 rounded ${r.bgColor}`}
+              >
+                <div className={`font-bold ${r.textColor}`}>{r.label}</div>
+                <div>{r.range}</div>
+              </div>
+            ))}
+          </div>
+        </CardContent>
+      </Card>
+    );
+  }
+
+  /* ---------- variant: twoFeatureCards ---------- */
+  if (variant === "twoFeatureCards") {
+    const cards: Array<{
+      title: string;
+      subtitle?: string;
+      color?: "blue" | "green" | "purple" | "yellow";
+      bullets?: string[];
+    }> = section.metadata?.cards || [];
+
+    const bgFor = (c?: string) => {
+      if (c === "green") return "bg-green-50 border-green-200";
+      if (c === "purple") return "bg-purple-50 border-purple-200";
+      if (c === "yellow") return "bg-yellow-50 border-yellow-200";
+      return "bg-blue-50 border-blue-200";
+    };
+
+    const titleColorFor = (c?: string) => {
+      if (c === "green") return "text-green-700";
+      if (c === "purple") return "text-purple-700";
+      if (c === "yellow") return "text-yellow-700";
+      return "text-blue-700";
+    };
+
+    const subtitleColorFor = (c?: string) => {
+      if (c === "green") return "text-green-600";
+      if (c === "purple") return "text-purple-600";
+      if (c === "yellow") return "text-yellow-600";
+      return "text-blue-600";
+    };
+
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            {section.icon && (
+              <SectionIcon
+                name={section.icon}
+                className={`h-5 w-5 ${scheme.text}`}
+              />
+            )}
+            <span>{section.title}</span>
+          </CardTitle>
+          {section.content && (
+            <CardDescription>{section.content}</CardDescription>
+          )}
+        </CardHeader>
+        <CardContent>
+          <div className="grid md:grid-cols-2 gap-6">
+            {cards.map((card, idx) => (
+              <div
+                key={idx}
+                className={`p-6 rounded-lg border ${bgFor(card.color)}`}
+              >
+                <h3
+                  className={`text-xl font-bold mb-1 ${titleColorFor(
+                    card.color
+                  )}`}
+                >
+                  {card.title}
+                </h3>
+                {card.subtitle && (
+                  <p
+                    className={`text-md mb-3 ${subtitleColorFor(card.color)}`}
+                  >
+                    {card.subtitle}
+                  </p>
+                )}
+                {card.bullets && (
+                  <ul className="space-y-1 text-sm text-gray-800">
+                    {card.bullets.map((item, i) => (
+                      <li key={i}>• {item}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
+          </div>
         </CardContent>
       </Card>
     );

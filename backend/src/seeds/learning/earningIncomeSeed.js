@@ -40,31 +40,34 @@ const earningIncomeModules = [
         title: "Gross vs Net Pay: The Big Difference",
         icon: "Calculator",
         metadata: {
-          variant: "accountComparisonTwo",
-          left: {
-            title: "💰 Gross Pay",
-            color: "green",
-            subtitle: "Your pay BEFORE deductions",
-            items: [
-              "The amount advertised in job ads",
-              "Your hourly rate × hours worked",
-              "What you earn before anything is taken off",
-              "Example: £10/hour × 20 hours = £200 gross"
-            ]
-          },
-          right: {
-            title: "💳 Net Pay",
-            color: "blue",
-            subtitle: "Your pay AFTER deductions",
-            items: [
-              "The money that actually hits your bank",
-              "Gross pay minus taxes and deductions",
-              "Also called 'take-home pay'",
-              "Example: £200 gross - £15 tax = £185 net"
-            ]
-          }
+          variant: "accountFeatureCards",
+          cards: [
+            {
+              title: "💰 Gross Pay",
+              subtitle: "Your pay BEFORE deductions",
+              color: "green",
+              items: [
+                "The amount advertised in job ads",
+                "Your hourly rate × hours worked",
+                "What you earn before anything is taken off",
+                "Example: £10/hour × 20 hours = £200 gross"
+              ]
+            },
+            {
+              title: "💳 Net Pay",
+              subtitle: "Your pay AFTER deductions",
+              color: "blue",
+              items: [
+                "The money that actually hits your bank",
+                "Gross pay minus taxes and deductions",
+                "Also called 'take-home pay'",
+                "Example: £200 gross - £15 tax = £185 net"
+              ]
+            }
+          ]
         }
       },
+
 
       /* ------------------------------------------------------------ */
       /* 2. NET PAY INSIGHT TIP BOX                                    */
@@ -147,7 +150,8 @@ const earningIncomeModules = [
       {
         id: "student-tax-rules-info",
         type: "warning",
-        title: "Special Rules for Student Jobs",
+        icon: "none",
+        title: "✅ Special Rules for Student Jobs",
         colorScheme: "green",
         metadata: {
           warnings: [
@@ -253,8 +257,8 @@ const earningIncomeModules = [
       },
       {
         moduleId: "budgeting-basics",
-        title: "Budgeting with Your Pay",
-        relationship: "next-step"
+        title: "Budgeting Basics",
+        relationship: "related"
       }
     ],
 
@@ -267,328 +271,957 @@ const earningIncomeModules = [
   },
 
   // =====================================================
-  // 2. Different Types of Income
+  // 2. Part-Time Jobs & Apprenticeships
   // =====================================================
   {
-    title: "Different Types of Income",
+    title: "Part-Time Jobs & Apprenticeships",
     description:
-      "Earned, passive, and portfolio income — understand the differences and why they matter.",
+      "Learn when you can start working, the best student-friendly jobs, how apprenticeships work, and how to land your very first role.",
     categoryId: "earning-income",
-    topic: "income-streams",
+    topic: "part-time-jobs",
 
     visual: {
-      icon: "TrendingUp",
+      icon: "Building",
       iconColor: "bg-green-500",
-      badge: "Income Essentials",
-      readTime: 4,
+      badge: "Earning & Income",
+      readTime: 3, // 3 min read
     },
 
     contentSections: [
+      // 1) Age & Legal Requirements — 3 coloured boxes + legal note
       {
-        id: "three-types-income",
-        type: "list",
-        title: "The 3 Types of Income",
+        id: "age-legal-requirements",
+        type: "comparison",
+        title: "When Can You Start Working?",
         content: "",
-        icon: "List",
-        colorScheme: "green",
+        icon: null,
+        colorScheme: null,
         metadata: {
-          listItems: [
-            "Earned Income — wages, salary",
-            "Passive Income — rent, royalties",
-            "Portfolio Income — investments, dividends",
+          // Reuse the credit-score style multi-box layout
+          variant: "scoreRangeGrid",
+          ranges: [
+            {
+              label: "13–14",
+              score: "Very limited work",
+              bgColor: "bg-red-50",
+              textColor: "text-red-600",
+              description:
+                "Paper rounds, light agricultural work, usually with a work permit.",
+            },
+            {
+              label: "15",
+              score: "More options",
+              bgColor: "bg-orange-50",
+              textColor: "text-orange-600",
+              description:
+                "Retail and restaurant roles (outside school hours), max ~8 hours/week.",
+            },
+            {
+              label: "16+",
+              score: "Most part-time jobs",
+              bgColor: "bg-green-50",
+              textColor: "text-green-600",
+              description:
+                "Evening & weekend work in most sectors, plus apprenticeships.",
+            },
+          ],
+          note: {
+            title: "Important Legal Limits",
+            items: [
+              "School days: Max 2 hours (typically after 7pm)",
+              "Saturdays: Max 8 hours",
+              "Sundays: Max 2 hours",
+              "School holidays: Up to 8 hours/day, 35 hours/week (13–14), 40 hours/week (15+)",
+            ],
+          },
+        },
+      },
+
+      // 2) Best Part-Time Jobs — stacked cards
+      {
+        id: "best-student-jobs",
+        type: "list",
+        title: "Best Part-Time Jobs for Students",
+        content: "Jobs that work around your school or uni schedule.",
+        icon: null,
+        colorScheme: null,
+        metadata: {
+          variant: "cardsStack",
+          cards: [
+            {
+              title: "🛒 Retail Assistant",
+              color: "blue",
+              items: [
+                "Pay: £6.40–£8.50 per hour",
+                "Hours: Evenings and weekends",
+                "Skills: Customer service, teamwork, communication",
+              ],
+            },
+            {
+              title: "🍟 Food Service",
+              color: "green",
+              items: [
+                "Pay: £6.40–£9.00 per hour",
+                "Hours: Split shifts and weekends",
+                "Skills: Fast-paced work, resilience, people skills",
+              ],
+            },
+            {
+              title: "📚 Tutoring",
+              color: "purple",
+              items: [
+                "Pay: £8–£15 per hour",
+                "Hours: After school and weekends",
+                "Skills: Teaching, patience, strong subject knowledge",
+              ],
+            },
+            {
+              title: "🚗 Delivery Driver",
+              color: "yellow", // maps to orange-ish in your UI
+              items: [
+                "Pay: £7–£12 per hour plus tips",
+                "Hours: Flexible, mostly evenings",
+                "Skills: Navigation, time management, reliability",
+              ],
+            },
+          ],
+          tip: {
+            title: "Hot Tip: Seasonal Work",
+            content:
+              "Christmas retail, summer festivals, and holiday resorts often pay more and are perfect for short bursts of work.",
+          },
+        },
+      },
+
+      // 3) Apprenticeships — gradient two-column knowledge box
+      {
+        id: "apprenticeships-intro",
+        type: "explanation",
+        title: "Apprenticeships: Learn While You Earn",
+        content:
+          "Apprenticeships let you work, earn a salary, and study towards a qualification at the same time.",
+        icon: null,
+        colorScheme: null,
+        metadata: {
+          variant: "gradientInfoTwoColumn",
+          heading: "What is an Apprenticeship?",
+          description:
+            "A real job with training and a salary. You typically work 4 days and study 1 day.",
+          columns: [
+            {
+              title: "Benefits",
+              color: "green",
+              items: [
+                "No student debt",
+                "Earn while you learn",
+                "Real work experience",
+                "Guaranteed job at the end",
+                "Industry-recognised qualifications",
+              ],
+            },
+            {
+              title: "The Numbers",
+              color: "blue",
+              items: [
+                "Minimum pay £6.40/hour",
+                "Duration: 1–4 years",
+                "Age: 16+",
+                "600+ apprenticeship routes",
+              ],
+            },
+          ],
+        }
+      },
+
+      // 4) Apprenticeship Sectors — mini 3-card grid
+      {
+        id: "apprenticeship-sectors",
+        type: "miniInfoGrid",
+        title: "Popular Apprenticeship Areas",
+        content: "",
+        icon: null,
+        colorScheme: null,
+        metadata: {
+          items: [
+            {
+              title: "💻 Tech & Digital",
+              description: "Software development, cybersecurity, IT support, digital marketing.",
+              color: "blue"
+            },
+            {
+              title: "🏥 Healthcare",
+              description: "Nursing, dental, pharmacy, healthcare assistant, veterinary roles.",
+              color: "green"
+            },
+            {
+              title: "💼 Business",
+              description: "Accounting, HR, project management, sales, business admin.",
+              color: "purple"
+            }
+          ]
+        },
+      },
+
+      // 5) Landing Your First Job — CV vs Interview tips
+      {
+        id: "cv-and-interview-tips",
+        type: "list",
+        title: "Landing Your First Job",
+        content: "",
+        icon: null,
+        colorScheme: null,
+        metadata: {
+          variant: "twoColumn",
+          columns: [
+            {
+              title: "Writing Your CV",
+              color: "green",
+              iconName: "Check",
+              items: [
+                "Keep it to 1 page maximum.",
+                "Include school achievements, sports, and volunteering.",
+                "List subjects and topics you’re strongest in.",
+                "Mention hobbies that show responsibility and teamwork.",
+              ],
+            },
+            {
+              title: "Interview Tips",
+              color: "blue",
+              iconName: "MoveRight",
+              items: [
+                "Arrive around 10 minutes early.",
+                "Dress smartly, even for casual roles.",
+                "Bring printed copies of your CV.",
+                "Prepare 1–2 questions about the role or company.",
+              ],
+            },
           ],
         },
       },
+
+      // 6) Job scams & red flags — warning block
       {
-        id: "income-diversification",
-        type: "tip",
-        title: "Why Income Diversification Helps",
-        content: "Multiple income streams create financial stability and reduce risk.",
-        icon: "Layers",
-        colorScheme: "blue",
+        id: "job-red-flags",
+        type: "warning",
+        title: "⚠️ Watch Out For:",
+        content: "",
+        icon: "none",
+        colorScheme: "yellow",
+        metadata: {
+          warnings: [
+            "Jobs asking you to pay money upfront (often scams).",
+            "“Too good to be true” pay rates for very little work.",
+            "Pyramid schemes disguised as “business opportunities”.",
+            "Work hours that clash heavily with school or exam revision.",
+          ],
+        },
+      },
+
+      // 7) Next steps / action plan — reusing StepsSection
+      {
+        id: "next-steps-job-hunting",
+        type: "steps",
+        title: "Ready to Start Job Hunting?",
+        content:
+          "Follow this simple plan to get your first job or apprenticeship interview.",
+        icon: null,
+        colorScheme: null,
+        metadata: {
+          variant: "default",
+          steps: [
+            {
+              number: 1,
+              text: "Check the age requirements",
+              description:
+                "Make sure you meet the minimum age for the jobs you’re targeting.",
+            },
+            {
+              number: 2,
+              text: "Write or update your CV",
+              description:
+                "Ask a teacher, careers adviser, or friend to read it over.",
+            },
+            {
+              number: 3,
+              text: "Search for roles",
+              description:
+                "Look on Indeed, local job boards, company websites, and apprenticeship sites.",
+            },
+            {
+              number: 4,
+              text: "Apply to 5–10 roles",
+              description:
+                "Don’t pin everything on just one job — give yourself options.",
+            },
+            {
+              number: 5,
+              text: "Prepare for interviews",
+              description:
+                "Practice answers out loud and plan your outfit and travel ahead of time.",
+            },
+          ],
+        },
       },
     ],
 
     quiz: {
+      passingScore: 1,
       questions: [
         {
-          question: "Which of these is passive income?",
-          options: ["Salary", "Rent from a property", "Bonus", "Tips"],
-          correctAnswer: 1,
+          question: "At what age can you do most part-time jobs?",
+          options: ["13", "14", "15", "16"],
+          correctAnswer: 3, // index of "16"
+          explanation:
+            "Most part-time job opportunities fully open up at age 16, including evening and weekend roles.",
         },
       ],
-      passingScore: 1,
     },
 
     relatedLessons: [
       {
-        moduleId: "understanding-payslips",
-        title: "Understanding Payslips",
-        relationship: "prerequisite",
+        moduleId: "side-hustles",
+        title: "Side Hustles",
+        relationship: "next-step",
       },
       {
-        moduleId: "side-hustles-and-freelancing",
-        title: "Side Hustles & Freelancing",
-        relationship: "next-step",
+        moduleId: "how-pay-works",
+        title: "How Pay Works",
+        relationship: "related",
+      },
+      {
+        moduleId: "budgeting-basics",
+        title: "Budgeting Basics",
+        relationship: "related",
       },
     ],
 
     points: 100,
     difficultyLevel: "beginner",
-    timeEstimate: 4,
+    timeEstimate: 5,
     order: 2,
     isActive: true,
+
     createdBy: "system",
   },
 
   // =====================================================
-  // 3. Taxes 101
-  // =====================================================
-  {
-    title: "Taxes 101",
-    description:
-      "Understand how income tax works, what NI is, and how your tax-free allowance affects take-home pay.",
-    categoryId: "earning-income",
-    topic: "taxes-101",
-
-    visual: {
-      icon: "Calculator",
-      iconColor: "bg-green-600",
-      badge: "Essential Knowledge",
-      readTime: 6,
-    },
-
-    contentSections: [
-      {
-        id: "tax-free-allowance",
-        type: "explanation",
-        title: "Your Tax-Free Allowance",
-        content:
-          "Most people in the UK can earn a certain amount tax-free each year — this is called your Personal Allowance.",
-        icon: "Ticket",
-        colorScheme: "yellow",
-      },
-      {
-        id: "income-tax-how",
-        type: "steps",
-        title: "How Income Tax Works",
-        content: "",
-        icon: "ArrowRight",
-        colorScheme: "blue",
-        metadata: {
-          steps: [
-            { number: 1, text: "You earn income" },
-            { number: 2, text: "Tax is calculated based on tax bands" },
-            { number: 3, text: "Your employer deducts it automatically" },
-          ],
-        },
-      },
-      {
-        id: "ni-explained",
-        type: "explanation",
-        title: "What Is National Insurance (NI)?",
-        content:
-          "NI helps fund the NHS, state pension, maternity allowance, and other benefits.",
-        icon: "HeartPulse",
-        colorScheme: "pink",
-      },
-    ],
-
-    quiz: {
-      questions: [
-        {
-          question: "What does NI fund?",
-          options: ["Your personal savings", "Public services", "Employer bonuses", "Student loans"],
-          correctAnswer: 1,
-        },
-      ],
-      passingScore: 1,
-    },
-
-    relatedLessons: [
-      { moduleId: "understanding-payslips", title: "Understanding Payslips", relationship: "related" },
-    ],
-
-    points: 120,
-    difficultyLevel: "beginner",
-    timeEstimate: 6,
-    order: 3,
-    isActive: true,
-    createdBy: "system",
-  },
-
-  // =====================================================
-  // 4. Side Hustles & Freelancing
+  // 3. Side Hustles & Freelancing
   // =====================================================
   {
     title: "Side Hustles & Freelancing",
     description:
-      "Learn how to earn extra income, find freelance work, and handle taxes as a self-employed worker.",
+      "Flexible ways for students to earn money online or locally, build skills, and grow income at their own pace.",
     categoryId: "earning-income",
-    topic: "side-hustles-and-freelancing",
+    topic: "side-hustles",
 
     visual: {
-      icon: "Briefcase",
-      iconColor: "bg-green-700",
-      badge: "Income Booster",
-      readTime: 7,
+      icon: "Lightbulb",
+      iconColor: "bg-green-500",
+      badge: "Earning & Income",
+      readTime: 2
     },
 
     contentSections: [
+      /* ------------------------------------------------------------ */
+      /* 1. WHAT IS A SIDE HUSTLE? (intro three cards)                 */
+      /* ------------------------------------------------------------ */
       {
-        id: "what-is-freelancing",
-        type: "header",
-        title: "What Is Freelancing?",
+        id: "what-is-side-hustle",
+        type: "explanation",
+        title: "What is a Side Hustle?",
         content:
-          "Freelancing means working for yourself, offering skills or services directly to clients.",
-        icon: "UserCheck",
-        colorScheme: "green",
+          "Side hustles are flexible earning opportunities you can do alongside school or university.",
+        metadata: {
+          variant: "introThreeCards",
+          cards: [
+            {
+              title: "Flexible",
+              emoji: "💪",
+              description: "Work around your own schedule",
+              color: "blue"
+            },
+            {
+              title: "Scalable",
+              emoji: "🚀",
+              description: "Grow your earnings steadily",
+              color: "green"
+            },
+            {
+              title: "Skill Building",
+              emoji: "🎯",
+              description: "Gain experience employers love",
+              color: "purple"
+            }
+          ]
+        }
       },
+
+      /* ------------------------------------------------------------ */
+      /* 2. ONLINE SIDE HUSTLES (hustleCardGrid)                       */
+      /* ------------------------------------------------------------ */
       {
-        id: "finding-work",
+        id: "online-hustles",
         type: "list",
-        title: "Where to Find Freelance Work",
-        content: "",
-        icon: "Search",
-        colorScheme: "blue",
+        title: "Online Side Hustles",
+        content: "Work from anywhere with an internet connection.",
         metadata: {
-          listItems: [
-            "Upwork",
-            "Fiverr",
-            "PeoplePerHour",
-            "Local businesses",
-            "Social media outreach",
-          ],
-        },
+          variant: "hustleCardGrid",
+          hustles: [
+            {
+              title: "Online Tutoring",
+              emoji: "📚",
+              color: "blue",
+              description: "Teach subjects you're strong in over video call.",
+              platformsLabel: "Platforms",
+              platforms: "Tutor.com, Preply, Wyzant",
+              pay: "£10–20/hour",
+              requirements: "Good subject knowledge, patience"
+            },
+            {
+              title: "Freelance Writing",
+              emoji: "✍️",
+              color: "green",
+              description:
+                "Write blog posts, articles, and social media content.",
+              platformsLabel: "Platforms",
+              platforms: "Upwork, Fiverr, Contently",
+              pay: "£0.05–0.50 per word",
+              requirements: "Strong English, creativity"
+            },
+            {
+              title: "Graphic Design",
+              emoji: "🎨",
+              color: "purple",
+              description: "Create logos, posters, and social content.",
+              platformsLabel: "Platforms",
+              platforms: "Fiverr, 99designs, Dribbble",
+              pay: "£5–100/design",
+              requirements: "Design skills, Canva or Figma"
+            },
+            {
+              title: "Social Media Management",
+              emoji: "📱",
+              color: "orange",
+              description:
+                "Run social accounts for small businesses or creators.",
+              platformsLabel: "Find clients",
+              platforms: "Local businesses, Instagram, Upwork",
+              pay: "£100–500/month per client",
+              requirements: "Social media knowledge"
+            }
+          ]
+        }
       },
+
+      /* ------------------------------------------------------------ */
+      /* 3. LOCAL HUSTLES (hustleCardGrid)                             */
+      /* ------------------------------------------------------------ */
       {
-        id: "self-employed-tax",
-        type: "warning",
-        title: "Your Tax Responsibilities",
-        content: "",
-        icon: "AlertTriangle",
-        colorScheme: "red",
+        id: "local-hustles",
+        type: "list",
+        title: "Local & Physical Side Hustles",
         metadata: {
-          warnings: [
-            "Registering as self-employed",
-            "Keeping track of income & expenses",
-            "Submitting a yearly tax return",
-          ],
-        },
+          variant: "hustleCardGrid",
+          hustles: [
+            {
+              title: "Dog Walking & Pet Sitting",
+              emoji: "🐕",
+              color: "blue",
+              description: "Walk dogs or care for pets when owners are away.",
+              platformsLabel: "Apps",
+              platforms: "Rover, Wag",
+              pay: "£10–20/walk, £20–40/night",
+              requirements: "Reliability, love animals"
+            },
+            {
+              title: "Food Delivery",
+              emoji: "🚗",
+              color: "green",
+              description:
+                "Deliver food using a bike, scooter, or car (17+).",
+              platformsLabel: "Apps",
+              platforms: "Deliveroo, Just Eat, Uber Eats",
+              pay: "£8–15/hour + tips",
+              requirements: "Transport, smartphone"
+            },
+            {
+              title: "House Sitting",
+              emoji: "🏠",
+              color: "purple",
+              description: "Look after someone’s home while they're away.",
+              platformsLabel: "Platforms",
+              platforms: "TrustedHousesitters",
+              pay: "£20–50/night",
+              requirements: "Trustworthy, responsible"
+            },
+            {
+              title: "Cleaning",
+              emoji: "🧽",
+              color: "orange",
+              description:
+                "Clean student accommodation, houses, or local offices.",
+              platformsLabel: "Find work",
+              platforms: "Local ads, community groups",
+              pay: "£10–15/hour",
+              requirements: "Attention to detail"
+            }
+          ]
+        }
       },
-    ],
 
-    quiz: {
-      questions: [
-        {
-          question: "Which of these platforms is used for freelancing?",
-          options: ["Spotify", "Upwork", "Netflix", "JustEat"],
-          correctAnswer: 1,
-        },
-      ],
-      passingScore: 1,
-    },
-
-    relatedLessons: [
-      { moduleId: "income-streams", title: "Different Types of Income", relationship: "prerequisite" },
-      { moduleId: "salary-negotiation-basics", title: "Salary Negotiation Basics", relationship: "next-step" },
-    ],
-
-    points: 120,
-    difficultyLevel: "intermediate",
-    timeEstimate: 7,
-    order: 4,
-    isActive: true,
-    createdBy: "system",
-  },
-
-  // =====================================================
-  // 5. Salary Negotiation Basics
-  // =====================================================
-  {
-    title: "Salary Negotiation Basics",
-    description:
-      "Learn how to confidently ask for a raise or negotiate your starting salary.",
-    categoryId: "earning-income",
-    topic: "salary-negotiation-basics",
-
-    visual: {
-      icon: "Handshake",
-      iconColor: "bg-green-800",
-      badge: "Career Skill",
-      readTime: 6,
-    },
-
-    contentSections: [
+      /* ------------------------------------------------------------ */
+      /* 4. SELLING & TRADING (cardsStack)                             */
+      /* ------------------------------------------------------------ */
       {
-        id: "why-negotiate",
-        type: "header",
-        title: "Why Negotiation Matters",
-        content:
-          "Negotiating your salary can increase your lifetime earnings by thousands of pounds.",
-        icon: "TrendingUp",
-        colorScheme: "green",
+        id: "selling-and-trading",
+        type: "list",
+        title: "Selling & Trading",
+        metadata: {
+          variant: "cardsStack",
+          cards: [
+            {
+              title: "👕 Reselling Clothes",
+              color: "blue",
+              items: [
+                "Buy and sell popular fashion items.",
+                "Platforms: Vinted, Depop, eBay.",
+                "Potential: £50–500/month."
+              ]
+            },
+            {
+              title: "📚 Selling Course Materials",
+              color: "green",
+              items: [
+                "Sell textbooks, notes, or revision guides.",
+                "Where: Facebook groups, uni circles.",
+                "Potential: £20–200/term."
+              ]
+            },
+            {
+              title: "🎮 Gaming Items",
+              color: "purple",
+              items: [
+                "Sell in-game items or offer coaching.",
+                "Examples: FIFA coins, Fortnite coaching.",
+                "Potential: £10–100/month."
+              ]
+            }
+          ]
+        }
       },
+
+      /* ------------------------------------------------------------ */
+      /* 5. TIPS — twoColumn                                           */
+      /* ------------------------------------------------------------ */
       {
-        id: "negotiation-steps",
+        id: "side-hustle-tips",
+        type: "list",
+        title: "Side Hustle Success Tips",
+        metadata: {
+          variant: "twoColumn",
+          columns: [
+            {
+              title: "Do This",
+              color: "green",
+              items: [
+                "Start with skills you already have.",
+                "Track earnings and time.",
+                "Build reviews and reliability.",
+                "Set realistic weekly limits."
+              ]
+            },
+            {
+              title: "Avoid This",
+              color: "red",
+              items: [
+                "Letting it affect your studies.",
+                "Taking on too many clients.",
+                "Working for free “for exposure”.",
+                "Ignoring tax responsibilities."
+              ]
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 6. PRO TIP (info box)                                         */
+      /* ------------------------------------------------------------ */
+      {
+        id: "side-hustle-pro-tip",
+        type: "tip",
+        icon: "Lightbulb",
+        title: "Pro Tip",
+        metadata: {
+          variant: "lightbulb",
+          tips: [
+            "It’s better to earn £200/month consistently from ONE hustle than juggle five unstable ones."
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 7. ACTION PLAN (steps)                                        */
+      /* ------------------------------------------------------------ */
+      {
+        id: "side-hustle-action-plan",
         type: "steps",
-        title: "How to Negotiate Effectively",
-        content: "",
-        icon: "CheckCircle",
-        colorScheme: "purple",
+        title: "Ready to Start Your Side Hustle?",
         metadata: {
           steps: [
-            { number: 1, text: "Research market rates" },
-            { number: 2, text: "Highlight your achievements" },
-            { number: 3, text: "Practice your pitch" },
-            { number: 4, text: "Be confident but polite" },
-          ],
-        },
-      },
-      {
-        id: "negotiation-mistakes",
-        type: "warning",
-        title: "Common Mistakes",
-        content: "",
-        icon: "AlertTriangle",
-        colorScheme: "red",
-        metadata: {
-          warnings: [
-            "Accepting the first offer immediately",
-            "Not asking at all",
-            "Using ultimatums",
-          ],
-        },
-      },
+            { number: 1, text: "Choose 1–2 side hustles that match your skills" },
+            { number: 2, text: "Set up profiles on relevant platforms" },
+            { number: 3, text: "Start with small jobs to build reviews" },
+            { number: 4, text: "Track time and earnings consistently" },
+            { number: 5, text: "Scale up once you're confident" }
+          ]
+        }
+      }
     ],
 
+    /* ------------------------------------------------------------ */
+    /* QUIZ                                                         */
+    /* ------------------------------------------------------------ */
     quiz: {
+      passingScore: 1,
       questions: [
         {
-          question: "What should you always do before negotiating salary?",
-          options: [
-            "Threaten to quit",
-            "Research market pay",
-            "Ask coworkers",
-            "Avoid preparing",
-          ],
-          correctAnswer: 1,
-        },
-      ],
-      passingScore: 1,
+          question: "Which side hustle typically offers the highest hourly pay?",
+          options: ["Dog walking", "Food delivery", "Tutoring", "Cleaning"],
+          correctAnswer: 2,
+          explanation:
+            "Tutoring often pays £10–20/hour due to the skill required."
+        }
+      ]
     },
 
+    /* ------------------------------------------------------------ */
+    /* RELATED LESSONS                                              */
+    /* ------------------------------------------------------------ */
     relatedLessons: [
-      { moduleId: "side-hustles-and-freelancing", title: "Side Hustles & Freelancing", relationship: "related" },
+      {
+        moduleId: "tax-basics",
+        title: "Tax Basics",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "how-pay-works",
+        title: "How Pay Works",
+        relationship: "related"
+      },
+      {
+        moduleId: "budgeting-basics",
+        title: "Budgeting Basics",
+        relationship: "related"
+      }
     ],
 
-    points: 120,
-    difficultyLevel: "intermediate",
-    timeEstimate: 6,
-    order: 5,
+    points: 100,
+    difficultyLevel: "beginner",
+    timeEstimate: 2,
+    order: 3,
     isActive: true,
-    createdBy: "system",
+    createdBy: "system"
   },
+
+  // =====================================================
+  // 4. Tax Basics
+  // =====================================================
+  {
+    title: "Tax Basics",
+    description:
+      "Learn how income tax, National Insurance, VAT, tax codes, and PAYE work as a student.",
+    categoryId: "earning-income",
+    topic: "tax-basics",
+
+    visual: {
+      icon: "Calculator",
+      iconColor: "bg-green-500",
+      badge: "Earning & Income",
+      readTime: 3
+    },
+
+    contentSections: [
+      /* ------------------------------------------------------------ */
+      /* 1. WHAT IS TAX?  (mini 3 card grid)                          */
+      /* ------------------------------------------------------------ */
+      {
+        id: "what-is-tax",
+        type: "miniInfoGrid",
+        title: "What is Tax and Why Do We Pay It?",
+        content: 
+          "Tax is money the government takes from your earnings to pay for public services like schools, hospitals, roads, and police. Think of it as everyone chipping in for things we all use!",
+        metadata: {
+          items: [
+            {
+              title: "🏥 Healthcare",
+              description: "NHS hospitals and public health services",
+              color: "blue"
+            },
+            {
+              title: "🏫 Education",
+              description: "Schools, colleges, and universities",
+              color: "green"
+            },
+            {
+              title: "🛣️ Infrastructure",
+              description: "Roads, transport, police, and public safety",
+              color: "purple"
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 2. MAIN TAX TYPES  (cardsStack)                               */
+      /* ------------------------------------------------------------ */
+      {
+        id: "main-tax-types",
+        type: "list",
+        title: "Main Types of Tax You'll Pay",
+        metadata: {
+          variant: "cardsStack",
+          cards: [
+            {
+              title: "💰 Income Tax",
+              color: "blue",
+              items: [
+                "Tax on money you earn from jobs",
+                "Personal Allowance (2024): £12,570",
+                "20% basic rate on earnings above allowance",
+                "Most student jobs fall BELOW the tax threshold"
+              ]
+            },
+            {
+              title: "🏥 National Insurance",
+              color: "green",
+              items: [
+                "Funds NHS, pensions, and benefits",
+                "Threshold (2024): £12,570/year",
+                "12% rate above threshold",
+                "Most part-time students pay £0"
+              ]
+            },
+            {
+              title: "🛒 VAT",
+              color: "purple",
+              items: [
+                "Tax on goods you buy",
+                "Standard rate: 20%",
+                "Examples: clothes, electronics, restaurants",
+                "Most food & children’s clothes are VAT-free"
+              ]
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 3. REAL STUDENT TAX EXAMPLES (twoFeatureCards)                */
+      /* ------------------------------------------------------------ */
+      {
+        id: "student-tax-examples",
+        type: "comparison",
+        title: "Real Student Tax Examples",
+        metadata: {
+          variant: "twoFeatureCards",
+          cards: [
+            {
+              title: "Scenario 1: No Tax",
+              subtitle: "Typical student part-time job",
+              color: "green",
+              bullets: [
+                "Job: Retail assistant",
+                "Hours: 15 hours/week",
+                "Pay: £8.50/hour",
+                "Annual earnings: £6,630",
+                "Tax owed: £0 (under £12,570)"
+              ]
+            },
+            {
+              title: "Scenario 2: Some Tax",
+              subtitle: "Full-time summer work",
+              color: "yellow",
+              bullets: [
+                "Salary: £15,000/year",
+                "Taxable income: £2,430",
+                "Income tax: £486",
+                "National Insurance: £292",
+                "Total tax: £778/year"
+              ]
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 4. NEW — Key Insight (standalone info section)                */
+      /* ------------------------------------------------------------ */
+      {
+        id: "student-tax-key-insight",
+        type: "explanation",
+        title: "Key Insight",
+        icon: "Lightbulb",
+        metadata: {
+          variant: "info",
+          highlightTitle: "💡 Key Insight:",
+          highlightText:
+            "If you work part-time (under ~25 hours/week at minimum wage), you will likely pay NO income tax or National Insurance."
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 5. PAYE OVERVIEW (ONLY the blue box)                          */
+      /* ------------------------------------------------------------ */
+      {
+        id: "paye-overview",
+        type: "explanation",
+        title: "PAYE: Pay As You Earn",
+        content:
+          "PAYE is the UK system where tax is automatically taken from your paycheck before you receive it.",
+        icon: "Receipt",
+        metadata: {
+          variant: "featureWithList",
+          listTitle: "How PAYE Works:",
+          listItems: [
+            "Employer calculates gross pay",
+            "Income Tax & NI deducted automatically",
+            "Employer sends tax to HMRC",
+            "You receive net pay",
+            "Everything is shown clearly on your payslip",
+          ],
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 6. NEW — Two column section (split from PAYE)                 */
+      /* ------------------------------------------------------------ */
+      {
+        id: "paye-benefits-responsibilities",
+        type: "list",
+        title: "PAYE Benefits & Responsibilities",
+        metadata: {
+          variant: "twoColumn",
+          columns: [
+            {
+              title: "Benefits of PAYE",
+              color: "green",
+              items: [
+                "Automatic tax calculation",
+                "No tax returns needed for most people",
+                "Tax spread throughout the year",
+                "Employer handles everything"
+              ]
+            },
+            {
+              title: "Your Responsibilities",
+              color: "blue",
+              items: [
+                "Provide correct personal details",
+                "Keep your P45/P60 documents",
+                "Check your payslips for errors",
+                "Tell HMRC if you have side income"
+              ]
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 7. TAX CODES (miniInfoGrid)                                   */
+      /* ------------------------------------------------------------ */
+      {
+        id: "tax-codes",
+        type: "miniInfoGrid",
+        title: "Understanding Tax Codes",
+        metadata: {
+          items: [
+            {
+              title: "1257L — Most Common",
+              description: "Standard tax code (2024): £12,570 tax-free allowance",
+              color: "green"
+            },
+            {
+              title: "BR — Basic Rate",
+              description:
+                "Used for second jobs; all income taxed at 20% with no allowance",
+              color: "blue"
+            },
+            {
+              title: "0T — Emergency Tax",
+              description:
+                "Used when HMRC lacks your details; often leads to overpayment",
+              color: "orange"
+            }
+          ]
+        }
+      },
+
+      /* ------------------------------------------------------------ */
+      /* 8. ACTION PLAN (steps)                                        */
+      /* ------------------------------------------------------------ */
+      {
+        id: "tax-action-plan",
+        type: "steps",
+        title: "Tax Action Plan for Students",
+        metadata: {
+          steps: [
+            { number: 1, text: "Keep all payslips & P60 documents" },
+            { number: 2, text: "Check your tax code (usually 1257L)" },
+            { number: 3, text: "Register with HMRC if side income > £1,000/year" },
+            { number: 4, text: "Claim tax refunds if you overpay" },
+            { number: 5, text: "Learn to read your payslip properly" }
+          ]
+        }
+      }
+    ],
+
+
+    /* ------------------------------------------------------------ */
+    /* QUIZ                                                         */
+    /* ------------------------------------------------------------ */
+    quiz: {
+      passingScore: 1,
+      questions: [
+        {
+          question: "What is the personal allowance for income tax in 2024?",
+          options: ["£11,850", "£12,570", "£13,500", "£10,000"],
+          correctAnswer: 1,
+          explanation:
+            "The personal allowance is £12,570, meaning you pay no income tax on this amount."
+        }
+      ]
+    },
+
+    /* ------------------------------------------------------------ */
+    /* RELATED LESSONS                                              */
+    /* ------------------------------------------------------------ */
+    relatedLessons: [
+      {
+        moduleId: "how-pay-works",
+        title: "How Pay Works",
+        relationship: "related"
+      },
+      {
+        moduleId: "side-hustles",
+        title: "Side Hustles",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "budgeting-basics",
+        title: "Budgeting Basics",
+        relationship: "related"
+      }
+    ],
+
+    points: 100,
+    difficultyLevel: "beginner",
+    timeEstimate: 3,
+    order: 3,
+    isActive: true,
+    createdBy: "system"
+  }
+
 ];
 
 // =====================================================
@@ -597,19 +1230,20 @@ const earningIncomeModules = [
 async function seedEarningIncome() {
   try {
     for (const module of earningIncomeModules) {
-      const exists = await LearningModule.findOne({ topic: module.topic });
-      if (!exists) {
-        await LearningModule.create(module);
-        console.log(`✅ Created module: ${module.title}`);
-      } else {
-        console.log(`⏭️  Module already exists: ${module.title}`);
-      }
+      await LearningModule.findOneAndUpdate(
+        { topic: module.topic },
+        module,
+        { upsert: true, new: true }
+      );
+
+      console.log(`🔄 Upserted module: ${module.title}`);
     }
     console.log("✅ Earning & Income modules seeded!");
   } catch (error) {
     console.error("❌ Error seeding Earning & Income:", error);
   }
 }
+
 
 module.exports = {
   earningIncomeModules,

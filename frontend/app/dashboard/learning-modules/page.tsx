@@ -161,7 +161,7 @@ export default function LearningModulesPage() {
                         {/* Time badge */}
                         <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <ClockIcon className="w-4 h-4" />
-                          {module.timeEstimate} min
+                          {module.visual.readTime} min
                         </span>
                       </div>
 

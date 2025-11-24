@@ -6,15 +6,14 @@ const API_BASE_URL =
  * BACKEND-ACCURATE TYPES
  * ============================================================ */
 
-export interface ContentSection {
-  id: string;
+export type JsonChild = JsonNode | string;
+
+export interface JsonNode {
   type: string;
-  title: string;
-  content: string;
-  icon?: string;
-  colorScheme?: string;
-  metadata?: any;
+  props?: Record<string, any>;
+  children?: JsonChild[];
 }
+
 
 export interface QuizQuestion {
   question: string;
@@ -42,7 +41,7 @@ export interface LearningModule {
     readTime: number;
   };
 
-  contentSections: ContentSection[];
+  uiTree: JsonNode[];
 
   quiz?: QuizData;
 

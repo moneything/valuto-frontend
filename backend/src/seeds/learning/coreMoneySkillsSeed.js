@@ -17,1031 +17,1344 @@ const LearningModule = require("../../models/LearningModule");
 const coreMoneySkillsModules = [
   // Budgeting Basics
   {
-    title: "Budgeting Basics",
-    description:
-      "Learn how to take control of your money with simple budgeting techniques like the 50/30/20 rule, identifying needs vs wants, and building lasting habits.",
+    "title": "Budgeting Basics",
+    "topic": "budgeting-basics",
+    "categoryId": "core-money-skills",
 
-    categoryId: "core-money-skills",
-    topic: "budgeting-basics",
-
-    visual: {
-      icon: "Wallet",
-      iconColor: "bg-blue-500",
-      badge: "Core Money Skills",
-      readTime: 2,
+    "visual": {
+      "icon": "Wallet",
+      "iconColor": "bg-blue-500",
+      "badge": "Core Money Skills",
+      "readTime": 3
     },
 
-    contentSections: [
-      // -----------------------------------------------------------
-      // 1) What is a Budget? (Matches EXACT original static UI)
-      // -----------------------------------------------------------
+    "difficultyLevel": "beginner",
+    "points": 100,
+    "timeEstimate": 3,
+    "order": 1,
+    "isActive": true,
+
+    "uiTree": [
       {
-        id: "intro-what-is-budget",
-        type: "explanation",
-        title: "What is a Budget?",
-        content:
-          "A budget is simply a plan for your money. It helps you see where your money comes from and where it goes, so you can make sure you have enough for the things you need and want.",
-        icon: "TrendingUp",
-        colorScheme: "blue",
-        metadata: {
-          variant: "info",
-          highlightTitle: "Think of it like this:",
-          highlightText:
-            "If your money was water, a budget would be like having different buckets to catch it – one for rent, one for food, one for fun, and one for saving!",
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "TrendingUp", "className": "h-5 w-5" } },
+                  "What is a Budget?"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "props": { "className": "space-y-4" },
+            "children": [
+              {
+                "type": "Text",
+                "props": { "className": "text-lg" },
+                "children": [
+                  "A budget is simply a plan for your money. It helps you see where your money comes from and where it goes, so you can make sure you have enough for the things you need and want."
+                ]
+              },
+              {
+                "type": "Box",
+                "props": { "className": "bg-primary/10 p-4 rounded-lg" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold" }, "children": ["Think of it like this:"] },
+                  {
+                    "type": "Text",
+                    "children": [
+                      "If your money was water, a budget would be like having different buckets to catch it – one for rent, one for food, one for fun, and one for saving!"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // -----------------------------------------------------------
-      // 2) Needs vs Wants — EXACT 2-column card
-      // -----------------------------------------------------------
       {
-        id: "needs-vs-wants",
-        type: "list",
-        title: "Needs vs Wants: The Foundation",
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "✅ NEEDS (Must Have)",
-              color: "green",
-              iconName: "CheckCircle",
-              items: [
-                "Rent/Housing",
-                "Food & Groceries",
-                "Transport to work/uni",
-                "Phone bill",
-                "Essential clothing",
-              ],
-            },
-            {
-              title: "⚠️ WANTS (Nice to Have)",
-              color: "orange",
-              iconName: "AlertCircle",
-              items: [
-                "Netflix/Spotify subscriptions",
-                "Eating out/takeaways",
-                "Designer clothes",
-                "Gaming/entertainment",
-                "Holidays",
-              ],
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Needs vs Wants: The Foundation"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 6 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "space-y-3" },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": { "className": "text-lg font-semibold text-green-600" },
+                        "children": ["✅ NEEDS (Must Have)"]
+                      },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "icon": "CheckCircle", "iconColor": "text-green-500", "children": ["Rent/Housing"] },
+                          { "type": "ListItem", "icon": "CheckCircle", "iconColor": "text-green-500", "children": ["Food & Groceries"] },
+                          { "type": "ListItem", "icon": "CheckCircle", "iconColor": "text-green-500", "children": ["Transport to work/uni"] },
+                          { "type": "ListItem", "icon": "CheckCircle", "iconColor": "text-green-500", "children": ["Phone bill"] },
+                          { "type": "ListItem", "icon": "CheckCircle", "iconColor": "text-green-500", "children": ["Essential clothing"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "space-y-3" },
+                    "children": [
+                      {
+                        "type": "Text",
+                        "props": { "className": "text-lg font-semibold text-orange-600" },
+                        "children": ["⚠️ WANTS (Nice to Have)"]
+                      },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "icon": "AlertCircle", "iconColor": "text-orange-500", "children": ["Netflix/Spotify subscriptions"] },
+                          { "type": "ListItem", "icon": "AlertCircle", "iconColor": "text-orange-500", "children": ["Eating out/takeaways"] },
+                          { "type": "ListItem", "icon": "AlertCircle", "iconColor": "text-orange-500", "children": ["Designer clothes"] },
+                          { "type": "ListItem", "icon": "AlertCircle", "iconColor": "text-orange-500", "children": ["Gaming/entertainment"] },
+                          { "type": "ListItem", "icon": "AlertCircle", "iconColor": "text-orange-500", "children": ["Holidays"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // -----------------------------------------------------------
-      // 3) 50/30/20 Rule — IDENTICAL UI
-      // -----------------------------------------------------------
       {
-        id: "fifty-thirty-twenty",
-        type: "comparison",
-        title: "The 50/30/20 Rule (Perfect for Students!)",
-        content: "The simplest way to budget your money",
-        metadata: {
-          variant: "gridCards",
-          columns: [
-            {
-              title: "50%",
-              subtitle: "NEEDS",
-              description: "Rent, food, transport, phone",
-              color: "green",
-            },
-            {
-              title: "30%",
-              subtitle: "WANTS",
-              description: "Fun, eating out, entertainment",
-              color: "blue",
-            },
-            {
-              title: "20%",
-              subtitle: "SAVINGS",
-              description: "Emergency fund, future goals",
-              color: "purple",
-            },
-          ],
-          exampleTitle: "Example with £1000/month income:",
-          exampleList: [
-            "£500 for needs (rent, food, transport)",
-            "£300 for wants (fun, eating out)",
-            "£200 for savings",
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["The 50/30/20 Rule (Perfect for Students!)"] },
+              { "type": "CardDescription", "children": ["The simplest way to budget your money"] }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 3, "gap": 4 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-green-50 p-4 rounded-lg border border-green-200" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold text-green-700" }, "children": ["50%"] },
+                      { "type": "Text", "props": { "className": "font-semibold text-green-600" }, "children": ["NEEDS"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Rent, food, transport, phone"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-blue-50 p-4 rounded-lg border border-blue-200" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold text-blue-700" }, "children": ["30%"] },
+                      { "type": "Text", "props": { "className": "font-semibold text-blue-600" }, "children": ["WANTS"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Fun, eating out, entertainment"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-purple-50 p-4 rounded-lg border border-purple-200" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold text-purple-700" }, "children": ["20%"] },
+                      { "type": "Text", "props": { "className": "font-semibold text-purple-600" }, "children": ["SAVINGS"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Emergency fund, future goals"] }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "Box",
+                "props": { "className": "mt-6 p-4 bg-accent rounded-lg" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold mb-2" }, "children": ["Example with £1000/month income:"] },
+                  {
+                    "type": "List",
+                    "children": [
+                      { "type": "ListItem", "children": ["• £500 for needs (rent, food, transport)"] },
+                      { "type": "ListItem", "children": ["• £300 for wants (fun, eating out)"] },
+                      { "type": "ListItem", "children": ["• £200 for savings"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // -----------------------------------------------------------
-      // 4) How to Start Budgeting — EXACT step UI
-      // -----------------------------------------------------------
       {
-        id: "start-budgeting-steps",
-        type: "steps",
-        title: "How to Start Budgeting (3 Easy Steps)",
-        metadata: {
-          steps: [
-            {
-              number: 1,
-              text: "Track Your Income",
-              description:
-                "Add up all money coming in: part-time job, student loan, family support",
-            },
-            {
-              number: 2,
-              text: "List Your Expenses",
-              description:
-                "Write down everything you spend money on for a week",
-            },
-            {
-              number: 3,
-              text: "Apply the 50/30/20 Rule",
-              description:
-                "Split your income and adjust your spending to fit",
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [{ "type": "CardTitle", "children": ["How to Start Budgeting (3 Easy Steps)"] }]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "List",
+                "children": [
+                  {
+                    "type": "ListItem",
+                    "title": "Track Your Income",
+                    "description": "Add up all money coming in: part-time job, student loan, family support",
+                    "numbered": 1
+                  },
+                  {
+                    "type": "ListItem",
+                    "title": "List Your Expenses",
+                    "description": "Write down everything you spend money on for a week",
+                    "numbered": 2
+                  },
+                  {
+                    "type": "ListItem",
+                    "title": "Apply the 50/30/20 Rule",
+                    "description": "Split your income and adjust your spending to fit",
+                    "numbered": 3
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // -----------------------------------------------------------
-      // 5) Quick Budgeting Tips — EXACT pastel card
-      // -----------------------------------------------------------
       {
-        id: "quick-tips",
-        type: "list",
-        title: "💡 Quick Budgeting Tips",
-        metadata: {
-          variant: "pastel",
-          listItems: [
-            "Use apps like Monzo or Starling Bank to track spending automatically",
-            "Review your budget every month and adjust as needed",
-            "If you overspend in one category, reduce another (don't touch savings!)",
-            "Start small – even budgeting £100 builds good habits",
-            "Remember: budgeting gives you MORE freedom, not less",
-          ],
-        },
-      },
+        "type": "Card",
+        "props": { "className": "bg-gradient-to-r from-primary/10 to-secondary/10" },
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["💡 Quick Budgeting Tips"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "List",
+                "children": [
+                  { "type": "ListItem", "children": ["Use apps like Monzo or Starling to track spending"] },
+                  { "type": "ListItem", "children": ["Review your budget monthly"] },
+                  { "type": "ListItem", "children": ["If overspending, reduce another category"] },
+                  { "type": "ListItem", "children": ["Start with £100 – build the habit"] },
+                  { "type": "ListItem", "children": ["Budgeting gives freedom, not restriction"] }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ],
 
-    quiz: {
-      passingScore: 1,
-      questions: [
+    "quiz": {
+      "passingScore": 1,
+      "questions": [
         {
-          question: "What is the 50/30/20 budgeting rule?",
-          options: ["50/30/20", "60/20/20", "40/40/20", "50/25/25"],
-          correctAnswer: 0,
-          explanation:
-            "The 50/30/20 rule means 50% needs, 30% wants, and 20% savings.",
-        },
-      ],
+          "question": "What is the 50/30/20 budgeting rule?",
+          "options": ["50/30/20", "60/20/20", "40/40/20", "50/25/25"],
+          "correctAnswer": 0,
+          "explanation": "50% needs, 30% wants, 20% savings."
+        }
+      ]
     },
 
-    relatedLessons: [
-      {
-        moduleId: "saving-strategies",
-        title: "Saving Strategies",
-        relationship: "next-step",
-      },
-      {
-        moduleId: "banking-101",
-        title: "Banking 101",
-        relationship: "related",
-      },
-    ],
-
-    points: 100,
-    difficultyLevel: "beginner",
-    timeEstimate: 2,
-    order: 1,
-    isActive: true,
-
-    createdBy: "system",
+    "relatedLessons": [
+      { "moduleId": "saving-strategies", "title": "Saving Strategies", "relationship": "next-step" },
+      { "moduleId": "banking-101", "title": "Banking 101", "relationship": "next-step" }
+    ]
   },
 
   // Saving Strategies
   {
-    title: "Saving Strategies",
-    description:
-      "Learn how to build an emergency fund, set SMART goals, and use simple tricks to save more without feeling deprived.",
-    categoryId: "core-money-skills",
-    topic: "saving-strategies",
+    "title": "Saving Strategies",
+    "topic": "saving-strategies",
+    "categoryId": "core-money-skills",
 
-    visual: {
-      icon: "PiggyBank",
-      iconColor: "bg-green-500",
-      badge: "Core Money Skills",
-      readTime: 3,
+    "visual": {
+      "icon": "PiggyBank",
+      "iconColor": "bg-green-500",
+      "badge": "Core Money Skills",
+      "readTime": 3
     },
 
-    contentSections: [
-      // Why Save Money?
-      {
-        id: "why-save-money",
-        type: "explanation",
-        title: "Why Save Money?",
-        icon: "TrendingUp",
-        colorScheme: "blue",
-        content:
-          "Saving money gives you freedom and peace of mind. It's not about being cheap – it's about being prepared for emergencies and opportunities.",
-        metadata: {
-          variant: "introThreeCards",
-          cards: [
-            {
-              title: "Emergencies",
-              emoji: "🚨",
-              color: "blue",
-              description: "Unexpected expenses won't stress you out.",
-            },
-            {
-              title: "Goals",
-              emoji: "🎯",
-              color: "green",
-              description: "Holidays, a car, or a future house deposit.",
-            },
-            {
-              title: "Opportunities",
-              emoji: "🌟",
-              color: "purple",
-              description:
-                "Courses, starting a business, or saying yes to something big.",
-            },
-          ],
-        },
-      },
+    "difficultyLevel": "beginner",
+    "points": 100,
+    "timeEstimate": 3,
+    "order": 2,
+    "isActive": true,
 
-      // Pay Yourself First
+    "uiTree": [
+      /* ============================================================
+      * INTRO: WHY SAVE MONEY?
+      * ============================================================ */
       {
-        id: "pay-yourself-first",
-        type: "explanation",
-        title: "Pay Yourself First (The Golden Rule)",
-        icon: "Target",
-        colorScheme: "green",
-        metadata: {
-          variant: "featureWithList",
-          featureBox: {
-            title: "The Secret: Save BEFORE You Spend",
-            text: "As soon as money comes in, move your savings amount to a separate account. Treat it like a bill you MUST pay.",
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "TrendingUp", "className": "h-5 w-5" } },
+                  "Why Save Money?"
+                ]
+              }
+            ]
           },
-          listTitle: "How it works:",
-          listItems: [
-            "Get paid £500",
-            "Immediately save £50 (10%)",
-            "Live on the remaining £450",
-            "Never touch the £50 savings",
-          ],
-          proTipTitle: "💡 Pro Tip:",
-          proTipText:
-            "Set up an automatic transfer on payday. If you don't see the money, you won't miss it!",
-        },
+          {
+            "type": "CardContent",
+            "props": { "className": "space-y-4" },
+            "children": [
+              {
+                "type": "Text",
+                "props": { "className": "text-lg" },
+                "children": [
+                  "Saving money gives you freedom and peace of mind. It's not about being cheap – it's about being prepared for opportunities and emergencies."
+                ]
+              },
+
+              {
+                "type": "Grid",
+                "props": { "columns": 3, "gap": 4 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-blue-50 p-4 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-blue-700" }, "children": ["🚨 Emergencies"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Unexpected expenses won't stress you out"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-green-50 p-4 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-green-700" }, "children": ["🎯 Goals"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Holiday, car, house deposit"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-purple-50 p-4 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-purple-700" }, "children": ["🌟 Opportunities"] },
+                      { "type": "Text", "props": { "className": "text-sm" }, "children": ["Job course, starting a business"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // Emergency Fund
+      /* ============================================================
+      * PAY YOURSELF FIRST
+      * ============================================================ */
       {
-        id: "emergency-fund",
-        type: "explanation",
-        title: "Emergency Fund: Your Financial Safety Net",
-        icon: "Shield",
-        colorScheme: "red",
-        content:
-          "An emergency fund is money saved specifically for unexpected expenses. It's not for holidays or shopping – it's for genuine emergencies.",
-        metadata: {
-          variant: "emergencyFund",
-          emergencyTitle: "What counts as an emergency?",
-          emergencyItems: [
-            "Car breaks down",
-            "Laptop dies during exams",
-            "Unexpected medical expenses",
-            "Lost job or reduced hours",
-            "Urgent travel for a family emergency",
-          ],
-          amountBlocks: [
-            {
-              label: "Students / Part-time:",
-              value: "£500–£1000",
-              color: "green",
-            },
-            {
-              label: "Full-time workers:",
-              value: "3–6 months expenses",
-              color: "blue",
-            },
-          ],
-          whereTitle: "Where to keep it:",
-          whereItems: [
-            "✅ High-interest savings account",
-            "✅ Easy access (not locked away)",
-            "✅ Separate from spending money",
-            "❌ Not invested (too risky)",
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "Target", "className": "h-5 w-5" } },
+                  "Pay Yourself First (The Golden Rule)"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Box",
+                "props": { "className": "bg-primary/10 p-6 rounded-lg mb-4" },
+                "children": [
+                  { "type": "Text", "props": { "className": "text-xl font-bold mb-2" }, "children": ["The Secret: Save BEFORE You Spend"] },
+                  {
+                    "type": "Text",
+                    "props": { "className": "text-lg" },
+                    "children": [
+                      "As soon as money comes in, immediately move your savings amount to a separate account. Treat it like a bill you MUST pay."
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "Box",
+                "props": { "className": "space-y-3" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold" }, "children": ["How it works:"] },
+                  {
+                    "type": "List",
+                    "props": { "ordered": true },
+                    "children": [
+                      { "type": "ListItem", "children": ["Get paid £500"] },
+                      { "type": "ListItem", "children": ["Immediately save £50 (10%)"] },
+                      { "type": "ListItem", "children": ["Live on the remaining £450"] },
+                      { "type": "ListItem", "children": ["Never touch the £50 savings"] }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "Box",
+                "props": { "className": "mt-4 p-4 bg-accent rounded-lg" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold" }, "children": ["💡 Pro Tip:"] },
+                  {
+                    "type": "Text",
+                    "children": [
+                      "Set up an automatic transfer on payday. If you don't see the money, you won't miss it!"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // SMART Savings Goals
+      /* ============================================================
+      * EMERGENCY FUND
+      * ============================================================ */
       {
-        id: "smart-goals",
-        type: "explanation",
-        title: "Setting Savings Goals (SMART Method)",
-        colorScheme: "blue",
-        content:
-          'Vague goals like "save more money" don\'t work. Use the SMART method for goals you\'ll actually achieve.',
-        metadata: {
-          variant: "smartGoals",
-          smartTitle: "SMART Savings Goals:",
-          smartItems: [
-            {
-              letter: "S",
-              color: "blue",
-              text: 'pecific – "Save for a holiday to Spain"',
-            },
-            {
-              letter: "M",
-              color: "green",
-              text: 'easurable – "Need £800 total"',
-            },
-            {
-              letter: "A",
-              color: "orange",
-              text: 'chievable – "Can save £100/month"',
-            },
-            {
-              letter: "R",
-              color: "red",
-              text: 'elevant – "Really want this holiday"',
-            },
-            {
-              letter: "T",
-              color: "purple",
-              text: 'ime-bound – "By next August (8 months)"',
-            },
-          ],
-          horizonsTitle: "Types of savings goals:",
-          horizons: [
-            {
-              title: "Short-term (1–12 months)",
-              color: "green",
-              text: "Holiday, laptop, course.",
-            },
-            {
-              title: "Medium-term (1–5 years)",
-              color: "blue",
-              text: "Car, house deposit.",
-            },
-            {
-              title: "Long-term (5+ years)",
-              color: "purple",
-              text: "Retirement, investment property.",
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "Shield", "className": "h-5 w-5" } },
+                  "Emergency Fund: Your Financial Safety Net"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Box",
+                "props": { "className": "space-y-4" },
+                "children": [
+                  {
+                    "type": "Text",
+                    "children": [
+                      "An emergency fund is money saved specifically for unexpected expenses. It's not for holidays or shopping – it's for genuine emergencies."
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-red-50 border-l-4 border-red-400 p-4" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-red-700" }, "children": ["What counts as an emergency?"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• Car breaks down"] },
+                          { "type": "ListItem", "children": ["• Laptop dies during exams"] },
+                          { "type": "ListItem", "children": ["• Unexpected medical expenses"] },
+                          { "type": "ListItem", "children": ["• Lost job/reduced hours"] },
+                          { "type": "ListItem", "children": ["• Urgent travel for family emergency"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Grid",
+                    "props": { "columns": 2, "gap": 4 },
+                    "children": [
+                      {
+                        "type": "Box",
+                        "props": { "className": "space-y-3" },
+                        "children": [
+                          { "type": "Text", "props": { "className": "font-semibold" }, "children": ["How much to save:"] },
+                          {
+                            "type": "List",
+                            "children": [
+                              {
+                                "type": "ListItem",
+                                "children": ["Students/Part-time: ", { "type": "Strong", "children": ["£500–£1000"] }]
+                              },
+                              {
+                                "type": "ListItem",
+                                "children": ["Full-time workers: ", { "type": "Strong", "children": ["3–6 months expenses"] }]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "Box",
+                        "props": { "className": "space-y-3" },
+                        "children": [
+                          { "type": "Text", "props": { "className": "font-semibold" }, "children": ["Where to keep it:"] },
+                          {
+                            "type": "List",
+                            "children": [
+                              { "type": "ListItem", "children": ["✅ High-interest savings account"] },
+                              { "type": "ListItem", "children": ["✅ Easy access (not locked away)"] },
+                              { "type": "ListItem", "children": ["✅ Separate from spending money"] },
+                              { "type": "ListItem", "children": ["❌ Not invested (too risky)"] }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // Practical Saving Tips for Students
+      /* ============================================================
+      * SMART SAVINGS GOALS
+      * ============================================================ */
       {
-        id: "practical-saving-tips",
-        type: "list",
-        title: "💡 Practical Saving Tips for Students",
-        colorScheme: "green",
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "Easy Wins:",
-              color: "green",
-              items: [
-                'Use the "52-week challenge" (save £1 week 1, £2 week 2, etc.)',
-                "Save all £5 notes you receive",
-                "Use student discounts (UNiDAYS, Student Beans)",
-                "Cook at home more often",
-                "Buy supermarket own-brand instead of big names",
-              ],
-            },
-            {
-              title: "Apps to Help:",
-              color: "blue",
-              items: [
-                "Monzo / Starling: Round up spare change",
-                "Plum: Automatically saves small amounts",
-                "Chip: AI-powered saving",
-                "YNAB: Budgeting app",
-                "Honey: Finds discount codes online",
-              ],
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Setting Savings Goals (SMART Method)"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Text",
+                "children": [
+                  "Vague goals like 'save more money' don't work. Use the SMART method for goals you'll actually achieve."
+                ]
+              },
+
+              {
+                "type": "Box",
+                "props": { "className": "bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg mt-4" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-bold text-lg mb-3" }, "children": ["SMART Savings Goals:"] },
+                  {
+                    "type": "List",
+                    "children": [
+                      { "type": "ListItem", "children": ["S — Specific: \"Save for a holiday to Spain\""] },
+                      { "type": "ListItem", "children": ["M — Measurable: \"Need £800 total\""] },
+                      { "type": "ListItem", "children": ["A — Achievable: \"Can save £100/month\""] },
+                      { "type": "ListItem", "children": ["R — Relevant: \"Really want this holiday\""] },
+                      { "type": "ListItem", "children": ["T — Time-bound: \"By next August (8 months)\""] }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "Grid",
+                "props": { "columns": 3, "gap": 4, "className": "mt-6" },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "text-center p-4 bg-green-50 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-green-700" }, "children": ["Short-term (1–12 months)"] },
+                      { "type": "Text", "props": { "className": "text-sm mt-1" }, "children": ["Holiday, laptop, course"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "text-center p-4 bg-blue-50 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-blue-700" }, "children": ["Medium-term (1–5 years)"] },
+                      { "type": "Text", "props": { "className": "text-sm mt-1" }, "children": ["Car, house deposit"] }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "text-center p-4 bg-purple-50 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-purple-700" }, "children": ["Long-term (5+ years)"] },
+                      { "type": "Text", "props": { "className": "text-sm mt-1" }, "children": ["Retirement, investment property"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // Ready to Start Saving? (separate section before quiz CTA)
+      /* ============================================================
+      * PRACTICAL SAVING TIPS
+      * ============================================================ */
       {
-        id: "ready-to-start-saving",
-        type: "explanation",
-        title: "Ready to Start Saving?",
-        colorScheme: "blue",
-        content:
-          "Turn these ideas into action with a simple plan you can start today.",
-        metadata: {
-          variant: "actionPlan",
-          boxTitle: "Your Action Plan:",
-          steps: [
-            "Set up a separate savings account.",
-            "Decide on your emergency fund target (start with £500).",
-            "Set up an automatic transfer for payday.",
-            "Choose one SMART savings goal.",
-            "Track your progress every month.",
-          ],
-        },
-      },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["💡 Practical Saving Tips for Students"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 6 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold mb-3" }, "children": ["Easy Wins:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• 52-week challenge (save £1 week 1, £2 week 2, etc.)"] },
+                          { "type": "ListItem", "children": ["• Save all £5 notes you receive"] },
+                          { "type": "ListItem", "children": ["• Use student discounts (UNiDAYS, Student Beans)"] },
+                          { "type": "ListItem", "children": ["• Cook at home more often"] },
+                          { "type": "ListItem", "children": ["• Buy generic instead of big-name brands"] }
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold mb-3" }, "children": ["Apps to Help:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• Monzo/Starling: Round up spare change"] },
+                          { "type": "ListItem", "children": ["• Plum: Automatically saves small amounts"] },
+                          { "type": "ListItem", "children": ["• Chip: AI-powered saving"] },
+                          { "type": "ListItem", "children": ["• YNAB: Budgeting app"] },
+                          { "type": "ListItem", "children": ["• Honey: Finds discount codes"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ],
 
-    quiz: {
-      passingScore: 1,
-      questions: [
+    /* ============================================================
+    * QUIZ
+    * ============================================================ */
+    "quiz": {
+      "passingScore": 1,
+      "questions": [
         {
-          question:
-            "How much should a full-time worker aim to have in their emergency fund?",
-          options: [
-            "1 month of expenses",
-            "3–6 months of expenses",
-            "1 year of expenses",
-            "£100",
-          ],
-          correctAnswer: 1,
-          explanation:
-            "Most financial experts recommend saving 3–6 months of essential expenses in an emergency fund.",
-        },
-      ],
+          "question": "How much should a full-time worker have in their emergency fund?",
+          "options": ["1 month expenses", "3-6 months expenses", "1 year expenses", "£100"],
+          "correctAnswer": 1,
+          "explanation": "Financial experts recommend 3–6 months of expenses saved."
+        }
+      ]
     },
 
-    relatedLessons: [
-      {
-        moduleId: "banking-101",
-        title: "Banking 101",
-        relationship: "related",
-      },
-      {
-        moduleId: "intro-investing",
-        title: "Introduction to Investing",
-        relationship: "next-step",
-      },
-    ],
-
-    points: 100,
-    difficultyLevel: "beginner",
-    timeEstimate: 3,
-    order: 2,
-    isActive: true,
-    createdBy: "system",
+    /* ============================================================
+    * RELATED LESSONS
+    * ============================================================ */
+    "relatedLessons": [
+      { "moduleId": "banking-101", "title": "Banking 101", "relationship": "next-step" },
+      { "moduleId": "intro-investing", "title": "Introduction to Investing", "relationship": "next-step" }
+    ]
   },
+
 
   // BANKING 101
   {
-    title: "Banking 101",
-    description:
-      "Understand different types of bank accounts, how interest works, and how to open your first account as a student.",
+    "title": "Banking 101",
+    "topic": "banking-101",
+    "categoryId": "core-money-skills",
 
-    categoryId: "core-money-skills",
-    topic: "banking-101",
-
-    visual: {
-      icon: "Building2",
-      iconColor: "bg-blue-500",
-      badge: "Core Money Skills",
-      readTime: 2,
+    "visual": {
+      "icon": "Building2",
+      "iconColor": "bg-blue-500",
+      "badge": "Core Money Skills",
+      "readTime": 2
     },
 
-    contentSections: [
-      // TYPES OF BANK ACCOUNTS – two big feature cards
+    "difficultyLevel": "beginner",
+    "points": 100,
+    "timeEstimate": 2,
+    "order": 3,
+    "isActive": true,
+
+    "uiTree": [
+      /* ============================================================
+      * TYPES OF BANK ACCOUNTS
+      * ============================================================ */
       {
-        id: "account-types",
-        type: "comparison",
-        title: "Types of Bank Accounts",
-        content: "Understanding your options",
-        icon: null,
-        colorScheme: "blue",
-        metadata: {
-          variant: "twoFeatureCards",
-          cards: [
-            {
-              title: "💳 Current Account",
-              subtitle: "Your everyday spending account",
-              color: "blue",
-              bullets: [
-                "Debit card for everyday spending",
-                "Direct debits for bills and subscriptions",
-                "Online and mobile banking access",
-                "Usually no interest earned",
-                "Perfect for daily expenses",
-              ],
-            },
-            {
-              title: "🏦 Savings Account",
-              subtitle: "Where you grow your money",
-              color: "green",
-              bullets: [
-                "Earns interest on your balance",
-                "Sometimes limited withdrawals per month",
-                "Often higher interest than current accounts",
-                "Perfect for emergency funds and goals",
-                "Money grows while you save",
-              ],
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["Types of Bank Accounts"] },
+              { "type": "CardDescription", "children": ["Understanding your options"] }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 6 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-blue-50 p-6 rounded-lg border border-blue-200" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold text-blue-700 mb-3" }, "children": ["💳 Current Account"] },
+                      { "type": "Text", "props": { "className": "text-blue-600 mb-3" }, "children": ["Your everyday spending account"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• Debit card for spending"] },
+                          { "type": "ListItem", "children": ["• Direct debits for bills"] },
+                          { "type": "ListItem", "children": ["• Online banking access"] },
+                          { "type": "ListItem", "children": ["• Usually no interest earned"] },
+                          { "type": "ListItem", "children": ["• Perfect for daily expenses"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-green-50 p-6 rounded-lg border border-green-200" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold text-green-700 mb-3" }, "children": ["🏦 Savings Account"] },
+                      { "type": "Text", "props": { "className": "text-green-600 mb-3" }, "children": ["Where you grow your money"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• Earns interest on your balance"] },
+                          { "type": "ListItem", "children": ["• Limited withdrawals per month"] },
+                          { "type": "ListItem", "children": ["• Higher interest than current accounts"] },
+                          { "type": "ListItem", "children": ["• Perfect for emergency funds"] },
+                          { "type": "ListItem", "children": ["• Money grows while you save"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // HOW INTEREST WORKS – reuse explanation variant, no new layout needed
+      /* ============================================================
+      * HOW INTEREST WORKS
+      * ============================================================ */
       {
-        id: "how-interest-works",
-        type: "explanation",
-        title: "How Interest Works",
-        content:
-          "When you save money in a bank, they pay you interest as a 'thank you' for letting them use your money. Over time, this interest can grow your savings — especially when you earn interest on your interest (compound interest).",
-        icon: "Percent",
-        colorScheme: "green",
-        metadata: {
-          variant: "info",
-          description: "Why banks pay you to save money with them.",
-          examples: [
-            "Simple example: Save £1,000 at 5% per year → After 1 year you have £1,050.",
-            "Compound interest: In year 2, you earn interest on £1,050, not just £1,000.",
-            "Over several years, your interest starts earning its own interest.",
-          ],
-          highlightTitle: "💡 Pro Tip: Check the AER",
-          highlightText:
-            "Look for accounts with the highest AER (Annual Equivalent Rate). That’s the real interest rate you’ll get after compounding is taken into account.",
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "Percent", "className": "h-5 w-5" } },
+                  "How Interest Works"
+                ]
+              }
+            ]
+          },
+
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Box",
+                "props": { "className": "space-y-4" },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "text-xl font-bold mb-3" }, "children": ["Interest = Free Money!"] },
+                      {
+                        "type": "Text",
+                        "props": { "className": "mb-4" },
+                        "children": [
+                          "When you save money in a bank, they pay you interest as a 'thank you' for letting them use your money."
+                        ]
+                      },
+
+                      {
+                        "type": "Grid",
+                        "props": { "columns": 2, "gap": 4 },
+                        "children": [
+                          {
+                            "type": "Box",
+                            "children": [
+                              { "type": "Text", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["Simple Example:"] },
+                              {
+                                "type": "List",
+                                "children": [
+                                  { "type": "ListItem", "children": ["• You save: £1,000"] },
+                                  { "type": "ListItem", "children": ["• Interest rate: 5% per year"] },
+                                  { "type": "ListItem", "children": ["• After 1 year: £1,050"] },
+                                  { "type": "ListItem", "children": ["• You earned: £50 for free!"] }
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "Box",
+                            "children": [
+                              { "type": "Text", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["Compound Interest:"] },
+                              {
+                                "type": "List",
+                                "children": [
+                                  { "type": "ListItem", "children": ["• Year 2: £1,050 + 5% = £1,102.50"] },
+                                  { "type": "ListItem", "children": ["• Year 3: £1,102.50 + 5% = £1,157.63"] },
+                                  { "type": "ListItem", "children": ["• Your interest earns interest!"] }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "p-4 bg-accent rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold mb-2" }, "children": ["💡 Pro Tip:"] },
+                      {
+                        "type": "Text",
+                        "props": { "className": "text-sm" },
+                        "children": [
+                          "Look for accounts with the highest AER (Annual Equivalent Rate) – that's the real interest rate you'll get!"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // BEST STUDENT BANK ACCOUNTS – stacked cards
+      /* ============================================================
+      * BEST STUDENT ACCOUNTS
+      * ============================================================ */
       {
-        id: "student-accounts",
-        type: "list",
-        title: "Best Student Bank Accounts (Examples)",
-        content:
-          "Banks often compete for students with perks like 0% overdrafts and rewards. Here are example features you might see (always check the latest offers):",
-        icon: "CreditCard",
-        colorScheme: "blue",
-        metadata: {
-          variant: "cardsStack",
-          cards: [
-            {
-              title: "🏦 Santander Student Account",
-              color: "blue",
-              items: [
-                "FREE multi-year railcard or similar travel perk",
-                "0% overdraft up to a set limit (e.g. £1,500)",
-                "No monthly account fees",
-              ],
-            },
-            {
-              title: "🏦 HSBC Student Account",
-              color: "green",
-              items: [
-                "0% overdraft up to a higher limit (e.g. £3,000)",
-                "Welcome bonus or voucher when you open the account",
-                "Modern mobile app and online banking",
-              ],
-            },
-            {
-              title: "🏦 NatWest Student Account",
-              color: "purple",
-              items: [
-                "0% overdraft up to a set limit (e.g. £2,000)",
-                "Cash reward or freebie when you switch",
-                "Spending insights and budgeting tools in the app",
-              ],
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Best Student Bank Accounts (2024)"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "gap": 4 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-blue-600" }, "children": ["🏦 Santander Student Account"] },
+                      {
+                        "type": "List",
+                        "props": { "className": "text-sm mt-2 space-y-1" },
+                        "children": [
+                          { "type": "ListItem", "children": ["• FREE 4-year 16–25 Railcard"] },
+                          { "type": "ListItem", "children": ["• 0% overdraft up to £1,500"] },
+                          { "type": "ListItem", "children": ["• No monthly fees"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-green-600" }, "children": ["🏦 HSBC Student Account"] },
+                      {
+                        "type": "List",
+                        "props": { "className": "text-sm mt-2 space-y-1" },
+                        "children": [
+                          { "type": "ListItem", "children": ["• 0% overdraft up to £3,000"] },
+                          { "type": "ListItem", "children": ["• £80 Amazon voucher"] },
+                          { "type": "ListItem", "children": ["• Great mobile app"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "Box",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-purple-600" }, "children": ["🏦 NatWest Student Account"] },
+                      {
+                        "type": "List",
+                        "props": { "className": "text-sm mt-2 space-y-1" },
+                        "children": [
+                          { "type": "ListItem", "children": ["• 0% overdraft up to £2,000"] },
+                          { "type": "ListItem", "children": ["• £100 cash when you switch"] },
+                          { "type": "ListItem", "children": ["• Spending insights + budgeting tools"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // OPENING YOUR FIRST ACCOUNT – two-column checklist
+      /* ============================================================
+      * OPENING YOUR FIRST ACCOUNT
+      * ============================================================ */
       {
-        id: "opening-first-account",
-        type: "list",
-        title: "Opening Your First Bank Account",
-        content: "What you'll need and what to expect at the appointment.",
-        icon: null,
-        colorScheme: "blue",
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "📋 Documents Required",
-              color: "blue",
-              iconName: undefined,
-              items: [
-                "Photo ID (passport or driving licence)",
-                "Proof of address (e.g. council tax or utility bill, bank statement)",
-                "Student ID card or university acceptance letter",
-                "Sometimes: birth certificate or extra proof if needed",
-              ],
-            },
-            {
-              title: "📝 What to Expect",
-              color: "green",
-              iconName: undefined,
-              items: [
-                "30–60 minute appointment (often can be done online now)",
-                "Questions about your income and typical spending",
-                "Debit card arriving by post in a few days",
-                "Online and mobile banking set up on the spot",
-              ],
-            },
-          ],
-        },
-      },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Opening Your First Bank Account"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Text",
+                "props": { "className": "font-semibold" },
+                "children": ["What You'll Need:"]
+              },
 
-      // TOP TIPS – separate pastel tips section
-      {
-        id: "banking-top-tips",
-        type: "list",
-        title: "Top Tips When Choosing a Bank",
-        content: "",
-        icon: null,
-        colorScheme: "yellow",
-        metadata: {
-          variant: "pastel",
-          listItems: [
-            "Compare several banks — don’t just pick the closest branch.",
-            "Look at overdraft rules carefully (limit, fees, when interest starts).",
-            "Check the quality of the mobile app and online banking.",
-            "See what student-specific perks are available (railcards, cash bonuses, discounts).",
-            "Set up mobile and online banking immediately so you can track spending.",
-          ],
-        },
-      },
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 4 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-medium text-blue-600 mb-2" }, "children": ["📋 Documents Required:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• Photo ID (passport/driver’s license)"] },
+                          { "type": "ListItem", "children": ["• Proof of address"] },
+                          { "type": "ListItem", "children": ["• Student ID or uni acceptance letter"] },
+                          { "type": "ListItem", "children": ["• Sometimes: birth certificate"] }
+                        ]
+                      }
+                    ]
+                  },
 
-      // READY TO OPEN YOUR ACCOUNT? – action-style steps
-      {
-        id: "ready-to-open-account",
-        type: "steps",
-        title: "Ready to Open Your Account?",
-        content:
-          "Follow this simple action plan to get your first bank account up and running with confidence.",
-        icon: null,
-        colorScheme: "green",
-        metadata: {
-          variant: "default",
-          steps: [
-            {
-              number: 1,
-              text: "Pick your preferred bank",
-              description:
-                "Compare overdraft limits, perks, fees, and app quality. Choose the one that fits your needs best.",
-            },
-            {
-              number: 2,
-              text: "Gather your documents",
-              description:
-                "Make sure you have photo ID, proof of address, and your student ID or acceptance letter ready.",
-            },
-            {
-              number: 3,
-              text: "Book an appointment or apply online",
-              description:
-                "Most student accounts can be opened online. If you prefer in-person, book a branch appointment.",
-            },
-            {
-              number: 4,
-              text: "Set up mobile banking",
-              description:
-                "As soon as your account is open, download the app, enable notifications, and log in.",
-            },
-            {
-              number: 5,
-              text: "Link it to your budget",
-              description:
-                "Use your current account for day-to-day spending and your savings account for goals and emergency funds.",
-            },
-          ],
-        },
-      },
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-medium text-green-600 mb-2" }, "children": ["📝 What to Expect:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          { "type": "ListItem", "children": ["• 30–60 minute appointment"] },
+                          { "type": "ListItem", "children": ["• Income/expenses questions"] },
+                          { "type": "ListItem", "children": ["• Debit card in 3–5 days"] },
+                          { "type": "ListItem", "children": ["• Online banking setup on the spot"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "Box",
+                "props": { "className": "bg-primary/10 p-4 rounded-lg mt-4" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold mb-2" }, "children": ["💡 Top Tips:"] },
+                  {
+                    "type": "List",
+                    "children": [
+                      { "type": "ListItem", "children": ["• Shop around for perks"] },
+                      { "type": "ListItem", "children": ["• Don't pick the closest branch by default"] },
+                      { "type": "ListItem", "children": ["• Read overdraft terms carefully"] },
+                      { "type": "ListItem", "children": ["• Set up mobile banking immediately"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ],
 
-    quiz: {
-      passingScore: 1,
-      questions: [
+    /* ============================================================
+    * QUIZ
+    * ============================================================ */
+    "quiz": {
+      "passingScore": 1,
+      "questions": [
         {
-          question: "Which type of account is best for everyday spending?",
-          options: [
+          "question": "Which type of account is best for everyday spending?",
+          "options": [
             "Current account",
             "Savings account",
             "Investment account",
-            "Credit account",
+            "Credit account"
           ],
-          correctAnswer: 0,
-          explanation:
-            "Current accounts are designed for day-to-day spending with a debit card and easy access to your money. Savings accounts are better for building up money over time.",
-        },
-      ],
+          "correctAnswer": 0,
+          "explanation": "Current accounts are made for day-to-day spending with a debit card."
+        }
+      ]
     },
 
-    relatedLessons: [
-      {
-        moduleId: "budgeting-basics",
-        title: "Budgeting Basics",
-        relationship: "prerequisite",
-      },
-      {
-        moduleId: "saving-strategies",
-        title: "Saving Strategies",
-        relationship: "next-step",
-      },
-    ],
-
-    points: 100,
-    difficultyLevel: "beginner",
-    timeEstimate: 2,
-    order: 2,
-    isActive: true,
-
-    createdBy: "system",
+    /* ============================================================
+    * RELATED LESSONS
+    * ============================================================ */
+    "relatedLessons": [
+      { "moduleId": "budgeting-basics", "title": "Budgeting Basics", "relationship": "next-step" },
+      { "moduleId": "saving-strategies", "title": "Saving Strategies", "relationship": "next-step" }
+    ]
   },
+
 
   // Understanding Credit Scores
   {
-    title: "Understanding Credit Scores",
-    description:
-      "Learn what credit scores mean, how they are calculated, and how to build strong credit as a student.",
+    "title": "Understanding Credit Scores",
+    "topic": "credit-scores",
+    "categoryId": "core-money-skills",
 
-    categoryId: "core-money-skills",
-    topic: "understanding-credit-scores",
-
-    visual: {
-      icon: "CreditCard",
-      iconColor: "bg-blue-500",
-      badge: "Core Money Skills",
-      readTime: 3,
+    "visual": {
+      "icon": "CreditCard",
+      "iconColor": "bg-blue-500",
+      "badge": "Core Money Skills",
+      "readTime": 2
     },
 
-    /* ========================= CONTENT SECTIONS ========================= */
-    contentSections: [
-      /* -------------------------------------------------------------
-       * 1. What is a Credit Score?  (+ Score Range Grid)
-       * ------------------------------------------------------------- */
+    "difficultyLevel": "beginner",
+    "points": 100,
+    "timeEstimate": 2,
+    "order": 4,
+    "isActive": true,
+
+    "uiTree": [
+
+      /* ============================================================
+      * WHAT IS A CREDIT SCORE?
+      * ============================================================ */
       {
-        id: "what-is-credit-score",
-        type: "explanation",
-        title: "What is a Credit Score?",
-        content:
-          "A credit score is like a financial report card that tells lenders how trustworthy you are with money. It's a number between 300-850 that affects your ability to borrow money.",
-        metadata: { variant: "default" },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["What is a Credit Score?"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Box",
+                "props": { "className": "space-y-4" },
+                "children": [
+                  {
+                    "type": "Text",
+                    "props": { "className": "text-lg" },
+                    "children": [
+                      "A credit score is like a financial report card that tells lenders how trustworthy you are with money. It's a number between 300-850 that affects your ability to borrow money."
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "props": { "className": "bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 p-6 rounded-lg" },
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-bold text-lg mb-4" }, "children": ["Credit Score Ranges:"] },
+                      {
+                        "type": "Grid",
+                        "props": { "columns": 5, "gap": 2, "className": "text-center text-sm" },
+                        "children": [
+                          { "type": "Box", "props": { "className": "bg-red-100 p-3 rounded" }, "children": [{ "type": "Text", "props": { "className": "font-bold text-red-700" }, "children": ["Poor"] }, "300-579"] },
+                          { "type": "Box", "props": { "className": "bg-orange-100 p-3 rounded" }, "children": [{ "type": "Text", "props": { "className": "font-bold text-orange-700" }, "children": ["Fair"] }, "580-669"] },
+                          { "type": "Box", "props": { "className": "bg-yellow-100 p-3 rounded" }, "children": [{ "type": "Text", "props": { "className": "font-bold text-yellow-700" }, "children": ["Good"] }, "670-739"] },
+                          { "type": "Box", "props": { "className": "bg-blue-100 p-3 rounded" }, "children": [{ "type": "Text", "props": { "className": "font-bold text-blue-700" }, "children": ["Very Good"] }, "740-799"] },
+                          { "type": "Box", "props": { "className": "bg-green-100 p-3 rounded" }, "children": [{ "type": "Text", "props": { "className": "font-bold text-green-700" }, "children": ["Excellent"] }, "800-850"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
+      /* ============================================================
+      * WHY CREDIT SCORES MATTER
+      * ============================================================ */
       {
-        id: "credit-score-ranges",
-        type: "comparison",
-        title: "Credit Score Ranges",
-        metadata: {
-          variant: "scoreRangeGrid",
-          ranges: [
-            {
-              label: "Poor",
-              range: "300–579",
-              bgColor: "bg-red-100",
-              textColor: "text-red-700",
-            },
-            {
-              label: "Fair",
-              range: "580–669",
-              bgColor: "bg-orange-100",
-              textColor: "text-orange-700",
-            },
-            {
-              label: "Good",
-              range: "670–739",
-              bgColor: "bg-yellow-100",
-              textColor: "text-yellow-700",
-            },
-            {
-              label: "Very Good",
-              range: "740–799",
-              bgColor: "bg-blue-100",
-              textColor: "text-blue-700",
-            },
-            {
-              label: "Excellent",
-              range: "800–850",
-              bgColor: "bg-green-100",
-              textColor: "text-green-700",
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "props": { "className": "flex items-center gap-2" },
+                "children": [
+                  { "type": "Icon", "props": { "name": "TrendingUp", "className": "h-5 w-5" } },
+                  "Why Your Credit Score Matters"
+                ]
+              }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 6 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Good Credit Score Gets You:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          "• Lower interest rates",
+                          "• Better credit card offers",
+                          "• Easier mortgage approval",
+                          "• Better mobile phone contracts",
+                          "• Easier car finance",
+                          "• Some rental agreements"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["❌ Poor Credit Score Means:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          "• Higher interest rates",
+                          "• Loan rejections",
+                          "• Larger deposits",
+                          "• Limited credit cards",
+                          "• Difficulty renting",
+                          "• More expensive insurance"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "Box",
+                "props": { "className": "mt-6 p-4 bg-primary/10 rounded-lg" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold mb-2" }, "children": ["💰 Real Impact Example:"] },
+                  { "type": "Text", "props": { "className": "text-sm" }, "children": ["On a £200,000 mortgage: 1.5% vs 4.5% = £3,000+ annual difference!"] }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      /* -------------------------------------------------------------
-       * 2. Why Credit Scores Matter  (Two Columns + Impact Box)
-       * ------------------------------------------------------------- */
+      /* ============================================================
+      * HOW CREDIT SCORES ARE CALCULATED
+      * ============================================================ */
       {
-        id: "why-credit-scores-matter",
-        type: "list",
-        title: "Why Your Credit Score Matters",
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "Good Credit Score Gets You:",
-              color: "green",
-              items: [
-                "Lower interest rates on loans",
-                "Better credit card offers",
-                "Easier mortgage approval",
-                "Better mobile phone contracts",
-                "Easier car finance",
-                "Some rental agreements",
-              ],
-            },
-            {
-              title: "Poor Credit Score Means:",
-              color: "red",
-              items: [
-                "Higher interest rates",
-                "Loan applications rejected",
-                "Larger deposits required",
-                "Limited credit card options",
-                "Difficulty renting properties",
-                "More expensive insurance",
-              ],
-            },
-          ],
-        },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["How Credit Scores Are Calculated"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "gap": 4 },
+                "children": [
+                  { "type": "FactorItem", "props": { "percent": "35%", "color": "blue", "title": "Payment History", "desc": "Do you pay bills on time?" } },
+                  { "type": "FactorItem", "props": { "percent": "30%", "color": "green", "title": "Credit Utilization", "desc": "How much credit you use vs available" } },
+                  { "type": "FactorItem", "props": { "percent": "15%", "color": "purple", "title": "Length of History", "desc": "How long accounts have existed" } },
+                  { "type": "FactorItem", "props": { "percent": "10%", "color": "orange", "title": "Credit Mix", "desc": "Loans, cards, etc." } },
+                  { "type": "FactorItem", "props": { "percent": "10%", "color": "red", "title": "New Credit", "desc": "Recent applications & accounts" } }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
+      /* ============================================================
+      * BUILDING CREDIT AS A STUDENT
+      * ============================================================ */
       {
-        id: "real-impact",
-        type: "explanation",
-        title: "💰 Real Impact Example",
-        content:
-          "On a £200,000 mortgage: Excellent credit (1.5% rate) vs Poor credit (4.5% rate) can be more than £3,000 difference per year in payments!",
-        metadata: {
-          variant: "info",
-        },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Building Credit as a Student"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Box",
+                "props": { "className": "bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["⚠️ Starting From Zero"] },
+                  { "type": "Text", "props": { "className": "text-sm" }, "children": ["Students usually have no credit history — this is normal!"] }
+                ]
+              },
+
+              {
+                "type": "Grid",
+                "props": { "columns": 2, "gap": 4 },
+                "children": [
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Smart Ways to Build Credit:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          "• Student credit card",
+                          "• Register to vote",
+                          "• Pay bills on time",
+                          "• Keep credit usage < 30%",
+                          "• Don’t close old accounts",
+                          "• Monitor score monthly"
+                        ]
+                      }
+                    ]
+                  },
+                  {
+                    "type": "Box",
+                    "children": [
+                      { "type": "Text", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["❌ Credit Score Killers:"] },
+                      {
+                        "type": "List",
+                        "children": [
+                          "• Missing payments",
+                          "• Maxing credit cards",
+                          "• Applying for lots of credit",
+                          "• Only minimum payments",
+                          "• Not checking for errors",
+                          "• Payday loans"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      /* -------------------------------------------------------------
-       * 3. How Credit Scores Are Calculated  (Percent List Cards)
-       * ------------------------------------------------------------- */
+      /* ============================================================
+      * FREE CREDIT SCORE CHECK
+      * ============================================================ */
       {
-        id: "score-calculation",
-        type: "list",
-        title: "How Credit Scores Are Calculated",
-        metadata: {
-          variant: "percentListCards",
-          items: [
-            {
-              percent: "35%",
-              title: "Payment History",
-              description: "Do you pay bills on time?",
-              bgColor: "bg-blue-100 text-blue-700",
-            },
-            {
-              percent: "30%",
-              title: "Credit Utilization",
-              description: "How much of your available credit do you use?",
-              bgColor: "bg-green-100 text-green-700",
-            },
-            {
-              percent: "15%",
-              title: "Length of Credit History",
-              description: "How long have you had credit accounts?",
-              bgColor: "bg-purple-100 text-purple-700",
-            },
-            {
-              percent: "10%",
-              title: "Credit Mix",
-              description: "Variety of credit types (cards, loans, etc.)",
-              bgColor: "bg-orange-100 text-orange-700",
-            },
-            {
-              percent: "10%",
-              title: "New Credit",
-              description: "Recent credit applications and new accounts",
-              bgColor: "bg-red-100 text-red-700",
-            },
-          ],
-        },
-      },
-
-      /* -------------------------------------------------------------
-       * 4. Building Credit as a Student (Warning + Columns)
-       * ------------------------------------------------------------- */
-      {
-        id: "build-credit-vs-killers",
-        type: "list",
-        title: "Building Credit as a Student",
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "Smart Ways to Build Credit",
-              color: "green",
-              items: [
-                "Get a student credit card",
-                "Register to vote",
-                "Pay all bills on time",
-                "Keep credit utilization under 30%",
-                "Don't close old accounts",
-                "Check your score regularly (free)",
-              ],
-            },
-            {
-              title: "Credit Score Killers",
-              color: "red",
-              items: [
-                "Missing payments",
-                "Maxing out credit cards",
-                "Applying for lots of credit quickly",
-                "Only making minimum payments",
-                "Not checking for errors",
-                "Using payday loans",
-              ],
-            },
-          ],
-        },
-      },
-      
-      {
-        id: "starting-from-zero",
-        type: "explanation",
-        title: "⚠️ Starting From Zero",
-        content: 
-          "Most students have no credit history. This means 'no score' rather than a bad score — and that’s completely normal.",
-        metadata: {
-          variant: "info",
-        },
-      },
-
-      /* -------------------------------------------------------------
-       * 5. Free Credit Score Checks (Agency Grid)
-       * ------------------------------------------------------------- */
-      {
-        id: "free-checks",
-        type: "list",
-        title: "Check Your Credit Score (FREE!)",
-        metadata: {
-          variant: "agencyGrid",
-          agencies: [
-            {
-              name: "Experian",
-              description: "Most comprehensive, used by most lenders",
-              bgColor: "bg-blue-50",
-              textColor: "text-blue-700",
-            },
-            {
-              name: "Equifax",
-              description: "Great for spotting errors",
-              bgColor: "bg-green-50",
-              textColor: "text-green-700",
-            },
-            {
-              name: "TransUnion",
-              description: "Growing in popularity, good insights",
-              bgColor: "bg-purple-50",
-              textColor: "text-purple-700",
-            },
-          ],
-          tips: [
-            "Check all three agencies (they can differ!)",
-            "Checking your own score DOES NOT affect it",
-            "Dispute mistakes as soon as you find them",
-            "Monitor changes monthly",
-          ],
-        },
-      },
+        "type": "Card",
+        "children": [
+          { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Check Your Credit Score (FREE!)"] }] },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "Grid",
+                "props": { "columns": 3, "gap": 4 },
+                "children": [
+                  { "type": "AgencyCard", "props": { "color": "blue", "title": "Experian", "desc": "Most widely used" } },
+                  { "type": "AgencyCard", "props": { "color": "green", "title": "Equifax", "desc": "Great for error-checking" } },
+                  { "type": "AgencyCard", "props": { "color": "purple", "title": "TransUnion", "desc": "Good insights" } }
+                ]
+              },
+              {
+                "type": "Box",
+                "props": { "className": "mt-4 p-4 bg-accent rounded-lg" },
+                "children": [
+                  { "type": "Text", "props": { "className": "font-semibold mb-2" }, "children": ["💡 Pro Tips:"] },
+                  {
+                    "type": "List",
+                    "children": [
+                      "• Check all three agencies",
+                      "• Checking your score does NOT hurt it",
+                      "• Dispute errors",
+                      "• Track changes monthly"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ],
 
-    /* =============================== QUIZ =============================== */
-    quiz: {
-      passingScore: 1,
-      questions: [
+    /* ============================================================
+    * QUIZ
+    * ============================================================ */
+    "quiz": {
+      "passingScore": 1,
+      "questions": [
         {
-          question: "What is the typical UK credit score range?",
-          options: ["300-850", "0-1000", "1-10", "0-999"],
-          correctAnswer: 0,
-          explanation:
-            "Credit scores usually range from 300 to 850. Higher scores indicate better creditworthiness.",
-        },
-      ],
+          "question": "What is the range for credit scores in the UK?",
+          "options": ["300-850", "0-1000", "1-10", "0-999"],
+          "correctAnswer": 0,
+          "explanation": "Credit scores typically range from 300 (poor) to 850 (excellent)."
+        }
+      ]
     },
 
-    /* =========================== RELATED LESSONS =========================== */
-    relatedLessons: [
-      {
-        moduleId: "good-vs-bad-debt",
-        title: "Learn About Debt",
-        relationship: "next-step",
-      },
-      {
-        moduleId: "credit-cards-safely",
-        title: "Using Credit Cards Safely",
-        relationship: "related",
-      },
-    ],
+    /* ============================================================
+    * RELATED LESSONS
+    * ============================================================ */
+    "relatedLessons": [
+      { "moduleId": "good-vs-bad-debt", "title": "Learn About Debt", "relationship": "next-step" },
+      { "moduleId": "credit-cards-safely", "title": "Using Credit Cards Safely", "relationship": "next-step" }
+    ]
+  }
 
-    points: 100,
-    difficultyLevel: "beginner",
-    timeEstimate: 3,
-
-    order: 4, // after budgeting, saving, banking
-    isActive: true,
-    createdBy: "system",
-  },
 ];
 
 

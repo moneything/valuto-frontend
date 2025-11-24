@@ -18,7 +18,7 @@ import {
   useLearningProgress,
 } from "@/lib/hooks/useLearningModules";
 
-import SectionRenderer from "@/components/learning/sections/SectionRenderer";
+import { JsonRenderer } from "@/components/JsonRenderer";
 import * as LucideIcons from "lucide-react";
 import LessonPageLayout from "@/components/learning/LessonPageLayout";
 
@@ -182,11 +182,27 @@ export default function LearningModulePage({
       {step === "intro" && (
         <>
           {/* Content sections */}
-          <div className="grid gap-6">
-            {module.contentSections?.map((section: any) => (
-              <SectionRenderer key={section.id} section={section} />
-            ))}
-          </div>
+          {module.uiTree && (
+            <JsonRenderer
+              tree={module.uiTree}
+              onAction={(action) => {
+                // Use the action system for quiz + navigation + anything else
+                if (action.type === "navigate") {
+                  router.push(action.payload);
+                }
+
+                if (action.type === "quiz-start") {
+                  setStep("quiz");
+                }
+
+                if (action.type === "quiz-answer") {
+                  // your quiz logic
+                  console.log("User selected answer:", action.payload);
+                }
+              }}
+            />
+          )}
+
 
 
           {/* Quiz CTA */}

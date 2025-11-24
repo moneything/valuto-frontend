@@ -24,32 +24,11 @@ const learningModuleSchema = new mongoose.Schema(
     },
 
     // Core lesson content (multiple cards)
-    contentSections: [
-      {
-        id: String, // unique for card
-        type: {
-          type: String,
-          enum: [
-            "header",
-            "explanation",
-            "example",
-            "warning",
-            "tip",
-            "comparison",
-            "list",
-            "steps",
-            "payslip",
-            "miniInfoGrid",
-            "payTypesStack",
-          ],
-        },
-        title: String,
-        content: String,
-        icon: String,
-        colorScheme: String,
-        metadata: mongoose.Schema.Types.Mixed,
-      },
-    ],
+    uiTree: {
+      type: Array,   // Array of JSON nodes
+      default: [],
+    },
+
 
     // Mini quiz
     quiz: {

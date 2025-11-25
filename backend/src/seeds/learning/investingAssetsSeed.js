@@ -59,7 +59,7 @@ const investingAssetsModules = [
               },
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Simple Example:"] },
                   {
@@ -425,7 +425,7 @@ const investingAssetsModules = [
               /* EXAMPLE */
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Example:"] },
                   {
@@ -636,7 +636,7 @@ const investingAssetsModules = [
 
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg border-l-4 border-primary" },
+                props: { className: "bg-primary/10 p-4 rounded-lg border-l-4 border-primary" },
                 children: [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Student Tip:"] },
                   {
@@ -937,7 +937,7 @@ const investingAssetsModules = [
               /* BITCOIN VOLATILITY EXAMPLE */
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -1341,7 +1341,7 @@ const investingAssetsModules = [
                 type: "div",
                 props: {
                   className:
-                    "bg-accent/50 p-4 rounded-lg border-l-4 border-primary"
+                    "bg-primary/10 p-4 rounded-lg border-l-4 border-primary"
                 },
                 children: [
                   {
@@ -1431,7 +1431,7 @@ const investingAssetsModules = [
               {
                 type: "div",
                 props: {
-                  className: "bg-accent/50 p-4 rounded-lg"
+                  className: "bg-primary/10 p-4 rounded-lg"
                 },
                 children: [
                   {
@@ -1723,7 +1723,7 @@ const investingAssetsModules = [
               {
                 type: "div",
                 props: {
-                  className: "bg-accent/50 p-4 rounded-lg border-l-4 border-primary"
+                  className: "bg-primary/10 p-4 rounded-lg border-l-4 border-primary"
                 },
                 children: [
                   {
@@ -1926,7 +1926,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-accent/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Global stocks fund"] },
@@ -1938,7 +1938,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-accent/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Government bonds fund"] },
@@ -1950,7 +1950,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-accent/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Property/REIT fund"] },
@@ -1997,7 +1997,7 @@ const investingAssetsModules = [
     order: 4,
     createdBy: "system"
   }
-  
+
 ];
 
 // =====================================================

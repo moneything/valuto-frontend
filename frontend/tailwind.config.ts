@@ -17,6 +17,12 @@ const config: Config = {
     "bg-yellow-500",
     "bg-teal-500",
     "bg-pink-500",
+    "bg-gradient-to-r",
+    "from-green-50",
+    "to-blue-50",
+    "from-red-50",
+    "via-yellow-50",
+    "to-green-50",
   ],
   theme: {
     extend: {

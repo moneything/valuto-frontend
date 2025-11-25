@@ -15,205 +15,405 @@ const LearningModule = require("../../models/LearningModule");
 const spendingWiselyModules = [
   // How to Spot Good Value
   {
-    topic: "how-to-spot-good-value",
     title: "How to Spot Good Value",
-    description: "Learn how to use unit pricing, comparisons, and smart strategies to get the most value for your money.",
+    description: "Learn how to compare prices, avoid value traps, and shop smarter using unit pricing, own-label comparisons, and smart tools.",
     categoryId: "spending-wisely",
+    topic: "how-to-spot-good-value",
+    createdBy: "system",
 
     visual: {
       icon: "ShoppingCart",
       iconColor: "bg-orange-500",
-      badge: "Spending Wisely",
+      badge: "Beginner Friendly",
       readTime: 2
     },
 
     difficultyLevel: "beginner",
-    points: 70,
-    timeEstimate: 2,
+    timeEstimate: 5,
+    points: 120,
     order: 1,
-    isActive: true,
-    createdBy: "system",
 
-    /* ---------------------------------------------------------
-    * CONTENT SECTIONS
-    * --------------------------------------------------------- */
-    contentSections: [
-      /* ------------------------- SECTION TITLE ------------------------- */
+    uiTree: [
       {
-        id: "unit-pricing-title",
-        type: "section-title",
-        icon: "Calculator",
-        title: "Unit Pricing: Your Secret Weapon"
-      },
+        "type": "div",
+        "props": { "className": "grid gap-6" },
+        "children": [
+          /* ------------------------------------
+            CARD 1 — Unit Pricing
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [
+                  {
+                    "type": "CardTitle",
+                    "props": { "className": "flex items-center gap-2" },
+                    "children": [
+                      { "type": "Calculator", "props": { "className": "h-5 w-5" } },
+                      "Unit Pricing: Your Secret Weapon"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "p",
+                        "props": { "className": "text-lg" },
+                        "children": [
+                          "Unit pricing tells you the cost per gram, liter, or item. It's the easiest way to compare value between different brands and sizes."
+                        ]
+                      },
 
-      /* --------------------------- EXPLANATION -------------------------- */
-      {
-        id: "unit-pricing-explanation",
-        type: "explanation",
-        content:
-          "Unit pricing tells you the cost per gram, liter, or item. It's the easiest and most accurate way to compare value between different product sizes and brands."
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-primary/10 p-6 rounded-lg" },
+                        "children": [
+                          {
+                            "type": "h3",
+                            "props": { "className": "text-xl font-bold mb-3" },
+                            "children": ["Real Example: Pasta"]
+                          },
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-2 gap-4" },
+                            "children": [
+                              {
+                                "type": "div",
+                                "props": { "className": "bg-white p-4 rounded border" },
+                                "children": [
+                                  {
+                                    "type": "h4",
+                                    "props": { "className": "font-semibold text-blue-600" },
+                                    "children": ["Brand A Pasta"]
+                                  },
+                                  "500g for £2.50",
+                                  {
+                                    "type": "p",
+                                    "props": { "className": "text-sm text-muted-foreground" },
+                                    "children": ["Unit price: £5.00 per kg"]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "div",
+                                "props": { "className": "bg-white p-4 rounded border border-green-500" },
+                                "children": [
+                                  {
+                                    "type": "h4",
+                                    "props": { "className": "font-semibold text-green-600" },
+                                    "children": ["Brand B Pasta"]
+                                  },
+                                  "750g for £3.00",
+                                  {
+                                    "type": "p",
+                                    "props": { "className": "text-sm text-green-600 font-medium" },
+                                    "children": ["Unit price: £4.00 per kg ✓ BETTER VALUE"]
+                                  }
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "props": { "className": "mt-3 text-sm" },
+                            "children": ["Brand B is 20% cheaper per kg, even though it costs more upfront!"]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      /* ----------------------------- EXAMPLE ---------------------------- */
-      {
-        id: "unit-pricing-example",
-        type: "example",
-        title: "Real Example: Pasta",
-        content:
-          "Brand A: 500g for £2.50 → £5.00/kg\n" +
-          "Brand B: 750g for £3.00 → £4.00/kg ✓ Better value\n\n" +
-          "Brand B is 20% cheaper per kg, even though it costs slightly more upfront."
-      },
+          /* ------------------------------------
+            CARD 2 — Brands vs Own Label
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Brands vs Own-Label: The Truth"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-6" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "h4",
+                                "props": { "className": "font-semibold text-blue-600 mb-3" },
+                                "children": ["🏷️ Branded Products"]
+                              },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• Premium pricing for marketing",
+                                  "• Often same ingredients as own-label",
+                                  "• Better packaging and presentation",
+                                  "• Sometimes genuinely better quality",
+                                  "• Strong brand reputation"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "h4",
+                                "props": { "className": "font-semibold text-green-600 mb-3" },
+                                "children": ["🏪 Own-Label Products"]
+                              },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• 30–50% cheaper on average",
+                                  "• Often made by same manufacturers",
+                                  "• Basic but functional packaging",
+                                  "• Quality controlled by supermarket",
+                                  "• Great for everyday items"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-accent p-4 rounded-lg" },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": { "className": "font-semibold mb-2" },
+                            "children": ["💡 Smart Shopping Strategy:"]
+                          },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Try own-label first for basics (pasta, rice, cleaning products)",
+                              "• Stick to brands for items where quality matters to you",
+                              "• Check if products are made by the same manufacturer",
+                              "• Look for supermarket premium ranges for middle ground"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      /* ------------------------- BRANDS VS OWN LABEL -------------------- */
-      {
-        id: "brands-vs-own",
-        type: "section-title",
-        title: "Brands vs Own-Label"
-      },
-      {
-        id: "brands-vs-own-comparison",
-        type: "comparison",
-        metadata: {
-          leftTitle: "Branded Products",
-          leftColor: "blue",
-          leftPoints: [
-            "Premium pricing due to marketing",
-            "Often same ingredients as own-label",
-            "Better packaging and reputation",
-            "Sometimes higher quality"
-          ],
-          rightTitle: "Own-Label Products",
-          rightColor: "green",
-          rightPoints: [
-            "30–50% cheaper on average",
-            "Often made by same manufacturers",
-            "Basic but functional packaging",
-            "Quality controlled by supermarket"
-          ]
-        }
-      },
-      {
-        id: "smart-shopping-tip",
-        type: "tip",
-        title: "Smart Shopping Strategy",
-        content:
-          "Try own-label first for everyday basics. Stick to brands only for items where quality truly matters to you. Check whether own-label and branded products come from the same manufacturer."
-      },
+          /* ------------------------------------
+            CARD 3 — Comparison Shopping
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Smart Comparison Shopping"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": { "className": "font-semibold text-blue-600 mb-2" },
+                            "children": ["📱 Use Apps & Websites"]
+                          },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Honey: Finds discount codes",
+                              "• PriceGrabber: Compares prices",
+                              "• ShopSavvy: Barcode scanning",
+                              "• Store apps: Tesco, ASDA, Sainsbury’s promotions"
+                            ]
+                          }
+                        ]
+                      },
 
-      /* ------------------------- Comparison Shopping -------------------- */
-      {
-        id: "comparison-title",
-        type: "section-title",
-        title: "Smart Comparison Shopping"
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": { "className": "font-semibold text-green-600 mb-2" },
+                            "children": ["🕒 Timing is Everything"]
+                          },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Yellow stickers: End-of-day reductions",
+                              "• Seasonal sales: Christmas, Black Friday",
+                              "• Weekly cycles: New deals Wed/Thu",
+                              "• End of month: Furniture & car deals"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "apps-list",
-        type: "list",
-        title: "Useful Apps & Websites",
-        items: [
-          "Honey — finds discount codes automatically",
-          "PriceGrabber — compares prices across stores",
-          "ShopSavvy — barcode scanner for price checks",
-          "Supermarket apps — Tesco, ASDA, Sainsbury’s"
-        ]
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": { "className": "font-semibold text-purple-600 mb-2" },
+                            "children": ["🔍 Hidden Costs to Watch"]
+                          },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Delivery fees",
+                              "• Membership costs (Amazon Prime, Costco)",
+                              "• Overpriced insurance/warranties",
+                              "• Installation fees"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      {
-        id: "timing-list",
-        type: "list",
-        title: "Timing Tips",
-        items: [
-          "Yellow sticker reductions near closing time",
-          "Seasonal sales — Christmas, Black Friday",
-          "Weekly deal cycles — often start midweek",
-          "End-of-month deals for furniture & cars"
-        ]
-      },
+          /* ------------------------------------
+            CARD 4 — Value Traps
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Avoid These \"Value\" Traps"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-red-50 border-l-4 border-red-400 p-4" },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": { "className": "font-semibold text-red-700 mb-2" },
+                            "children": ["❌ False Economy Examples:"]
+                          },
+                          {
+                            "type": "ul",
+                            "props": { "className": "space-y-2 text-sm" },
+                            "children": [
+                              "• Cheap shoes that fall apart",
+                              "• Minimum-spend for 'free' delivery",
+                              "• Bulk buying food that goes off",
+                              "• Hidden fees in phone contracts",
+                              "• Store credit cards with high APR"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "hidden-costs-list",
-        type: "list",
-        title: "Hidden Costs to Watch",
-        items: [
-          "Delivery fees",
-          "Membership costs (Prime, Costco)",
-          "Overpriced extended warranties",
-          "Installation or setup fees"
-        ]
-      },
-
-      /* ------------------------- Value Traps ---------------------------- */
-      {
-        id: "value-traps-title",
-        type: "section-title",
-        title: "Avoid Value Traps"
-      },
-
-      {
-        id: "false-economy-warning",
-        type: "warning",
-        title: "False Economy Examples",
-        content:
-          "Buying low-quality items that break quickly, spending extra for 'free delivery', overbuying perishables, choosing misleadingly cheap phone contracts, or getting sucked into store card discounts with high interest rates."
-      },
-
-      {
-        id: "true-value-list",
-        type: "list",
-        title: "True Value Indicators",
-        items: [
-          "Strong customer reviews",
-          "Included warranty or guarantee",
-          "Low cost per use",
-          "Durable materials",
-          "Multi-purpose functionality"
-        ]
-      },
-
-      {
-        id: "red-flags-list",
-        type: "list",
-        title: "Major Red Flags",
-        items: [
-          "Pressure-selling tactics",
-          "No return policy",
-          "Prices that seem too good to be true",
-          "Hidden fees or unclear terms",
-          "Pushy sales reps"
-        ]
-      },
-
-      /* ------------------------- Next Steps (Action Plan) ---------------------------- */
-      {
-        id: "next-steps-title",
-        type: "section-title",
-        title: "Become a Smart Shopper"
-      },
-
-      {
-        id: "action-plan-steps",
-        type: "steps",
-        steps: [
-          { title: "Download comparison apps", description: "" },
-          { title: "Try own-label alternatives", description: "" },
-          { title: "Check unit prices for weekly essentials", description: "" },
-          { title: "Set price alerts for big purchases", description: "" },
-          { title: "Track your savings over a month", description: "" }
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "h4",
+                                "props": { "className": "font-semibold text-green-600 mb-2" },
+                                "children": ["✅ True Value Indicators"]
+                              },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-1 text-sm" },
+                                "children": [
+                                  "• Good customer reviews",
+                                  "• Warranty included",
+                                  "• Low cost per use",
+                                  "• Multi-purpose items",
+                                  "• Durable materials"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "h4",
+                                "props": { "className": "font-semibold text-orange-600 mb-2" },
+                                "children": ["⚠️ Red Flags"]
+                              },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-1 text-sm" },
+                                "children": [
+                                  "• Pressure tactics",
+                                  "• No return policy",
+                                  "• Prices too good to be true",
+                                  "• Hidden fees",
+                                  "• Pushy sales behaviour"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],
 
-    /* ---------------------------------------------------------
-    * QUIZ
-    * --------------------------------------------------------- */
+    /* ------------------------------------
+      QUIZ (converted from your Mini Quiz)
+    ------------------------------------ */
     quiz: {
       passingScore: 1,
       questions: [
         {
-          question:
-            "What's the most accurate way to compare value between products of different sizes?",
+          question: "What’s the best way to compare value between different sized products?",
           options: [
             "Unit pricing",
             "Total price",
@@ -221,15 +421,14 @@ const spendingWiselyModules = [
             "Package size"
           ],
           correctAnswer: 0,
-          explanation:
-            "Unit pricing shows the cost per gram/liter/item, making it the best comparison method."
+          explanation: "Unit pricing tells you cost per gram/litre/item and is the most accurate comparison method."
         }
       ]
     },
 
-    /* ---------------------------------------------------------
-    * RELATED LESSONS
-    * --------------------------------------------------------- */
+    /* ------------------------------------
+      RELATED LESSONS
+    ------------------------------------ */
     relatedLessons: [
       {
         moduleId: "avoiding-scams",
@@ -246,256 +445,411 @@ const spendingWiselyModules = [
 
   // Avoiding Scams & Fraud
   {
-    topic: "avoiding-scams",
     title: "Avoiding Scams & Fraud",
-    description: "Learn how to identify scams, spot red flags, protect yourself online, and take action if you're targeted.",
+    description: "Learn how to recognise online scams, protect yourself against fraud, and take action if you’ve been targeted.",
     categoryId: "spending-wisely",
+    topic: "avoiding-scams",
+    createdBy: "system",
 
     visual: {
       icon: "Shield",
       iconColor: "bg-orange-500",
-      badge: "Spending Wisely",
+      badge: "Beginner Friendly",
       readTime: 3
     },
 
     difficultyLevel: "beginner",
-    points: 90,
-    timeEstimate: 3,
+    timeEstimate: 7,
+    points: 150,
     order: 2,
-    isActive: true,
-    createdBy: "system",
 
-    /* ---------------------------------------------------------
-    * CONTENT SECTIONS
-    * --------------------------------------------------------- */
-    contentSections: [
-      /* ---------------------- Title: Common Scams ---------------------- */
+    uiTree: [
       {
-        id: "common-scams-title",
-        type: "section-title",
-        icon: "AlertTriangle",
-        title: "Common Online Scams Targeting Students"
-      },
+        "type": "div",
+        "props": { "className": "grid gap-6" },
+        "children": [
 
-      /* ---------------------- List: Common Scam Types ------------------ */
-      {
-        id: "common-scams-list",
-        type: "list",
-        title: "High-Risk Scams",
-        items: [
-          "Student loan scams promising instant forgiveness for a fee",
-          "Fake job offers with guaranteed high pay and no experience",
-          "Phone and text scams pretending to be banks",
-          "Fake online shopping websites offering unrealistic prices"
-        ]
-      },
+          /* ------------------------------------
+              CARD 1 — Common Online Scams
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [
+                  {
+                    "type": "CardTitle",
+                    "props": { "className": "flex items-center gap-2" },
+                    "children": [
+                      { "type": "AlertTriangle", "props": { "className": "h-5 w-5" } },
+                      "Common Online Scams Targeting Students"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🎓 Student Loan Scams"] },
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Get your student loan forgiven instantly for just £99!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Reality: Legitimate loan forgiveness is free and never instant."] }
+                        ]
+                      },
 
-      /* -------------------- Explanation per Scam ----------------------- */
-      {
-        id: "scam-explanations",
-        type: "explanation",
-        content:
-          "Scammers often target students with urgent messages, unrealistic promises, or requests for upfront payments. If something feels off, trust your instincts and pause before acting."
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["💼 Fake Job Offers"] },
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Earn £500/week from home, no experience required!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Red flags: Upfront fees, vague roles, guaranteed high income."] }
+                        ]
+                      },
 
-      /* ---------------------- Spotting Scams --------------------------- */
-      {
-        id: "spotting-title",
-        type: "section-title",
-        title: "How to Spot a Scam"
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["📱 Phone/Text Scams"] },
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Your bank account is compromised — click here now!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Truth: Banks never ask for passwords via text."] }
+                        ]
+                      },
 
-      {
-        id: "red-flags",
-        type: "list",
-        title: "Major Red Flags",
-        items: [
-          "Requests for money or personal information upfront",
-          "Guaranteed returns or instant success",
-          "Spelling mistakes or unprofessional design",
-          "No physical address or legitimate contact info",
-          "Unusual payment methods (gift cards, crypto)",
-          "Pressure to 'act now' or secrecy"
-        ]
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🛒 Fake Shopping Sites"] },
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"iPhone 15 for £200 — limited time!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Warning: If the price seems too good to be true, it probably is."] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      {
-        id: "legit-signs",
-        type: "list",
-        title: "What Legitimate Companies Do",
-        items: [
-          "Provide clear contact information and physical address",
-          "Use secure websites (HTTPS)",
-          "Make realistic promises",
-          "Provide accessible reviews and transparent policies",
-          "Use secure payment methods and no pressure tactics"
-        ]
-      },
 
-      /* ---------------------- Social Media Scams ----------------------- */
-      {
-        id: "social-title",
-        type: "section-title",
-        title: "Social Media & Influencer Scams"
-      },
+          /* ------------------------------------
+              CARD 2 — How to Spot a Scam
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["How to Spot a Scam"] }] },
 
-      {
-        id: "social-scam-explanation",
-        type: "explanation",
-        content:
-          "Scammers often use Instagram, TikTok, and influencers to push fake investment schemes, pyramid schemes, or overpriced 'courses' promising fast income."
-      },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid md:grid-cols-2 gap-6" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["🚨 Major Red Flags:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "space-y-2 text-sm" },
+                            "children": [
+                              "• Requests money or personal info upfront",
+                              "• Guaranteed returns or instant results",
+                              "• Creates false urgency",
+                              "• Poor grammar or unprofessional design",
+                              "• No address or contact details",
+                              "• Unusual payment methods (crypto, gift cards)",
+                              "• Pressure to act quickly"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "social-scam-list",
-        type: "list",
-        title: "Common Social Media Scams",
-        items: [
-          "Fake crypto investment opportunities",
-          "‘Get rich quick’ online courses",
-          "Pyramid schemes disguised as business opportunities",
-          "Fake designer goods sold at impossible prices"
-        ]
-      },
+                      {
+                        "type": "div",
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Legitimate Signs:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "space-y-2 text-sm" },
+                            "children": [
+                              "• Clear contact information",
+                              "• Secure website with https://",
+                              "• Realistic claims",
+                              "• Verified reviews",
+                              "• Secure payment options",
+                              "• Transparent T&Cs",
+                              "• No pressure tactics"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      {
-        id: "influencer-check",
-        type: "list",
-        title: "How to Check Influencers",
-        items: [
-          "Look for #ad or #sponsored labels",
-          "Check if they actually use the product",
-          "Avoid those who promote too many unrelated products",
-          "Look for real engagement, not just follower numbers"
-        ]
-      },
 
-      {
-        id: "research-before-buying",
-        type: "list",
-        title: "Do Your Research Before Buying",
-        items: [
-          "Search the company name with 'scam' or 'review'",
-          "Check Trustpilot or Google Reviews",
-          "Look for complaints on Reddit or student forums",
-          "Verify business registration details"
-        ]
-      },
+          /* ------------------------------------
+              CARD 3 — Social Media Scams
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Social Media & Influencer Scams"] }] },
 
-      /* ---------------------- Protection Strategies -------------------- */
-      {
-        id: "protection-title",
-        type: "section-title",
-        title: "Protect Yourself: Smart Strategies"
-      },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-yellow-50 border-l-4 border-yellow-400 p-4" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["⚠️ Instagram/TikTok Scams"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "space-y-1 text-sm" },
+                            "children": [
+                              "• Fake crypto investment schemes",
+                              "• Worthless 'get rich' courses",
+                              "• Pyramid schemes disguised as businesses",
+                              "• Counterfeit designer goods"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "online-safety",
-        type: "list",
-        title: "Online Shopping Safety",
-        items: [
-          "Only shop on secure websites (look for HTTPS)",
-          "Use credit cards — better fraud protection",
-          "Avoid saving payment details on unknown sites",
-          "Check return policies before buying",
-          "Use PayPal or Apple Pay where possible"
-        ]
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-blue-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["📸 How to Check Influencers:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• Look for #ad/#sponsored tags",
+                                  "• Verify they use the product",
+                                  "• Watch out for too many random promotions",
+                                  "• Check engagement, not just followers"
+                                ]
+                              }
+                            ]
+                          },
 
-      {
-        id: "email-phone-safety",
-        type: "list",
-        title: "Email & Phone Safety",
-        items: [
-          "Never click suspicious links",
-          "Banks will never ask for passwords via text",
-          "Always call the company directly if unsure",
-          "Ignore calls from unknown numbers",
-          "Be cautious of urgent or threatening messages"
-        ]
-      },
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-purple-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-purple-700 mb-2" }, "children": ["🔍 Research Before Buying:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• Search company + 'scam'",
+                                  "• Check Trustpilot",
+                                  "• Read Reddit discussions",
+                                  "• Verify business registration"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      {
-        id: "financial-protection",
-        type: "list",
-        title: "Financial Protection",
-        items: [
-          "Enable alerts for all bank transactions",
-          "Check your bank statements weekly",
-          "Never give your full card details over phone",
-          "Use different passwords for financial accounts",
-          "Enable two-factor authentication everywhere possible"
-        ]
-      },
 
-      /* ---------------------- What to do if scammed -------------------- */
-      {
-        id: "scammed-title",
-        type: "section-title",
-        title: "If You've Been Scammed: Act Fast!"
-      },
+          /* ------------------------------------
+              CARD 4 — Protection Strategies
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Protect Yourself: Smart Strategies"] }] },
 
-      {
-        id: "immediate-actions",
-        type: "steps",
-        steps: [
-          { title: "Contact your bank immediately", description: "" },
-          { title: "Report to Action Fraud (0300 123 2040)", description: "" },
-          { title: "Change passwords to affected accounts", description: "" },
-          { title: "Take screenshots and gather evidence", description: "" },
-          { title: "Report the scammer to the platform", description: "" }
-        ]
-      },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["🛡️ Online Shopping Safety"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Shop only on secure sites (https://)",
+                              "• Prefer credit cards for protection",
+                              "• Avoid saving card details",
+                              "• Know the return policy",
+                              "• Use PayPal or Apple Pay when possible"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "key-numbers",
-        type: "list",
-        title: "Important Contacts",
-        items: [
-          "Action Fraud: 0300 123 2040",
-          "Citizens Advice: 0808 223 1133",
-          "Financial Ombudsman: 0300 123 9123",
-          "Your bank’s fraud hotline"
-        ]
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["📧 Email & Phone Safety"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Never click suspicious links",
+                              "• Banks never ask for passwords",
+                              "• Call companies directly",
+                              "• Ignore unknown callers",
+                              "• Avoid messages that create urgency"
+                            ]
+                          }
+                        ]
+                      },
 
-      {
-        id: "prevention-next-time",
-        type: "tip",
-        title: "Avoid Future Scams",
-        content:
-          "Trust your instincts. Research before buying, avoid rushed decisions, and stay updated on new scam techniques."
-      },
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-purple-600 mb-2" }, "children": ["💳 Financial Protection"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Enable account alerts",
+                              "• Check statements weekly",
+                              "• Never share full card details",
+                              "• Use different passwords",
+                              "• Enable two-factor authentication"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
 
-      /* ---------------------- Security Checklist ----------------------- */
-      {
-        id: "checklist-title",
-        type: "section-title",
-        title: "Your Security Checklist"
-      },
 
-      {
-        id: "security-checklist",
-        type: "list",
-        title: "Do These Regularly",
-        items: [
-          "Enable fraud alerts on all bank accounts",
-          "Use two-factor authentication everywhere",
-          "Use a separate email for online shopping",
-          "Keep learning about scam trends",
-          "Share scam awareness with friends & family"
+          /* ------------------------------------
+              CARD 5 — What to Do if Scammed
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Been Scammed? Act Fast!"] }] },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-red-50 p-4 rounded-lg mb-4" },
+                    "children": [
+                      { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🚨 Immediate Actions (First 24 Hours):"] },
+                      {
+                        "type": "ol",
+                        "props": { "className": "space-y-1 text-sm list-decimal list-inside" },
+                        "children": [
+                          "Contact your bank immediately",
+                          "Report to Action Fraud (0300 123 2040)",
+                          "Change compromised passwords",
+                          "Take screenshots of evidence",
+                          "Report scammer on the platform"
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    "type": "div",
+                    "props": { "className": "grid md:grid-cols-2 gap-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["📞 Key Numbers:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Action Fraud: 0300 123 2040",
+                              "• Citizens Advice: 0808 223 1133",
+                              "• Financial Ombudsman: 0300 123 9123",
+                              "• Your bank’s fraud line"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["💡 Prevention for Next Time:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Trust your instincts",
+                              "• Research before purchases",
+                              "• Never rush decisions",
+                              "• Stay updated on scam trends"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       }
     ],
 
-    /* ---------------------------------------------------------
-    * QUIZ
-    * --------------------------------------------------------- */
+    /* ------------------------------------
+      QUIZ (converted from your React quiz)
+    ------------------------------------ */
     quiz: {
       passingScore: 1,
       questions: [
         {
-          question: "What's the biggest red flag when shopping online?",
+          question: "What’s the biggest red flag when shopping online?",
           options: [
             "No contact information",
             "Prices too good to be true",
@@ -503,319 +857,509 @@ const spendingWiselyModules = [
             "Only accepts cash"
           ],
           correctAnswer: 1,
-          explanation:
-            "If prices seem too good to be true, they usually are — this is the strongest scam indicator."
+          explanation: "Prices that are too good to be true are the strongest indicator of a scam."
         }
       ]
     },
 
-    /* ---------------------------------------------------------
-    * RELATED LESSONS
-    * --------------------------------------------------------- */
+    /* ------------------------------------
+      RELATED LESSONS
+    ------------------------------------ */
     relatedLessons: [
       {
         moduleId: "good-value",
         title: "How to Spot Good Value",
-        relationship: "next-step"
+        relationship: "related"
       },
       {
         moduleId: "credit-cards-safely",
         title: "Using Credit Cards Safely",
-        relationship: "related"
+        relationship: "next-step"
       }
     ]
   },
   
   // Using Buy Now Pay Later & Credit Cards Safely
   {
-    topic: "credit-cards-safely",
     title: "Using Buy Now Pay Later & Credit Cards Safely",
-    description: "Understand how Buy Now Pay Later services and credit cards work, their risks and benefits, and how to use them without falling into debt.",
+    description: "Learn how to use BNPL services and credit cards responsibly to avoid debt and protect your financial future.",
     categoryId: "spending-wisely",
+    topic: "credit-cards-safely",
+    createdBy: "system",
 
     visual: {
       icon: "CreditCard",
       iconColor: "bg-orange-500",
-      badge: "Spending Wisely",
+      badge: "Beginner Friendly",
       readTime: 3
     },
 
-    difficultyLevel: "intermediate",
-    points: 100,
-    timeEstimate: 3,
+    difficultyLevel: "beginner",
+    timeEstimate: 8,
+    points: 150,
     order: 3,
-    isActive: true,
-    createdBy: "system",
 
-    /* ---------------------------------------------------------
-    * CONTENT SECTIONS
-    * --------------------------------------------------------- */
-    contentSections: [
-      /* -------------------- BNPL Overview -------------------- */
+    uiTree: [
       {
-        id: "bnpl-title",
-        type: "section-title",
-        icon: "ShoppingBag",
-        title: "Buy Now Pay Later (BNPL): The Good and the Bad"
-      },
-      {
-        id: "bnpl-explanation",
-        type: "explanation",
-        content:
-          "Buy Now Pay Later (BNPL) services like Klarna, Clearpay, and PayPal Pay in 3 let you split purchases into instalments. They can be useful for managing short-term cash flow, but they are still a form of borrowing and can become dangerous if misused."
-      },
-      {
-        id: "bnpl-benefits",
-        type: "list",
-        title: "BNPL Benefits",
-        items: [
-          "No interest if you pay on time",
-          "Helps manage cash flow for planned purchases",
-          "Often easier to get than a credit card",
-          "Can help build a positive payment history",
-          "Some platforms include buyer protection"
-        ]
-      },
-      {
-        id: "bnpl-risks",
-        type: "list",
-        title: "BNPL Risks",
-        items: [
-          "Late fees can be expensive (e.g. £6–£12 per missed payment)",
-          "Missed payments can harm your credit score",
-          "Easy to overspend and lose track of multiple instalments",
-          "Using several BNPL apps at once can spiral into debt",
-          "Less legal protection than a traditional credit card"
-        ]
-      },
-      {
-        id: "bnpl-student-example",
-        type: "tip",
-        title: "Real Student Example",
-        content:
-          "A student bought £300 worth of clothes across 3 different BNPL apps. Because payments were spread out, they forgot about some and got hit with multiple late fees. What seemed like 'free money' became extra cost and stress during exams."
-      },
+        "type": "div",
+        "props": { "className": "grid gap-6" },
+        "children": [
 
-      /* -------------------- BNPL Best Practices -------------------- */
-      {
-        id: "bnpl-best-practices-title",
-        type: "section-title",
-        title: "BNPL Best Practices"
-      },
-      {
-        id: "bnpl-smart-usage",
-        type: "list",
-        title: "Smart BNPL Usage Tips",
-        items: [
-          "Only use BNPL for planned purchases you can genuinely afford",
-          "Set up automatic payments to avoid late fees",
-          "Stick to ONE BNPL service at a time",
-          "Track all upcoming instalments in your budget or calendar",
-          "Avoid using BNPL for groceries, bills, or everyday living costs"
-        ]
-      },
-      {
-        id: "bnpl-good-uses",
-        type: "list",
-        title: "When BNPL Can Make Sense",
-        items: [
-          "Spreading the cost of essential items (like a laptop for university)",
-          "When you have guaranteed income arriving soon",
-          "For items you were already planning and saving for",
-          "When the total instalments fit comfortably in your budget"
-        ]
-      },
-      {
-        id: "bnpl-avoid",
-        type: "list",
-        title: "When to Avoid BNPL",
-        items: [
-          "Impulse purchases you didn’t plan",
-          "Items you couldn't afford even with instalments",
-          "Everyday expenses like food, bills, or nights out",
-          "When you already have other BNPL payments due"
-        ]
-      },
-
-      /* -------------------- Credit Cards Basics -------------------- */
-      {
-        id: "credit-cards-title",
-        type: "section-title",
-        icon: "CreditCard",
-        title: "Credit Cards: Use Them Right"
-      },
-      {
-        id: "credit-cards-explanation",
-        type: "explanation",
-        content:
-          "Credit cards are powerful tools. They can give you strong consumer protection and help build your credit score, but they also come with high interest rates if you carry a balance."
-      },
-      {
-        id: "credit-card-benefits",
-        type: "list",
-        title: "Credit Card Benefits",
-        items: [
-          "Section 75 protection on purchases between £100 and £30,000",
-          "Better fraud protection than most debit cards",
-          "Helps build your credit history for future loans and mortgages",
-          "Potential cashback, points, or rewards",
-          "Extra purchase protection on big items"
-        ]
-      },
-      {
-        id: "credit-card-dangers",
-        type: "list",
-        title: "Credit Card Dangers",
-        items: [
-          "High interest rates (often 18–29% APR or more)",
-          "Minimum payment trap can keep you in debt for years",
-          "Easy to overspend because it doesn’t feel like cash",
-          "Missed payments can damage your credit score",
-          "Extra fees for late payments, cash withdrawals, or overseas use"
-        ]
-      },
-
-      /* -------------------- Golden Rules -------------------- */
-      {
-        id: "golden-rules-title",
-        type: "section-title",
-        title: "Credit Card Golden Rules"
-      },
-      {
-        id: "golden-rules-main",
-        type: "explanation",
-        content:
-          "The most important rule: if you can't afford to pay off your credit card in full each month, you can't really afford the purchase. Treat your card like a tool for convenience and protection, not a source of extra money."
-      },
-      {
-        id: "minimum-payment-trap",
-        type: "explanation",
-        content:
-          "Example: You owe £1,000 at 22% APR and only pay the minimum £25 per month. It could take over 4 years to clear the debt and cost hundreds of pounds in interest. Minimum payments are designed to benefit the lender, not you."
-      },
-      {
-        id: "smart-usage-list",
-        type: "list",
-        title: "Smart Credit Card Usage",
-        items: [
-          "Use your card for planned, budgeted expenses only",
-          "Set up a direct debit to pay the full balance every month",
-          "Track your spending in your banking app",
-          "Avoid cash withdrawals (they often have extra fees and interest)",
-          "Keep your balance under 30% of your credit limit for a healthy score"
-        ]
-      },
-      {
-        id: "pro-tips-list",
-        type: "list",
-        title: "Pro Tips for Students",
-        items: [
-          "Start with a low credit limit (around £300–£500)",
-          "Choose cards with no annual fee",
-          "Use your card for big purchases to get Section 75 protection",
-          "Pay before the statement date to show low or zero utilisation",
-          "Never lend your card or share your PIN with anyone"
-        ]
-      },
-
-      /* -------------------- Student Card Examples -------------------- */
-      {
-        id: "student-cards-title",
-        type: "section-title",
-        title: "Examples of Student-Friendly Credit Cards"
-      },
-      {
-        id: "barclaycard-forward",
-        type: "list",
-        title: "Barclaycard Forward",
-        items: [
-          "Designed for people with limited credit history",
-          "No annual fee",
-          "Representative APR around the mid-20% range",
-          "Typical starting credit limits are relatively low to keep things manageable"
-        ]
-      },
-      {
-        id: "halifax-clarity",
-        type: "list",
-        title: "Halifax Clarity",
-        items: [
-          "Good for travel – often no foreign transaction fees",
-          "No annual fee",
-          "Representative APR in the low-20% range",
-          "Useful if you study or travel abroad frequently"
-        ]
-      },
-      {
-        id: "aqua-classic",
-        type: "list",
-        title: "Aqua / 'Credit Builder' Style Cards",
-        items: [
-          "Designed for people with no or poor credit history",
-          "Higher APR, so paying in full is essential",
-          "Easier acceptance criteria",
-          "Can be a stepping stone to better cards if used responsibly"
-        ]
-      },
-
-      /* -------------------- Action Plan -------------------- */
-      {
-        id: "action-plan-title",
-        type: "section-title",
-        title: "Your Action Plan"
-      },
-      {
-        id: "action-plan-steps",
-        type: "steps",
-        steps: [
+          /* -------------------------------
+              CARD 1 — Buy Now Pay Later
+          ------------------------------- */
           {
-            title: "Limit your BNPL usage",
-            description: "Use at most one BNPL provider and set up automatic payments."
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [
+                  {
+                    "type": "CardTitle",
+                    "props": { "className": "flex items-center gap-2" },
+                    "children": [
+                      { "type": "ShoppingBag", "props": { "className": "h-5 w-5" }},
+                      "Buy Now Pay Later (BNPL): The Good and Bad"
+                    ]
+                  }
+                ]
+              },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "p",
+                        "props": { "className": "text-lg" },
+                        "children": [
+                          "BNPL services like Klarna, Clearpay, and PayPal Pay in 3 let you split purchases into installments. They can be helpful, but they're not risk-free."
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-6" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "props": { "className": "bg-green-50 p-4 rounded-lg border border-green-200" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-3" }, "children": ["✅ Benefits:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• No interest if you pay on time",
+                                  "• Helps manage cash flow for planned purchases",
+                                  "• Easier approval than credit cards",
+                                  "• Can build payment history",
+                                  "• Sometimes offers buyer protection"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "bg-red-50 p-4 rounded-lg border border-red-200" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-3" }, "children": ["❌ Risks:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• Late fees (£6–£12 per missed payment)",
+                                  "• Can damage credit score if missed",
+                                  "• Easy to overspend",
+                                  "• Multiple BNPL apps = debt spiral",
+                                  "• No legal protection like credit cards"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-yellow-50 border-l-4 border-yellow-400 p-4" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["⚠️ Real Student Example:"] },
+                          {
+                            "type": "p",
+                            "props": { "className": "text-sm" },
+                            "children": [
+                              "\"I bought clothes worth £300 across 3 BNPL apps. Payments were split, so I forgot some and paid £36 in late fees. It felt like free money until it wasn't.\""
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           },
+
+
+          /* -------------------------------
+              CARD 2 — BNPL Best Practices
+          ------------------------------- */
           {
-            title: "Pick a student-friendly card",
-            description: "Choose a credit card with no annual fee and a sensible limit."
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [{ "type": "CardTitle", "children": ["BNPL Best Practices"] }]
+              },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["📱 Smart Usage Tips:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Only use for planned purchases",
+                              "• Enable auto-payments",
+                              "• Use ONE BNPL at a time",
+                              "• Track all installment payments",
+                              "• Never use BNPL for groceries or bills"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["💡 When BNPL Makes Sense:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Essential items (e.g., uni laptop)",
+                              "• Guaranteed income coming in",
+                              "• Items you planned to buy anyway",
+                              "• Fits your monthly budget"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-2" }, "children": ["🚫 Avoid BNPL For:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Impulse purchases",
+                              "• Things you can't afford",
+                              "• Groceries and bills",
+                              "• When you already owe other installments"
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+            ]
           },
+
+
+          /* -------------------------------
+              CARD 3 — Credit Cards
+          ------------------------------- */
           {
-            title: "Set up full payment direct debit",
-            description: "Always pay the full balance each month, not the minimum."
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Credit Cards: Use Them Right"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "p",
+                        "children": [
+                          "Credit cards can be powerful financial tools when used correctly. They offer better protection than debit cards and can help build your credit score."
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-6" },
+                        "children": [
+
+                          {
+                            "type": "div",
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Credit Card Benefits:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• Section 75 protection (£100–£30,000 purchases)",
+                                  "• Stronger fraud protection",
+                                  "• Builds credit history",
+                                  "• Cashback/rewards",
+                                  "• Purchase protection on big items"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["❌ Credit Card Dangers:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• High interest (18–29% APR)",
+                                  "• Minimum payment trap",
+                                  "• Encourages overspending",
+                                  "• Credit score damage if missed",
+                                  "• Late fees, cash advance fees"
+                                ]
+                              }
+                            ]
+                          }
+
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           },
+
+
+          /* -------------------------------
+              CARD 4 — Credit Card Golden Rules
+          ------------------------------- */
           {
-            title: "Use credit for planned spending only",
-            description: "Avoid impulse purchases on both BNPL and credit cards."
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Credit Card Golden Rules"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-gradient-to-r from-yellow-50 to-orange-50 p-6 rounded-lg" },
+                        "children": [
+                          { "type": "h3", "props": { "className": "text-xl font-bold mb-4" }, "children": ["The #1 Rule: Pay in Full Every Month"] },
+                          {
+                            "type": "p",
+                            "children": [
+                              "If you can't afford to pay off your credit card in full each month, you can't afford what you're buying."
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "bg-white p-4 rounded border mt-4" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Why Minimum Payments Are a Trap"] },
+                              {
+                                "type": "div",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• Balance: £1,000",
+                                  "• APR: 22%",
+                                  "• Min payment: £25/mo",
+                                  "• Time to clear: 4 years 6 months",
+                                  "• Interest paid: £347"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-blue-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["💳 Smart Usage:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• Use only for planned expenses",
+                                  "• Set direct debit for FULL amount",
+                                  "• Track spending in your app",
+                                  "• Avoid cash advances",
+                                  "• Keep utilisation < 30%"
+                                ]
+                              }
+                            ]
+                          },
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-green-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["🏆 Pro Tips:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• Start with low limit (£300–£500)",
+                                  "• Choose no-fee cards",
+                                  "• Use for expensive purchases",
+                                  "• Pay before statement date",
+                                  "• Never lend your card"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+            ]
           },
+
+
+          /* -------------------------------
+              CARD 5 — Student Credit Cards
+          ------------------------------- */
           {
-            title: "Monitor your credit score",
-            description: "Use free apps or your bank to check your score monthly."
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Best Student Credit Cards (2024)"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-blue-600" }, "children": ["🏦 Barclaycard Forward"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "children": [
+                              "• 25.9% APR",
+                              "• No annual fee",
+                              "• £1,200 typical limit",
+                              "• Good for building credit"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-green-600" }, "children": ["🏦 Halifax Clarity"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "children": [
+                              "• No foreign transaction fees",
+                              "• Good for travel",
+                              "• 22.9% APR",
+                              "• No annual fee"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-purple-600" }, "children": ["🏦 Aqua Classic"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "children": [
+                              "• Great for no credit history",
+                              "• 34.9% APR (so pay in full!)",
+                              "• Easier acceptance",
+                              "• Good starter card"
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+            ]
           }
+
         ]
       }
     ],
 
-    /* ---------------------------------------------------------
-    * QUIZ
-    * --------------------------------------------------------- */
+    /* -------------------------------
+        QUIZ
+    ------------------------------- */
     quiz: {
       passingScore: 1,
       questions: [
         {
-          question: "What is the safest way to use a credit card?",
+          question: "What’s the best way to use a credit card?",
           options: [
-            "Pay only the minimum amount each month",
+            "Pay the minimum amount",
             "Pay the full amount every month",
-            "Use it for every purchase you make",
-            "Keep a high balance to show the bank you use it"
+            "Use it for everything",
+            "Keep a high balance"
           ],
           correctAnswer: 1,
-          explanation:
-            "Paying the full balance each month avoids interest charges and builds a strong credit history. Minimum payments and high balances keep you in debt."
+          explanation: "Paying in full every month avoids interest and builds strong credit history."
         }
       ]
     },
 
-    /* ---------------------------------------------------------
-    * RELATED LESSONS
-    * --------------------------------------------------------- */
+    /* -------------------------------
+        RELATED LESSONS
+    ------------------------------- */
     relatedLessons: [
       {
         moduleId: "credit-scores",
@@ -823,13 +1367,13 @@ const spendingWiselyModules = [
         relationship: "next-step"
       },
       {
-        moduleId: "good-vs-bad-debt",
-        title: "Good vs Bad Debt",
+        moduleId: "good-value",
+        title: "How to Spot Good Value",
         relationship: "related"
       },
       {
-        moduleId: "avoiding-scams",
-        title: "Avoiding Scams & Fraud",
+        moduleId: "good-vs-bad-debt",
+        title: "Good vs Bad Debt",
         relationship: "related"
       }
     ]
@@ -837,247 +1381,624 @@ const spendingWiselyModules = [
 
   // Cost of Living: Student Perspective
   {
-    topic: "cost-of-living",
     title: "Cost of Living: Student Perspective",
-    description: "A complete breakdown of real student expenses, regional cost differences, housing choices, food budgeting, and how to manage rising living costs effectively.",
+    description: "Understand real UK student living costs and learn budgeting strategies.",
     categoryId: "spending-wisely",
+    topic: "cost-of-living",
+    createdBy: "system",
 
     visual: {
       icon: "Home",
       iconColor: "bg-orange-500",
-      badge: "Spending Wisely",
-      readTime: 3
+      readTime: 3,
+      badge: "Beginner Friendly"
     },
 
     difficultyLevel: "beginner",
-    points: 100,
-    timeEstimate: 3,
+    timeEstimate: 10,
+    points: 180,
     order: 4,
-    isActive: true,
-    createdBy: "system",
 
-    /* ---------------------------------------------------------
-    * CONTENT SECTIONS
-    * --------------------------------------------------------- */
-    contentSections: [
-      /* -------------------- Student Cost Breakdown -------------------- */
+    uiTree: [
       {
-        id: "cost-breakdown-title",
-        type: "section-title",
-        title: "Real Student Living Costs (2024)",
-        description: "Based on surveys of UK students"
-      },
-      {
-        id: "average-budget",
-        type: "explanation",
-        content:
-          "The rising cost of living affects students significantly. Rent, bills, groceries, and transport often take up a large portion of your student loan. Understanding the breakdown helps you plan realistically."
-      },
-      {
-        id: "budget-breakdown-list",
-        type: "list",
-        title: "Average Monthly Student Budget",
-        items: [
-          "Rent & Bills: £400–600",
-          "Food & Groceries: £150–200",
-          "Transport: £50–80",
-          "Study Materials: £30–50",
-          "Clothes: £30–60",
-          "Social/Entertainment: £80–120",
-          "Phone & Internet: £25–40",
-          "Total: £765–1,150"
-        ]
-      },
+        "type": "div",
+        "props": { "className": "grid gap-6" },
+        "children": [
 
-      /* -------------------- Regional Differences -------------------- */
-      {
-        id: "regional-differences-title",
-        type: "section-title",
-        icon: "MapPin",
-        title: "Location Makes a Huge Difference"
-      },
-      {
-        id: "most-expensive",
-        type: "list",
-        title: "Most Expensive Student Cities",
-        items: [
-          "London: £1,200–1,800 per month",
-          "Cambridge: £1,000–1,400 per month",
-          "Oxford: £1,000–1,400 per month",
-          "Brighton: £900–1,300 per month"
-        ]
-      },
-      {
-        id: "moderate-cities",
-        type: "list",
-        title: "Moderate Cost Cities",
-        items: [
-          "Manchester: £700–1,000",
-          "Birmingham: £650–950",
-          "Leeds: £600–900",
-          "Bristol: £700–1,000"
-        ]
-      },
-      {
-        id: "affordable-cities",
-        type: "list",
-        title: "Most Affordable Cities",
-        items: [
-          "Hull: £500–750",
-          "Stoke: £450–700",
-          "Preston: £500–750",
-          "Swansea: £550–800"
-        ]
-      },
-      {
-        id: "location-tips",
-        type: "list",
-        title: "Money-Saving Location Tips",
-        items: [
-          "Consider smaller cities with lower costs but strong universities",
-          "Factor in transport when comparing rent prices",
-          "Research local student discounts",
-          "Check graduate job rates vs living costs"
-        ]
-      },
+          /* ------------------------------------------------
+              CARD 1 — Student Cost Breakdown
+          ------------------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [
+                  { "type": "CardTitle", "children": ["Real Student Living Costs (2024)"] },
+                  { "type": "CardDescription", "children": ["Based on surveys of UK students"] }
+                ]
+              },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg" },
+                        "children": [
+                          { "type": "h3", "props": { "className": "text-xl font-bold mb-4" }, "children": ["Average Monthly Student Budget"] },
+                          
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-2 gap-6" },
+                            "children": [
 
-      /* -------------------- Housing Options -------------------- */
-      {
-        id: "housing-title",
-        type: "section-title",
-        title: "Student Housing: Comparing Your Options"
-      },
-      {
-        id: "halls",
-        type: "list",
-        title: "University Halls (Cost: £100–200/week)",
-        items: [
-          "Pros: Bills included, close to campus, social, no guarantor needed",
-          "Cons: More expensive, less privacy, strict rules, small kitchens"
-        ]
-      },
-      {
-        id: "private-housing",
-        type: "list",
-        title: "Private Student Housing (Cost: £80–150/week)",
-        items: [
-          "Pros: Cheaper, independence, choose housemates, good kitchens",
-          "Cons: Bills not included, need deposits, maintenance responsibility"
-        ]
-      },
-      {
-        id: "living-at-home",
-        type: "list",
-        title: "Living With Family (Cost: £0–300/month)",
-        items: [
-          "Pros: Cheapest option, home cooking, emotional support",
-          "Cons: Commute costs, miss social life, less independence"
-        ]
-      },
+                              /* Left column */
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-3" },
+                                "children": [
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["🏠 Rent & Bills", { "type": "span", "props": { "className": "font-bold text-red-600" }, "children": ["£400–600"] }]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["🍕 Food & Groceries", "£150–200"]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["🚌 Transport", "£50–80"]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["📚 Study Materials", "£30–50"]
+                                  }
+                                ]
+                              },
 
-      /* -------------------- Food Budgeting -------------------- */
-      {
-        id: "food-budget-title",
-        type: "section-title",
-        title: "Smart Food Budgeting"
-      },
-      {
-        id: "food-tips",
-        type: "list",
-        title: "Budget-Friendly Food Tips",
-        items: [
-          "Cook in bulk and freeze portions",
-          "Shop at Aldi/Lidl for basics",
-          "Use yellow-sticker reductions",
-          "Buy frozen veg (cheaper + nutritious)",
-          "Learn 5–10 cheap recipes",
-          "Share cooking with housemates",
-          "Use student discounts when eating out"
-        ]
-      },
-      {
-        id: "weekly-food-budget",
-        type: "list",
-        title: "Weekly Food Cost Breakdown",
-        items: [
-          "Groceries: £25–35",
-          "Eating out: £10–15",
-          "Snacks/drinks: £5–10",
-          "Total per week: £40–60"
-        ]
-      },
-      {
-        id: "meal-prep-heroes",
-        type: "list",
-        title: "Student Meal Prep Heroes",
-        items: [
-          "Pasta & Rice – cheap, filling, extremely versatile",
-          "Eggs – high protein and low cost",
-          "Beans & Lentils – nutritious and affordable"
-        ]
-      },
+                              /* Right column */
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-3" },
+                                "children": [
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["👕 Clothes", "£30–60"]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["🎉 Social/Entertainment", "£80–120"]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
+                                    "children": ["📱 Phone & Internet", "£25–40"]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex justify-between items-center p-2 bg-green-100 rounded border border-green-500" },
+                                    "children": ["💰 Total", { "type": "span", "props": { "className": "font-bold text-green-700" }, "children": ["£765–1,150"] }]
+                                  }
+                                ]
+                              }
 
-      /* -------------------- Transport -------------------- */
-      {
-        id: "transport-title",
-        type: "section-title",
-        title: "Getting Around on a Budget"
-      },
-      {
-        id: "public-transport",
-        type: "list",
-        title: "Public Transport Tips",
-        items: [
-          "Student discounts typically 30% off",
-          "Monthly passes save money",
-          "16–25 Railcard saves 1/3 on trains",
-          "Bus passes: usually £40–80/month"
-        ]
-      },
-      {
-        id: "cycling-tips",
-        type: "list",
-        title: "Cycling: Low-Cost Transport",
-        items: [
-          "Initial cost £100–300",
-          "Free exercise + travel",
-          "Bike-sharing schemes in many cities",
-          "Consider cycle-to-work discounts"
-        ]
-      },
-      {
-        id: "car-costs",
-        type: "list",
-        title: "Cars Are Expensive for Students",
-        items: [
-          "Insurance: £800–2,000/year",
-          "Fuel: £100–200/month",
-          "Parking: £50–150/month",
-          "Maintenance: £500+/year",
-          "Total yearly cost: £2,000–4,000"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+
+          /* ------------------------------------------------
+              CARD 2 — Regional Differences
+          ------------------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              {
+                "type": "CardHeader",
+                "children": [
+                  {
+                    "type": "CardTitle",
+                    "props": { "className": "flex items-center gap-2" },
+                    "children": [
+                      { "type": "MapPin", "props": { "className": "h-5 w-5" }},
+                      "Location Makes a Huge Difference"
+                    ]
+                  }
+                ]
+              },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+
+                      /* Three columns: expensive / moderate / affordable */
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-3 gap-4" },
+                        "children": [
+
+                          /* Expensive */
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-red-50 rounded-lg border border-red-200" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["💸 Most Expensive"] },
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "London: £1,200–1,800/month",
+                                  "Cambridge: £1,000–1,400/month",
+                                  "Oxford: £1,000–1,400/month",
+                                  "Brighton: £900–1,300/month"
+                                ]
+                              }
+                            ]
+                          },
+
+                          /* Moderate */
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-yellow-50 rounded-lg border border-yellow-200" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["💰 Moderate"] },
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "Manchester: £700–1,000/month",
+                                  "Birmingham: £650–950/month",
+                                  "Leeds: £600–900/month",
+                                  "Bristol: £700–1,000/month"
+                                ]
+                              }
+                            ]
+                          },
+
+                          /* Affordable */
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-green-50 rounded-lg border border-green-200" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["💚 Most Affordable"] },
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "Hull: £500–750/month",
+                                  "Stoke: £450–700/month",
+                                  "Preston: £500–750/month",
+                                  "Swansea: £550–800/month"
+                                ]
+                              }
+                            ]
+                          }
+
+                        ]
+                      },
+
+                      /* Money-saving tips */
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-blue-50 p-4 rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["💡 Money-Saving Location Tips:"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Smaller cities = lower living costs",
+                              "• Consider transport cost when choosing accommodation",
+                              "• Research local student discounts",
+                              "• Compare job opportunities vs living costs"
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+
+            ]
+          },
+
+
+          /* ------------------------------------------------
+              CARD 3 — Housing Options
+          ------------------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Student Housing: Comparing Your Options"] }] },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+
+                      /* University Halls */
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["🏫 University Halls"] },
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-2 gap-4" },
+                            "children": [
+                              {
+                                "type": "div",
+                                "children": [
+                                  "Cost: £100–200/week",
+                                  { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• Bills included",
+                                      "• Social atmosphere",
+                                      "• Close to campus",
+                                      "• No guarantor needed"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• More expensive",
+                                      "• Less privacy",
+                                      "• Strict rules",
+                                      "• Limited kitchen facilities"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* Private Housing */
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["🏠 Private Student Housing"] },
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-2 gap-4" },
+                            "children": [
+                              {
+                                "type": "div",
+                                "children": [
+                                  "Cost: £80–150/week",
+                                  { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• Cheaper",
+                                      "• Independence",
+                                      "• Choose housemates",
+                                      "• Better kitchen"
+                                    ]
+                                  }
+                                ]
+                              },
+
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• Bills not included",
+                                      "• Need deposit",
+                                      "• Need guarantor",
+                                      "• Maintenance responsibility"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* Living at Home */
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 border rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-purple-600 mb-2" }, "children": ["🏡 Home/Family"] },
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-2 gap-4" },
+                            "children": [
+                              {
+                                "type": "div",
+                                "children": [
+                                  "Cost: £0–300/month",
+                                  { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• Cheapest",
+                                      "• Home-cooked meals",
+                                      "• Support system",
+                                      "• No bills"
+                                    ]
+                                  }
+                                ]
+                              },
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
+                                  {
+                                    "type": "ul",
+                                    "props": { "className": "text-xs space-y-1" },
+                                    "children": [
+                                      "• Commute time",
+                                      "• Less independence",
+                                      "• Harder to socialise",
+                                      "• Travel expenses"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+
+            ]
+          },
+
+
+          /* ------------------------------------------------
+              CARD 4 — Food Budget
+          ------------------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Smart Food Budgeting"] }] },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "space-y-4" },
+                    "children": [
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-6" },
+                        "children": [
+
+                          /* Cheap food tips */
+                          {
+                            "type": "div",
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["🥗 Budget-Friendly Food Tips:"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-2 text-sm" },
+                                "children": [
+                                  "• Cook in bulk",
+                                  "• Shop at Aldi/Lidl",
+                                  "• Use yellow sticker deals",
+                                  "• Frozen veg > fresh",
+                                  "• Learn 5–10 cheap recipes",
+                                  "• Share cooking",
+                                  "• Use student discounts"
+                                ]
+                              }
+                            ]
+                          },
+
+                          /* Weekly breakdown */
+                          {
+                            "type": "div",
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-orange-600 mb-3" }, "children": ["📊 Weekly Food Budget Breakdown:"] },
+                              {
+                                "type": "div",
+                                "props": { "className": "space-y-2" },
+                                "children": [
+                                  "Groceries: £25–35",
+                                  "Eating out: £10–15",
+                                  "Snacks: £5–10",
+                                  { "type": "strong", "children": ["Total: £40–60"] }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* Recommended staples */
+                      {
+                        "type": "div",
+                        "props": { "className": "bg-accent p-4 rounded-lg" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["🍝 Student Meal Prep Heroes:"] },
+                          {
+                            "type": "div",
+                            "props": { "className": "grid md:grid-cols-3 gap-4 text-sm" },
+                            "children": [
+                              "Pasta & Rice: Cheap, filling",
+                              "Eggs: Protein & cheap",
+                              "Beans & Lentils: Healthy & filling"
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+
+            ]
+          },
+
+
+          /* ------------------------------------------------
+              CARD 5 — Transport
+          ------------------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Getting Around on a Budget"] }] },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "grid gap-4" },
+                    "children": [
+
+                      /* Public transport & cycling */
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+
+                          /* Public transport */
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-blue-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["🚌 Public Transport"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• 30% student discount",
+                                  "• Monthly passes save money",
+                                  "• 16-25 Railcard = 1/3 off",
+                                  "• Bus passes: £40–80/month"
+                                ]
+                              }
+                            ]
+                          },
+
+                          /* Cycling */
+                          {
+                            "type": "div",
+                            "props": { "className": "p-4 bg-green-50 rounded" },
+                            "children": [
+                              { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["🚲 Cycling"] },
+                              {
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1" },
+                                "children": [
+                                  "• £100–300 upfront",
+                                  "• Free exercise",
+                                  "• Bike-share in many cities",
+                                  "• No fuel/insurance"
+                                ]
+                              }
+                            ]
+                          }
+
+                        ]
+                      },
+
+                      /* Cars cost breakdown */
+                      {
+                        "type": "div",
+                        "props": { "className": "p-4 bg-yellow-50 rounded" },
+                        "children": [
+                          { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["🚗 Cars: Calculate the True Cost"] },
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1" },
+                            "children": [
+                              "• Insurance: £800–2000/year",
+                              "• Fuel: £100–200/month",
+                              "• Parking: £50–150/month",
+                              "• Repairs: £500+/year",
+                              "• Total: £2000–4000/year"
+                            ]
+                          }
+                        ]
+                      }
+
+                    ]
+                  }
+                ]
+              }
+
+            ]
+          }
+
         ]
       }
     ],
 
-    /* ---------------------------------------------------------
-    * QUIZ
-    * --------------------------------------------------------- */
+    /* ------------------------------------------------
+        QUIZ
+    ------------------------------------------------ */
     quiz: {
       passingScore: 1,
       questions: [
         {
-          question: "What is typically the biggest expense in a student budget?",
+          question: "What’s typically the biggest expense in a student budget?",
           options: ["Rent", "Food", "Transport", "Entertainment"],
           correctAnswer: 0,
           explanation:
-            "Rent and accommodation usually take up 40–60% of a student's monthly budget, making it the largest expense by far."
+            "Rent usually makes up 40–60% of a student's total monthly expenses, making it the largest cost."
         }
       ]
     },
 
-    /* ---------------------------------------------------------
-    * RELATED LESSONS
-    * --------------------------------------------------------- */
+    /* ------------------------------------------------
+        RELATED LESSONS
+    ------------------------------------------------ */
     relatedLessons: [
       {
         moduleId: "budgeting-basics",
@@ -1087,11 +2008,6 @@ const spendingWiselyModules = [
       {
         moduleId: "saving-strategies",
         title: "Saving Strategies",
-        relationship: "related"
-      },
-      {
-        moduleId: "good-value",
-        title: "How to Spot Good Value",
         relationship: "related"
       }
     ]

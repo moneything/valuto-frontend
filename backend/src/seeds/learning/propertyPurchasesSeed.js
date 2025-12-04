@@ -19,7 +19,7 @@ const propertyPurchasesModules = [
   ================================================================= */
   {
     title: "Renting vs Buying Property",
-    description: "Understand the trade-offs between renting and buying a home.",
+    description: "Understanding the trade-offs",
     categoryId: "property-purchases",
     topic: "renting-vs-buying",
 
@@ -459,7 +459,7 @@ const propertyPurchasesModules = [
   ================================================================= */
   {
     title: "Mortgages 101",
-    description: "Learn the basics of mortgages, deposits, interest, LTVs, and the buying process.",
+    description: "What they are, deposits, repayments",
     categoryId: "property-purchases",
     topic: "mortgages-101",
 
@@ -1016,7 +1016,7 @@ const propertyPurchasesModules = [
   ================================================================= */
   {
     title: "Car Finance Explained",
-    description: "HP, PCP, leasing vs buying — everything students need to know about car finance.",
+    description: "HP, PCP, leasing vs buying",
     categoryId: "property-purchases",
     topic: "car-finance",
     createdBy: "system",
@@ -1801,7 +1801,7 @@ const propertyPurchasesModules = [
   ================================================================= */
   {
     title: "Wealth Through Property",
-    description: "How property builds long-term wealth through appreciation, income, leverage, and strategic investing.",
+    description: "Building wealth with real estate",
     categoryId: "property-purchases",
     topic: "wealth-through-property",
     createdBy: "system",

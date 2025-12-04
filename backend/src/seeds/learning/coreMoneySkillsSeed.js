@@ -18,7 +18,7 @@ const coreMoneySkillsModules = [
   // Budgeting Basics
   {
     title: "Budgeting Basics",
-    description: "Learn the foundations of budgeting, needs vs wants, 50/30/20 rule, and how to build your first budget.",
+    description: "How to make a simple budget, needs vs wants",
     categoryId: "core-money-skills",
     topic: "budgeting-basics",
     createdBy: "system",
@@ -414,7 +414,7 @@ const coreMoneySkillsModules = [
   // Saving Strategies
   {
     title: "Saving Strategies",
-    description: "Learn smart saving techniques, emergency funds, and goal-setting methods for financial stability.",
+    description: "Setting goals, emergency funds, paying yourself first",
     categoryId: "core-money-skills",
     topic: "saving-strategies",
 
@@ -1019,7 +1019,7 @@ const coreMoneySkillsModules = [
   // BANKING 101
   {
     title: "Banking 101",
-    description: "Learn the basics of bank accounts, interest, student account perks, and how to open your first bank account.",
+    description: "Current accounts, savings accounts, interest explained",
     categoryId: "core-money-skills",
     topic: "banking-101",
     createdBy: "system",
@@ -1523,7 +1523,7 @@ const coreMoneySkillsModules = [
   // Understanding Credit Scores
 {
   title: "Understanding Credit Scores",
-  description: "Learn what credit scores mean, how they affect your financial life, and how to build good credit as a student.",
+  description: "What they are and why they matter",
   categoryId: "core-money-skills",
   topic: "credit-scores",
   createdBy: "system",

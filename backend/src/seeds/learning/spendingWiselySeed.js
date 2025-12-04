@@ -16,7 +16,7 @@ const spendingWiselyModules = [
   // How to Spot Good Value
   {
     title: "How to Spot Good Value",
-    description: "Learn how to compare prices, avoid value traps, and shop smarter using unit pricing, own-label comparisons, and smart tools.",
+    description: "Unit pricing, brands vs own-label",
     categoryId: "spending-wisely",
     topic: "how-to-spot-good-value",
     createdBy: "system",
@@ -446,7 +446,7 @@ const spendingWiselyModules = [
   // Avoiding Scams & Fraud
   {
     title: "Avoiding Scams & Fraud",
-    description: "Learn how to recognise online scams, protect yourself against fraud, and take action if you’ve been targeted.",
+    description: "Protecting yourself from financial fraud",
     categoryId: "spending-wisely",
     topic: "avoiding-scams",
     createdBy: "system",
@@ -882,7 +882,7 @@ const spendingWiselyModules = [
   // Using Buy Now Pay Later & Credit Cards Safely
   {
     title: "Using Buy Now Pay Later & Credit Cards Safely",
-    description: "Learn how to use BNPL services and credit cards responsibly to avoid debt and protect your financial future.",
+    description: "Benefits and risks explained",
     categoryId: "spending-wisely",
     topic: "credit-cards-safely",
     createdBy: "system",
@@ -1382,7 +1382,7 @@ const spendingWiselyModules = [
   // Cost of Living: Student Perspective
   {
     title: "Cost of Living: Student Perspective",
-    description: "Understand real UK student living costs and learn budgeting strategies.",
+    description: "Rent, food, transport and budgeting",
     categoryId: "spending-wisely",
     topic: "cost-of-living",
     createdBy: "system",

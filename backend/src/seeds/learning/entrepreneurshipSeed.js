@@ -17,7 +17,7 @@ const entrepreneurshipModules = [
   {
     title: "How to Start a Business",
     description:
-      "A simple, step-by-step guide for students and young adults on how to start a business safely and realistically.",
+      "Step by step in simple language",
     topic: "how-to-start-a-business",
     categoryId: "entrepreneurship",
 
@@ -1207,17 +1207,17 @@ const entrepreneurshipModules = [
   },
 
   {
-    "title": "Business Models",
-    "description": "Understand how businesses make money, from shops and online stores to subscription and service models.",
-    "categoryId": "entrepreneurship",
-    "topic": "business-models",
-    "visual": {
-      "icon": "Store",
-      "iconColor": "bg-red-500",
-      "badge": "Entrepreneurship",
-      "readTime": 2
+    title: "Business Models",
+    description: "Understand how businesses make money, from shops and online stores to subscription and service models.",
+    categoryId: "entrepreneurship",
+    topic: "business-models",
+    visual: {
+      icon: "Store",
+      iconColor: "bg-red-500",
+      badge: "Entrepreneurship",
+      readTime: 2
     },
-    "uiTree": [
+    uiTree: [
       {
         "type": "div",
         "props": { "className": "grid gap-6" },
@@ -1556,81 +1556,81 @@ const entrepreneurshipModules = [
         ]
       }
     ],
-    "quiz": {
-      "questions": [
+    quiz: {
+      questions: [
         {
-          "question": "What's the main advantage of a subscription business model?",
-          "options": [
+          question: "What's the main advantage of a subscription business model?",
+          options: [
             "One-time large payment",
             "Predictable recurring revenue",
             "No customer service needed",
             "Lower prices for customers"
           ],
-          "correctAnswer": 1,
-          "explanation": "Subscriptions provide stable, predictable monthly income."
+          correctAnswer: 1,
+          explanation: "Subscriptions provide stable, predictable monthly income."
         },
         {
-          "question": "Which business model requires the least upfront inventory?",
-          "options": [
+          question: "Which business model requires the least upfront inventory?",
+          options: [
             "Traditional retail store",
             "Manufacturing",
             "Dropshipping",
             "Restaurant"
           ],
-          "correctAnswer": 2,
-          "explanation": "Dropshipping doesn’t require you to buy or hold stock."
+          correctAnswer: 2,
+          explanation: "Dropshipping doesn’t require you to buy or hold stock."
         },
         {
-          "question": "What's a marketplace business model?",
-          "options": [
+          question: "What's a marketplace business model?",
+          options: [
             "Buying and selling your own products",
             "Connecting buyers and sellers for a fee",
             "Only selling services",
             "Renting physical space"
           ],
-          "correctAnswer": 1,
-          "explanation": "Marketplaces connect users and take a fee per transaction."
+          correctAnswer: 1,
+          explanation: "Marketplaces connect users and take a fee per transaction."
         }
       ],
-      "passingScore": 2
+      passingScore: 2
     },
-    "relatedLessons": [
+    relatedLessons: [
       {
-        "moduleId": "start-business",
-        "title": "How to Start a Business",
-        "relationship": "next-step"
+        moduleId: "start-business",
+        title: "How to Start a Business",
+        relationship: "next-step"
       },
       {
-        "moduleId": "risk-vs-reward",
-        "title": "Risk vs Reward",
-        "relationship": "related"
+        moduleId: "risk-vs-reward",
+        title: "Risk vs Reward",
+        relationship: "related"
       },
       {
-        "moduleId": "young-entrepreneurs",
-        "title": "Success Stories",
-        "relationship": "related"
+        moduleId: "young-entrepreneurs",
+        title: "Success Stories",
+        relationship: "related"
       }
     ],
-    "points": 100,
-    "difficultyLevel": "beginner",
-    "timeEstimate": 5,
-    "order": 1,
-    "isActive": true,
-    "createdBy": "system"
+    points: 100,
+    difficultyLevel: "beginner",
+    timeEstimate: 5,
+    order: 1,
+    isActive: true,
+    createdBy: "system"
   },
 
   {
-    "title": "Risk vs Reward in Business",
-    "description": "Learn how risk and reward work together, how to manage entrepreneurial risks, and how to take smart calculated risks.",
-    "categoryId": "entrepreneurship",
-    "topic": "risk-vs-reward",
-    "visual": {
-      "icon": "Scale",
-      "iconColor": "bg-red-500",
-      "badge": "Entrepreneurship",
-      "readTime": 2
+    title: "Risk vs Reward in Business",
+    description: "Understanding entrepreneurial risks",
+    categoryId: "entrepreneurship",
+    topic: "risk-vs-reward",
+    visual: {
+      icon: "Scale",
+      iconColor: "bg-red-500",
+      badge: "Entrepreneurship",
+      readTime: 2
     },
-    "uiTree": 
+    uiTree: 
       [
         {
           "type": "div",
@@ -1902,7 +1902,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-green-700 dark:text-green-400" }, "children": ["Lower Risk Options"] },
-                                { "type": "Badge", "props": { "className": "bg-green-500" }, "children": ["Beginner Friendly"] }
+                                { "type": "div", "props": { "className": "bg-green-500" }, "children": ["Beginner Friendly"] }
                               ]
                             },
                             {
@@ -1932,7 +1932,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-yellow-700 dark:text-yellow-400" }, "children": ["Medium Risk Options"] },
-                                { "type": "Badge", "props": { "variant": "outline" }, "children": ["Some Experience Needed"] }
+                                { "type": "div", "props": { "variant": "outline" }, "children": ["Some Experience Needed"] }
                               ]
                             },
                             {
@@ -1962,7 +1962,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-red-700 dark:text-red-400" }, "children": ["Higher Risk Options"] },
-                                { "type": "Badge", "props": { "variant": "destructive" }, "children": ["High Investment"] }
+                                { "type": "div", "props": { "variant": "destructive" }, "children": ["High Investment"] }
                               ]
                             },
                             {
@@ -2217,74 +2217,74 @@ const entrepreneurshipModules = [
           ]
         }
       ],
-    "quiz": {
-      "questions": [
+    quiz: {
+      questions: [
         {
-          "question": "What's the relationship between risk and potential reward in business?",
-          "options": [
+          question: "What's the relationship between risk and potential reward in business?",
+          options: [
             "Higher risk always means higher reward",
             "Higher risk generally offers higher potential reward",
             "Risk and reward are unrelated",
             "Lower risk always means higher reward"
           ],
-          "correctAnswer": 1,
-          "explanation": "Risk and reward generally move together — but high risk never guarantees high reward."
+          correctAnswer: 1,
+          explanation: "Risk and reward generally move together — but high risk never guarantees high reward."
         },
         {
-          "question": "What's a good way to manage business risk?",
-          "options": [
+          question: "What's a good way to manage business risk?",
+          options: [
             "Avoid all risks completely",
             "Take the biggest risks possible",
             "Start small and test before scaling",
             "Ignore risks and hope for the best"
           ],
-          "correctAnswer": 2,
-          "explanation": "Starting small reduces risk while allowing validation and learning."
+          correctAnswer: 2,
+          explanation: "Starting small reduces risk while allowing validation and learning."
         },
         {
-          "question": "Which represents the lowest financial risk for a student entrepreneur?",
-          "options": [
+          question: "Which represents the lowest financial risk for a student entrepreneur?",
+          options: [
             "Quitting university to focus on business full-time",
             "Borrowing £50,000 to start a restaurant",
             "Starting a service business while still studying",
             "Investing all savings in cryptocurrency for the business"
           ],
-          "correctAnswer": 2,
-          "explanation": "Service businesses have minimal startup costs and low risk."
+          correctAnswer: 2,
+          explanation: "Service businesses have minimal startup costs and low risk."
         }
       ],
-      "passingScore": 2
+      passingScore: 2
     },
-    "relatedLessons": [
+    relatedLessons: [
       {
-        "moduleId": "business-models",
-        "title": "Business Models",
-        "relationship": "related"
+        moduleId: "business-models",
+        title: "Business Models",
+        relationship: "related"
       },
       {
-        "moduleId": "start-business",
-        "title": "How to Start a Business",
-        "relationship": "next-step"
+        moduleId: "start-business",
+        title: "How to Start a Business",
+        relationship: "next-step"
       },
       {
-        "moduleId": "young-entrepreneurs",
-        "title": "Success Stories",
-        "relationship": "related"
+        moduleId: "young-entrepreneurs",
+        title: "Success Stories",
+        relationship: "related"
       }
     ],
-    "points": 100,
-    "difficultyLevel": "beginner",
-    "timeEstimate": 5,
-    "order": 2,
-    "isActive": true,
-    "createdBy": "system"
+    points: 100,
+    difficultyLevel: "beginner",
+    timeEstimate: 5,
+    order: 2,
+    isActive: true,
+    createdBy: "system"
   },
 
   {
-    title: "Young Entrepreneurs",
-    description: "Real success stories and lessons from young entrepreneurs across the UK and the world.",
+    title: "Real Stories of Young Entrepreneurs",
+    description: "Inspiration from successful young people",
     categoryId: "entrepreneurship",
-    topic: "young-entrepreneurs",
+    topic: "real-stories-of-young-entrepreneurs",
 
     visual: {
       icon: "Star",

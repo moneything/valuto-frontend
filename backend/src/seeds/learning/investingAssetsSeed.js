@@ -16,7 +16,7 @@ const LearningModule = require("../../models/LearningModule");
 const investingAssetsModules = [
   {
     title: "Introduction to Investing",
-    description: "A beginner-friendly introduction to what investing is, why it matters, and how students can start safely.",
+    description: "Why investing matters for your future",
     categoryId: "investing-assets",
     topic: "intro-investing",
 
@@ -33,6 +33,7 @@ const investingAssetsModules = [
       * ---------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -81,6 +82,7 @@ const investingAssetsModules = [
       * ---------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -172,6 +174,7 @@ const investingAssetsModules = [
       * ---------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -224,6 +227,7 @@ const investingAssetsModules = [
       * ---------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -308,7 +312,7 @@ const investingAssetsModules = [
 
   {
     title: "Traditional Assets",
-    description: "A beginner-friendly guide to stocks, bonds, and funds.",
+    description: "Stocks, bonds, and funds explained",
     categoryId: "investing-assets",
     topic: "traditional-assets",
 
@@ -325,6 +329,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -377,12 +382,12 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-sm space-y-1 pl-4", style: {"list-style": "disc"}  },
                         children: [
-                          "• High potential long-term returns",
-                          "• You own part of a real business",
-                          "• Many pay dividends",
-                          "• Easy to buy and sell"
+                          { type: "li", children: ["High potential long-term returns"] },
+                          { type: "li", children: ["You own part of a real business"] },
+                          { type: "li", children: ["Many pay dividends"] },
+                          { type: "li", children: ["Easy to buy and sell"] },
                         ]
                       }
                     ]
@@ -409,12 +414,12 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-sm space-y-1 pl-4", style: {"list-style": "disc"} },
                         children: [
-                          "• Can be very volatile",
-                          "• Risk of losing money",
-                          "• Individual companies can fail",
-                          "• Requires research or luck"
+                          { type: "li", children: ["Can be very volatile"] },
+                          { type: "li", children: ["Risk of losing money"] },
+                          { type: "li", children: ["Individual companies can fai"] },
+                          { type: "li", children: ["Requires research or luck"] },
                         ]
                       }
                     ]
@@ -447,6 +452,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -496,7 +502,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Very safe, low returns (2–4%). Good for stability, not rapid growth."
+                          "Loans to the UK government. Very safe but lower returns (around 2-4% per year). Great for preserving wealth rather than growing it rapidly."
                         ]
                       }
                     ]
@@ -520,7 +526,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Riskier than government bonds but offer better returns (4–8%)."
+                          "Loans to companies. Higher returns than government bonds (4-8%) but slightly riskier. The company could struggle to pay you back."
                         ]
                       }
                     ]
@@ -537,7 +543,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "They stabilise your portfolio — often holding up when stocks fall."
+                      "Bonds help balance your portfolio. When stocks go down, bonds often stay stable or even go up. They're like the boring, reliable friend in your investment group."
                     ]
                   }
                 ]
@@ -552,6 +558,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           {
             type: "CardHeader",
@@ -588,22 +595,22 @@ const investingAssetsModules = [
                     type: "div",
                     props: { className: "p-4 border rounded-lg bg-primary/5" },
                     children: [
-                      { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Index Funds / ETFs"] },
+                      { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Index Funds / ETFs (Most Popular)"] },
                       {
                         type: "p",
                         props: { className: "text-sm mb-3" },
                         children: [
-                          "Track market indexes like the FTSE 100 — owning tiny pieces of all companies inside."
+                          "Track a market index like the FTSE 100 (top 100 UK companies). When you buy one, you own tiny pieces of all 100 companies!"
                         ]
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs text-muted-foreground space-y-1" },
+                        props: { className: "text-xs text-muted-foreground space-y-1 pl-4", style: {"list-style": "disc",} },
                         children: [
-                          "• Low fees",
-                          "• Instant diversification",
-                          "• Beginner-friendly",
-                          "• Works well in ISAs"
+                          {type: "li", children: ["Low fees (often 0.1-0.5% per year)"],},
+                          {type: "li", children: ["Instant diversification"],},
+                          {type: "li", children: ["No need to pick individual stock"],},
+                          {type: "li", children: ["Available through ISAs"],},
                         ]
                       }
                     ]
@@ -622,11 +629,11 @@ const investingAssetsModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs text-muted-foreground space-y-1" },
+                        props: { className: "text-xs text-muted-foreground space-y-1 pl-4" },
                         children: [
-                          "• Higher fees",
-                          "• Professional selection",
-                          "• Most fail to outperform index funds long-term"
+                          {type: "li", children: ["Higher fees (1-2% per year)"],},
+                          {type: "li", children: ["Professional management"],},
+                          {type: "li", children: ["Many fail to beat index funds long-term"],},
                         ]
                       }
                     ]
@@ -643,7 +650,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "A simple global index fund in a Stocks & Shares ISA is one of the easiest and safest ways to begin investing."
+                      "Start with a global index fund in a Stocks & Shares ISA. It's simple, cheap, and gives you exposure to thousands of companies worldwide. You can invest as little as £25/month!"
                     ]
                   }
                 ]
@@ -658,6 +665,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5",},
         children: [
           { type: "CardHeader", children: [{ type: "CardTitle", children: ["Risk vs Return Ladder"] }] },
 
@@ -675,7 +683,7 @@ const investingAssetsModules = [
                         "flex items-center justify-between p-3 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800"
                     },
                     children: [
-                      { type: "span", props: { className: "font-medium" }, children: ["Government Bonds"] },
+                      { type: "span", props: { className: "font-bold" }, children: ["Government Bonds"] },
                       {
                         type: "div",
                         props: { className: "text-right" },
@@ -694,7 +702,7 @@ const investingAssetsModules = [
                         "flex items-center justify-between p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200 dark:border-yellow-800"
                     },
                     children: [
-                      { type: "span", props: { className: "font-medium" }, children: ["Corporate Bonds"] },
+                      { type: "span", props: { className: "font-bold" }, children: ["Corporate Bonds"] },
                       {
                         type: "div",
                         props: { className: "text-right" },
@@ -713,7 +721,7 @@ const investingAssetsModules = [
                         "flex items-center justify-between p-3 bg-orange-50 dark:bg-orange-950/20 rounded border border-orange-200 dark:border-orange-800"
                     },
                     children: [
-                      { type: "span", props: { className: "font-medium" }, children: ["Index Funds"] },
+                      { type: "span", props: { className: "font-bold" }, children: ["Index Funds"] },
                       {
                         type: "div",
                         props: { className: "text-right" },
@@ -732,7 +740,7 @@ const investingAssetsModules = [
                         "flex items-center justify-between p-3 bg-red-50 dark:bg-red-950/20 rounded border border-red-200 dark:border-red-800"
                     },
                     children: [
-                      { type: "span", props: { className: "font-medium" }, children: ["Individual Stocks"] },
+                      { type: "span", props: { className: "font-bold" }, children: ["Individual Stocks"] },
                       {
                         type: "div",
                         props: { className: "text-right" },
@@ -767,7 +775,7 @@ const investingAssetsModules = [
 
   {
     title: "New Assets",
-    description: "Crypto, NFTs, and other speculative assets explained for beginners.",
+    description: "Crypto, NFTs — pros, cons, and risks",
     categoryId: "investing-assets",
     topic: "new-assets",
 
@@ -806,7 +814,8 @@ const investingAssetsModules = [
                   {
                     type: "h3",
                     props: {
-                      className: "font-semibold text-yellow-800 dark:text-yellow-300 mb-1"
+                      className:
+                        "font-semibold text-yellow-800 dark:text-yellow-300 mb-1"
                     },
                     children: ["Important Warning for Students"]
                   },
@@ -831,6 +840,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
           {
             type: "CardHeader",
@@ -887,13 +897,16 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Can grow very quickly in value",
-                          "• No government control",
-                          "• Global and borderless",
-                          "• 24/7 trading",
-                          "• Some see it as 'digital gold'"
+                          { type: "li", children: ["Can grow very quickly in value"] },
+                          { type: "li", children: ["No government control"] },
+                          { type: "li", children: ["Global and borderless"] },
+                          { type: "li", children: ["24/7 trading"] },
+                          { type: "li", children: ["Some see it as 'digital gold'"] }
                         ]
                       }
                     ]
@@ -920,13 +933,16 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Extremely volatile (wild swings)",
-                          "• Can lose 50%+ fast",
-                          "• No consumer protection",
-                          "• Environmental concerns",
-                          "• Regulatory uncertainty"
+                          { type: "li", children: ["Extremely volatile (wild swings)"] },
+                          { type: "li", children: ["Can lose 50%+ fast"] },
+                          { type: "li", children: ["No consumer protection"] },
+                          { type: "li", children: ["Environmental concerns"] },
+                          { type: "li", children: ["Regulatory uncertainty"] }
                         ]
                       }
                     ]
@@ -945,13 +961,16 @@ const investingAssetsModules = [
                     children: ["Real Example – Bitcoin Volatility:"]
                   },
                   {
-                    type: "p",
-                    props: { className: "text-sm" },
+                    type: "ul",
+                    props: {
+                      className: "text-sm pl-4 space-y-1",
+                      style: { "list-style": "disc" }
+                    },
                     children: [
-                      "• 2021: nearly $65,000\n",
-                      "• 2022: crashed to ~$16,000\n",
-                      "• 2024: back above $40,000\n",
-                      "Crypto can rise and collapse unpredictably."
+                      { type: "li", children: ["2021: nearly $65,000"] },
+                      { type: "li", children: ["2022: crashed to ~$16,000"] },
+                      { type: "li", children: ["2024: back above $40,000"] },
+                      { type: "li", children: ["Crypto can rise and collapse unpredictably."] }
                     ]
                   }
                 ]
@@ -972,13 +991,16 @@ const investingAssetsModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "text-sm space-y-1" },
+                    props: {
+                      className: "text-sm space-y-1 pl-4",
+                      style: { "list-style": "disc" }
+                    },
                     children: [
-                      "✅ Only invest 5–10% max",
-                      "✅ Use reputable exchanges",
-                      "✅ Avoid social media hype",
-                      "✅ Assume it could go to zero",
-                      "✅ NEVER invest borrowed money"
+                      { type: "li", children: ["Only invest 5–10% max"] },
+                      { type: "li", children: ["Use reputable exchanges"] },
+                      { type: "li", children: ["Avoid social media hype"] },
+                      { type: "li", children: ["Assume it could go to zero"] },
+                      { type: "li", children: ["NEVER invest borrowed money"] }
                     ]
                   }
                 ]
@@ -993,6 +1015,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
           {
             type: "CardHeader",
@@ -1037,7 +1060,9 @@ const investingAssetsModules = [
                   },
                   {
                     type: "ol",
-                    props: { className: "text-sm space-y-1 list-decimal list-inside" },
+                    props: {
+                      className: "text-sm space-y-1 list-decimal list-inside"
+                    },
                     children: [
                       "Artist creates digital artwork",
                       "They mint it as an NFT",
@@ -1048,7 +1073,7 @@ const investingAssetsModules = [
                 ]
               },
 
-              /* PROS + REALITY CHECK */
+              /* PROS + REALITY */
               {
                 type: "div",
                 props: { className: "grid md:grid-cols-2 gap-4" },
@@ -1067,12 +1092,15 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Support artists directly",
-                          "• Provable digital ownership",
-                          "• Potential collectible value",
-                          "• Access to exclusive communities"
+                          { type: "li", children: ["Support artists directly"] },
+                          { type: "li", children: ["Provable digital ownership"] },
+                          { type: "li", children: ["Potential collectible value"] },
+                          { type: "li", children: ["Access to exclusive communities"] }
                         ]
                       }
                     ]
@@ -1095,12 +1123,15 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Most NFTs have dropped 90%+ in value",
-                          "• Anyone can still copy the image",
-                          "• Environmental impact concerns",
-                          "• Many NFT projects were scams"
+                          { type: "li", children: ["Most NFTs have dropped 90%+ in value"] },
+                          { type: "li", children: ["Anyone can still copy the image"] },
+                          { type: "li", children: ["Environmental impact concerns"] },
+                          { type: "li", children: ["Many NFT projects were scams"] }
                         ]
                       }
                     ]
@@ -1119,7 +1150,8 @@ const investingAssetsModules = [
                   {
                     type: "h4",
                     props: {
-                      className: "font-semibold text-red-700 dark:text-red-400 mb-2"
+                      className:
+                        "font-semibold text-red-700 dark:text-red-400 mb-2"
                     },
                     children: ["Student Reality:"]
                   },
@@ -1142,6 +1174,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
           {
             type: "CardHeader",
@@ -1173,10 +1206,17 @@ const investingAssetsModules = [
                         type: "div",
                         props: { className: "flex items-center gap-2 mb-2" },
                         children: [
-                          { type: "span", props: { className: "font-semibold" }, children: ["Meme Coins"] },
                           {
-                            type: "Badge",
-                            props: { variant: "destructive", className: "text-xs" },
+                            type: "span",
+                            props: { className: "font-semibold" },
+                            children: ["Meme Coins"]
+                          },
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                            },
                             children: ["High Risk"]
                           }
                         ]
@@ -1184,8 +1224,9 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children:
+                        children: [
                           "Cryptocurrencies based on jokes (Dogecoin, Shiba Inu). Extremely volatile and speculative."
+                        ]
                       }
                     ]
                   },
@@ -1199,10 +1240,17 @@ const investingAssetsModules = [
                         type: "div",
                         props: { className: "flex items-center gap-2 mb-2" },
                         children: [
-                          { type: "span", props: { className: "font-semibold" }, children: ["DeFi (Decentralized Finance)"] },
                           {
-                            type: "Badge",
-                            props: { variant: "destructive", className: "text-xs" },
+                            type: "span",
+                            props: { className: "font-semibold" },
+                            children: ["DeFi (Decentralized Finance)"]
+                          },
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                            },
                             children: ["Very High Risk"]
                           }
                         ]
@@ -1210,8 +1258,9 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children:
+                        children: [
                           "Complex crypto lending/borrowing systems. Many collapsed and caused total losses."
+                        ]
                       }
                     ]
                   },
@@ -1225,10 +1274,17 @@ const investingAssetsModules = [
                         type: "div",
                         props: { className: "flex items-center gap-2 mb-2" },
                         children: [
-                          { type: "span", props: { className: "font-semibold" }, children: ["Social Media \"Tips\""] },
                           {
-                            type: "Badge",
-                            props: { variant: "destructive", className: "text-xs" },
+                            type: "span",
+                            props: { className: "font-semibold" },
+                            children: ["Social Media \"Tips\""]
+                          },
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                            },
                             children: ["Scam Alert"]
                           }
                         ]
@@ -1236,8 +1292,9 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children:
+                        children: [
                           "Influencers promoting “the next big thing.” Often pump-and-dump scams designed to steal money."
+                        ]
                       }
                     ]
                   }
@@ -1253,6 +1310,7 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
           {
             type: "CardHeader",
@@ -1294,12 +1352,15 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Emergency fund (3–6 months)",
-                          "• Pay off high-interest debt",
-                          "• Start with index funds",
-                          "• Learn traditional investing"
+                          { type: "li", children: ["Emergency fund (3–6 months)"] },
+                          { type: "li", children: ["Pay off high-interest debt"] },
+                          { type: "li", children: ["Start with index funds"] },
+                          { type: "li", children: ["Learn traditional investing"] }
                         ]
                       }
                     ]
@@ -1307,7 +1368,7 @@ const investingAssetsModules = [
 
                   /* EXPERIMENT SAFELY */
                   {
-                    type: "div",
+                    type:  "div",
                     props: {
                       className:
                         "p-4 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800"
@@ -1323,12 +1384,15 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
                         children: [
-                          "• Only risk up to 5%",
-                          "• Use money you can lose entirely",
-                          "• Research thoroughly",
-                          "• Avoid social media hype"
+                          { type: "li", children: ["Only risk up to 5%"] },
+                          { type: "li", children: ["Use money you can lose entirely"] },
+                          { type: "li", children: ["Research thoroughly"] },
+                          { type: "li", children: ["Avoid social media hype"] }
                         ]
                       }
                     ]
@@ -1353,7 +1417,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Warren Buffett avoids crypto entirely. Instead, he invests in simple, proven businesses that provide real value."
+                      "Warren Buffett, one of the world's most successful investors, avoids crypto entirely. He focuses on businesses he understands that provide real value. That's a pretty good strategy to follow!"
                     ]
                   }
                 ]
@@ -1364,9 +1428,49 @@ const investingAssetsModules = [
       }
     ],
 
+    /* ----------------------------------------------------
+    * QUIZ + RELATED MODULES
+    * ---------------------------------------------------- */
     quiz: {
-      questions: [],
-      passingScore: 0
+      passingScore: 2,
+      questions: [
+        {
+          question: "What is the main characteristic of cryptocurrency?",
+          options: [
+            "It's backed by gold",
+            "It's controlled by governments",
+            "It's digital and decentralized",
+            "It never loses value"
+          ],
+          correctAnswer: 2,
+          explanation:
+            "Cryptocurrency is digital and decentralized — not controlled by any government or bank."
+        },
+        {
+          question: "What should students know about crypto investing?",
+          options: [
+            "It's guaranteed to make money",
+            "It's extremely volatile and risky",
+            "Banks recommend it for beginners",
+            "It's completely safe"
+          ],
+          correctAnswer: 1,
+          explanation:
+            "Crypto is extremely volatile and risky. Prices can rise or crash quickly."
+        },
+        {
+          question: "What is an NFT?",
+          options: [
+            "A new type of bank account",
+            "A digital certificate of ownership",
+            "A government bond",
+            "A savings account"
+          ],
+          correctAnswer: 1,
+          explanation:
+            "An NFT is a digital certificate proving you own a specific digital item — NOT exclusive rights."
+        }
+      ]
     },
 
     relatedLessons: [],
@@ -1380,7 +1484,7 @@ const investingAssetsModules = [
 
   {
     title: "Diversification Explained",
-    description: "Learn why spreading investments reduces risk and increases stability.",
+    description: "Don't put all eggs in one basket",
     categoryId: "investing-assets",
     topic: "diversification",
 
@@ -1397,9 +1501,8 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
-
-          /* HEADER */
           {
             type: "CardHeader",
             children: [
@@ -1414,11 +1517,9 @@ const investingAssetsModules = [
             ]
           },
 
-          /* CONTENT */
           {
             type: "CardContent",
             props: { className: "space-y-4" },
-
             children: [
               {
                 type: "p",
@@ -1427,12 +1528,10 @@ const investingAssetsModules = [
                 ]
               },
 
-              /* ANALOGY BANNER */
+              /* ANALOGY */
               {
                 type: "div",
-                props: {
-                  className: "bg-primary/10 p-4 rounded-lg"
-                },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -1449,7 +1548,7 @@ const investingAssetsModules = [
                 ]
               },
 
-              /* NOT DIVERSIFIED / WELL DIVERSIFIED */
+              /* NOT VS WELL DIVERSIFIED */
               {
                 type: "div",
                 props: { className: "grid md:grid-cols-2 gap-4" },
@@ -1459,7 +1558,8 @@ const investingAssetsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800"
+                      className:
+                        "p-4 bg-red-50 dark:bg-red-950/20 rounded-lg border border-red-200 dark:border-red-800"
                     },
                     children: [
                       {
@@ -1469,12 +1569,12 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• All money in one company stock",
-                          "• Only tech stocks",
-                          "• Only UK investments",
-                          "• All money in crypto"
+                          { type: "li", children: ["All money in one company stock"] },
+                          { type: "li", children: ["Only tech stocks"] },
+                          { type: "li", children: ["Only UK investments"] },
+                          { type: "li", children: ["All money in crypto"] }
                         ]
                       }
                     ]
@@ -1484,7 +1584,8 @@ const investingAssetsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
+                      className:
+                        "p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
                     },
                     children: [
                       {
@@ -1494,16 +1595,17 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• Mix of stocks, bonds, real estate",
-                          "• Different industries and company sizes",
-                          "• Global investments (UK, US, emerging markets)",
-                          "• Multiple asset classes"
+                          { type: "li", children: ["Mix of stocks, bonds, real estate"] },
+                          { type: "li", children: ["Different industries & company sizes"] },
+                          { type: "li", children: ["Global investments (UK, US, emerging markets)"] },
+                          { type: "li", children: ["Multiple asset classes"] }
                         ]
                       }
                     ]
                   }
+
                 ]
               }
             ]
@@ -1516,8 +1618,8 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
-
           {
             type: "CardHeader",
             children: [
@@ -1525,7 +1627,7 @@ const investingAssetsModules = [
                 type: "CardTitle",
                 props: { className: "flex items-center gap-2" },
                 children: [
-                  { type: "Target", props: { className: "h-5 w-5" } },
+                  { type: "PieChart", props: { className: "h-5 w-5" } },
                   "Types of Diversification"
                 ]
               }
@@ -1536,8 +1638,6 @@ const investingAssetsModules = [
             type: "CardContent",
             props: { className: "space-y-4" },
             children: [
-
-              /* LIST OF 3 TYPES */
               {
                 type: "div",
                 props: { className: "space-y-4" },
@@ -1564,13 +1664,13 @@ const investingAssetsModules = [
                         children: ["Spread across different types of investments:"]
                       },
                       {
-                        type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        type: "ul",
+                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• Stocks: 60–80% (growth)",
-                          "• Bonds: 15–30% (stability)",
-                          "• Real estate: 5–15% (property exposure)",
-                          "• Commodities: 0–10% (inflation hedge)"
+                          { type: "li", children: ["Stocks: 60–80% (growth)"] },
+                          { type: "li", children: ["Bonds: 15–30% (stability)"] },
+                          { type: "li", children: ["Real estate: 5–15% (property exposure)"] },
+                          { type: "li", children: ["Commodities: 0–10% (inflation hedge)"] }
                         ]
                       }
                     ]
@@ -1587,7 +1687,7 @@ const investingAssetsModules = [
                           className: "font-semibold mb-2 flex items-center gap-2"
                         },
                         children: [
-                          { type: "Globe", props: { className: "h-4 w-4 text-green-500" } },
+                          { type: "Globe2", props: { className: "h-4 w-4 text-green-500" } },
                           "Geographic Diversification"
                         ]
                       },
@@ -1597,13 +1697,13 @@ const investingAssetsModules = [
                         children: ["Don’t invest in only one country:"]
                       },
                       {
-                        type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        type: "ul",
+                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• UK: 25–40%",
-                          "• US: 30–50%",
-                          "• Europe: 10–20%",
-                          "• Emerging markets: 5–15%"
+                          { type: "li", children: ["UK: 25–40%"] },
+                          { type: "li", children: ["US: 30–50%"] },
+                          { type: "li", children: ["Europe: 10–20%"] },
+                          { type: "li", children: ["Emerging markets: 5–15%"] }
                         ]
                       }
                     ]
@@ -1632,15 +1732,16 @@ const investingAssetsModules = [
                         ]
                       },
                       {
-                        type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        type: "ul",
+                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• Technology • Healthcare • Finance • Consumer goods",
-                          "• Energy • Real estate • Utilities • Materials"
+                          { type: "li", children: ["Technology • Healthcare • Finance • Consumer goods"] },
+                          { type: "li", children: ["Energy • Real estate • Utilities • Materials"] }
                         ]
                       }
                     ]
                   }
+
                 ]
               }
             ]
@@ -1653,17 +1754,19 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
           {
             type: "CardHeader",
-            children: [{ type: "CardTitle", children: ["Why Diversification Works"] }]
+            children: [
+              { type: "CardTitle", children: ["Why Diversification Works"] }
+            ]
           },
 
           {
             type: "CardContent",
             props: { className: "space-y-4" },
             children: [
-
               {
                 type: "div",
                 props: { className: "grid gap-4" },
@@ -1679,7 +1782,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "When one investment goes down, others might stay stable or rise. This smooths your overall performance and reduces big losses."
+                          "When one investment goes down, others might stay stable or go up. This smooths out your overall returns and reduces the chance of big losses."
                         ]
                       }
                     ]
@@ -1695,13 +1798,13 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Different markets rise at different times. Being diversified allows you to benefit from growth wherever it happens."
+                          "Different markets and sectors perform well at different times. Diversification helps you benefit from various growth opportunities."
                         ]
                       }
                     ]
                   },
 
-                  /* STRESS REDUCTION */
+                  /* SLEEP BETTER */
                   {
                     type: "div",
                     props: { className: "p-4 bg-purple-50 dark:bg-purple-950/20 rounded-lg" },
@@ -1711,11 +1814,12 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "If your portfolio doesn't depend on one risky bet, investing becomes less stressful and more sustainable."
+                          "Knowing your money isn't all riding on one bet makes investing less stressful. You can focus on long-term growth instead of daily worries."
                         ]
                       }
                     ]
                   }
+
                 ]
               },
 
@@ -1723,7 +1827,8 @@ const investingAssetsModules = [
               {
                 type: "div",
                 props: {
-                  className: "bg-primary/10 p-4 rounded-lg border-l-4 border-primary"
+                  className:
+                    "bg-primary/10 p-4 rounded-lg border-l-4 border-primary"
                 },
                 children: [
                   {
@@ -1735,7 +1840,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "In 2022, tech stocks fell ~30% while energy stocks rose ~65%. Diversification helped offset losses and stabilize returns."
+                      "In 2022, technology stocks fell about 30%, but energy stocks rose 65%. If you only owned tech, you lost big. If you were diversified, the energy gains helped offset the tech losses."
                     ]
                   }
                 ]
@@ -1750,8 +1855,8 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
-
           {
             type: "CardHeader",
             children: [
@@ -1775,6 +1880,7 @@ const investingAssetsModules = [
                 props: { className: "space-y-3" },
                 children: [
 
+                  /* FALSE DIVERSIFICATION */
                   {
                     type: "div",
                     props: {
@@ -1791,12 +1897,13 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Buying 10 tech stocks is NOT diversified — they all move together when tech falls."
+                          "Buying 10 different tech stocks isn't diversified - they'll all move together when tech struggles."
                         ]
                       }
                     ]
                   },
 
+                  /* OVER-DIVERSIFICATION */
                   {
                     type: "div",
                     props: {
@@ -1812,11 +1919,14 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm" },
-                        children: ["Owning 100+ stocks is messy and unnecessary. Funds simplify everything."]
+                        children: [
+                          "Owning 100+ individual stocks is unnecessarily complex and expensive. Keep it simple with funds."
+                        ]
                       }
                     ]
                   },
 
+                  /* HOME COUNTRY BIAS */
                   {
                     type: "div",
                     props: {
@@ -1833,11 +1943,12 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Only investing in the UK means missing global growth."
+                          "Only investing in UK companies means missing out on global opportunities and growth."
                         ]
                       }
                     ]
                   }
+
                 ]
               }
             ]
@@ -1850,13 +1961,13 @@ const investingAssetsModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mt-5" },
         children: [
-
           {
             type: "CardHeader",
             children: [
               { type: "CardTitle", children: ["Easy Diversification for Students"] },
-              { type: "CardDescription", children: ["Simple ways to diversify effectively"] }
+              { type: "CardDescription", children: ["Simple ways to build a diversified portfolio"] }
             ]
           },
 
@@ -1864,7 +1975,6 @@ const investingAssetsModules = [
             type: "CardContent",
             props: { className: "space-y-4" },
             children: [
-
               {
                 type: "div",
                 props: { className: "grid gap-4" },
@@ -1889,12 +1999,12 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-xs space-y-1 ml-4" },
+                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          "• Thousands of companies",
-                          "• Multiple countries",
-                          "• Different sectors",
-                          "• Various company sizes"
+                          { type: "li", children: ["Thousands of companies"] },
+                          { type: "li", children: ["Multiple countries"] },
+                          { type: "li", children: ["Different sectors and industries"] },
+                          { type: "li", children: ["Various company sizes"] }
                         ]
                       },
                       {
@@ -1917,7 +2027,6 @@ const investingAssetsModules = [
                         props: { className: "font-semibold mb-2" },
                         children: ["📈 Next Level: Three-Fund Portfolio"]
                       },
-
                       {
                         type: "div",
                         props: { className: "space-y-2" },
@@ -1926,11 +2035,11 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Global stocks fund"] },
-                              { type: "Badge", props: { variant: "outline" }, children: ["70%"] }
+                              { type: "div", props: { className: "border rounded-xl border-gray-500 px-3" }, children: ["70%"] }
                             ]
                           },
 
@@ -1938,11 +2047,11 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Government bonds fund"] },
-                              { type: "Badge", props: { variant: "outline" }, children: ["20%"] }
+                              { type: "div", props: { className: "border rounded-xl border-gray-500 px-3" }, children: ["20%"] }
                             ]
                           },
 
@@ -1950,11 +2059,11 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "flex justify-between items-center p-2 bg-primary/10/30 rounded"
+                                "flex justify-between items-center p-2 bg-primary/10 rounded"
                             },
                             children: [
                               { type: "span", props: { className: "text-sm" }, children: ["Property/REIT fund"] },
-                              { type: "Badge", props: { variant: "outline" }, children: ["10%"] }
+                              { type: "div", props: { className: "border rounded-xl border-gray-500 px-3" }, children: ["10%"] }
                             ]
                           }
                         ]
@@ -1976,27 +2085,32 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Choose a fund based on your retirement year (e.g., 2060). It automatically shifts your diversification over time, becoming more stable as you age."
+                          "Choose a fund based on when you plan to retire (e.g., 2060). It automatically adjusts diversification as you age, becoming more conservative over time."
                         ]
                       }
                     ]
                   }
+
                 ]
               }
             ]
           }
         ]
       }
+
     ],
 
+    /* NO QUIZ, NO RELATED LESSONS */
     quiz: { questions: [], passingScore: 0 },
     relatedLessons: [],
+
     points: 100,
     difficultyLevel: "intermediate",
     timeEstimate: 2,
     order: 4,
     createdBy: "system"
   }
+
 
 ];
 

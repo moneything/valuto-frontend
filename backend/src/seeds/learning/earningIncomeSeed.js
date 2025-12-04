@@ -19,589 +19,862 @@ const earningIncomeModules = [
   // =====================================================
   {
     title: "How Pay Works",
-    description: "Understand gross pay, net pay, payslips, deductions, and different types of pay structures.",
+    description: "Gross vs net pay, payslips explained",
     categoryId: "earning-income",
     topic: "how-pay-works",
 
     visual: {
       icon: "TrendingUp",
       iconColor: "bg-green-500",
-      badge: "Earning & Income",
       readTime: 3
     },
 
-    contentSections: [
-      /* ------------------------------------------------------------ */
-      /* 1. GROSS VS NET PAY (twoColumn feature cards like Banking101) */
-      /* ------------------------------------------------------------ */
+    uiTree: [
+      /* ============================================================
+      * 1) GROSS VS NET PAY
+      * ============================================================ */
       {
-        id: "gross-vs-net",
-        type: "list",
-        title: "Gross vs Net Pay: The Big Difference",
-        icon: "Calculator",
-        metadata: {
-          variant: "accountFeatureCards",
-          cards: [
-            {
-              title: "💰 Gross Pay",
-              subtitle: "Your pay BEFORE deductions",
-              color: "green",
-              items: [
-                "The amount advertised in job ads",
-                "Your hourly rate × hours worked",
-                "What you earn before anything is taken off",
-                "Example: £10/hour × 20 hours = £200 gross"
-              ]
-            },
-            {
-              title: "💳 Net Pay",
-              subtitle: "Your pay AFTER deductions",
-              color: "blue",
-              items: [
-                "The money that actually hits your bank",
-                "Gross pay minus taxes and deductions",
-                "Also called 'take-home pay'",
-                "Example: £200 gross - £15 tax = £185 net"
-              ]
-            }
-          ]
-        }
-      },
+        type: "Card",
+        props: { className: "mb-5" },
+        children: [
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "flex items-center gap-2" },
+                children: [
+                  { type: "Calculator", props: { className: "h-5 w-5" } },
+                  "Gross vs Net Pay: The Big Difference"
+                ]
+              }
+            ]
+          },
 
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-2 gap-6" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "bg-green-50 p-6 rounded-lg border border-green-200" },
+                    children: [
+                      { type: "h3", props: { className: "text-xl font-bold text-green-700 mb-3" }, children: ["💰 Gross Pay"] },
+                      { type: "p", props: { className: "text-green-600 mb-3" }, children: ["Your pay BEFORE deductions"] },
+                      {
+                        type: "ul",
+                        props: { className: "space-y-2 text-sm list-disc pl-4" },
+                        children: [
+                          { type: "li", children: ["The amount advertised in job ads"] },
+                          { type: "li", children: ["Your hourly rate × hours worked"] },
+                          { type: "li", children: ["What you earn before anything is taken off"] },
+                          { type: "li", children: ["Example: £10/hour × 20 hours = £200 gross"] },
+                        ]
+                      }
+                    ]
+                  },
 
-      /* ------------------------------------------------------------ */
-      /* 2. NET PAY INSIGHT TIP BOX                                    */
-      /* ------------------------------------------------------------ */
-      {
-        id: "net-budget-tip",
-        type: "tip",
-        title: "Key Insight",
-        icon: "Lightbulb",
-        metadata: {
-          variant: "lightbulb",
-          tips: [
-            "Always budget using your NET pay, not gross pay. That's the real money you can spend!"
-          ]
-        }
-      },
+                  {
+                    type: "div",
+                    props: { className: "bg-blue-50 p-6 rounded-lg border border-blue-200" },
+                    children: [
+                      { type: "h3", props: { className: "text-xl font-bold text-blue-700 mb-3" }, children: ["💳 Net Pay"] },
+                      { type: "p", props: { className: "text-blue-600 mb-3" }, children: ["Your pay AFTER deductions"] },
+                      {
+                        type: "ul",
+                        props: { className: "space-y-2 text-sm list-disc pl-4" },
+                        children: [
+                          { type: "li", children: ["The money that actually hits your bank"] },
+                          { type: "li", children: ["Gross pay minus taxes and deductions"] },
+                          { type: "li", children: ["Also called 'take-home pay'"] },
+                          { type: "li", children: ["Example: £200 gross - £15 tax = £185 net"] },
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
 
-      /* ------------------------------------------------------------ */
-      /* 3. PAYSLIP (payslip)                                          */
-      /* ------------------------------------------------------------ */
-      {
-        id: "payslip-breakdown",
-        type: "payslip",
-        title: "Understanding Your Payslip",
-        content: "Breaking down every section",
-        icon: "FileText",
-        metadata: {
-          header: "📄 SAMPLE PAYSLIP",
-          summaryRows: [
-            { left: "Employee: Alex Johnson", right: "Pay Period: 01/01/24 - 31/01/24" }
-          ],
-          breakdown: [
-            { left: "Basic Pay (£8.50 × 60 hours)", right: "£510.00" },
-            { left: "Overtime (£12.75 × 5 hours)", right: "£63.75" },
-            { left: "GROSS PAY", right: "£573.75", highlight: true }
-          ],
-          deductions: [
-            { left: "Income Tax", right: "-£28.69" },
-            { left: "National Insurance", right: "-£22.95" },
-            { left: "Pension Contribution", right: "-£17.21" }
-          ],
-          netPay: {
-            left: "NET PAY",
-            right: "£504.90"
+              {
+                type: "div",
+                props: { className: "mt-6 p-4 bg-primary/10 rounded-lg" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["💡 Key Insight:"] },
+                  { type: "p", props: { className: "text-sm" }, children: ["Always budget using your NET pay, not gross pay. That's the real money you can spend!"] }
+                ]
+              }
+            ]
           }
-        }
+        ]
       },
 
-      /* ------------------------------------------------------------ */
-      /* 4. MINI INFO GRID (Income Tax, NI, Pension)                   */
-      /* ------------------------------------------------------------ */
+      /* ============================================================
+      * 2) UNDERSTANDING YOUR PAYSLIP
+      * ============================================================ */
       {
-        id: "payslip-mini-info",
-        type: "miniInfoGrid",
-        title: "Payslip Deductions Explained",
-        metadata: {
-          items: [
-            {
-              title: "Income Tax",
-              description: "Tax on your earnings (starts at £12,570/year)",
-              color: "blue"
-            },
-            {
-              title: "National Insurance",
-              description: "Contributes to NHS & pension (starts at £12,570)",
-              color: "orange"
-            },
-            {
-              title: "Pension",
-              description: "Automatic retirement saving (3% minimum)",
-              color: "purple"
-            }
-          ]
-        }
+        type: "Card",
+        props: { className: "mb-5" },
+        children: [
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "flex items-center gap-2" },
+                children: [
+                  { type: "FileText", props: { className: "h-5 w-5" } },
+                  "Understanding Your Payslip"
+                ]
+              },
+              {
+                type: "CardDescription",
+                children: ["Breaking down every section"]
+              }
+            ]
+          },
+
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "bg-gray-50 p-6 rounded-lg border border-gray-200 mb-4" },
+                children: [
+                  { type: "h4", props: { className: "font-bold text-center mb-4" }, children: ["📄 SAMPLE PAYSLIP"] },
+
+                  {
+                    type: "div",
+                    props: { className: "space-y-3 text-sm" },
+                    children: [
+                      {
+                        type: "div",
+                        props: { className: "flex justify-between" },
+                        children: [
+                          "Employee: Alex Johnson",
+                          "Pay Period: 01/01/24 - 31/01/24"
+                        ]
+                      },
+
+                      /* Replace <hr> */
+                      { type: "div", props: { className: "border-t my-2" } },
+
+                      {
+                        type: "div",
+                        props: { className: "space-y-2" },
+                        children: [
+                          {
+                            type: "div",
+                            props: { className: "flex justify-between font-semibold" },
+                            children: ["Basic Pay (£8.50 × 60 hours)", "£510.00"]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "flex justify-between" },
+                            children: ["Overtime (£12.75 × 5 hours)", "£63.75"]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "flex justify-between font-bold text-green-600" },
+                            children: ["GROSS PAY", "£573.75"]
+                          }
+                        ]
+                      },
+
+                      { type: "div", props: { className: "border-t my-2" } },
+
+                      {
+                        type: "div",
+                        props: { className: "space-y-2" },
+                        children: [
+                          { type: "div", props: { className: "flex justify-between text-red-600" }, children: ["Income Tax", "-£28.69"] },
+                          { type: "div", props: { className: "flex justify-between text-red-600" }, children: ["National Insurance", "-£22.95"] },
+                          { type: "div", props: { className: "flex justify-between text-red-600" }, children: ["Pension Contribution", "-£17.21"] }
+                        ]
+                      },
+
+                      { type: "div", props: { className: "border-t my-2" } },
+
+                      {
+                        type: "div",
+                        props: { className: "flex justify-between font-bold text-blue-600 text-lg" },
+                        children: ["NET PAY", "£504.90"]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-3 gap-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-primary/10 rounded-lg" },
+                    children: [
+                      { type: "h5", props: { className: "font-semibold text-primary" }, children: ["Income Tax"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Tax on your earnings (starts at £12,570/year)"] }
+                    ]
+                  },
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-purple-50 rounded-lg" },
+                    children: [
+                      { type: "h5", props: { className: "font-semibold" }, children: ["National Insurance"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Contributes to NHS, state pension (starts at £12,570/year)"] }
+                    ]
+                  },
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-yellow-50 rounded-lg" },
+                    children: [
+                      { type: "h5", props: { className: "font-semibold" }, children: ["Pension"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Automatic saving for retirement (3% minimum)"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      /* ------------------------------------------------------------ */
-      /* 5. STUDENT TAX RULES (explanation + warning-style list)       */
-      /* ------------------------------------------------------------ */
+      /* ============================================================
+      * 3) SPECIAL STUDENT RULES
+      * ============================================================ */
       {
-        id: "student-tax-rules-info",
-        type: "warning",
-        icon: "none",
-        title: "✅ Special Rules for Student Jobs",
-        colorScheme: "green",
-        metadata: {
-          warnings: [
-            "If you earn under £12,570/year, you pay NO income tax",
-            "If you earn under £12,570/year, you pay NO National Insurance",
-            "Most part-time student jobs fall under these limits"
-          ]
-        }
+        type: "Card",
+        props: { className: "mt-5" },
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Special Rules for Student Jobs"] }] },
+
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "space-y-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "bg-green-50 border-l-4 border-green-400 p-4" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["✅ Good News for Students!"] },
+                      {
+                        type: "ul",
+                        props: { className: "space-y-1 text-sm list-disc pl-4" },
+                        children: [
+                          { type: "li", children: ["If you earn under £12,570/year, you pay NO income tax"] },
+                          { type: "li", children: ["If you earn under £12,570/year, you pay NO National Insurance"] },
+                          { type: "li", children: ["Most part-time student jobs fall under these limits"] },
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: { className: "grid md:grid-cols-2 gap-4" },
+                    children: [
+                      {
+                        type: "div",
+                        children: [
+                          { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Annual Tax-Free Allowances (2024):"] },
+                          {
+                            type: "ul",
+                            props: { className: "space-y-1 text-sm list-disc pl-4" },
+                            children: [
+                              { type: "li", children: ["Income Tax: £12,570"] },
+                              { type: "li", children: ["National Insurance: £12,570"] },
+                              { type: "li", children: ["Both calculated yearly, not monthly"] },
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        type: "div",
+                        children: [
+                          { type: "h4", props: { className: "font-semibold mb-2" }, children: ["What this means weekly:"] },
+                          {
+                            type: "ul",
+                            props: { className: "space-y-1 text-sm list-disc pl-4" },
+                            children: [
+                              { type: "li", children: ["£242/week tax-free"] },
+                              { type: "li", children: ["About 30 hours at minimum wage"] },
+                              { type: "li", children: ["Perfect for most student jobs!"] },
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
+      /* ============================================================
+      * 4) TYPES OF PAY STRUCTURE
+      * ============================================================ */
       {
-        id: "student-tax-details",
-        type: "list",
-        title: "Annual Tax-Free Allowances (2024)",
-        metadata: {
-          listItems: [
-            "Income Tax: £12,570",
-            "National Insurance: £12,570",
-            "Both calculated yearly, not monthly"
-          ]
-        }
-      },
+        type: "Card",
+        props: { className: "mt-5" },
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Types of Pay Structure"] }] },
 
-      {
-        id: "weekly-meaning",
-        type: "list",
-        title: "What this means weekly",
-        metadata: {
-          listItems: [
-            "£242/week tax-free",
-            "About 30 hours at minimum wage",
-            "Perfect for most student jobs!"
-          ]
-        }
-      },
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "grid gap-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-blue-600" }, children: ["💰 Hourly Pay"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Most common for students. Pay = hours worked × hourly rate"] },
+                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: 15 hours × £8.50 = £127.50"] }
+                    ]
+                  },
 
-      /* ------------------------------------------------------------ */
-      /* 6. TYPES OF PAY STRUCTURE (stacked cards)                     */
-      /* ------------------------------------------------------------ */
-      {
-        id: "pay-types",
-        type: "payTypesStack",
-        title: "Types of Pay Structure",
-        metadata: {
-          items: [
-            {
-              title: "💰 Hourly Pay",
-              color: "blue",
-              description: "Most common for students. Pay = hours × hourly rate",
-              footer: "Example: 15 hours × £8.50 = £127.50"
-            },
-            {
-              title: "📅 Salary",
-              color: "green",
-              description: "Fixed annual amount, paid monthly regardless of hours",
-              footer: "Example: £25,000/year = £2,083/month"
-            },
-            {
-              title: "📈 Commission",
-              color: "purple",
-              description: "Earn based on sales or performance",
-              footer: "Example: £200 base + 5% of sales"
-            },
-            {
-              title: "💪 Piece Rate",
-              color: "orange",
-              description: "Paid per item/task completed",
-              footer: "Example: £2 per delivery completed"
-            }
-          ]
-        }
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["📅 Salary"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Fixed annual amount, paid monthly regardless of hours"] },
+                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £25,000/year = £2,083/month"] }
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-purple-600" }, children: ["📈 Commission"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Earn based on sales or performance"] },
+                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £200 base + 5% of sales"] }
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-orange-600" }, children: ["💪 Piece Rate"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Paid per item/task completed"] },
+                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £2 per delivery completed"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       }
     ],
 
-    /* ------------------------------------------------------------ */
-    /* QUIZ                                                         */
-    /* ------------------------------------------------------------ */
+    /* ============================================================
+    * QUIZ — properly formatted
+    * ============================================================ */
     quiz: {
       passingScore: 1,
       questions: [
         {
           question: "What is the term for your pay BEFORE any deductions?",
-          options: ["Gross pay", "Net pay", "Take-home pay", "Basic pay"],
+          options: [
+            "Gross pay",
+            "Net pay",
+            "Take-home pay",
+            "Basic pay"
+          ],
           correctAnswer: 0,
-          explanation: "Gross pay is the amount you earn before any deductions."
+          explanation: "Gross pay is the amount you earn before any tax or deductions are taken off."
         }
       ]
     },
 
-    /* ------------------------------------------------------------ */
-    /* RELATED LESSONS                                              */
-    /* ------------------------------------------------------------ */
-    relatedLessons: [
-      {
-        moduleId: "part-time-jobs",
-        title: "Part-Time Jobs Guide",
-        relationship: "next-step"
-      },
-      {
-        moduleId: "tax-basics",
-        title: "Tax Basics",
-        relationship: "related"
-      },
-      {
-        moduleId: "budgeting-basics",
-        title: "Budgeting Basics",
-        relationship: "related"
-      }
-    ],
-
-    points: 100,
+    /* ============================================================
+    * Meta
+    * ============================================================ */
+    relatedLessons: [],
+    points: 90,
     difficultyLevel: "beginner",
     timeEstimate: 3,
     order: 1,
-    isActive: true,
     createdBy: "system"
   },
-
+  
   // =====================================================
   // 2. Part-Time Jobs & Apprenticeships
   // =====================================================
   {
     title: "Part-Time Jobs & Apprenticeships",
-    description:
-      "Learn when you can start working, the best student-friendly jobs, how apprenticeships work, and how to land your very first role.",
+    description: "Getting started in the workforce",
     categoryId: "earning-income",
     topic: "part-time-jobs",
 
     visual: {
       icon: "Building",
       iconColor: "bg-green-500",
-      badge: "Earning & Income",
-      readTime: 3, // 3 min read
+      readTime: 3
     },
 
-    contentSections: [
-      // 1) Age & Legal Requirements — 3 coloured boxes + legal note
+    uiTree: [
+      /* ============================================================
+      * AGE & LEGAL REQUIREMENTS
+      * ============================================================ */
       {
-        id: "age-legal-requirements",
-        type: "comparison",
-        title: "When Can You Start Working?",
-        content: "",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          // Reuse the credit-score style multi-box layout
-          variant: "scoreRangeGrid",
-          ranges: [
-            {
-              label: "13–14",
-              score: "Very limited work",
-              bgColor: "bg-red-50",
-              textColor: "text-red-600",
-              description:
-                "Paper rounds, light agricultural work, usually with a work permit.",
-            },
-            {
-              label: "15",
-              score: "More options",
-              bgColor: "bg-orange-50",
-              textColor: "text-orange-600",
-              description:
-                "Retail and restaurant roles (outside school hours), max ~8 hours/week.",
-            },
-            {
-              label: "16+",
-              score: "Most part-time jobs",
-              bgColor: "bg-green-50",
-              textColor: "text-green-600",
-              description:
-                "Evening & weekend work in most sectors, plus apprenticeships.",
-            },
-          ],
-          note: {
-            title: "Important Legal Limits",
-            items: [
-              "School days: Max 2 hours (typically after 7pm)",
-              "Saturdays: Max 8 hours",
-              "Sundays: Max 2 hours",
-              "School holidays: Up to 8 hours/day, 35 hours/week (13–14), 40 hours/week (15+)",
-            ],
+        type: "Card",
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["When Can You Start Working?"] }] },
+
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-3 gap-4" },
+                children: [
+                  /* 13-14 */
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-red-50 rounded-lg border border-red-200" },
+                    children: [
+                      { type: "h3", props: { className: "text-2xl font-bold text-red-600" }, children: ["13-14"] },
+                      { type: "p", props: { className: "text-sm font-semibold" }, children: ["Very Limited Work"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        children: [
+                          { type: "li", children: ["Paper rounds"] },
+                          { type: "li", children: ["Light agricultural work"] },
+                          { type: "li", children: ["Requires work permit"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* 15 */
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-orange-50 rounded-lg border border-orange-200" },
+                    children: [
+                      { type: "h3", props: { className: "text-2xl font-bold text-orange-600" }, children: ["15"] },
+                      { type: "p", props: { className: "text-sm font-semibold" }, children: ["More Options"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        children: [
+                          { type: "li", children: ["Retail (not during school)"] },
+                          { type: "li", children: ["Restaurants (light duties)"] },
+                          { type: "li", children: ["Max 8 hours/week"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* 16+ */
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-green-50 rounded-lg border border-green-200" },
+                    children: [
+                      { type: "h3", props: { className: "text-2xl font-bold text-green-600" }, children: ["16+"] },
+                      { type: "p", props: { className: "text-sm font-semibold" }, children: ["Full Part-Time Work"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        children: [
+                          { type: "li", children: ["Most jobs available"] },
+                          { type: "li", children: ["Evening & weekend work"] },
+                          { type: "li", children: ["Apprenticeships available"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              /* Legal limits */
+              {
+                type: "div",
+                props: { className: "mt-4 p-4 bg-primary/10 rounded-lg" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["⚖️ Important Legal Limits:"] },
+                  {
+                    type: "ul",
+                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    children: [
+                      { type: "li", children: ["School days: Max 2 hours (after 7pm)"] },
+                      { type: "li", children: ["Saturdays: Max 8 hours"] },
+                      { type: "li", children: ["Sundays: Max 2 hours"] },
+                      { type: "li", children: ["School holidays: Maximum 8 hours/day, 35 hours/week (13-14), 40 hours/week (15+)"] },
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+
+      /* ============================================================
+      * BEST STUDENT JOBS
+      * ============================================================ */
+      {
+        type: "Card",
+        props: { className: "mt-5" },
+        children: [
+          {
+            type: "CardHeader",
+            children: [
+              { type: "CardTitle", children: ["Best Part-Time Jobs for Students"] },
+              { type: "CardDescription", children: ["Jobs that work around school schedules"] }
+            ]
           },
-        },
+
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-2 gap-4" },
+                children: [
+                  /* Retail */
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-blue-600 mb-2" }, children: ["🛒 Retail Assistant"] },
+                      { type: "p", props: { className: "text-sm mb-2" }, children: ["Working in shops, supermarkets, or department stores"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        children: [
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £6.40–£8.50/hour"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Evenings/weekends"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Skills"]},": Customer service, teamwork"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* Food service */
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-green-600 mb-2" }, children: ["🍟 Food Service"] },
+                      { type: "p", props: { className: "text-sm mb-2" }, children: ["Restaurants, cafes, fast food"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        children: [
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £6.40–£9.00/hour"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Split shifts, weekends"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Skills"]},": Fast-paced work, communication"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* Tutoring */
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-purple-600 mb-2" }, children: ["📚 Tutoring"] },
+                      { type: "p", props: { className: "text-sm mb-2" }, children: ["Help younger students succeed in subjects you're good at"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        children: [
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £8–£15/hour"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": After school/weekends"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Skills"]},": Teaching, patience, subject knowledge"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* Delivery */
+                  {
+                    type: "div",
+                    props: { className: "p-4 border rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold text-orange-600 mb-2" }, children: ["🚗 Delivery Driver"] },
+                      { type: "p", props: { className: "text-sm mb-2" }, children: ["Food delivery (17+ with license) or cycling delivery"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        children: [
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £7–£12/hour + tips"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Flexible, evenings"] },
+                          { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Skills"]},": Navigation, time management"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              /* Seasonal work tip */
+              {
+                type: "div",
+                props: { className: "bg-primary/10 p-4 rounded-lg mt-4" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["💡 Hot Tip: Seasonal Jobs"] },
+                  { type: "p", props: { className: "text-sm" }, children: ["Christmas retail, summer festivals, and holiday resorts offer great temporary work with often higher pay rates!"] }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // 2) Best Part-Time Jobs — stacked cards
+      /* ============================================================
+      * APPRENTICESHIPS
+      * ============================================================ */
       {
-        id: "best-student-jobs",
-        type: "list",
-        title: "Best Part-Time Jobs for Students",
-        content: "Jobs that work around your school or uni schedule.",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          variant: "cardsStack",
-          cards: [
-            {
-              title: "🛒 Retail Assistant",
-              color: "blue",
-              items: [
-                "Pay: £6.40–£8.50 per hour",
-                "Hours: Evenings and weekends",
-                "Skills: Customer service, teamwork, communication",
-              ],
-            },
-            {
-              title: "🍟 Food Service",
-              color: "green",
-              items: [
-                "Pay: £6.40–£9.00 per hour",
-                "Hours: Split shifts and weekends",
-                "Skills: Fast-paced work, resilience, people skills",
-              ],
-            },
-            {
-              title: "📚 Tutoring",
-              color: "purple",
-              items: [
-                "Pay: £8–£15 per hour",
-                "Hours: After school and weekends",
-                "Skills: Teaching, patience, strong subject knowledge",
-              ],
-            },
-            {
-              title: "🚗 Delivery Driver",
-              color: "yellow", // maps to orange-ish in your UI
-              items: [
-                "Pay: £7–£12 per hour plus tips",
-                "Hours: Flexible, mostly evenings",
-                "Skills: Navigation, time management, reliability",
-              ],
-            },
-          ],
-          tip: {
-            title: "Hot Tip: Seasonal Work",
-            content:
-              "Christmas retail, summer festivals, and holiday resorts often pay more and are perfect for short bursts of work.",
-          },
-        },
+        type: "Card",
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Apprenticeships: Learn While You Earn"] }] },
+
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "bg-gradient-to-r from-blue-50 to-green-50 p-6 rounded-lg space-y-4" },
+                children: [
+                  { type: "h3", props: { className: "text-xl font-bold" }, children: ["What is an Apprenticeship?"] },
+                  { type: "p", children: ["A real job with training, qualifications, and a salary. You work 4 days, study 1 day."] },
+
+                  {
+                    type: "div",
+                    props: { className: "grid md:grid-cols-2 gap-4" },
+                    children: [
+                      /* Benefits */
+                      {
+                        type: "div",
+                        children: [
+                          { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["Benefits"] },
+                          {
+                            type: "ul",
+                            props: { className: "list-disc pl-4 text-sm space-y-1 mt-1" },
+                            children: [
+                              { type: "li", children: ["No student debt"] },
+                              { type: "li", children: ["Earn while you learn"] },
+                              { type: "li", children: ["Guaranteed job at the end"] },
+                              { type: "li", children: ["Real work experience"] },
+                              { type: "li", children: ["Industry-recognized qualifications"] },
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* Numbers */
+                      {
+                        type: "div",
+                        children: [
+                          { type: "h4", props: { className: "font-semibold text-blue-600" }, children: ["The Numbers"] },
+                          {
+                            type: "ul",
+                            props: { className: "list-disc pl-4 text-sm space-y-1 mt-1" },
+                            children: [
+                              { type: "li", children: ["Minimum pay: £6.40/hour"] },
+                              { type: "li", children: ["Duration: 1–4 years"] },
+                              { type: "li", children: ["Age: 16+ (no upper limit)"] },
+                              { type: "li", children: ["600+ apprenticeships"] }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              /* Apprenticeship categories */
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-3 gap-4 mt-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-blue-50 rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold" }, children: ["💻 Tech & Digital"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Software development, cybersecurity, digital marketing"] }
+                    ]
+                  },
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-green-50 rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold" }, children: ["🏥 Healthcare"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Nursing, dental, pharmacy, veterinary"] }
+                    ]
+                  },
+                  {
+                    type: "div",
+                    props: { className: "text-center p-4 bg-yellow-50 rounded-lg" },
+                    children: [
+                      { type: "h4", props: { className: "font-semibold" }, children: ["💼 Business"] },
+                      { type: "p", props: { className: "text-sm mt-1" }, children: ["Accounting, HR, project management, sales"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // 3) Apprenticeships — gradient two-column knowledge box
+      /* ============================================================
+      * JOB APPLICATION TIPS
+      * ============================================================ */
       {
-        id: "apprenticeships-intro",
-        type: "explanation",
-        title: "Apprenticeships: Learn While You Earn",
-        content:
-          "Apprenticeships let you work, earn a salary, and study towards a qualification at the same time.",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          variant: "gradientInfoTwoColumn",
-          heading: "What is an Apprenticeship?",
-          description:
-            "A real job with training and a salary. You typically work 4 days and study 1 day.",
-          columns: [
-            {
-              title: "Benefits",
-              color: "green",
-              items: [
-                "No student debt",
-                "Earn while you learn",
-                "Real work experience",
-                "Guaranteed job at the end",
-                "Industry-recognised qualifications",
-              ],
-            },
-            {
-              title: "The Numbers",
-              color: "blue",
-              items: [
-                "Minimum pay £6.40/hour",
-                "Duration: 1–4 years",
-                "Age: 16+",
-                "600+ apprenticeship routes",
-              ],
-            },
-          ],
-        }
+        type: "Card",
+        props: { className: "mt-5" },
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Landing Your First Job"] }] },
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "grid md:grid-cols-2 gap-6" },
+                children: [
+                  /* CV Tips */
+                  {
+                    type: "div",
+                    children: [
+                      { type: "h4", props: { className: "font-semibold mb-3" }, children: ["📝 Writing Your CV"] },
+                      {
+                        type: "ul",
+                        props: { className: "space-y-2 text-sm" },
+                        children: [
+                          { type: "li", props: {className: "flex"}, children: [{type: "Check", props: { className: "h-5 w-5 mr-2 text-green-500" } }, "Keep it to 1 page maximum"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "Check", props: { className: "h-5 w-5 mr-2 text-green-500" } }, "Include school achievements, sports, volunteering"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "Check", props: { className: "h-5 w-5 mr-2 text-green-500" } }, "List subjects you're good at"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "Check", props: { className: "h-5 w-5 mr-2 text-green-500" } }, "Add hobbies that show responsibility"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* Interview Tips */
+                  {
+                    type: "div",
+                    children: [
+                      { type: "h4", props: { className: "font-semibold mb-3" }, children: ["🎯 Interview Tips"] },
+                      {
+                        type: "ul",
+                        props: { className: "list-disc space-y-2 text-sm" },
+                        children: [
+                          { type: "li", props: {className: "flex"}, children: [{type: "ArrowRight", props: { className: "h-5 w-5 mr-2 text-blue-500" } }, "Arrive 10 minutes early"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "ArrowRight", props: { className: "h-5 w-5 mr-2 text-blue-500" } }, "Dress smartly (even for casual jobs)"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "ArrowRight", props: { className: "h-5 w-5 mr-2 text-blue-500" } }, "Bring copies of your CV"] },
+                          { type: "li", props: {className: "flex"}, children: [{type: "ArrowRight", props: { className: "h-5 w-5 mr-2 text-blue-500" } }, "Ask questions about the role"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              /* Watch Out For */
+              {
+                type: "div",
+                props: { className: "bg-yellow-50 border-l-4 border-yellow-400 p-4 mt-4" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold text-yellow-700 mb-2" }, children: ["⚠️ Watch Out For:"] },
+                  {
+                    type: "ul",
+                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    children: [
+                      { type: "li", children: ["Jobs asking for money upfront (usually scams)"] },
+                      { type: "li", children: ["\"Too good to be true\" pay rates"] },
+                      { type: "li", children: ["Pyramid schemes disguised as jobs"] },
+                      { type: "li", children: ["Work that interferes with school"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
-      // 4) Apprenticeship Sectors — mini 3-card grid
+      /* ============================================================
+      * NEXT STEPS
+      * ============================================================ */
       {
-        id: "apprenticeship-sectors",
-        type: "miniInfoGrid",
-        title: "Popular Apprenticeship Areas",
-        content: "",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          items: [
-            {
-              title: "💻 Tech & Digital",
-              description: "Software development, cybersecurity, IT support, digital marketing.",
-              color: "blue"
-            },
-            {
-              title: "🏥 Healthcare",
-              description: "Nursing, dental, pharmacy, healthcare assistant, veterinary roles.",
-              color: "green"
-            },
-            {
-              title: "💼 Business",
-              description: "Accounting, HR, project management, sales, business admin.",
-              color: "purple"
-            }
-          ]
-        },
-      },
+        type: "Card",
+        props: { className: "mt-5" },
+        children: [
+          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Ready to Start Job Hunting?"] }] },
 
-      // 5) Landing Your First Job — CV vs Interview tips
-      {
-        id: "cv-and-interview-tips",
-        type: "list",
-        title: "Landing Your First Job",
-        content: "",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          variant: "twoColumn",
-          columns: [
-            {
-              title: "Writing Your CV",
-              color: "green",
-              iconName: "Check",
-              items: [
-                "Keep it to 1 page maximum.",
-                "Include school achievements, sports, and volunteering.",
-                "List subjects and topics you’re strongest in.",
-                "Mention hobbies that show responsibility and teamwork.",
-              ],
-            },
-            {
-              title: "Interview Tips",
-              color: "blue",
-              iconName: "MoveRight",
-              items: [
-                "Arrive around 10 minutes early.",
-                "Dress smartly, even for casual roles.",
-                "Bring printed copies of your CV.",
-                "Prepare 1–2 questions about the role or company.",
-              ],
-            },
-          ],
-        },
-      },
-
-      // 6) Job scams & red flags — warning block
-      {
-        id: "job-red-flags",
-        type: "warning",
-        title: "⚠️ Watch Out For:",
-        content: "",
-        icon: "none",
-        colorScheme: "yellow",
-        metadata: {
-          warnings: [
-            "Jobs asking you to pay money upfront (often scams).",
-            "“Too good to be true” pay rates for very little work.",
-            "Pyramid schemes disguised as “business opportunities”.",
-            "Work hours that clash heavily with school or exam revision.",
-          ],
-        },
-      },
-
-      // 7) Next steps / action plan — reusing StepsSection
-      {
-        id: "next-steps-job-hunting",
-        type: "steps",
-        title: "Ready to Start Job Hunting?",
-        content:
-          "Follow this simple plan to get your first job or apprenticeship interview.",
-        icon: null,
-        colorScheme: null,
-        metadata: {
-          variant: "default",
-          steps: [
-            {
-              number: 1,
-              text: "Check the age requirements",
-              description:
-                "Make sure you meet the minimum age for the jobs you’re targeting.",
-            },
-            {
-              number: 2,
-              text: "Write or update your CV",
-              description:
-                "Ask a teacher, careers adviser, or friend to read it over.",
-            },
-            {
-              number: 3,
-              text: "Search for roles",
-              description:
-                "Look on Indeed, local job boards, company websites, and apprenticeship sites.",
-            },
-            {
-              number: 4,
-              text: "Apply to 5–10 roles",
-              description:
-                "Don’t pin everything on just one job — give yourself options.",
-            },
-            {
-              number: 5,
-              text: "Prepare for interviews",
-              description:
-                "Practice answers out loud and plan your outfit and travel ahead of time.",
-            },
-          ],
-        },
-      },
+          {
+            type: "CardContent",
+            children: [
+              {
+                type: "div",
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Your Action Plan"] },
+                  {
+                    type: "ol",
+                    props: { className: "list-decimal list-inside space-y-1 text-sm" },
+                    children: [
+                      { type: "li", children: ["Check you meet age requirements"] },
+                      { type: "li", children: ["Write your first CV"] },
+                      { type: "li", children: ["Search on Indeed or company sites"] },
+                      { type: "li", children: ["Apply to 5–10 suitable roles"] },
+                      { type: "li", children: ["Prepare for interviews"] }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
     ],
 
+    /* ============================================================
+    * QUIZ (MIGRATED EXACTLY)
+    * ============================================================ */
     quiz: {
       passingScore: 1,
       questions: [
         {
+          id: "ptjobs-q1",
+          type: "multiple-choice",
           question: "At what age can you do most part-time jobs?",
           options: ["13", "14", "15", "16"],
-          correctAnswer: 3, // index of "16"
+          correctAnswer: "16",
           explanation:
-            "Most part-time job opportunities fully open up at age 16, including evening and weekend roles.",
-        },
-      ],
+            "Most part-time roles open at age 16, including evening and weekend work."
+        }
+      ]
     },
 
-    relatedLessons: [
-      {
-        moduleId: "side-hustles",
-        title: "Side Hustles",
-        relationship: "next-step",
-      },
-      {
-        moduleId: "how-pay-works",
-        title: "How Pay Works",
-        relationship: "related",
-      },
-      {
-        moduleId: "budgeting-basics",
-        title: "Budgeting Basics",
-        relationship: "related",
-      },
-    ],
-
-    points: 100,
+    relatedLessons: [],
+    points: 90,
     difficultyLevel: "beginner",
-    timeEstimate: 5,
+    timeEstimate: 3,
     order: 2,
-    isActive: true,
-
-    createdBy: "system",
+    createdBy: "system"
   },
 
   // =====================================================
@@ -610,7 +883,7 @@ const earningIncomeModules = [
   {
     title: "Side Hustles & Freelancing",
     description:
-      "Flexible ways for students to earn money online or locally, build skills, and grow income at their own pace.",
+      "Creative ways to earn extra money",
     categoryId: "earning-income",
     topic: "side-hustles",
 
@@ -621,96 +894,390 @@ const earningIncomeModules = [
       readTime: 2
     },
 
-    contentSections: [
+    uiTree: [
       /* ------------------------------------------------------------ */
       /* 1. WHAT IS A SIDE HUSTLE? (intro three cards)                 */
       /* ------------------------------------------------------------ */
       {
-        id: "what-is-side-hustle",
-        type: "explanation",
-        title: "What is a Side Hustle?",
-        content:
-          "Side hustles are flexible earning opportunities you can do alongside school or university.",
-        metadata: {
-          variant: "introThreeCards",
-          cards: [
-            {
-              title: "Flexible",
-              emoji: "💪",
-              description: "Work around your own schedule",
-              color: "blue"
-            },
-            {
-              title: "Scalable",
-              emoji: "🚀",
-              description: "Grow your earnings steadily",
-              color: "green"
-            },
-            {
-              title: "Skill Building",
-              emoji: "🎯",
-              description: "Gain experience employers love",
-              color: "purple"
-            }
-          ]
-        }
+        "type": "Card",
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["What is a Side Hustle?"] }
+            ]
+          },
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "div",
+                "props": { "className": "space-y-4" },
+                "children": [
+                  {
+                    "type": "p",
+                    "props": { "className": "text-lg" },
+                    "children": [
+                      "A side hustle is flexible work you do alongside studying to earn extra money. Unlike traditional part-time jobs, side hustles let you work when YOU want!"
+                    ]
+                  },
+
+                  {
+                    "type": "div",
+                    "props": { "className": "grid md:grid-cols-3 gap-4" },
+                    "children": [
+                      {
+                        "type": "div",
+                        "props": {
+                          "className": "text-center p-4 bg-blue-50 rounded-lg"
+                        },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": {
+                              "className": "font-semibold text-blue-700"
+                            },
+                            "children": ["💪 Flexible"]
+                          },
+                          {
+                            "type": "p",
+                            "props": { "className": "text-sm mt-1" },
+                            "children": ["Work around your schedule"]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": {
+                          "className": "text-center p-4 bg-green-50 rounded-lg"
+                        },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": {
+                              "className": "font-semibold text-green-700"
+                            },
+                            "children": ["🚀 Scalable"]
+                          },
+                          {
+                            "type": "p",
+                            "props": { "className": "text-sm mt-1" },
+                            "children": ["Grow your earnings over time"]
+                          }
+                        ]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": {
+                          "className": "text-center p-4 bg-purple-50 rounded-lg"
+                        },
+                        "children": [
+                          {
+                            "type": "h4",
+                            "props": {
+                              "className": "font-semibold text-purple-700"
+                            },
+                            "children": ["🎯 Skill Building"]
+                          },
+                          {
+                            "type": "p",
+                            "props": { "className": "text-sm mt-1" },
+                            "children": ["Develop valuable experience"]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
       /* ------------------------------------------------------------ */
       /* 2. ONLINE SIDE HUSTLES (hustleCardGrid)                       */
       /* ------------------------------------------------------------ */
       {
-        id: "online-hustles",
-        type: "list",
-        title: "Online Side Hustles",
-        content: "Work from anywhere with an internet connection.",
-        metadata: {
-          variant: "hustleCardGrid",
-          hustles: [
-            {
-              title: "Online Tutoring",
-              emoji: "📚",
-              color: "blue",
-              description: "Teach subjects you're strong in over video call.",
-              platformsLabel: "Platforms",
-              platforms: "Tutor.com, Preply, Wyzant",
-              pay: "£10–20/hour",
-              requirements: "Good subject knowledge, patience"
-            },
-            {
-              title: "Freelance Writing",
-              emoji: "✍️",
-              color: "green",
-              description:
-                "Write blog posts, articles, and social media content.",
-              platformsLabel: "Platforms",
-              platforms: "Upwork, Fiverr, Contently",
-              pay: "£0.05–0.50 per word",
-              requirements: "Strong English, creativity"
-            },
-            {
-              title: "Graphic Design",
-              emoji: "🎨",
-              color: "purple",
-              description: "Create logos, posters, and social content.",
-              platformsLabel: "Platforms",
-              platforms: "Fiverr, 99designs, Dribbble",
-              pay: "£5–100/design",
-              requirements: "Design skills, Canva or Figma"
-            },
-            {
-              title: "Social Media Management",
-              emoji: "📱",
-              color: "orange",
-              description:
-                "Run social accounts for small businesses or creators.",
-              platformsLabel: "Find clients",
-              platforms: "Local businesses, Instagram, Upwork",
-              pay: "£100–500/month per client",
-              requirements: "Social media knowledge"
-            }
-          ]
-        }
+        "type": "Card",
+        props: { className: "mt-5" },
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["Online Side Hustles"] },
+              {
+                "type": "CardDescription",
+                "children": ["Work from anywhere with an internet connection"]
+              }
+            ]
+          },
+
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "div",
+                "props": { "className": "grid gap-4" },
+                "children": [
+                  /* ============================================================
+                  * 📚 Online Tutoring
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-blue-600 mb-2" },
+                        "children": ["📚 Online Tutoring"]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "p",
+                                "props": { "className": "text-sm mb-2" },
+                                "children": [
+                                  "Teach subjects you're good at via video call"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "props": { "className": "text-xs" },
+                                "children": [
+                                  { "type": "strong", "children": ["Platforms:"] },
+                                  " Tutor.com, Preply, Wyzant"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "text-sm" },
+                            "children": [
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pay:"] },
+                                  " £10-20/hour"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Requirements:"] },
+                                  " Good grades, patience"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * ✍️ Freelance Writing
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-green-600 mb-2" },
+                        "children": ["✍️ Freelance Writing"]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "p",
+                                "props": { "className": "text-sm mb-2" },
+                                "children": [
+                                  "Write articles, blog posts, social media content"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "props": { "className": "text-xs" },
+                                "children": [
+                                  { "type": "strong", "children": ["Platforms:"] },
+                                  " Upwork, Fiverr, Contently"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "text-sm" },
+                            "children": [
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pay:"] },
+                                  " £0.05-0.50/word"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Requirements:"] },
+                                  " Good English, creativity"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * 🎨 Graphic Design
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-purple-600 mb-2" },
+                        "children": ["🎨 Graphic Design"]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "p",
+                                "props": { "className": "text-sm mb-2" },
+                                "children": [
+                                  "Create logos, posters, social media graphics"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "props": { "className": "text-xs" },
+                                "children": [
+                                  { "type": "strong", "children": ["Platforms:"] },
+                                  " 99designs, Fiverr, Dribbble"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "text-sm" },
+                            "children": [
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pay:"] },
+                                  " £5-100/design"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Requirements:"] },
+                                  " Design skills, software"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * 📱 Social Media Management
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-orange-600 mb-2" },
+                        "children": ["📱 Social Media Management"]
+                      },
+
+                      {
+                        "type": "div",
+                        "props": { "className": "grid md:grid-cols-2 gap-4" },
+                        "children": [
+                          {
+                            "type": "div",
+                            "children": [
+                              {
+                                "type": "p",
+                                "props": { "className": "text-sm mb-2" },
+                                "children": [
+                                  "Manage social accounts for small businesses"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "props": { "className": "text-xs" },
+                                "children": [
+                                  { "type": "strong", "children": ["Find clients:"] },
+                                  " Local businesses, Upwork"
+                                ]
+                              }
+                            ]
+                          },
+
+                          {
+                            "type": "div",
+                            "props": { "className": "text-sm" },
+                            "children": [
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pay:"] },
+                                  " £100-500/month per client"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Requirements:"] },
+                                  " Social media savvy"
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
       /* ------------------------------------------------------------ */
@@ -773,41 +1340,153 @@ const earningIncomeModules = [
       /* 4. SELLING & TRADING (cardsStack)                             */
       /* ------------------------------------------------------------ */
       {
-        id: "selling-and-trading",
-        type: "list",
-        title: "Selling & Trading",
-        metadata: {
-          variant: "cardsStack",
-          cards: [
-            {
-              title: "👕 Reselling Clothes",
-              color: "blue",
-              items: [
-                "Buy and sell popular fashion items.",
-                "Platforms: Vinted, Depop, eBay.",
-                "Potential: £50–500/month."
-              ]
-            },
-            {
-              title: "📚 Selling Course Materials",
-              color: "green",
-              items: [
-                "Sell textbooks, notes, or revision guides.",
-                "Where: Facebook groups, uni circles.",
-                "Potential: £20–200/term."
-              ]
-            },
-            {
-              title: "🎮 Gaming Items",
-              color: "purple",
-              items: [
-                "Sell in-game items or offer coaching.",
-                "Examples: FIFA coins, Fortnite coaching.",
-                "Potential: £10–100/month."
-              ]
-            }
-          ]
-        }
+        "type": "Card",
+        props: { className: "mt-5" },
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["Selling & Trading"] }
+            ]
+          },
+
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "div",
+                "props": { "className": "grid gap-4" },
+                "children": [
+                  /* ============================================================
+                  * 👕 Reselling Clothes
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-blue-600 mb-2" },
+                        "children": ["👕 Reselling Clothes"]
+                      },
+                      {
+                        "type": "p",
+                        "props": { "className": "text-sm mb-2" },
+                        "children": [
+                          "Buy and sell trendy clothes, vintage items, or sneakers"
+                        ]
+                      },
+                      {
+                        "type": "div",
+                        "props": { "className": "text-xs" },
+                        "children": [
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Platforms:"] },
+                              " Depop, Vinted, eBay, Facebook Marketplace"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Potential:"] },
+                              " £50-500/month"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * 📚 Sell Course Materials
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-green-600 mb-2" },
+                        "children": ["📚 Sell Course Materials"]
+                      },
+                      {
+                        "type": "p",
+                        "props": { "className": "text-sm mb-2" },
+                        "children": [
+                          "Sell textbooks, notes, study guides to other students"
+                        ]
+                      },
+                      {
+                        "type": "div",
+                        "props": { "className": "text-xs" },
+                        "children": [
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Where:"] },
+                              " Facebook groups, uni notice boards, Amazon"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Potential:"] },
+                              " £20-200/semester"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * 🎮 Gaming Items
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "props": { "className": "p-4 border rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-purple-600 mb-2" },
+                        "children": ["🎮 Gaming Items"]
+                      },
+                      {
+                        "type": "p",
+                        "props": { "className": "text-sm mb-2" },
+                        "children": [
+                          "Sell in-game items, accounts, or gaming coaching"
+                        ]
+                      },
+                      {
+                        "type": "div",
+                        "props": { "className": "text-xs" },
+                        "children": [
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Popular:"] },
+                              " FIFA coins, Fortnite coaching, rare skins"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Potential:"] },
+                              " £10-100/month"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
       /* ------------------------------------------------------------ */
@@ -848,35 +1527,161 @@ const earningIncomeModules = [
       /* 6. PRO TIP (info box)                                         */
       /* ------------------------------------------------------------ */
       {
-        id: "side-hustle-pro-tip",
-        type: "tip",
-        icon: "Lightbulb",
-        title: "Pro Tip",
-        metadata: {
-          variant: "lightbulb",
-          tips: [
-            "It’s better to earn £200/month consistently from ONE hustle than juggle five unstable ones."
-          ]
-        }
+        "type": "Card",
+        props: { className: "mt-5" },
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              { "type": "CardTitle", "children": ["Side Hustle Success Tips"] }
+            ]
+          },
+
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "div",
+                "props": { "className": "grid md:grid-cols-2 gap-6" },
+                "children": [
+                  /* ============================================================
+                  * ✅ Do This
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-green-600 mb-3" },
+                        "children": ["✅ Do This:"]
+                      },
+
+                      {
+                        "type": "ul",
+                        "props": { "className": "space-y-2 text-sm" },
+                        "children": [
+                          { "type": "li", "children": ["• Start with skills you already have"] },
+                          { "type": "li", "children": ["• Set realistic time limits"] },
+                          { "type": "li", "children": ["• Track your earnings and time"] },
+                          { "type": "li", "children": ["• Build good reviews/ratings"] },
+                          { "type": "li", "children": ["• Save money for taxes"] },
+                          { "type": "li", "children": ["• Network and ask for referrals"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* ============================================================
+                  * ❌ Avoid This
+                  * ============================================================ */
+                  {
+                    "type": "div",
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold text-red-600 mb-3" },
+                        "children": ["❌ Avoid This:"]
+                      },
+
+                      {
+                        "type": "ul",
+                        "props": { "className": "space-y-2 text-sm" },
+                        "children": [
+                          { "type": "li", "children": ["• Letting it affect your studies"] },
+                          { "type": "li", "children": ["• Taking on too much at once"] },
+                          { "type": "li", "children": ["• Forgetting about tax obligations"] },
+                          { "type": "li", "children": ["• Working for free \"for exposure\""] },
+                          { "type": "li", "children": ["• Unreliable communication"] },
+                          { "type": "li", "children": ["• Not setting boundaries"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+
+              /* ============================================================
+              * 💡 Pro Tip Box
+              * ============================================================ */
+              {
+                "type": "div",
+                "props": { "className": "mt-6 p-4 bg-primary/10 rounded-lg" },
+                "children": [
+                  {
+                    "type": "h4",
+                    "props": { "className": "font-semibold mb-2" },
+                    "children": ["💡 Pro Tip:"]
+                  },
+                  {
+                    "type": "p",
+                    "props": { "className": "text-sm" },
+                    "children": [
+                      "Start with one side hustle and master it before adding more. ",
+                      "It's better to earn £200/month consistently than to juggle 5 hustles earning £20 each!"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
       },
 
       /* ------------------------------------------------------------ */
       /* 7. ACTION PLAN (steps)                                        */
       /* ------------------------------------------------------------ */
       {
-        id: "side-hustle-action-plan",
-        type: "steps",
-        title: "Ready to Start Your Side Hustle?",
-        metadata: {
-          steps: [
-            { number: 1, text: "Choose 1–2 side hustles that match your skills" },
-            { number: 2, text: "Set up profiles on relevant platforms" },
-            { number: 3, text: "Start with small jobs to build reviews" },
-            { number: 4, text: "Track time and earnings consistently" },
-            { number: 5, text: "Scale up once you're confident" }
-          ]
-        }
-      }
+        "type": "Card",
+        props: { className: "mt-5" },
+        "children": [
+          {
+            "type": "CardHeader",
+            "children": [
+              {
+                "type": "CardTitle",
+                "children": ["Ready to Start Your Side Hustle?"]
+              }
+            ]
+          },
+
+          {
+            "type": "CardContent",
+            "children": [
+              {
+                "type": "div",
+                "props": { "className": "space-y-4" },
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
+                    "children": [
+                      {
+                        "type": "h4",
+                        "props": { "className": "font-semibold mb-2" },
+                        "children": ["Your Action Plan:"]
+                      },
+                      {
+                        "type": "ol",
+                        "props": {
+                          "className": "space-y-1 text-sm list-decimal list-inside"
+                        },
+                        "children": [
+                          { "type": "li", "children": ["Choose 1-2 side hustles that match your skills"] },
+                          { "type": "li", "children": ["Set up profiles on relevant platforms"] },
+                          { "type": "li", "children": ["Start with small projects to build reviews"] },
+                          { "type": "li", "children": ["Track your time and earnings"] },
+                          { "type": "li", "children": ["Scale up once you're comfortable"] }
+                        ]
+                      }
+                    ]
+                  },
+
+                ]
+              }
+            ]
+          }
+        ]
+      },
     ],
 
     /* ------------------------------------------------------------ */
@@ -886,14 +1691,19 @@ const earningIncomeModules = [
       passingScore: 1,
       questions: [
         {
-          question: "Which side hustle typically offers the highest hourly pay?",
-          options: ["Dog walking", "Food delivery", "Tutoring", "Cleaning"],
-          correctAnswer: 2,
-          explanation:
-            "Tutoring often pays £10–20/hour due to the skill required."
+          question: "Which side hustle typically pays the highest hourly rate?",
+          options: [
+            "Tutoring",
+            "Food delivery",
+            "Dog walking",
+            "Cleaning"
+          ],
+          correctAnswer: 0,
+          explanation: "Tutoring typically pays £10–20/hour because it requires subject knowledge and specialised skills."
         }
       ]
     },
+
 
     /* ------------------------------------------------------------ */
     /* RELATED LESSONS                                              */
@@ -930,7 +1740,7 @@ const earningIncomeModules = [
   {
     title: "Tax Basics",
     description:
-      "Learn how income tax, National Insurance, VAT, tax codes, and PAYE work as a student.",
+      "PAYE, National Insurance, student jobs & tax",
     categoryId: "earning-income",
     topic: "tax-basics",
 

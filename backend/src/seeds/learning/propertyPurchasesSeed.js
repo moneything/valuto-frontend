@@ -36,6 +36,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -68,7 +69,7 @@ const propertyPurchasesModules = [
               /* Info banner */
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -94,6 +95,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           { 
@@ -236,6 +238,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           { 
@@ -272,19 +275,48 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          //todo: make words before ":" bold and use li and replace with 
-// • Build equity: Monthly payments increase your ownership
-// • Stability: No landlord, no forced moves
-// • Control: Renovate and modify as you wish
-// • Potential appreciation: Property might increase in value
-// • Tax benefits: Mortgage interest relief
-// • Fixed payments: Mortgage stays the same (if fixed rate)
-                          "• Build equity",
-                          "• Stability & long-term security",
-                          "• Renovation freedom",
-                          "• Potential price appreciation",
-                          "• Tax benefits",
-                          "• Fixed mortgage payments"
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Build equity:"] },
+                              " Monthly payments increase your ownership"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Stability:"] },
+                              " No landlord, no forced moves"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Control:"] },
+                              " Renovate and modify as you wish"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Potential appreciation:"] },
+                              " Property might increase in value"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Tax benefits:"] },
+                              " Mortgage interest relief"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Fixed payments:"] },
+                              " Mortgage stays the same (if fixed rate)"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -308,19 +340,48 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          //todo: make words before ":" bold and use li and replace with 
-// • High upfront costs: Deposit, fees, surveys
-// • Maintenance costs: You pay for all repairs
-// • Less flexibility: Harder to move quickly
-// • Market risk: Property values can fall
-// • Additional costs: Insurance, taxes, maintenance
-// • Interest payments: Pay interest to the bank
-                          "• High upfront costs",
-                          "• Full maintenance responsibility",
-                          "• Less flexibility",
-                          "• Market downturn risk",
-                          "• Extra costs: taxes, insurance, upkeep",
-                          "• Interest payments"
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["High upfront costs:"] },
+                              " Deposit, fees, surveys"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Maintenance costs:"] },
+                              " You pay for all repairs"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Less flexibility:"] },
+                              " Harder to move quickly"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Market risk:"] },
+                              " Property values can fall"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Additional costs:"] },
+                              " Insurance, taxes, maintenance"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Interest payments:"] },
+                              " Pay interest to the bank"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -337,6 +398,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -361,7 +423,7 @@ const propertyPurchasesModules = [
               /* Example block */
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -384,10 +446,10 @@ const propertyPurchasesModules = [
                             type: "ul",
                             props: { className: "text-sm space-y-1" },
                             children: [
-                              "• Rent: £1,200/month",
-                              "• Utilities: £150/month",
-                              "• Total: £1,350/month",
-                              "• Upfront: £2,400"
+                              { type: "li", children: ["Rent: £1,200/month"] },
+                              { type: "li", children: ["Utilities: £150/month"] },
+                              { type: "li", props: { className: "font-semibold" }, children: ["Total: £1,350/month"] },
+                              { type: "li", children: ["Upfront: £2,400 (deposit + first month)"] }
                             ]
                           }
                         ]
@@ -403,11 +465,11 @@ const propertyPurchasesModules = [
                             type: "ul",
                             props: { className: "text-sm space-y-1" },
                             children: [
-                              "• Mortgage: £1,100/month",
-                              "• Insurance/taxes: £200/month",
-                              "• Maintenance: £100/month",
-                              "• Total: £1,400/month",
-                              "• Upfront: £25,000+"
+                              { type: "li", children: ["Mortgage: £1,100/month"] },
+                              { type: "li", children: ["Insurance/taxes: £200/month"] },
+                              { type: "li", children: ["Maintenance: £100/month"] },
+                              { type: "li", children: [{ type: "strong", children: ["Total: £1,400/month"] }] },
+                              { type: "li", children: ["Upfront: £25,000+ (10% deposit + fees)"] }
                             ]
                           }
                         ]
@@ -427,7 +489,7 @@ const propertyPurchasesModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "If annual rent is less than 5% of the property's price, renting may be better. Above 5%, buying may be better if staying 5+ years."
+                      "A rough guide: if annual rent is less than 5% of the property's purchase price, renting might be better financially. If it's more than 5%, buying could be better (assuming you'll stay for 5+ years)."
                     ]
                   }
                 ]
@@ -442,6 +504,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           { type: "CardHeader", children: [ { type: "CardTitle", children: ["Decision Framework"] } ] },
@@ -470,12 +533,12 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          "• You plan to stay 5+ years",
-                          "• You have a 10–20% deposit",
-                          "• Income is stable",
-                          "• Want customization freedom",
-                          "• Prices are reasonable",
-                          "• Comfortable with maintenance"
+                          { type: "li", children: [{ type: "p", children: ["✅ You plan to stay 5+ years"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You have 10-20% deposit saved"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ Your income is stable"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You want to customize your space"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ Local property prices are reasonable"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You're comfortable with maintenance responsibility"] }] }
                         ]
                       }
                     ]
@@ -495,12 +558,12 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          "• You might move within 3–5 years",
-                          "• You don’t have a big deposit",
-                          "• Income is uncertain",
-                          "• You want flexibility",
-                          "• Local prices are too high",
-                          "• You prefer avoiding maintenance"
+                          { type: "li", children: [{ type: "p", children: ["✅ You might move within 3-5 years"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You don't have a large deposit"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ Your career/income is uncertain"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You prefer flexibility"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ Local property prices are very high"] }] },
+                          { type: "li", children: [{ type: "p", children: ["✅ You don't want maintenance hassles"] }] }
                         ]
                       }
                     ]
@@ -513,8 +576,60 @@ const propertyPurchasesModules = [
       }
     ],
 
-    quiz: { questions: [], passingScore: 0 },
-    relatedLessons: [],
+    
+    quiz: {
+      passingScore: 2,
+      questions: [
+        {
+          question: "What's typically the main advantage of renting?",
+          options: [
+            "Building equity over time",
+            "More flexibility to move",
+            "Lower total housing costs",
+            "Complete control over the property"
+          ],
+          correctAnswer: 1
+        },
+        {
+          question: "What should you consider before buying your first home?",
+          options: [
+            "Only the monthly mortgage payment",
+            "Just the deposit amount",
+            "All costs including maintenance, insurance, and taxes",
+            "Only the interest rate"
+          ],
+          correctAnswer: 2
+        },
+        {
+          question: "When might renting be better than buying?",
+          options: [
+            "When you plan to live somewhere for 10+ years",
+            "When you have a large deposit saved",
+            "When you might move within 3-5 years",
+            "When house prices are falling"
+          ],
+          correctAnswer: 2
+        }
+      ]
+    },
+
+    relatedLessons: [
+      {
+        moduleId: "mortgages-101",
+        title: "Mortgages 101",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "wealth-through-property",
+        title: "Long-term Wealth Through Property",
+        relationship: "related"
+      },
+      {
+        moduleId: "car-finance",
+        title: "Car Finance Explained",
+        relationship: "related"
+      }
+    ],
     points: 100,
     difficultyLevel: "beginner",
     timeEstimate: 3,
@@ -544,6 +659,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -569,13 +685,13 @@ const propertyPurchasesModules = [
               {
                 type: "p",
                 children: [
-                  "A mortgage is a loan specifically designed to help you buy property. The property itself serves as security for the loan — if you can't repay, the lender can take the property to recover their money."
+                  "A mortgage is a loan specifically designed to help you buy property. The property itself serves as security for the loan - if you can't repay, the lender can take the property to recover their money."
                 ]
               },
 
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -584,12 +700,36 @@ const propertyPurchasesModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "text-sm space-y-1" },
+                    props: { className: "text-sm space-y-1 list-disc pl-4" },
                     children: [
-                      "• You want: A £200,000 house",
-                      "• You have: £20,000 deposit (10%)",
-                      "• Bank lends: £180,000 (90%)",
-                      "• You pay back: £180,000 + interest over 25–30 years"
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["You want"] },
+                          ": A £200,000 house"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["You have"] },
+                          ": £20,000 deposit (10%)"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["Bank lends"] },
+                          ": £180,000 (90%)"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["You pay back"] },
+                          ": £180,000 + interest over 25-30 years"
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -604,6 +744,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -641,7 +782,7 @@ const propertyPurchasesModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "The upfront payment you make. First-time buyers typically need 5–10% minimum, but larger deposits (15–20%) get better interest rates."
+                          "The upfront payment you make. First-time buyers typically need 5-10% minimum, but larger deposits (15-20%) get better interest rates."
                         ]
                       }
                     ]
@@ -689,7 +830,7 @@ const propertyPurchasesModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "How long you take to repay (usually 25–30 years). Longer terms = lower monthly payments but more interest overall."
+                          "How long you take to repay (usually 25-30 years). Longer terms = lower monthly payments but more interest overall."
                         ]
                       }
                     ]
@@ -706,6 +847,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -749,14 +891,26 @@ const propertyPurchasesModules = [
                       {
                         type: "p",
                         props: { className: "text-sm mb-2" },
-                        children: ["Interest rate stays the same for a set period (2–10 years)."]
+                        children: ["Interest rate stays the same for a set period (2-10 years)."]
                       },
                       {
                         type: "div",
                         props: { className: "text-xs space-y-1" },
                         children: [
-                          "Pros: Predictable payments, protection from rate rises",
-                          "Cons: Often higher initial rates, can't benefit from rate falls"
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Pros:"] },
+                              " Predictable payments, protection from rate rises"
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Cons:"] },
+                              " Often higher initial rates, can't benefit from rate falls"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -784,8 +938,20 @@ const propertyPurchasesModules = [
                         type: "div",
                         props: { className: "text-xs space-y-1" },
                         children: [
-                          "Pros: Often lower initial rates, benefit from rate cuts",
-                          "Cons: Payments can increase, harder to budget"
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Pros:"] },
+                              " Often lower initial rates, benefit from rate cuts"
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Cons:"] },
+                              " Payments can increase, harder to budget"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -813,8 +979,20 @@ const propertyPurchasesModules = [
                         type: "div",
                         props: { className: "text-xs space-y-1" },
                         children: [
-                          "Help to Buy: Government loan for new builds",
-                          "Shared Ownership: Buy a share (25–75%), rent the rest"
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Help to Buy:"] },
+                              " Government loan for new builds"
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "strong", children: ["Shared Ownership:"] },
+                              " Buy a share (25–75%), rent the rest"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -831,6 +1009,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           { type: "CardHeader", children: [ { type: "CardTitle", children: ["Mortgage Application Process"] } ] },
@@ -990,6 +1169,7 @@ const propertyPurchasesModules = [
       * ---------------------------------------------------- */
       {
         type: "Card",
+        props: { className: "mb-5" },
         children: [
 
           {
@@ -1032,17 +1212,59 @@ const propertyPurchasesModules = [
                       {
                         type: "div",
                         children: [
-                          "• Stamp Duty: Government tax on property purchases",
-                          "• Survey: £400–£1,500 to check property condition",
-                          "• Legal fees: £800–£2,000"
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Stamp Duty"] },
+                              ": Government tax on property purchases"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Survey"] },
+                              ": £400–£1,500 to check property condition"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Legal fees"] },
+                              ": £800–£2,000"
+                            ]
+                          }
                         ]
                       },
                       {
                         type: "div",
                         children: [
-                          "• Mortgage fees: £500–£2,000 arrangement fees",
-                          "• Moving costs: £500–£2,000",
-                          "• Buildings insurance: Required by lender"
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Mortgage fees"] },
+                              ": £500–£2,000 arrangement fees"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Moving costs"] },
+                              ": £500–£2,000"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              "• ",
+                              { type: "strong", children: ["Buildings insurance"] },
+                              ": Required by lender"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -1052,14 +1274,14 @@ const propertyPurchasesModules = [
 
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg border-l-4 border-primary" },
+                props: { className: "bg-primary/20 p-4 rounded-lg border-l-4 border-primary" },
                 children: [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Student Tip:"] },
                   {
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Don't just save for the deposit — budget for all these extra costs too! Many first-time buyers are caught off guard by how much they add up."
+                      "Don't just save for the deposit - budget for all these extra costs too! Many first-time buyers are caught off guard by how much they add up."
                     ]
                   }
                 ]
@@ -1070,7 +1292,42 @@ const propertyPurchasesModules = [
       }
     ],
 
-    quiz: { questions: [], passingScore: 0 },
+    quiz: {
+      passingScore: 2,
+      questions: [
+        {
+          question: "What is a mortgage?",
+          options: [
+            "A type of savings account",
+            "A loan to buy property",
+            "Property insurance",
+            "A government benefit"
+          ],
+          correctAnswer: 1
+        },
+        {
+          question: "What's typically the minimum deposit for a first-time buyer?",
+          options: [
+            "50% of property value",
+            "25% of property value",
+            "5-10% of property value",
+            "No deposit needed"
+          ],
+          correctAnswer: 2
+        },
+        {
+          question: "What does LTV stand for?",
+          options: [
+            "Long Term Value",
+            "Loan to Value",
+            "Living Term Variable",
+            "Legal Title Verification"
+          ],
+          correctAnswer: 1
+        }
+      ]
+    },
+
     relatedLessons: [],
     points: 100,
     difficultyLevel: "beginner",
@@ -1137,7 +1394,7 @@ const propertyPurchasesModules = [
                   },
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                     "children": [
                       {
                         "type": "h4",
@@ -1146,20 +1403,36 @@ const propertyPurchasesModules = [
                       },
                       {
                         "type": "ul",
-                        "props": { "className": "text-sm space-y-1" },
+                        "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                         "children": [
-                          "• ",
-                          { "type": "strong", "children": ["Buy outright:"] },
-                          " Pay full price, own it immediately",
-                          "• ",
-                          { "type": "strong", "children": ["Hire Purchase (HP):"] },
-                          " Monthly payments, own it at the end",
-                          "• ",
-                          { "type": "strong", "children": ["PCP:"] },
-                          " Lower payments, flexible at the end",
-                          "• ",
-                          { "type": "strong", "children": ["Leasing:"] },
-                          " Rent the car, return it at the end"
+                          {
+                            "type": "li",
+                            "children": [
+                              { "type": "strong", "children": ["Buy outright:"] },
+                              " Pay full price, own it immediately"
+                            ]
+                          },
+                          {
+                            "type": "li",
+                            "children": [
+                              { "type": "strong", "children": ["Hire Purchase (HP):"] },
+                              " Monthly payments, own it at the end"
+                            ]
+                          },
+                          {
+                            "type": "li",
+                            "children": [
+                              { "type": "strong", "children": ["PCP:"] },
+                              " Lower payments, flexible at the end"
+                            ]
+                          },
+                          {
+                            "type": "li",
+                            "children": [
+                              { "type": "strong", "children": ["Leasing:"] },
+                              " Rent the car, return it at the end"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -1219,13 +1492,13 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• You will own the car",
-                              "• Fixed monthly payments",
-                              "• No mileage restrictions",
-                              "• Can modify the car",
-                              "• Simpler than PCP"
+                              { "type": "li", "children": ["You will own the car"] },
+                              { "type": "li", "children": ["Fixed monthly payments"] },
+                              { "type": "li", "children": ["No mileage restrictions"] },
+                              { "type": "li", "children": ["Can modify the car"] },
+                              { "type": "li", "children": ["Simpler than PCP"] }
                             ]
                           }
                         ]
@@ -1247,12 +1520,24 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Higher monthly payments than PCP",
-                              "• You're responsible for depreciation",
-                              "• No flexibility at the end",
-                              "• Car loses value quickly"
+                              {
+                                "type": "li",
+                                "children": ["Higher monthly payments than PCP"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["You're responsible for depreciation"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["No flexibility at the end"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Car loses value quickly"]
+                              }
                             ]
                           }
                         ]
@@ -1261,7 +1546,7 @@ const propertyPurchasesModules = [
                   },
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                     "children": [
                       {
                         "type": "h4",
@@ -1315,22 +1600,53 @@ const propertyPurchasesModules = [
                       },
                       {
                         "type": "ol",
-                        "props": { "className": "text-sm space-y-1 list-decimal list-inside" },
+                        "props": { "className": "text-sm space-y-1 list-decimal pl-4" },
                         "children": [
-                          "Pay a deposit (usually 10% of car value)",
-                          "Make lower monthly payments for 2-4 years",
-                          "At the end, choose one of three options:"
+                          {
+                            "type": "li",
+                            "children": ["Pay a deposit (usually 10% of car value)"]
+                          },
+                          {
+                            "type": "li",
+                            "children": ["Make lower monthly payments for 2-4 years"]
+                          },
+                          {
+                            "type": "li",
+                            "children": [
+                              "At the end, choose one of three options:",
+                              {
+                                "type": "ul",
+                                "props": {
+                                  "className": "mt-2 ml-4 space-y-1 text-sm list-disc pl-4"
+                                },
+                                "children": [
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Return:"] },
+                                      " Give the car back, walk away"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Buy:"] },
+                                      " Pay the balloon payment to own it"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Exchange:"] },
+                                      " Trade it for a new PCP deal"
+                                    ]
+                                  }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       },
-                      {
-                        "type": "div",
-                        "props": { "className": "mt-2 ml-4 space-y-1 text-sm" },
-                        "children": [
-                          "• Return — give the car back, walk away",
-                          "• Buy — pay balloon payment to own it",
-                          "• Exchange — trade for new PCP deal"
-                        ]
-                      }
                     ]
                   },
                   {
@@ -1354,13 +1670,17 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Lower monthly payments",
-                              "• Flexibility at the end",
-                              "• Always driving newer cars",
-                              "• Warranty usually covers repairs",
-                              "• Fixed future value"
+                              { "type": "li", "props": {}, "children": ["Lower monthly payments"] },
+                              { "type": "li", "props": {}, "children": ["Flexibility at the end"] },
+                              { "type": "li", "props": {}, "children": ["Always driving newer cars"] },
+                              {
+                                "type": "li",
+                                "props": {},
+                                "children": ["Warranty usually covers repairs"]
+                              },
+                              { "type": "li", "props": {}, "children": ["Fixed future value"] }
                             ]
                           }
                         ]
@@ -1382,13 +1702,28 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Mileage restrictions",
-                              "• Charges for damage/wear",
-                              "• Expensive if keeping car",
-                              "• Never-ending payments",
-                              "• More complex terms"
+                              {
+                                "type": "li",
+                                "children": ["Mileage restrictions (usually 8-12k/year)"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Charges for damage/wear"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Expensive if you want to keep the car"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Never-ending car payments"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["More complex terms"]
+                              }
                             ]
                           }
                         ]
@@ -1414,7 +1749,7 @@ const propertyPurchasesModules = [
                   {
                     "type": "p",
                     "children": [
-                      "Like renting a car for 2-4 years. You never own it, just use it. Popular with businesses and increasingly common personally."
+                      "Like renting a car for 2-4 years. You never own it, just use it. Popular with businesses, increasingly common for personal use."
                     ]
                   },
                   {
@@ -1439,13 +1774,28 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Lowest monthly payments",
-                              "• Always driving new cars",
-                              "• Warranty covers everything",
-                              "• No depreciation worries",
-                              "• Predictable costs"
+                              {
+                                "type": "li",
+                                "children": ["Lowest monthly payments"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Always driving new cars"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Warranty covers everything"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["No depreciation worries"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Predictable costs"]
+                              }
                             ]
                           }
                         ]
@@ -1468,13 +1818,28 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• You never own anything",
-                              "• Strict mileage limits",
-                              "• Expensive early termination",
-                              "• Perpetual monthly payments",
-                              "• No modifications allowed"
+                              {
+                                "type": "li",
+                                "children": ["You never own anything"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Strict mileage limits"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Expensive early termination"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Perpetual monthly payments"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["No modifications allowed"]
+                              }
                             ]
                           }
                         ]
@@ -1525,13 +1890,13 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• No monthly payments",
-                              "• Complete ownership",
-                              "• No interest charges",
-                              "• Freedom to sell anytime",
-                              "• No mileage restrictions"
+                              { "type": "li", "children": ["No monthly payments"] },
+                              { "type": "li", "children": ["Complete ownership and control"] },
+                              { "type": "li", "children": ["No interest charges"] },
+                              { "type": "li", "children": ["Can sell anytime"] },
+                              { "type": "li", "children": ["No mileage restrictions"] }
                             ]
                           }
                         ]
@@ -1556,11 +1921,11 @@ const propertyPurchasesModules = [
                             "type": "ul",
                             "props": { "className": "text-sm space-y-1" },
                             "children": [
-                              "• Large upfront cost",
-                              "• Money tied up",
-                              "• You bear depreciation risk",
-                              "• Repair costs after warranty",
-                              "• Must handle selling"
+                              { "type": "li", "children": ["Large upfront cost"] },
+                              { "type": "li", "children": ["Money tied up"] },
+                              { "type": "li", "children": ["You bear depreciation risk"] },
+                              { "type": "li", "children": ["Repair costs after warranty"] },
+                              { "type": "li", "children": ["Need to handle selling"] }
                             ]
                           }
                         ]
@@ -1597,7 +1962,7 @@ const propertyPurchasesModules = [
                 "children": [
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                     "children": [
                       {
                         "type": "h4",
@@ -1620,10 +1985,10 @@ const propertyPurchasesModules = [
                                 "type": "ul",
                                 "props": { "className": "text-sm space-y-1" },
                                 "children": [
-                                  "Upfront: £20,000",
-                                  "Monthly: £0",
-                                  "Value after 3yr: £12,000",
-                                  "Total cost: £8,000"
+                                  { "type": "p", "children": ["Upfront: £20,000"] },
+                                  { "type": "p", "children": ["Monthly: £0"] },
+                                  { "type": "p", "children": ["Value after 3yr: £12,000"] },
+                                  { "type": "p", "props": { "className": "font-semibold" }, "children": ["Total cost: £8,000"] }
                                 ]
                               }
                             ]
@@ -1638,10 +2003,10 @@ const propertyPurchasesModules = [
                                 "type": "ul",
                                 "props": { "className": "text-sm space-y-1" },
                                 "children": [
-                                  "Deposit: £2,000",
-                                  "Monthly: £520",
-                                  "Total paid: £20,720",
-                                  "Own car worth ~£12k"
+                                  { "type": "p", "children": ["Deposit: £2,000"] },
+                                  { "type": "p", "children": ["Monthly: £520"] },
+                                  { "type": "p", "children": ["Total paid: £20,720"] },
+                                  { "type": "p", "props": { "className": "font-semibold" }, "children": ["Own car worth £12k"] }
                                 ]
                               }
                             ]
@@ -1656,10 +2021,10 @@ const propertyPurchasesModules = [
                                 "type": "ul",
                                 "props": { "className": "text-sm space-y-1" },
                                 "children": [
-                                  "Deposit: £2,000",
-                                  "Monthly: £299",
-                                  "Total paid: £12,764",
-                                  "Return or pay £11k"
+                                  { "type": "p", "children": ["Deposit: £2,000"] },
+                                  { "type": "p", "children": ["Monthly: £299"] },
+                                  { "type": "p", "children": ["Total paid: £12,764"] },
+                                  { "type": "p", "props": { "className": "font-semibold" }, "children": ["Return or pay £11k"] }
                                 ]
                               }
                             ]
@@ -1674,10 +2039,10 @@ const propertyPurchasesModules = [
                                 "type": "ul",
                                 "props": { "className": "text-sm space-y-1" },
                                 "children": [
-                                  "Deposit: £1,000",
-                                  "Monthly: £250",
-                                  "Total paid: £10,000",
-                                  "Return car, own nothing"
+                                  { "type": "p", "children": ["Deposit: £1,000"] },
+                                  { "type": "p", "children": ["Monthly: £250"] },
+                                  { "type": "p", "children": ["Total paid: £10,000"] },
+                                  { "type": "p", "props": { "className": "font-semibold" }, "children": ["Return car, own nothing"] }
                                 ]
                               }
                             ]
@@ -1723,7 +2088,7 @@ const propertyPurchasesModules = [
                         "type": "div",
                         "props": {
                           "className":
-                            "p-4 bg-yellow-50 dark:bg-yellow-950/20 rounded-lg border border-yellow-200 dark:border-yellow-800"
+                            "p-4 bg-yellow-50 rounded-lg border border-yellow-200 dark:border-yellow-800"
                         },
                         "children": [
                           {
@@ -1733,13 +2098,30 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Getting a car before you really need one",
-                              "• Choosing a car that's too expensive",
-                              "• Ignoring insurance, fuel, maintenance",
-                              "• PCP if likely to exceed mileage",
-                              "• Finance without checking total cost"
+                              {
+                                "type": "li",
+                                "children": ["Getting a car before you really need one"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Choosing a car that's too expensive for your income"]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  "Ignoring insurance, fuel, and maintenance costs"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["PCP if you're likely to exceed mileage limits"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Finance deals without checking total costs"]
+                              }
                             ]
                           }
                         ]
@@ -1759,13 +2141,30 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Buy a reliable used car outright (£3-8k)",
-                              "• Consider if you actually need a car",
-                              "• Car-sharing schemes",
-                              "• Family help instead of finance",
-                              "• HP on a sensible used car"
+                              {
+                                "type": "li",
+                                "children": ["Buy a reliable used car outright (£3-8k)"]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  "Consider if you actually need a car (public transport, cycling)"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Car sharing schemes in cities"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Family help with purchase rather than finance"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["HP on a sensible used car"]
+                              }
                             ]
                           }
                         ]
@@ -1775,7 +2174,7 @@ const propertyPurchasesModules = [
                   {
                     "type": "div",
                     "props": {
-                      "className": "bg-accent/50 p-4 rounded-lg border-l-4 border-primary"
+                      "className": "bg-primary/10 p-4 rounded-lg border-l-4 border-primary"
                     },
                     "children": [
                       {
@@ -1787,7 +2186,7 @@ const propertyPurchasesModules = [
                         "type": "p",
                         "props": { "className": "text-sm" },
                         "children": [
-                          "A car is a depreciating asset, not an investment. Focus on reliable, affordable transport rather than the newest model."
+                          "A car is usually a depreciating asset, not an investment. Focus on reliable, affordable transport rather than the newest or flashiest model. Your future self will thank you!"
                         ]
                       }
                     ]
@@ -1847,20 +2246,20 @@ const propertyPurchasesModules = [
     ---------------------------------- */
     relatedLessons: [
       {
+        moduleId: "wealth-through-property",
+        title: "Long-Term Wealth Through Property",
+        relationship: "next-step"
+      },
+      {
         moduleId: "budgeting-basics",
         title: "Budgeting Basics",
         relationship: "related"
       },
       {
-        moduleId: "good-vs-bad-debt",
-        title: "Good vs Bad Debt",
-        relationship: "related"
-      },
-      {
         moduleId: "mortgages-101",
         title: "Mortgages 101",
-        relationship: "next-step"
-      }
+        relationship: "related"
+      },
     ]
   },
 
@@ -1868,7 +2267,7 @@ const propertyPurchasesModules = [
      4. Long-Term Wealth Through Property
   ================================================================= */
   {
-    title: "Wealth Through Property",
+    title: "Long-Term Wealth Through Property",
     description: "Building wealth with real estate",
     categoryId: "property-purchases",
     topic: "wealth-through-property",
@@ -1940,11 +2339,41 @@ const propertyPurchasesModules = [
                             "type": "ul",
                             "props": { "className": "text-sm space-y-1" },
                             "children": [
-                              "• Capital appreciation over time",
-                              "• Rental income from tenants",
-                              "• Leverage: control large assets with smaller deposits",
-                              "• Inflation hedge",
-                              "• Tax benefits such as mortgage interest relief"
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Capital appreciation"] },
+                                  ": Property values rise over time"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Rental income"] },
+                                  ": Tenants pay your mortgage"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Leverage"] },
+                                  ": Control £200k with £20k deposit"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Inflation hedge"] },
+                                  ": Property prices rise with inflation"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Tax benefits"] },
+                                  ": Mortgage interest, depreciation"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1965,11 +2394,26 @@ const propertyPurchasesModules = [
                             "type": "ul",
                             "props": { "className": "text-sm space-y-1" },
                             "children": [
-                              "• Average growth: ~7–8% yearly since 1950s",
-                              "• Prices doubled every 10–15 years historically",
-                              "• London has higher growth but more volatility",
-                              "• Strong regional variations",
-                              "• Slower growth expected in coming years"
+                              {
+                                "type": "li",
+                                "children": ["Average annual growth: 7-8% since 1950s"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["House prices doubled every 10-15 years"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["London: Higher growth but more volatile"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Regional variations significant"]
+                              },
+                              {
+                                "type": "li",
+                                "children": ["Recent years: Slower growth expected"]
+                              }
                             ]
                           }
                         ]
@@ -2012,7 +2456,7 @@ const propertyPurchasesModules = [
                   },
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                     "children": [
                       {
                         "type": "h4",
@@ -2020,13 +2464,44 @@ const propertyPurchasesModules = [
                         "children": ["Leverage Example:"]
                       },
                       {
-                        "type": "div",
+                        "type": "ul",
                         "props": { "className": "space-y-2 text-sm" },
                         "children": [
-                          "• £200,000 house, £20,000 deposit (10%)",
-                          "• Year 5 value: £250,000 (5% annual growth)",
-                          "• Gain: £50,000 on a £20,000 investment",
-                          "• Return: 250% over 5 years"
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Scenario"] },
+                              ": £200,000 house, £20,000 deposit (10% down)"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Year 1"] },
+                              ": House worth £200,000"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Year 5"] },
+                              ": House worth £250,000 (5% annual growth)"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Your gain"] },
+                              ": £50,000 on your £20,000 investment"
+                            ]
+                          },
+                          {
+                            "type": "p",
+                            "children": [
+                              { "type": "strong", "children": ["Return"] },
+                              ": 250% over 5 years (vs 25% if you'd bought without leverage)"
+                            ]
+                          },
                         ]
                       }
                     ]
@@ -2044,7 +2519,7 @@ const propertyPurchasesModules = [
                         "type": "p",
                         "props": { "className": "text-sm" },
                         "children": [
-                          "Leverage amplifies both gains AND losses. If the property value falls, you still owe the full mortgage amount."
+                          "Leverage amplifies both gains AND losses. If the property value falls, you still owe the full mortgage amount. This is why property investment is considered medium-to-high risk."
                         ]
                       }
                     ]
@@ -2085,15 +2560,39 @@ const propertyPurchasesModules = [
                           {
                             "type": "p",
                             "props": { "className": "text-sm text-muted-foreground mb-2" },
-                            "children": ["Buy property specifically to rent out for income and long-term growth."]
+                            "children": ["Buy property specifically to rent out for income and growth."]
                           },
                           {
                             "type": "div",
                             "props": { "className": "text-xs space-y-1" },
                             "children": [
-                              "• Pros: rental income, appreciation, tax benefits",
-                              "• Cons: landlord duties, maintenance, void periods",
-                              "• Typical yield: 4–8% in the UK"
+                              {
+                                "type": "ul",
+                                "props": { "className": "space-y-1" },
+                                "children": [
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "strong", "children": ["Pros:"] },
+                                      " Regular rental income, potential appreciation, tax benefits"
+                                    ]
+                                  },
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "strong", "children": ["Cons:"] },
+                                      " Landlord responsibilities, void periods, maintenance costs"
+                                    ]
+                                  },
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "strong", "children": ["Typical yield:"] },
+                                      " 4-8% rental yield in UK"
+                                    ]
+                                  }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -2114,15 +2613,33 @@ const propertyPurchasesModules = [
                           {
                             "type": "p",
                             "props": { "className": "text-sm text-muted-foreground mb-2" },
-                            "children": ["Live in your property while it appreciates, then move up the property ladder."]
+                            "children": ["Live in your property while it appreciates, then move up the ladder."]
                           },
                           {
-                            "type": "div",
+                            "type": "ul",
                             "props": { "className": "text-xs space-y-1" },
                             "children": [
-                              "• Pros: no CGT, smaller deposits, stable housing",
-                              "• Cons: tied to location, concentrated risk",
-                              "• Strategy: buy → improve → remortgage → repeat"
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pros:"] },
+                                  " No capital gains tax, lower deposit requirements, stable housing"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Cons:"] },
+                                  " Tied to one location, all eggs in one basket"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Strategy:"] },
+                                  " Buy, improve, remortgage, repeat"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -2143,15 +2660,33 @@ const propertyPurchasesModules = [
                           {
                             "type": "p",
                             "props": { "className": "text-sm text-muted-foreground mb-2" },
-                            "children": ["Invest in property without buying a physical building."]
+                            "children": ["Invest in property through funds rather than buying directly."]
                           },
                           {
                             "type": "div",
                             "props": { "className": "text-xs space-y-1" },
                             "children": [
-                              "• Pros: lower entry cost, diversification, liquid",
-                              "• Cons: fees, market volatility, no direct control",
-                              "• Examples: property unit trusts, REITs"
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Pros:"] },
+                                  " Lower entry cost, professional management, diversification"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Cons:"] },
+                                  " No direct control, fees, market volatility"
+                                ]
+                              },
+                              {
+                                "type": "p",
+                                "children": [
+                                  { "type": "strong", "children": ["Examples:"] },
+                                  " Property unit trusts, REITs on stock market"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -2177,7 +2712,7 @@ const propertyPurchasesModules = [
                   {
                     "type": "p",
                     "children": [
-                      "A classic UK wealth-building method: start with a smaller home, build equity, move up, and eventually build a portfolio."
+                      "A classic UK wealth-building approach: start small, build equity, then use that equity to move up to better properties."
                     ]
                   },
                   {
@@ -2189,28 +2724,28 @@ const propertyPurchasesModules = [
                         { "type": "div", "props": { "className": "w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold" }, "children": ["1"] },
                         { "type": "div", "children": [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["First Home (Age 25–30)"] },
-                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["£150k starter home, £15k deposit"] }
+                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["£150k flat/house, £15k deposit, focus on good location and growth potential"] }
                         ]}
                       ]},
                       { "type": "div", "props": { "className": "flex items-start gap-3 p-3 border rounded-lg" }, "children": [
                         { "type": "div", "props": { "className": "w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold" }, "children": ["2"] },
                         { "type": "div", "children": [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Build Equity (5–7 years)"] },
-                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["£150k → £200k growth, plus mortgage repayments"] }
+                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Pay down mortgage, property appreciates to £200k, you now have £65k equity"] }
                         ]}
                       ]},
                       { "type": "div", "props": { "className": "flex items-start gap-3 p-3 border rounded-lg" }, "children": [
                         { "type": "div", "props": { "className": "w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold" }, "children": ["3"] },
                         { "type": "div", "children": [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Move Up (Age 32–37)"] },
-                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Use equity for deposit on £300k home"] }
+                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Use £50k equity for deposit on £300k family home, keep or sell first property"] }
                         ]}
                       ]},
                       { "type": "div", "props": { "className": "flex items-start gap-3 p-3 border rounded-lg" }, "children": [
                         { "type": "div", "props": { "className": "w-6 h-6 bg-primary text-white rounded-full flex items-center justify-center text-sm font-bold" }, "children": ["4"] },
                         { "type": "div", "children": [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Portfolio Building (Age 40+)"] },
-                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Multiple properties, early retirement potential"] }
+                          { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Multiple properties, significant equity, considering early retirement"] }
                         ]}
                       ]}
                     ]
@@ -2243,14 +2778,18 @@ const propertyPurchasesModules = [
                         },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 dark:text-red-400 mb-2" }, "children": ["Key Risks"] },
-                          { "type": "ul", "props": { "className": "text-sm space-y-1" }, "children": [
-                            "• Property values can fall",
-                            "• High transaction costs",
-                            "• Illiquid asset — slow to sell",
-                            "• Maintenance and tenant issues",
-                            "• Interest rate risks",
-                            "• Overexposure to one asset class"
-                          ] }
+                          {
+                            "type": "ul",
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
+                            "children": [
+                              { "type": "li", "children": ["Property values can fall (2008 crash: -20%)"] },
+                              { "type": "li", "children": ["High transaction costs (5-7% total)"] },
+                              { "type": "li", "children": ["Illiquidity - can't sell quickly"] },
+                              { "type": "li", "children": ["Maintenance and void periods"] },
+                              { "type": "li", "children": ["Interest rate rises increase costs"] },
+                              { "type": "li", "children": ["All wealth in one asset class"] }
+                            ]
+                          }
                         ]
                       },
                       /* Student-Specific */
@@ -2261,13 +2800,13 @@ const propertyPurchasesModules = [
                         },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-yellow-700 dark:text-yellow-400 mb-2" }, "children": ["For Students"] },
-                          { "type": "ul", "props": { "className": "text-sm space-y-1" }, "children": [
-                            "• Don’t rush into buying property",
-                            "• Build emergency fund first",
-                            "• Consider career mobility",
-                            "• Understand all long-term costs",
-                            "• Location matters massively",
-                            "• Property isn’t the only path to wealth"
+                          { "type": "ul", "props": { "className": "text-sm space-y-1 list-disc pl-4" }, "children": [
+                            { "type": "li", "children": ["Don't rush into property buying"] },
+                            { "type": "li", "children": ["Build strong financial foundation first"] },
+                            { "type": "li", "children": ["Consider your career mobility needs"] },
+                            { "type": "li", "children": ["Understand all costs involved"] },
+                            { "type": "li", "children": ["Location, location, location matters"] },
+                            { "type": "li", "children": ["Property isn't the only wealth builder"] }
                           ] }
                         ]
                       }
@@ -2275,11 +2814,11 @@ const propertyPurchasesModules = [
                   },
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg border-l-4 border-primary" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg border-l-4 border-primary" },
                     "children": [
                       { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Balanced Approach:"] },
                       { "type": "p", "props": { "className": "text-sm" }, "children": [
-                        "Property can be excellent for wealth building, but diversification matters. A balanced approach might include property, stocks, bonds, and cash."
+                        "Property can be excellent for wealth building, but don't put all your eggs in one basket. A balanced portfolio might include property (40%), stocks (40%), bonds (15%), and cash (5%). Start with index funds in your 20s, add property when you're ready to settle down."
                       ]}
                     ]
                   }
@@ -2341,11 +2880,6 @@ const propertyPurchasesModules = [
         moduleId: "renting-vs-buying",
         title: "Renting vs Buying",
         relationship: "related"
-      },
-      {
-        moduleId: "mortgages-101",
-        title: "Mortgages 101",
-        relationship: "next-step"
       },
       {
         moduleId: "diversification",

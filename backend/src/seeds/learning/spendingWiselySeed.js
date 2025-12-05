@@ -51,7 +51,7 @@ const spendingWiselyModules = [
                     "type": "CardTitle",
                     "props": { "className": "flex items-center gap-2" },
                     "children": [
-                      { "type": "Calculator", "props": { "className": "h-5 w-5" } },
+                      { "type": "Calculator", "props": { "className": "h-7 w-7" } },
                       "Unit Pricing: Your Secret Weapon"
                     ]
                   }
@@ -123,7 +123,7 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "p",
-                            "props": { "className": "mt-3 text-sm" },
+                            "props": { "className": "mt-3 text-sm text-black" },
                             "children": ["Brand B is 20% cheaper per kg, even though it costs more upfront!"]
                           }
                         ]
@@ -163,13 +163,16 @@ const spendingWiselyModules = [
                               },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": {
+                                  "className": "space-y-2 text-sm pl-4",
+                                  "style": { "list-style": "disc" }
+                                },
                                 "children": [
-                                  "• Premium pricing for marketing",
-                                  "• Often same ingredients as own-label",
-                                  "• Better packaging and presentation",
-                                  "• Sometimes genuinely better quality",
-                                  "• Strong brand reputation"
+                                  { "type": "li", "children": ["Premium pricing for marketing"] },
+                                  { "type": "li", "children": ["Often same ingredients as own-label"] },
+                                  { "type": "li", "children": ["Better packaging and presentation"] },
+                                  { "type": "li", "children": ["Sometimes genuinely better quality"] },
+                                  { "type": "li", "children": ["Strong brand reputation"] }
                                 ]
                               }
                             ]
@@ -184,13 +187,16 @@ const spendingWiselyModules = [
                               },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": {
+                                  "className": "space-y-2 text-sm pl-4",
+                                  "style": { "list-style": "disc" }
+                                },
                                 "children": [
-                                  "• 30–50% cheaper on average",
-                                  "• Often made by same manufacturers",
-                                  "• Basic but functional packaging",
-                                  "• Quality controlled by supermarket",
-                                  "• Great for everyday items"
+                                  { "type": "li", "children": ["30–50% cheaper on average"] },
+                                  { "type": "li", "children": ["Often made by same manufacturers"] },
+                                  { "type": "li", "children": ["Basic but functional packaging"] },
+                                  { "type": "li", "children": ["Quality controlled by supermarket"] },
+                                  { "type": "li", "children": ["Great for everyday items"] }
                                 ]
                               }
                             ]
@@ -199,7 +205,7 @@ const spendingWiselyModules = [
                       },
                       {
                         "type": "div",
-                        "props": { "className": "bg-accent p-4 rounded-lg" },
+                        "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                         "children": [
                           {
                             "type": "h4",
@@ -208,12 +214,12 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4", "style": { "list-style": "disc" } },
                             "children": [
-                              "• Try own-label first for basics (pasta, rice, cleaning products)",
-                              "• Stick to brands for items where quality matters to you",
-                              "• Check if products are made by the same manufacturer",
-                              "• Look for supermarket premium ranges for middle ground"
+                              { "type": "li", "children": ["Try own-label first for basics (pasta, rice, cleaning products)"] },
+                              { "type": "li", "children": ["Stick to brands for items where quality matters to you"] },
+                              { "type": "li", "children": ["Check if products are made by the same manufacturer"] },
+                              { "type": "li", "children": ["Look for supermarket premium ranges for middle ground"] }
                             ]
                           }
                         ]
@@ -250,12 +256,36 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4", "style": { "listStyle": "disc" } },
                             "children": [
-                              "• Honey: Finds discount codes",
-                              "• PriceGrabber: Compares prices",
-                              "• ShopSavvy: Barcode scanning",
-                              "• Store apps: Tesco, ASDA, Sainsbury’s promotions"
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Honey:"] },
+                                  " Finds discount codes"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["PriceGrabber:"] },
+                                  " Compares prices"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["ShopSavvy:"] },
+                                  " Barcode scanning"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Store apps:"] },
+                                  " Tesco, ASDA, Sainsbury’s promotions"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -272,12 +302,36 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4", "style": { "listStyle": "disc" } },
                             "children": [
-                              "• Yellow stickers: End-of-day reductions",
-                              "• Seasonal sales: Christmas, Black Friday",
-                              "• Weekly cycles: New deals Wed/Thu",
-                              "• End of month: Furniture & car deals"
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Yellow stickers:"] },
+                                  " End-of-day reductions"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Seasonal sales:"] },
+                                  " Christmas, Black Friday"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Weekly cycles:"] },
+                                  " New deals Wed/Thu"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["End of month:"] },
+                                  " Furniture & car deals"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -294,12 +348,36 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4", "style": { "listStyle": "disc" } },
                             "children": [
-                              "• Delivery fees",
-                              "• Membership costs (Amazon Prime, Costco)",
-                              "• Overpriced insurance/warranties",
-                              "• Installation fees"
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Delivery fees:"] },
+                                  " Adds up quickly at checkout"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Membership costs:"] },
+                                  " Amazon Prime, Costco"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Overpriced insurance/warranties:"] },
+                                  " Often unnecessary extras"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Installation fees:"] },
+                                  " Ask if DIY is an option"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -336,13 +414,15 @@ const spendingWiselyModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "space-y-2 text-sm" },
+                            "props": {
+                              "className": "space-y-2 text-sm list-disc pl-4"
+                            },
                             "children": [
-                              "• Cheap shoes that fall apart",
-                              "• Minimum-spend for 'free' delivery",
-                              "• Bulk buying food that goes off",
-                              "• Hidden fees in phone contracts",
-                              "• Store credit cards with high APR"
+                              { "type": "li", "children": ["Buying cheap shoes that fall apart in 3 months"] },
+                              { "type": "li", "children": ["\"Free\" delivery that requires minimum spend you don't need"] },
+                              { "type": "li", "children": ["Bulk buying perishables that go off before you use them"] },
+                              { "type": "li", "children": ["Choosing cheapest phone contract with hidden charges"] },
+                              { "type": "li", "children": ["Store credit cards with high interest rates for \"instant discount\""] }
                             ]
                           }
                         ]
@@ -362,13 +442,13 @@ const spendingWiselyModules = [
                               },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-1 text-sm" },
+                                "props": { "className": "space-y-1 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• Good customer reviews",
-                                  "• Warranty included",
-                                  "• Low cost per use",
-                                  "• Multi-purpose items",
-                                  "• Durable materials"
+                                  { "type": "li", "children": ["Good reviews from real customers"] },
+                                  { "type": "li", "children": ["Warranty/guarantee included"] },
+                                  { "type": "li", "children": ["Low cost per use over time"] },
+                                  { "type": "li", "children": ["Serves multiple purposes"] },
+                                  { "type": "li", "children": ["Durable materials and construction"] }
                                 ]
                               }
                             ]
@@ -383,13 +463,13 @@ const spendingWiselyModules = [
                               },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-1 text-sm" },
+                                "props": { "className": "space-y-1 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• Pressure tactics",
-                                  "• No return policy",
-                                  "• Prices too good to be true",
-                                  "• Hidden fees",
-                                  "• Pushy sales behaviour"
+                                  { "type": "li", "children": ["\"Limited time\" pressure tactics"] },
+                                  { "type": "li", "children": ["No clear return policy"] },
+                                  { "type": "li", "children": ["Prices seem too good to be true"] },
+                                  { "type": "li", "children": ["Hidden fees in small print"] },
+                                  { "type": "li", "children": ["Pushy sales tactics"] }
                                 ]
                               }
                             ]
@@ -401,7 +481,42 @@ const spendingWiselyModules = [
                 ]
               }
             ]
+          },
+
+          /* ------------------------------------
+            CARD 5 — Action Plan
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Become a Smart Shopper"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-green-50 p-6 rounded-lg border border-green-100" },
+                    "children": [
+                      { "type": "h4", "props": { "className": "font-semibold text-lg mb-3" }, "children": ["Action Plan:"] },
+                      {
+                        "type": "ol",
+                        "props": { "className": "list-decimal list-inside space-y-2 text-base" },
+                        "children": [
+                          { "type": "li", "children": ["Download price comparison apps"] },
+                          { "type": "li", "children": ["Try own-label alternatives for your regular shopping"] },
+                          { "type": "li", "children": ["Calculate unit prices for your weekly shop"] },
+                          { "type": "li", "children": ["Set price alerts for expensive items you want"] },
+                          { "type": "li", "children": ["Track your savings over a month"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
           }
+
+          
         ]
       }
     ],
@@ -501,7 +616,14 @@ const spendingWiselyModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🎓 Student Loan Scams"] },
                           { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Get your student loan forgiven instantly for just £99!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Reality: Legitimate loan forgiveness is free and never instant."] }
+                          {
+                            "type": "div",
+                            "props": { "className": "text-xs text-red-600" },
+                            "children": [
+                              { "type": "span", "props": { "className": "font-semibold" }, "children": ["Reality"] },
+                              ": Legitimate loan forgiveness is free and takes time. No quick fixes exist."
+                            ]
+                          }
                         ]
                       },
 
@@ -510,8 +632,16 @@ const spendingWiselyModules = [
                         "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["💼 Fake Job Offers"] },
-                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Earn £500/week from home, no experience required!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Red flags: Upfront fees, vague roles, guaranteed high income."] }
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Work from home, earn £500/week, no experience needed!\""] },
+                          {
+                            "type": "div",
+                            "props": { "className": "text-xs text-red-600" },
+                            
+                            "children": [
+                              { "type": "span", "props": { "className": "font-semibold" }, "children": ["Red flags"] },
+                              ": Asking for money upfront, vague job descriptions, guaranteed high pay."
+                            ]
+                          }
                         ]
                       },
 
@@ -520,8 +650,12 @@ const spendingWiselyModules = [
                         "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["📱 Phone/Text Scams"] },
-                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Your bank account is compromised — click here now!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Truth: Banks never ask for passwords via text."] }
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Your bank account is compromised. Click here to secure it now!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": [
+                            { "type": "span", "props": { "className": "font-semibold" }, "children": ["Truth"] },
+                             ": Banks never ask for passwords via text. Always call them directly."
+                            ] 
+                          }
                         ]
                       },
 
@@ -530,8 +664,11 @@ const spendingWiselyModules = [
                         "props": { "className": "p-4 border-l-4 border-red-500 bg-red-50" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🛒 Fake Shopping Sites"] },
-                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"iPhone 15 for £200 — limited time!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": ["Warning: If the price seems too good to be true, it probably is."] }
+                          { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Brand new iPhone for just £200 - limited time offer!\""] },
+                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": [
+                            { "type": "span", "props": { "className": "font-semibold" }, "children": ["Warning"] }, 
+                            ": If prices seem too good to be true, they usually are."
+                          ] }
                         ]
                       }
                     ]
@@ -563,15 +700,15 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["🚨 Major Red Flags:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "space-y-2 text-sm" },
+                            "props": { "className": "space-y-2 text-sm pl-4 list-disc" },
                             "children": [
-                              "• Requests money or personal info upfront",
-                              "• Guaranteed returns or instant results",
-                              "• Creates false urgency",
-                              "• Poor grammar or unprofessional design",
-                              "• No address or contact details",
-                              "• Unusual payment methods (crypto, gift cards)",
-                              "• Pressure to act quickly"
+                              { "type": "li", "children": ["Asks for money or personal info upfront"] },
+                              { "type": "li", "children": ["Promises guaranteed returns or instant results"] },
+                              { "type": "li", "children": ["Creates false urgency (\"limited time only!\")"] },
+                              { "type": "li", "children": ["Poor spelling, grammar, or unprofessional design"] },
+                              { "type": "li", "children": ["No physical address or contact information"] },
+                              { "type": "li", "children": ["Pressure to \"act now\" or \"don't tell anyone\""] },
+                              { "type": "li", "children": ["Requests unusual payment methods (gift cards, crypto)"] }
                             ]
                           }
                         ]
@@ -583,15 +720,15 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Legitimate Signs:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "space-y-2 text-sm" },
+                            "props": { "className": "space-y-2 text-sm pl-4 list-disc" },
                             "children": [
-                              "• Clear contact information",
-                              "• Secure website with https://",
-                              "• Realistic claims",
-                              "• Verified reviews",
-                              "• Secure payment options",
-                              "• Transparent T&Cs",
-                              "• No pressure tactics"
+                              { "type": "li", "children": ["Clear contact information and address"] },
+                              { "type": "li", "children": ["Professional website with proper security"] },
+                              { "type": "li", "children": ["Realistic promises and expectations"] },
+                              { "type": "li", "children": ["Good reviews from multiple sources"] },
+                              { "type": "li", "children": ["Accepts secure payment methods"] },
+                              { "type": "li", "children": ["Clear terms and conditions"] },
+                              { "type": "li", "children": ["No pressure to decide immediately"] }
                             ]
                           }
                         ]
@@ -626,12 +763,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["⚠️ Instagram/TikTok Scams"] },
                           {
                             "type": "ul",
-                            "props": { "className": "space-y-1 text-sm" },
+                            "props": { "className": "space-y-1 text-sm pl-4 list-disc" },
                             "children": [
-                              "• Fake crypto investment schemes",
-                              "• Worthless 'get rich' courses",
-                              "• Pyramid schemes disguised as businesses",
-                              "• Counterfeit designer goods"
+                              { "type": "li", "children": ["Fake crypto investment schemes promoted by influencers"] },
+                              { "type": "li", "children": ["\"Get rich quick\" courses that teach nothing useful"] },
+                              { "type": "li", "children": ["Pyramid schemes disguised as business opportunities"] },
+                              { "type": "li", "children": ["Fake designer goods at \"wholesale prices\""] }
                             ]
                           }
                         ]
@@ -648,12 +785,12 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["📸 How to Check Influencers:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• Look for #ad/#sponsored tags",
-                                  "• Verify they use the product",
-                                  "• Watch out for too many random promotions",
-                                  "• Check engagement, not just followers"
+                                  { "type": "li", "children": ["Look for #ad or #sponsored tags"] },
+                                  { "type": "li", "children": ["Check if they actually use the product"] },
+                                  { "type": "li", "children": ["See if they promote too many random products"] },
+                                  { "type": "li", "children": ["Look for genuine engagement, not just follower count"] }
                                 ]
                               }
                             ]
@@ -666,12 +803,12 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-purple-700 mb-2" }, "children": ["🔍 Research Before Buying:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• Search company + 'scam'",
-                                  "• Check Trustpilot",
-                                  "• Read Reddit discussions",
-                                  "• Verify business registration"
+                                  { "type": "li", "children": ["Google the company + \"scam\" or \"review\""] },
+                                  { "type": "li", "children": ["Check Trustpilot and Google Reviews"] },
+                                  { "type": "li", "children": ["Look for complaints on Reddit or forums"] },
+                                  { "type": "li", "children": ["Verify business registration details"] }
                                 ]
                               }
                             ]
@@ -708,13 +845,13 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["🛡️ Online Shopping Safety"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Shop only on secure sites (https://)",
-                              "• Prefer credit cards for protection",
-                              "• Avoid saving card details",
-                              "• Know the return policy",
-                              "• Use PayPal or Apple Pay when possible"
+                              { "type": "li", "children": ["Only shop on secure sites (look for padlock icon and https://)"] },
+                              { "type": "li", "children": ["Use credit cards instead of debit cards (better fraud protection)"] },
+                              { "type": "li", "children": ["Never save payment details on unknown websites"] },
+                              { "type": "li", "children": ["Check return policy before buying"] },
+                              { "type": "li", "children": ["Use PayPal or Apple Pay when possible"] }
                             ]
                           }
                         ]
@@ -727,13 +864,13 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["📧 Email & Phone Safety"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4 list-disc" },
                             "children": [
-                              "• Never click suspicious links",
-                              "• Banks never ask for passwords",
-                              "• Call companies directly",
-                              "• Ignore unknown callers",
-                              "• Avoid messages that create urgency"
+                              { "type": "li", "children": ["Never click links in suspicious emails"] },
+                              { "type": "li", "children": ["Banks never ask for passwords via email or text"] },
+                              { "type": "li", "children": ["When unsure, call the company directly"] },
+                              { "type": "li", "children": ["Don't answer calls from unknown numbers"] },
+                              { "type": "li", "children": ["Be wary of messages that try to create urgency"] }
                             ]
                           }
                         ]
@@ -746,13 +883,13 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-purple-600 mb-2" }, "children": ["💳 Financial Protection"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4 list-disc" },
                             "children": [
-                              "• Enable account alerts",
-                              "• Check statements weekly",
-                              "• Never share full card details",
-                              "• Use different passwords",
-                              "• Enable two-factor authentication"
+                              { "type": "li", "children": ["Set up account alerts for all transactions"] },
+                              { "type": "li", "children": ["Check bank statements weekly"] },
+                              { "type": "li", "children": ["Never give out your full card details over phone"] },
+                              { "type": "li", "children": ["Use different passwords for financial accounts"] },
+                              { "type": "li", "children": ["Enable two-factor authentication"] }
                             ]
                           }
                         ]
@@ -785,11 +922,11 @@ const spendingWiselyModules = [
                         "type": "ol",
                         "props": { "className": "space-y-1 text-sm list-decimal list-inside" },
                         "children": [
-                          "Contact your bank immediately",
-                          "Report to Action Fraud (0300 123 2040)",
-                          "Change compromised passwords",
-                          "Take screenshots of evidence",
-                          "Report scammer on the platform"
+                          { "type": "li", "children": ["Contact your bank/credit card company immediately"] },
+                          { "type": "li", "children": ["Report to Action Fraud (0300 123 2040)"] },
+                          { "type": "li", "children": ["Change passwords on affected accounts"] },
+                          { "type": "li", "children": ["Take screenshots of everything"] },
+                          { "type": "li", "children": ["Report to the platform where you found the scammer"] }
                         ]
                       }
                     ]
@@ -805,12 +942,36 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["📞 Key Numbers:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4 list-disc" },
                             "children": [
-                              "• Action Fraud: 0300 123 2040",
-                              "• Citizens Advice: 0808 223 1133",
-                              "• Financial Ombudsman: 0300 123 9123",
-                              "• Your bank’s fraud line"
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Action Fraud"] },
+                                  ": 0300 123 2040"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Citizens Advice"] },
+                                  ": 0808 223 1133"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Financial Ombudsman"] },
+                                  ": 0300 123 9123"
+                                ]
+                              },
+                              {
+                                "type": "li",
+                                "children": [
+                                  { "type": "strong", "children": ["Your bank's fraud line"] },
+                                  ": usually 24/7"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -822,12 +983,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["💡 Prevention for Next Time:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 pl-4 list-disc" },
                             "children": [
-                              "• Trust your instincts",
-                              "• Research before purchases",
-                              "• Never rush decisions",
-                              "• Stay updated on scam trends"
+                              { "type": "li", "children": ["Trust your instincts - if it feels wrong, it probably is"] },
+                              { "type": "li", "children": ["Research before buying anything expensive"] },
+                              { "type": "li", "children": ["Never rush financial decisions"] },
+                              { "type": "li", "children": ["Keep learning about new scam techniques"] }
                             ]
                           }
                         ]
@@ -837,7 +998,58 @@ const spendingWiselyModules = [
                 ]
               }
             ]
-          }
+          },
+
+          /* ------------------------------------
+              CARD 6 — Stay Safe Online
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Stay Safe Online"] }] },
+
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-green-50 border border-green-100 p-6 rounded-xl" },
+                    "children": [
+                      { "type": "h4", "props": { "className": "font-semibold text-lg mb-4" }, "children": ["Your Security Checklist:"] },
+                      {
+                        "type": "ul",
+                        "props": { "className": "list-disc space-y-3 text-base text-gray-900 pl-4" },
+                        "children": [
+                          {
+                            "type": "li",
+                            "children": ["Set up fraud alerts on all bank accounts"]
+                          },
+                          {
+                            "type": "li",
+                            "children": ["Enable two-factor authentication on important accounts"]
+                          },
+                          {
+                            "type": "li",
+                            "children": ["Create a separate email for online shopping"]
+                          },
+                          {
+                            "type": "li",
+                            "children": ["Learn about the latest scam techniques"]
+                          },
+                          {
+                            "type": "li",
+                            "children": ["Share this knowledge with friends and family"]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+
         ]
       }
     ],
@@ -950,13 +1162,13 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-3" }, "children": ["✅ Benefits:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": { "className": "space-y-2 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• No interest if you pay on time",
-                                  "• Helps manage cash flow for planned purchases",
-                                  "• Easier approval than credit cards",
-                                  "• Can build payment history",
-                                  "• Sometimes offers buyer protection"
+                                  { "type": "li", "children": ["No interest if you pay on time"] },
+                                  { "type": "li", "children": ["Helps manage cash flow for planned purchases"] },
+                                  { "type": "li", "children": ["Easier approval than credit cards"] },
+                                  { "type": "li", "children": ["Can build payment history"] },
+                                  { "type": "li", "children": ["Sometimes offers buyer protection"] }
                                 ]
                               }
                             ]
@@ -969,13 +1181,13 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-3" }, "children": ["❌ Risks:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": { "className": "space-y-2 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• Late fees (£6–£12 per missed payment)",
-                                  "• Can damage credit score if missed",
-                                  "• Easy to overspend",
-                                  "• Multiple BNPL apps = debt spiral",
-                                  "• No legal protection like credit cards"
+                                  { "type": "li", "children": ["Late fees can be expensive (£6-12 per missed payment)"] },
+                                  { "type": "li", "children": ["Can hurt your credit score if you miss payments"] },
+                                  { "type": "li", "children": ["Easy to overspend and lose track"] },
+                                  { "type": "li", "children": ["Multiple BNPL apps can lead to debt spiral"] },
+                                  { "type": "li", "children": ["No legal protection like credit cards"] }
                                 ]
                               }
                             ]
@@ -992,7 +1204,7 @@ const spendingWiselyModules = [
                             "type": "p",
                             "props": { "className": "text-sm" },
                             "children": [
-                              "\"I bought clothes worth £300 across 3 BNPL apps. Payments were split, so I forgot some and paid £36 in late fees. It felt like free money until it wasn't.\""
+                              "\"I bought clothes worth £300 across 3 different BNPL apps. With payments spread out, I forgot about some and got hit with £36 in late fees. What seemed like 'free money' ended up costing me extra and stressing me out during exams!\""
                             ]
                           }
                         ]
@@ -1030,13 +1242,13 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-blue-600 mb-2" }, "children": ["📱 Smart Usage Tips:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Only use for planned purchases",
-                              "• Enable auto-payments",
-                              "• Use ONE BNPL at a time",
-                              "• Track all installment payments",
-                              "• Never use BNPL for groceries or bills"
+                              { "type": "li", "children": ["Only use for planned purchases you can afford"] },
+                              { "type": "li", "children": ["Set up automatic payments to avoid late fees"] },
+                              { "type": "li", "children": ["Use only ONE BNPL service at a time"] },
+                              { "type": "li", "children": ["Keep a budget tracker for all your payments"] },
+                              { "type": "li", "children": ["Never use BNPL for groceries or bills"] }
                             ]
                           }
                         ]
@@ -1049,12 +1261,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-2" }, "children": ["💡 When BNPL Makes Sense:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Essential items (e.g., uni laptop)",
-                              "• Guaranteed income coming in",
-                              "• Items you planned to buy anyway",
-                              "• Fits your monthly budget"
+                              { "type": "li", "children": ["Essential items (e.g., uni laptop)"] },
+                              { "type": "li", "children": ["Guaranteed income coming in"] },
+                              { "type": "li", "children": ["Items you planned to buy anyway"] },
+                              { "type": "li", "children": ["Fits your monthly budget"] }
                             ]
                           }
                         ]
@@ -1067,12 +1279,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-2" }, "children": ["🚫 Avoid BNPL For:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Impulse purchases",
-                              "• Things you can't afford",
-                              "• Groceries and bills",
-                              "• When you already owe other installments"
+                              { "type": "li", "children": ["Impulse purchases"] },
+                              { "type": "li", "children": ["Items you can't afford even in installments"] },
+                              { "type": "li", "children": ["Groceries, bills, or everyday expenses"] },
+                              { "type": "li", "children": ["When you already have other BNPL payments due"] }
                             ]
                           }
                         ]
@@ -1118,13 +1330,43 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["✅ Credit Card Benefits:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": { "className": "space-y-2 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• Section 75 protection (£100–£30,000 purchases)",
-                                  "• Stronger fraud protection",
-                                  "• Builds credit history",
-                                  "• Cashback/rewards",
-                                  "• Purchase protection on big items"
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Section 75 protection:"] },
+                                      " Bank liable for purchases £100-£30,000"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Fraud protection:"] },
+                                      " Better than debit cards"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Build credit history:"] },
+                                      " Helps future loans/mortgages"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Cashback/rewards:"] },
+                                      " Earn while you spend"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Purchase protection:"] },
+                                      " Insurance on big purchases"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1136,13 +1378,43 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-red-600 mb-3" }, "children": ["❌ Credit Card Dangers:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": { "className": "space-y-2 text-sm list-disc pl-4" },
                                 "children": [
-                                  "• High interest (18–29% APR)",
-                                  "• Minimum payment trap",
-                                  "• Encourages overspending",
-                                  "• Credit score damage if missed",
-                                  "• Late fees, cash advance fees"
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["High interest:"] },
+                                      " Often 18-29% APR"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Minimum payment trap:"] },
+                                      " Takes decades to clear debt"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Easy overspending:"] },
+                                      " Doesn't feel like real money"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Credit score damage:"] },
+                                      " If you miss payments"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "strong", "children": ["Fees:"] },
+                                      " Late payments, cash advances, overseas"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1181,7 +1453,8 @@ const spendingWiselyModules = [
                           {
                             "type": "p",
                             "children": [
-                              "If you can't afford to pay off your credit card in full each month, you can't afford what you're buying."
+                              "If you can't afford to pay off your credit card in full each month, you can't afford what you're buying.",
+                              "Period"
                             ]
                           },
 
@@ -1189,16 +1462,16 @@ const spendingWiselyModules = [
                             "type": "div",
                             "props": { "className": "bg-white p-4 rounded border mt-4" },
                             "children": [
-                              { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Why Minimum Payments Are a Trap"] },
+                              { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Example: Why Minimum Payments Are a Trap"] },
                               {
-                                "type": "div",
-                                "props": { "className": "text-sm space-y-1" },
+                                "type": "ul",
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• Balance: £1,000",
-                                  "• APR: 22%",
-                                  "• Min payment: £25/mo",
-                                  "• Time to clear: 4 years 6 months",
-                                  "• Interest paid: £347"
+                                  { "type": "li", "children": ["Credit card debt: £1,000"] },
+                                  { "type": "li", "children": ["Interest rate: 22% APR"] },
+                                  { "type": "li", "children": ["Minimum payment: £25/month"] },
+                                  { "type": "li", "props": { "className": "text-red-600" }, "children": ["Time to pay off: 4 years 6 months"] },
+                                  { "type": "li", "props": { "className": "text-red-600" }, "children": ["Total interest paid: £347"] }
                                 ]
                               }
                             ]
@@ -1217,13 +1490,13 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["💳 Smart Usage:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• Use only for planned expenses",
-                                  "• Set direct debit for FULL amount",
-                                  "• Track spending in your app",
-                                  "• Avoid cash advances",
-                                  "• Keep utilisation < 30%"
+                                  { "type": "li", "children": ["Use for planned expenses only"] },
+                                  { "type": "li", "children": ["Set up direct debit for full amount"] },
+                                  { "type": "li", "children": ["Track spending with bank app"] },
+                                  { "type": "li", "children": ["Never use for cash advances"] },
+                                  { "type": "li", "children": ["Keep utilization under 30% of limit"] }
                                 ]
                               }
                             ]
@@ -1235,13 +1508,13 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["🏆 Pro Tips:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• Start with low limit (£300–£500)",
-                                  "• Choose no-fee cards",
-                                  "• Use for expensive purchases",
-                                  "• Pay before statement date",
-                                  "• Never lend your card"
+                                  { "type": "li", "children": ["Start with a low limit (£300-500)"] },
+                                  { "type": "li", "children": ["Choose cards with no annual fee"] },
+                                  { "type": "li", "children": ["Use for big purchases for Section 75 protection"] },
+                                  { "type": "li", "children": ["Pay before statement date to show 0% utilization"] },
+                                  { "type": "li", "children": ["Never lend your card to anyone"] }
                                 ]
                               }
                             ]
@@ -1279,12 +1552,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-blue-600" }, "children": ["🏦 Barclaycard Forward"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "props": { "className": "text-sm mt-2 space-y-1 list-disc pl-4" },
                             "children": [
-                              "• 25.9% APR",
-                              "• No annual fee",
-                              "• £1,200 typical limit",
-                              "• Good for building credit"
+                              { "type": "li", "children": ["25.9% APR (representative)"] },
+                              { "type": "li", "children": ["No annual fee"] },
+                              { "type": "li", "children": ["£1,200 typical initial limit"] },
+                              { "type": "li", "children": ["Good for building credit history"] }
                             ]
                           }
                         ]
@@ -1297,12 +1570,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-green-600" }, "children": ["🏦 Halifax Clarity"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "props": { "className": "text-sm mt-2 space-y-1 list-disc pl-4" },
                             "children": [
-                              "• No foreign transaction fees",
-                              "• Good for travel",
-                              "• 22.9% APR",
-                              "• No annual fee"
+                              { "type": "li", "children": ["No foreign transaction fees"] },
+                              { "type": "li", "children": ["Great for travel"] },
+                              { "type": "li", "children": ["22.9% APR (representative)"] },
+                              { "type": "li", "children": ["No annual fee"] }
                             ]
                           }
                         ]
@@ -1315,17 +1588,50 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-purple-600" }, "children": ["🏦 Aqua Classic"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm mt-2 space-y-1" },
+                            "props": { "className": "text-sm mt-2 space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Great for no credit history",
-                              "• 34.9% APR (so pay in full!)",
-                              "• Easier acceptance",
-                              "• Good starter card"
+                              { "type": "li", "children": ["Designed for limited credit history"] },
+                              { "type": "li", "children": ["34.9% APR (high, so pay in full!)"] },
+                              { "type": "li", "children": ["Easier acceptance criteria"] },
+                              { "type": "li", "children": ["Good stepping stone card"] }
                             ]
                           }
                         ]
                       }
 
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+          /* ------------------------------------
+            CARD 6 — Action Plan
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Your Action Plan"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-green-50 p-6 rounded-lg border border-green-100" },
+                    "children": [
+                      { "type": "h4", "props": { "className": "font-semibold text-lg mb-3" }, "children": ["Smart Credit Steps:"] },
+                      {
+                        "type": "ol",
+                        "props": { "className": "list-decimal list-inside space-y-2 text-base" },
+                        "children": [
+                          { "type": "li", "children": ["If using BNPL, limit to ONE service and set up auto-payments"] },
+                          { "type": "li", "children": ["Research student credit cards and apply for one with no annual fee"] },
+                          { "type": "li", "children": ["Set up direct debit for FULL amount (not minimum)"] },
+                          { "type": "li", "children": ["Use credit card for planned purchases only"] },
+                          { "type": "li", "children": ["Monitor your credit score monthly (free apps available)"] }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -1444,22 +1750,34 @@ const spendingWiselyModules = [
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["🏠 Rent & Bills", { "type": "span", "props": { "className": "font-bold text-red-600" }, "children": ["£400–600"] }]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["🏠 Rent & Bills"] },
+                                      { "type": "span", "props": { "className": "font-bold text-red-600" }, "children": ["£400–600"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["🍕 Food & Groceries", "£150–200"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["🍕 Food & Groceries"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£150–200"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["🚌 Transport", "£50–80"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["🚌 Transport"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£50–80"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["📚 Study Materials", "£30–50"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["📚 Study Materials"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£30–50"] }
+                                    ]
                                   }
                                 ]
                               },
@@ -1472,22 +1790,34 @@ const spendingWiselyModules = [
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["👕 Clothes", "£30–60"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["👕 Clothes"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£30–60"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["🎉 Social/Entertainment", "£80–120"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["🎉 Social/Entertainment"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£80–120"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-white rounded" },
-                                    "children": ["📱 Phone & Internet", "£25–40"]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["📱 Phone & Internet"] },
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["£25–40"] }
+                                    ]
                                   },
                                   {
                                     "type": "div",
                                     "props": { "className": "flex justify-between items-center p-2 bg-green-100 rounded border border-green-500" },
-                                    "children": ["💰 Total", { "type": "span", "props": { "className": "font-bold text-green-700" }, "children": ["£765–1,150"] }]
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-bold" }, "children": ["💰 Total"] },
+                                      { "type": "span", "props": { "className": "font-bold text-green-700" }, "children": ["£765–1,150"] }
+                                    ]
                                   }
                                 ]
                               }
@@ -1545,13 +1875,37 @@ const spendingWiselyModules = [
                             "children": [
                               { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["💸 Most Expensive"] },
                               {
-                                "type": "div",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "type": "ul",
+                                "props": { "className": "list-inside space-y-1 text-sm" },
                                 "children": [
-                                  "London: £1,200–1,800/month",
-                                  "Cambridge: £1,000–1,400/month",
-                                  "Oxford: £1,000–1,400/month",
-                                  "Brighton: £900–1,300/month"
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["London"] },
+                                      ": £1,200–1,800/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Cambridge"] },
+                                      ": £1,000–1,400/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Oxford"] },
+                                      ": £1,000–1,400/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Brighton"] },
+                                      ": £900–1,300/month"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1564,13 +1918,37 @@ const spendingWiselyModules = [
                             "children": [
                               { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["💰 Moderate"] },
                               {
-                                "type": "div",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "type": "ul",
+                                "props": { "className": "pl-5 space-y-1 text-sm" },
                                 "children": [
-                                  "Manchester: £700–1,000/month",
-                                  "Birmingham: £650–950/month",
-                                  "Leeds: £600–900/month",
-                                  "Bristol: £700–1,000/month"
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Manchester"] },
+                                      ": £700–1,000/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Birmingham"] },
+                                      ": £650–950/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Leeds"] },
+                                      ": £600–900/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Bristol"] },
+                                      ": £700–1,000/month"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1583,13 +1961,37 @@ const spendingWiselyModules = [
                             "children": [
                               { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["💚 Most Affordable"] },
                               {
-                                "type": "div",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "type": "ul",
+                                "props": { "className": "list-inside space-y-1 text-sm" },
                                 "children": [
-                                  "Hull: £500–750/month",
-                                  "Stoke: £450–700/month",
-                                  "Preston: £500–750/month",
-                                  "Swansea: £550–800/month"
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Hull"] },
+                                      ": £500–750/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Stoke"] },
+                                      ": £450–700/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Preston"] },
+                                      ": £500–750/month"
+                                    ]
+                                  },
+                                  {
+                                    "type": "li",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Swansea"] },
+                                      ": £550–800/month"
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1606,12 +2008,12 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["💡 Money-Saving Location Tips:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc list-inside" },
                             "children": [
-                              "• Smaller cities = lower living costs",
-                              "• Consider transport cost when choosing accommodation",
-                              "• Research local student discounts",
-                              "• Compare job opportunities vs living costs"
+                              { "type": "li", "children": ["Consider universities in smaller cities – same quality education, lower costs"] },
+                              { "type": "li", "children": ["Factor in transport costs when choosing where to live"] },
+                              { "type": "li", "children": ["Research local student discounts and deals"] },
+                              { "type": "li", "children": ["Look at graduate employment rates vs living costs"] }
                             ]
                           }
                         ]
@@ -1655,16 +2057,22 @@ const spendingWiselyModules = [
                               {
                                 "type": "div",
                                 "children": [
-                                  "Cost: £100–200/week",
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Cost: "] },
+                                      "£100-200/week (£400-800/month)"
+                                    ]
+                                  },
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• Bills included",
-                                      "• Social atmosphere",
-                                      "• Close to campus",
-                                      "• No guarantor needed"
+                                      { "type": "li", "children": ["Bills included (electricity, internet, cleaning)"] },
+                                      { "type": "li", "children": ["Easy to make friends"] },
+                                      { "type": "li", "children": ["Close to campus"] },
+                                      { "type": "li", "children": ["No deposits or guarantors needed"] }
                                     ]
                                   }
                                 ]
@@ -1675,12 +2083,12 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• More expensive",
-                                      "• Less privacy",
-                                      "• Strict rules",
-                                      "• Limited kitchen facilities"
+                                      { "type": "li", "children": ["More expensive"] },
+                                      { "type": "li", "children": ["Less privacy"] },
+                                      { "type": "li", "children": ["Strict rules"] },
+                                      { "type": "li", "children": ["Limited kitchen facilities"] }
                                     ]
                                   }
                                 ]
@@ -1703,16 +2111,22 @@ const spendingWiselyModules = [
                               {
                                 "type": "div",
                                 "children": [
-                                  "Cost: £80–150/week",
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Cost: "] },
+                                      "£80-150/week (£320-600/month)"
+                                    ]
+                                  },
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• Cheaper",
-                                      "• Independence",
-                                      "• Choose housemates",
-                                      "• Better kitchen"
+                                      { "type": "li", "children": ["Often cheaper than halls"] },
+                                      { "type": "li", "children": ["More independence"] },
+                                      { "type": "li", "children": ["Choose your housemates"] },
+                                      { "type": "li", "children": ["Better cooking facilities"] }
                                     ]
                                   }
                                 ]
@@ -1724,12 +2138,12 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• Bills not included",
-                                      "• Need deposit",
-                                      "• Need guarantor",
-                                      "• Maintenance responsibility"
+                                      { "type": "li", "children": ["Bills on top of rent"] },
+                                      { "type": "li", "children": ["Need deposit (usually 1-2 months rent)"] },
+                                      { "type": "li", "children": ["May need guarantor"] },
+                                      { "type": "li", "children": ["Responsible for maintenance issues"] }
                                     ]
                                   }
                                 ]
@@ -1752,16 +2166,22 @@ const spendingWiselyModules = [
                               {
                                 "type": "div",
                                 "children": [
-                                  "Cost: £0–300/month",
+                                  {
+                                    "type": "p",
+                                    "children": [
+                                      { "type": "span", "props": { "className": "font-semibold" }, "children": ["Cost: "] },
+                                      "£0-300/month (if paying keep)"
+                                    ]
+                                  },
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• Cheapest",
-                                      "• Home-cooked meals",
-                                      "• Support system",
-                                      "• No bills"
+                                      { "type": "li", "children": ["Cheapest option"] },
+                                      { "type": "li", "children": ["Home-cooked meals"] },
+                                      { "type": "li", "children": ["Emotional support"] },
+                                      { "type": "li", "children": ["No bills to worry about"] }
                                     ]
                                   }
                                 ]
@@ -1772,12 +2192,12 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1" },
+                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                                     "children": [
-                                      "• Commute time",
-                                      "• Less independence",
-                                      "• Harder to socialise",
-                                      "• Travel expenses"
+                                      { "type": "li", "children": ["Commute costs and time"] },
+                                      { "type": "li", "children": ["Miss out on uni social life"] },
+                                      { "type": "li", "children": ["Less independence"] },
+                                      { "type": "li", "children": ["Harder to join activities"] }
                                     ]
                                   }
                                 ]
@@ -1824,15 +2244,15 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-green-600 mb-3" }, "children": ["🥗 Budget-Friendly Food Tips:"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "space-y-2 text-sm" },
+                                "props": { "className": "space-y-2 text-sm list-disc list-inside" },
                                 "children": [
-                                  "• Cook in bulk",
-                                  "• Shop at Aldi/Lidl",
-                                  "• Use yellow sticker deals",
-                                  "• Frozen veg > fresh",
-                                  "• Learn 5–10 cheap recipes",
-                                  "• Share cooking",
-                                  "• Use student discounts"
+                                  { "type": "li", "children": ["Cook in bulk and freeze portions"] },
+                                  { "type": "li", "children": ["Shop at Aldi/Lidl for basics"] },
+                                  { "type": "li", "children": ["Use yellow sticker reductions"] },
+                                  { "type": "li", "children": ["Buy frozen vegetables (often healthier than fresh)"] },
+                                  { "type": "li", "children": ["Learn 5-10 cheap, healthy recipes"] },
+                                  { "type": "li", "children": ["Share cooking with housemates"] },
+                                  { "type": "li", "children": ["Use student discounts at restaurants"] }
                                 ]
                               }
                             ]
@@ -1847,10 +2267,39 @@ const spendingWiselyModules = [
                                 "type": "div",
                                 "props": { "className": "space-y-2" },
                                 "children": [
-                                  "Groceries: £25–35",
-                                  "Eating out: £10–15",
-                                  "Snacks: £5–10",
-                                  { "type": "strong", "children": ["Total: £40–60"] }
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex items-center justify-between" },
+                                    "children": [
+                                      { "type": "span", "children": ["Groceries (cooking at home)"] },
+                                      { "type": "span", "children": ["£25–35"] }
+                                    ]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex items-center justify-between" },
+                                    "children": [
+                                      { "type": "span", "children": ["Eating out/takeaways"] },
+                                      { "type": "span", "children": ["£10–15"] }
+                                    ]
+                                  },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex items-center justify-between" },
+                                    "children": [
+                                      { "type": "span", "children": ["Snacks/drinks"] },
+                                      { "type": "span", "children": ["£5–10"] }
+                                    ]
+                                  },
+                                  { "type": "div", "children": [""], "props": { "className": "border-top-2 border border-black h-1" }, },
+                                  {
+                                    "type": "div",
+                                    "props": { "className": "flex items-center justify-between font-semibold" },
+                                    "children": [
+                                      { "type": "strong", "children": ["Total per week"] },
+                                      { "type": "strong", "children": ["£40–60"] }
+                                    ]
+                                  }
                                 ]
                               }
                             ]
@@ -1861,16 +2310,34 @@ const spendingWiselyModules = [
                       /* Recommended staples */
                       {
                         "type": "div",
-                        "props": { "className": "bg-accent p-4 rounded-lg" },
+                        "props": { "className": "bg-primary/30 p-4 rounded-lg" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["🍝 Student Meal Prep Heroes:"] },
                           {
                             "type": "div",
-                            "props": { "className": "grid md:grid-cols-3 gap-4 text-sm" },
+                            "props": { "className": "grid grid-cols-3 gap-4" },
                             "children": [
-                              "Pasta & Rice: Cheap, filling",
-                              "Eggs: Protein & cheap",
-                              "Beans & Lentils: Healthy & filling"
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "strong", "children": ["Pasta & Rice"] },
+                                  ": Buy in bulk, endless possibilities, filling and cheap"
+                                ]
+                              },
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "strong", "children": ["Eggs"] },
+                                  ": Protein-packed, versatile, under £2 for a dozen"
+                                ]
+                              },
+                              {
+                                "type": "div",
+                                "children": [
+                                  { "type": "strong", "children": ["Beans & Lentils"] },
+                                  ": Cheap protein, filling, healthy"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1915,12 +2382,12 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-blue-700 mb-2" }, "children": ["🚌 Public Transport"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• 30% student discount",
-                                  "• Monthly passes save money",
-                                  "• 16-25 Railcard = 1/3 off",
-                                  "• Bus passes: £40–80/month"
+                                  { "type": "li", "children": ["Student discounts: Usually 30% off"] },
+                                  { "type": "li", "children": ["Monthly passes often better value"] },
+                                  { "type": "li", "children": ["16-25 Railcard: 1/3 off train travel"] },
+                                  { "type": "li", "children": ["Bus passes: £40-80/month typically"] }
                                 ]
                               }
                             ]
@@ -1934,12 +2401,12 @@ const spendingWiselyModules = [
                               { "type": "h4", "props": { "className": "font-semibold text-green-700 mb-2" }, "children": ["🚲 Cycling"] },
                               {
                                 "type": "ul",
-                                "props": { "className": "text-sm space-y-1" },
+                                "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                 "children": [
-                                  "• £100–300 upfront",
-                                  "• Free exercise",
-                                  "• Bike-share in many cities",
-                                  "• No fuel/insurance"
+                                  { "type": "li", "children": ["One-time cost: £100-300 for decent bike"] },
+                                  { "type": "li", "children": ["Free exercise and transport"] },
+                                  { "type": "li", "children": ["Many cities have bike-sharing schemes"] },
+                                  { "type": "li", "children": ["Consider cycle-to-work scheme"] }
                                 ]
                               }
                             ]
@@ -1956,13 +2423,13 @@ const spendingWiselyModules = [
                           { "type": "h4", "props": { "className": "font-semibold text-yellow-700 mb-2" }, "children": ["🚗 Cars: Calculate the True Cost"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Insurance: £800–2000/year",
-                              "• Fuel: £100–200/month",
-                              "• Parking: £50–150/month",
-                              "• Repairs: £500+/year",
-                              "• Total: £2000–4000/year"
+                              { "type": "li", "children": ["Insurance: £800-2000/year for young drivers"] },
+                              { "type": "li", "children": ["Fuel: £100-200/month"] },
+                              { "type": "li", "children": ["Parking: £50-150/month near campus"] },
+                              { "type": "li", "children": ["MOT, service, repairs: £500+/year"] },
+                              { "type": "li", "children": ["Total: Often £2000-4000/year!"] }
                             ]
                           }
                         ]
@@ -1973,6 +2440,40 @@ const spendingWiselyModules = [
                 ]
               }
 
+            ]
+          },
+
+
+          /* ------------------------------------
+            CARD 6 — Action Plan
+          ------------------------------------ */
+          {
+            "type": "Card",
+            "children": [
+              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Master Your Student Budget"] }] },
+              {
+                "type": "CardContent",
+                "children": [
+                  {
+                    "type": "div",
+                    "props": { "className": "bg-green-50 p-6 rounded-lg border border-green-100" },
+                    "children": [
+                      { "type": "h4", "props": { "className": "font-semibold text-lg mb-3" }, "children": ["Your Budget Action Plan:"] },
+                      {
+                        "type": "ol",
+                        "props": { "className": "list-decimal list-inside space-y-2 text-base" },
+                        "children": [
+                          { "type": "li", "children": ["Calculate your total income (loan, grants, part-time work)"] },
+                          { "type": "li", "children": ["Research accommodation costs in your university city"] },
+                          { "type": "li", "children": ["Plan a realistic monthly budget using the 50/30/20 rule"] },
+                          { "type": "li", "children": ["Open a student bank account with good perks"] },
+                          { "type": "li", "children": ["Apply for relevant railcards and student discounts"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
             ]
           }
 

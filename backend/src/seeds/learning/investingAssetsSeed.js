@@ -55,7 +55,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "Investing means putting your money to work to grow over time instead of just letting it sit. It's like planting seeds today to harvest more tomorrow."
+                  "Investing is putting your money to work to potentially grow over time, rather than letting it sit in a basic savings account. Think of it as planting seeds today to harvest a bigger crop tomorrow."
                 ]
               },
               {
@@ -66,8 +66,7 @@ const investingAssetsModules = [
                   {
                     type: "p",
                     children: [
-                      "If you put £100 in a savings account earning 1% interest, after 10 years you'd have £110. ",
-                      "If you invested that £100 and earned 7% on average, you'd have around £197!"
+                      "If you put £100 in a savings account earning 1% interest, after 10 years you'd have £110. If you invested that £100 and earned an average 7% return, you'd have around £197!"
                     ]
                   }
                 ]
@@ -113,7 +112,7 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm" },
-                        children: ["Starting young gives your money decades to grow thanks to compound interest — your returns earn returns."]
+                        children: ["Starting young gives your money decades to grow through compound interest - your returns earn returns!"]
                       }
                     ]
                   },
@@ -127,7 +126,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Inflation makes prices rise over time. Investing helps your money grow fast enough to keep up."
+                          "Inflation makes things more expensive over time. Investing helps your money keep up with rising costs."
                         ]
                       }
                     ]
@@ -142,7 +141,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Whether you want to buy a house, start a business, or travel the world, investing helps get you there faster."
+                          "Want to buy a house, travel, or start a business? Investing can help you reach those goals faster."
                         ]
                       }
                     ]
@@ -157,7 +156,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm" },
                         children: [
-                          "Growing wealth over time gives you more choices and more control over your future."
+                          "Building wealth through investing can give you more choices and security in life."
                         ]
                       }
                     ]
@@ -202,10 +201,10 @@ const investingAssetsModules = [
                     type: "ul",
                     props: { className: "space-y-2 text-sm" },
                     children: [
-                      { type: "li", children: ["✅ Build an emergency fund (3–6 months of expenses)"] },
-                      { type: "li", children: ["✅ Pay off high-interest debt"] },
-                      { type: "li", children: ["✅ Have stable income"] },
-                      { type: "li", children: ["✅ Understand investing can go up and down"] }
+                      { type: "li", children: ["✅ Build an emergency fund (3-6 months of expenses)"] },
+                      { type: "li", children: ["✅ Pay off high-interest debt (credit cards, overdrafts)"] },
+                      { type: "li", children: ["✅ Have a stable income source"] },
+                      { type: "li", children: ["✅ Understand you might lose money in the short term"] }
                     ]
                   }
                 ]
@@ -214,7 +213,7 @@ const investingAssetsModules = [
                 type: "p",
                 children: [
                   { type: "strong", children: ["Remember: "] },
-                  "Only invest money you won’t need for at least 5 years. Investments can drop in value in the short term."
+                  "Only invest money you won't need for at least 5 years. Investments can go down as well as up, especially in the short term."
                 ]
               }
             ]
@@ -258,7 +257,7 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children: ["Own tiny parts of companies. Higher potential reward, higher risk."]
+                        children: ["Own tiny pieces of companies. Higher potential returns, higher risk."]
                       }
                     ]
                   },
@@ -271,7 +270,7 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children: ["Loans to governments/companies. Lower risk, lower reward."]
+                        children: ["Loans to governments or companies. Generally safer, lower returns."]
                       }
                     ]
                   },
@@ -284,7 +283,7 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
-                        children: ["Baskets of many investments — perfect for beginners and diversification."]
+                        children: ["Baskets of many investments. Great for beginners - instant diversification."]
                       }
                     ]
                   }
@@ -301,7 +300,19 @@ const investingAssetsModules = [
       passingScore: 0
     },
 
-    relatedLessons: [],
+    relatedLessons: [
+      {
+        moduleId: "traditional-assets",
+        title: "Traditional Assets",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "new-assets",
+        title: "New Assets",
+        relationship: "related"
+      }
+    ],
+    
 
     points: 100,
     difficultyLevel: "beginner",
@@ -352,8 +363,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "When you buy a stock, you are purchasing a tiny ownership slice of a company. ",
-                  "If the company performs well, your share value may rise — but it can also fall if the company struggles."
+                  "When you buy a stock, you're buying a tiny piece of ownership in a company. If the company does well, your stock value can increase. If it struggles, the value can decrease."
                 ]
               },
 
@@ -384,9 +394,9 @@ const investingAssetsModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1 pl-4", style: {"list-style": "disc"}  },
                         children: [
-                          { type: "li", children: ["High potential long-term returns"] },
-                          { type: "li", children: ["You own part of a real business"] },
-                          { type: "li", children: ["Many pay dividends"] },
+                          { type: "li", children: ["High potential returns over long term"] },
+                          { type: "li", children: ["You own part of real businesses"] },
+                          { type: "li", children: ["Some pay dividends (regular payments)"] },
                           { type: "li", children: ["Easy to buy and sell"] },
                         ]
                       }
@@ -416,9 +426,9 @@ const investingAssetsModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1 pl-4", style: {"list-style": "disc"} },
                         children: [
-                          { type: "li", children: ["Can be very volatile"] },
+                          { type: "li", children: ["Can be very volatile (up and down)"] },
                           { type: "li", children: ["Risk of losing money"] },
-                          { type: "li", children: ["Individual companies can fai"] },
+                          { type: "li", children: ["Individual stocks can fail completely"] },
                           { type: "li", children: ["Requires research or luck"] },
                         ]
                       }
@@ -437,7 +447,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Apple stock was around £150 in 2020 and over £170 in 2024, but fluctuated heavily along the way — showing both growth and volatility."
+                      "Apple stock cost about £150 in 2020. By 2024, it was worth over £170. But it fluctuated between £120-£190 during that time - showing both growth and volatility."
                     ]
                   }
                 ]
@@ -475,8 +485,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "Bonds are loans you give to governments or companies. ",
-                  "In return, they pay you interest and return your money after a set number of years."
+                  "Bonds are like IOUs. When you buy a bond, you're lending money to a government or company. They promise to pay you back with interest after a set period."
                 ]
               },
 
@@ -502,7 +511,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Loans to the UK government. Very safe but lower returns (around 2-4% per year). Great for preserving wealth rather than growing it rapidly."
+                          "LLoans to the UK government. Very safe but lower returns (around 2-4% per year). Great for preserving wealth rather than growing it rapidly."
                         ]
                       }
                     ]
@@ -581,8 +590,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "Funds let you buy a basket of investments at once. ",
-                  "It’s like buying a mixed bag of sweets instead of choosing each one individually."
+                  "Instead of picking individual stocks or bonds, funds let you buy a basket of many investments at once. Think of it like buying a mixed bag of sweets instead of choosing each sweet individually."
                 ]
               },
 
@@ -593,7 +601,7 @@ const investingAssetsModules = [
                   /* INDEX FUNDS */
                   {
                     type: "div",
-                    props: { className: "p-4 border rounded-lg bg-primary/5" },
+                    props: { className: "p-4 border rounded-lg bg-primary/10" },
                     children: [
                       { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Index Funds / ETFs (Most Popular)"] },
                       {
@@ -609,7 +617,7 @@ const investingAssetsModules = [
                         children: [
                           {type: "li", children: ["Low fees (often 0.1-0.5% per year)"],},
                           {type: "li", children: ["Instant diversification"],},
-                          {type: "li", children: ["No need to pick individual stock"],},
+                          {type: "li", children: ["No need to pick individual stocks"],},
                           {type: "li", children: ["Available through ISAs"],},
                         ]
                       }
@@ -760,11 +768,53 @@ const investingAssetsModules = [
     ],
 
     quiz: {
-      questions: [],
-      passingScore: 0
+      passingScore: 2,
+      questions: [
+        {
+          question: "What do you own when you buy a stock?",
+          options: [
+            "A loan to the company",
+            "A small ownership stake in the company",
+            "The right to work for the company",
+            "A guarantee of profits"
+          ],
+          correctAnswer: 1
+        },
+        {
+          question: "What is the main advantage of index funds for beginners?",
+          options: [
+            "They guarantee profits",
+            "They never lose money",
+            "They provide instant diversification",
+            "They have no fees"
+          ],
+          correctAnswer: 2
+        },
+        {
+          question: "Which is generally considered the safest investment?",
+          options: [
+            "Individual stocks",
+            "Government bonds",
+            "Corporate bonds",
+            "REITs"
+          ],
+          correctAnswer: 1
+        }
+      ]
     },
 
-    relatedLessons: [],
+    relatedLessons: [
+      {
+        moduleId: "new-assets",
+        title: "New Assets",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "diversification",
+        title: "Diversification",
+        relationship: "related"
+      },
+    ],
 
     points: 100,
     difficultyLevel: "beginner",
@@ -867,21 +917,21 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "Cryptocurrency (crypto) is digital money not controlled by any government or bank. Popular examples include Bitcoin and Ethereum. It uses blockchain to verify ownership."
+                  "Cryptocurrency (crypto) is digital money that isn't controlled by any government or bank. The most famous examples are Bitcoin and Ethereum. It uses blockchain technology to track ownership."
                 ]
               },
 
               /* PROS + CONS GRID */
               {
                 type: "div",
-                props: { className: "grid md:grid-cols-2 gap-4" },
+                props: { className: "grid grid-cols-2 gap-4" },
                 children: [
                   /* BENEFITS */
                   {
                     type: "div",
                     props: {
                       className:
-                        "p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800"
+                        "p-4 bg-green-50 rounded-lg border border-green-200"
                     },
                     children: [
                       {
@@ -906,7 +956,7 @@ const investingAssetsModules = [
                           { type: "li", children: ["No government control"] },
                           { type: "li", children: ["Global and borderless"] },
                           { type: "li", children: ["24/7 trading"] },
-                          { type: "li", children: ["Some see it as 'digital gold'"] }
+                          { type: "li", children: ["Some see it as \"digital gold\""] }
                         ]
                       }
                     ]
@@ -938,10 +988,10 @@ const investingAssetsModules = [
                           style: { "list-style": "disc" }
                         },
                         children: [
-                          { type: "li", children: ["Extremely volatile (wild swings)"] },
-                          { type: "li", children: ["Can lose 50%+ fast"] },
+                          { type: "li", children: ["Extremely volatile (wild price swings)"] },
+                          { type: "li", children: ["Can lose 50%+ value quickly"] },
                           { type: "li", children: ["No consumer protection"] },
-                          { type: "li", children: ["Environmental concerns"] },
+                          { type: "li", children: ["Energy consumption concerns"] },
                           { type: "li", children: ["Regulatory uncertainty"] }
                         ]
                       }
@@ -967,10 +1017,10 @@ const investingAssetsModules = [
                       style: { "list-style": "disc" }
                     },
                     children: [
-                      { type: "li", children: ["2021: nearly $65,000"] },
-                      { type: "li", children: ["2022: crashed to ~$16,000"] },
-                      { type: "li", children: ["2024: back above $40,000"] },
-                      { type: "li", children: ["Crypto can rise and collapse unpredictably."] }
+                      { type: "li", children: ["2021: Bitcoin hit nearly $65,000"] },
+                      { type: "li", children: ["2022: Crashed to around $16,000"] },
+                      { type: "li", children: ["2024: Back above $40,000"] },
+                      "This shows how unpredictable crypto can be!"
                     ]
                   }
                 ]
@@ -993,14 +1043,13 @@ const investingAssetsModules = [
                     type: "ul",
                     props: {
                       className: "text-sm space-y-1 pl-4",
-                      style: { "list-style": "disc" }
                     },
                     children: [
-                      { type: "li", children: ["Only invest 5–10% max"] },
-                      { type: "li", children: ["Use reputable exchanges"] },
-                      { type: "li", children: ["Avoid social media hype"] },
-                      { type: "li", children: ["Assume it could go to zero"] },
-                      { type: "li", children: ["NEVER invest borrowed money"] }
+                      { type: "p", children: ["✅ Only invest 5–10% max"] },
+                      { type: "p", children: ["✅ Use reputable exchanges"] },
+                      { type: "p", children: ["✅ Avoid social media hype"] },
+                      { type: "p", children: ["✅ Assume it could go to zero"] },
+                      { type: "p", children: ["✅ NEVER invest borrowed money"] }
                     ]
                   }
                 ]
@@ -1042,7 +1091,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "NFTs are digital certificates proving ownership of a specific digital item — usually art, collectibles, or music. Anyone can still view the image online, but only you have the blockchain certificate."
+                  "NFTs are like digital certificates that prove you own a specific digital item - usually art, music, or collectibles. Think of it like owning a certificate that says \"this digital artwork is yours,\" even though anyone can still view it online."
                 ]
               },
 
@@ -1064,10 +1113,10 @@ const investingAssetsModules = [
                       className: "text-sm space-y-1 list-decimal list-inside"
                     },
                     children: [
-                      "Artist creates digital artwork",
-                      "They mint it as an NFT",
-                      "You buy the NFT itself (not the artwork)",
-                      "You own the certificate—NOT exclusive access"
+                      { type: "li", children: ["Artist creates digital artwork"] },
+                      { type: "li", children: ["They \"mint\" it as an NFT on blockchain"] },
+                      { type: "li", children: ["You buy the NFT (not the artwork itself)"] },
+                      { type: "li", children: ["You own the certificate, but the image remains viewable by everyone"] }
                     ]
                   }
                 ]
@@ -1128,10 +1177,10 @@ const investingAssetsModules = [
                           style: { "list-style": "disc" }
                         },
                         children: [
-                          { type: "li", children: ["Most NFTs have dropped 90%+ in value"] },
+                          { type: "li", children: ["Most NFTs have lost 90%+ value"] },
                           { type: "li", children: ["Anyone can still copy the image"] },
                           { type: "li", children: ["Environmental impact concerns"] },
-                          { type: "li", children: ["Many NFT projects were scams"] }
+                          { type: "li", children: ["Many projects were scams"] }
                         ]
                       }
                     ]
@@ -1225,7 +1274,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Cryptocurrencies based on jokes (Dogecoin, Shiba Inu). Extremely volatile and speculative."
+                          "Cryptocurrencies based on internet jokes (Dogecoin, Shiba Inu). Extremely volatile and speculative."
                         ]
                       }
                     ]
@@ -1259,7 +1308,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Complex crypto lending/borrowing systems. Many collapsed and caused total losses."
+                          "Complex crypto lending/borrowing systems. Many have collapsed, causing total losses."
                         ]
                       }
                     ]
@@ -1293,7 +1342,7 @@ const investingAssetsModules = [
                         type: "p",
                         props: { className: "text-sm text-muted-foreground" },
                         children: [
-                          "Influencers promoting “the next big thing.” Often pump-and-dump scams designed to steal money."
+                          "Influencers promoting \"the next big thing.\" Often pump-and-dump schemes designed to steal your money."
                         ]
                       }
                     ]
@@ -1357,10 +1406,10 @@ const investingAssetsModules = [
                           style: { "list-style": "disc" }
                         },
                         children: [
-                          { type: "li", children: ["Emergency fund (3–6 months)"] },
+                          { type: "li", children: ["Emergency fund (3-6 months expenses)"] },
                           { type: "li", children: ["Pay off high-interest debt"] },
-                          { type: "li", children: ["Start with index funds"] },
-                          { type: "li", children: ["Learn traditional investing"] }
+                          { type: "li", children: ["Start with index funds in ISA"] },
+                          { type: "li", children: ["Learn about traditional investing"] }
                         ]
                       }
                     ]
@@ -1389,10 +1438,10 @@ const investingAssetsModules = [
                           style: { "list-style": "disc" }
                         },
                         children: [
-                          { type: "li", children: ["Only risk up to 5%"] },
-                          { type: "li", children: ["Use money you can lose entirely"] },
-                          { type: "li", children: ["Research thoroughly"] },
-                          { type: "li", children: ["Avoid social media hype"] }
+                          { type: "li", children: ["Only risk 5% maximum of your portfolio"] },
+                          { type: "li", children: ["Use money you can afford to lose completely"] },
+                          { type: "li", children: ["Research thoroughly before buying"] },
+                          { type: "li", children: ["Don't follow social media hype"] }                           
                         ]
                       }
                     ]
@@ -1473,7 +1522,18 @@ const investingAssetsModules = [
       ]
     },
 
-    relatedLessons: [],
+    relatedLessons: [
+      {
+        moduleId: "diversification",
+        title: "Diversification",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "traditional-assets",
+        title: "Traditional Assets",
+        relationship: "related"
+      }
+    ],
 
     points: 100,
     difficultyLevel: "intermediate",
@@ -1524,7 +1584,7 @@ const investingAssetsModules = [
               {
                 type: "p",
                 children: [
-                  "Diversification is spreading your investments across different types of assets, companies, and markets to reduce risk. It’s the investment world's version of “don’t put all your eggs in one basket.”"
+                  "Diversification is spreading your investments across different types of assets, companies, and markets to reduce risk. It's the investment world's version of \"don't put all your eggs in one basket.\""
                 ]
               },
 
@@ -1542,7 +1602,7 @@ const investingAssetsModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Imagine you're growing vegetables. If you only plant tomatoes and a disease hits, you lose everything. If you plant tomatoes, carrots, lettuce, and peppers, you still have other crops. That’s diversification!"
+                      "Imagine you're growing vegetables. If you only plant tomatoes and there's a tomato disease, you lose everything. But if you plant tomatoes, carrots, lettuce, and peppers, even if tomatoes fail, you still have other crops. That's diversification!"
                     ]
                   }
                 ]
@@ -1598,9 +1658,9 @@ const investingAssetsModules = [
                         props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: ["Mix of stocks, bonds, real estate"] },
-                          { type: "li", children: ["Different industries & company sizes"] },
+                          { type: "li", children: ["Different industries and company sizes"] },
                           { type: "li", children: ["Global investments (UK, US, emerging markets)"] },
-                          { type: "li", children: ["Multiple asset classes"] }
+                          { type: "li", children: ["Different asset classes"] }
                         ]
                       }
                     ]
@@ -1667,10 +1727,10 @@ const investingAssetsModules = [
                         type: "ul",
                         props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          { type: "li", children: ["Stocks: 60–80% (growth)"] },
-                          { type: "li", children: ["Bonds: 15–30% (stability)"] },
-                          { type: "li", children: ["Real estate: 5–15% (property exposure)"] },
-                          { type: "li", children: ["Commodities: 0–10% (inflation hedge)"] }
+                          { type: "li", children: [{ type: "strong", children: ["Stocks"] }, ": 60-80% (higher growth potential)"] },
+                          { type: "li", children: [{ type: "strong", children: ["Bonds"] }, ": 15-30% (stability and income)"] },
+                          { type: "li", children: [{ type: "strong", children: ["Real Estate"] }, ": 5-15% (property exposure)"] },
+                          { type: "li", children: [{ type: "strong", children: ["Commodities"] }, ": 0-10% (inflation protection)"] }
                         ]
                       }
                     ]
@@ -1694,16 +1754,16 @@ const investingAssetsModules = [
                       {
                         type: "p",
                         props: { className: "text-sm text-muted-foreground mb-2" },
-                        children: ["Don’t invest in only one country:"]
+                        children: ["Don't just invest in one country:"]
                       },
                       {
                         type: "ul",
                         props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          { type: "li", children: ["UK: 25–40%"] },
-                          { type: "li", children: ["US: 30–50%"] },
-                          { type: "li", children: ["Europe: 10–20%"] },
-                          { type: "li", children: ["Emerging markets: 5–15%"] }
+                          { type: "li", children: [{ type: "strong", children: ["UK"] }, ": 25-40% (your home market)"] },
+                          { type: "li", children: [{ type: "strong", children: ["US"] }, ": 30-50% (world's largest market)"] },
+                          { type: "li", children: [{ type: "strong", children: ["Europe"] }, ": 10-20% (developed markets)"] },
+                          { type: "li", children: [{ type: "strong", children: ["Emerging Markets"] }, ": 5-15% (higher growth potential)"] }
                         ]
                       }
                     ]
@@ -1735,8 +1795,14 @@ const investingAssetsModules = [
                         type: "ul",
                         props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
-                          { type: "li", children: ["Technology • Healthcare • Finance • Consumer goods"] },
-                          { type: "li", children: ["Energy • Real estate • Utilities • Materials"] }
+                          { type: "li", children: ["Technology"] },
+                          { type: "li", children: ["Healthcare"] },
+                          { type: "li", children: ["Finance"] },
+                          { type: "li", children: ["Consumer goods"] },
+                          { type: "li", children: ["Energy"] },
+                          { type: "li", children: ["Real estate"] },
+                          { type: "li", children: ["Utilities"] },
+                          { type: "li", children: ["Materials"] }
                         ]
                       }
                     ]
@@ -2002,7 +2068,7 @@ const investingAssetsModules = [
                         props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: ["Thousands of companies"] },
-                          { type: "li", children: ["Multiple countries"] },
+                          { type: "li", children: ["Multiple countries and currencies"] },
                           { type: "li", children: ["Different sectors and industries"] },
                           { type: "li", children: ["Various company sizes"] }
                         ]
@@ -2100,8 +2166,41 @@ const investingAssetsModules = [
 
     ],
 
-    /* NO QUIZ, NO RELATED LESSONS */
-    quiz: { questions: [], passingScore: 0 },
+    quiz: {
+      passingScore: 2,
+      questions: [
+        {
+          question: "What does 'don't put all your eggs in one basket' mean for investing?",
+          options: [
+            "Only buy one type of investment",
+            "Spread your money across different investments",
+            "Keep all money in savings accounts",
+            "Only invest in companies you know"
+          ],
+          correctAnswer: 1
+        },
+        {
+          question: "Why is diversification important?",
+          options: [
+            "It guarantees profits",
+            "It reduces overall risk",
+            "It's required by law",
+            "It makes investing more complicated"
+          ],
+          correctAnswer: 1
+        },
+        {
+          question: "What's the easiest way for students to diversify?",
+          options: [
+            "Buy individual stocks from different companies",
+            "Invest in different cryptocurrencies",
+            "Use index funds or ETFs",
+            "Keep money in multiple bank accounts"
+          ],
+          correctAnswer: 2
+        }
+      ]
+    },
     relatedLessons: [],
 
     points: 100,

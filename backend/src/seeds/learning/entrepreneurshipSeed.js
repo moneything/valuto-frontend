@@ -1021,7 +1021,7 @@ const entrepreneurshipModules = [
                             type: "div",
                             props: {
                               className:
-                                "bg-accent/50 p-4 rounded-lg border-l-4 border-primary",
+                                "bg-primary/10 p-4 rounded-lg border-l-4 border-primary",
                             },
                             children: [
                               {
@@ -1234,7 +1234,7 @@ const entrepreneurshipModules = [
                 ]},
                 {
                   "type": "div",
-                  "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                  "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                   "children": [
                     { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Key Questions Every Business Model Answers:"] },
                     {
@@ -1537,7 +1537,7 @@ const entrepreneurshipModules = [
                   },
                   {
                     "type": "div",
-                    "props": { "className": "bg-accent/50 p-4 rounded-lg border-l-4 border-primary" },
+                    "props": { "className": "bg-primary/10 p-4 rounded-lg border-l-4 border-primary" },
                     "children": [
                       { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Start Small, Think Big:"] },
                       {
@@ -1665,7 +1665,7 @@ const entrepreneurshipModules = [
                     },
                     {
                       "type": "div",
-                      "props": { "className": "bg-accent/50 p-4 rounded-lg" },
+                      "props": { "className": "bg-primary/10 p-4 rounded-lg" },
                       "children": [
                         { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["The Golden Rule:"] },
                         {
@@ -2198,7 +2198,7 @@ const entrepreneurshipModules = [
                     },
                     {
                       "type": "div",
-                      "props": { "className": "bg-accent/50 p-4 rounded-lg border-l-4 border-primary mt-4" },
+                      "props": { "className": "bg-primary/10 p-4 rounded-lg border-l-4 border-primary mt-4" },
                       "children": [
                         { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Remember:"] },
                         {
@@ -2325,7 +2325,7 @@ const entrepreneurshipModules = [
               },
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg" },
+                props: { className: "bg-primary/10 p-4 rounded-lg" },
                 children: [
                   {
                     type: "h4",
@@ -2747,7 +2747,7 @@ const entrepreneurshipModules = [
 
               {
                 type: "div",
-                props: { className: "bg-accent/50 p-4 rounded-lg border-l-4 border-primary" },
+                props: { className: "bg-primary/10 p-4 rounded-lg border-l-4 border-primary" },
                 children: [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Your Story Could Be Next:"] },
                   {

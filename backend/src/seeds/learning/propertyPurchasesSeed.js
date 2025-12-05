@@ -131,12 +131,36 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          "• Flexibility: Easier to move",
-                          "• Lower upfront costs",
-                          "• No maintenance costs",
-                          "• Predictable monthly costs",
-                          "• Amenities included",
-                          "• No property taxes or insurance"
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Flexibility:"] },
+                              " Easier to move for work or life changes"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Lower upfront costs:"] },
+                              " Just deposit and first month's rent"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["No maintenance costs:"] },
+                              " Landlord handles repairs"
+                            ]
+                          },
+                          { type: "li", children: ["Predictable monthly costs"] },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Access to amenities:"] },
+                              " Gyms, pools in some rentals"
+                            ]
+                          },
+                          { type: "li", children: [{ type: "strong", children: ["No property taxes or insurance to worry about"] },] }
                         ]
                       }
                     ]
@@ -160,12 +184,42 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
-                          "• No equity building",
-                          "• Rent increases over time",
-                          "• Limited control",
-                          "• Potential displacement",
-                          "• No tax benefits",
-                          "• Long-term cost may be higher"
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["No equity building:"] },
+                              " Monthly payments don't build ownership"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Rent increases:"] },
+                              " Landlord can raise rent annually"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["No control:"] },
+                              " Can't modify or renovate"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Potential displacement:"] },
+                              " Landlord might sell"
+                            ]
+                          },
+                          { type: "li", children: [{ type: "strong", children: ["No tax benefits"] },] },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Long-term:"] },
+                              " Often more expensive"
+                            ]
+                          }
                         ]
                       }
                     ]
@@ -218,6 +272,13 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
+                          //todo: make words before ":" bold and use li and replace with 
+// • Build equity: Monthly payments increase your ownership
+// • Stability: No landlord, no forced moves
+// • Control: Renovate and modify as you wish
+// • Potential appreciation: Property might increase in value
+// • Tax benefits: Mortgage interest relief
+// • Fixed payments: Mortgage stays the same (if fixed rate)
                           "• Build equity",
                           "• Stability & long-term security",
                           "• Renovation freedom",
@@ -247,6 +308,13 @@ const propertyPurchasesModules = [
                         type: "ul",
                         props: { className: "text-sm space-y-1" },
                         children: [
+                          //todo: make words before ":" bold and use li and replace with 
+// • High upfront costs: Deposit, fees, surveys
+// • Maintenance costs: You pay for all repairs
+// • Less flexibility: Harder to move quickly
+// • Market risk: Property values can fall
+// • Additional costs: Insurance, taxes, maintenance
+// • Interest payments: Pay interest to the bank
                           "• High upfront costs",
                           "• Full maintenance responsibility",
                           "• Less flexibility",

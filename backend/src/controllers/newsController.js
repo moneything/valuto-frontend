@@ -1,5 +1,6 @@
 const News = require('../models/News');
 const Event = require('../models/Event');
+const { fetchFinancialNews } = require('../services/newsFeedService');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
@@ -13,31 +14,13 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  * @access  Public
  */
 const getNews = asyncHandler(async (req, res) => {
-  const { limit = 10, category } = req.query;
-
-  const filter = { isActive: true };
-  if (category) {
-    filter.category = category;
-  }
-
-  const news = await News.find(filter)
-    .sort({ publishedAt: -1 })
-    .limit(parseInt(limit))
-    .lean();
-
-  // Format dates and map fields for frontend
-  const formattedNews = news.map(item => ({
-    ...item,
-    time: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
-    publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
-    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
-    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
-  }));
+  const { limit = 10 } = req.query;
+  const news = await fetchFinancialNews(parseInt(limit));
 
   res.status(200).json({
     success: true,
-    count: formattedNews.length,
-    data: formattedNews,
+    count: news.length,
+    data: news,
   });
 });
 
@@ -84,24 +67,12 @@ const getNewsAndEvents = asyncHandler(async (req, res) => {
   const { newsLimit = 5, eventsLimit = 5 } = req.query;
 
   const [news, events] = await Promise.all([
-    News.find({ isActive: true })
-      .sort({ publishedAt: -1 })
-      .limit(parseInt(newsLimit))
-      .lean(),
+    fetchFinancialNews(parseInt(newsLimit)),
     Event.find({ isActive: true })
       .sort({ eventDate: 1 })
       .limit(parseInt(eventsLimit))
       .lean(),
   ]);
-
-  // Format dates and map fields for frontend
-  const formattedNews = news.map(item => ({
-    ...item,
-    time: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
-    publishedAt: item.publishedAt ? new Date(item.publishedAt).toISOString() : null,
-    createdAt: item.createdAt ? new Date(item.createdAt).toISOString() : null,
-    updatedAt: item.updatedAt ? new Date(item.updatedAt).toISOString() : null,
-  }));
 
   const formattedEvents = events.map(item => ({
     ...item,
@@ -114,7 +85,7 @@ const getNewsAndEvents = asyncHandler(async (req, res) => {
   res.status(200).json({
     success: true,
     data: {
-      news: formattedNews,
+      news,
       events: formattedEvents,
     },
   });
@@ -165,4 +136,3 @@ module.exports = {
   createNews,
   createEvent,
 };
-

@@ -28,6 +28,9 @@ const config: Config = {
     "to-green-50",
     "bg-primary/5",
     "bg-primary/10",
+    "bg-red-500",
+    "w-3",
+    "h-3",
     "bg-primary/20",
     "bg-primary/30",
     "bg-primary/40",
@@ -42,7 +45,11 @@ const config: Config = {
     "px-3",
     "px-4",
     "px-5",
+    "py-0.5",
     "bg-secondary/20",
+    "text-purple-700",
+    "bg-purple-50",
+    "border-purple-200",
   ],
   theme: {
     extend: {

@@ -38,72 +38,13 @@ const entrepreneurshipModules = [
     uiTree: [
       {
         type: "div",
-        props: {
-          className:
-            "min-h-screen bg-gradient-to-b from-background to-secondary/20",
-        },
         children: [
           {
             type: "div",
             props: {
-              className: "container mx-auto px-4 py-8 max-w-4xl",
+              className: "container mx-auto max-w-4xl",
             },
             children: [
-              // Header row (icon + title + read time)
-              {
-                type: "div",
-                props: { className: "flex items-center gap-3 mb-6" },
-                children: [
-                  {
-                    type: "div",
-                    props: {
-                      className: "p-3 rounded-lg bg-red-500",
-                    },
-                    children: [
-                      {
-                        type: "Briefcase",
-                        props: { className: "h-6 w-6 text-white" },
-                      },
-                    ],
-                  },
-                  {
-                    type: "div",
-                    children: [
-                      {
-                        type: "h1",
-                        props: { className: "text-3xl font-bold" },
-                        children: ["How to Start a Business"],
-                      },
-                      {
-                        type: "p",
-                        props: { className: "text-muted-foreground" },
-                        children: ["Step by step in simple language"],
-                      },
-                    ],
-                  },
-                  {
-                    type: "div",
-                    props: { className: "ml-auto" },
-                    children: [
-                      {
-                        type: "div",
-                        props: {
-                          className:
-                            "inline-flex items-center gap-1 rounded-full bg-secondary px-3 py-1 text-xs font-medium text-muted-foreground",
-                        },
-                        children: [
-                          {
-                            type: "Clock",
-                            props: { className: "h-3 w-3" },
-                          },
-                          "3 min read",
-                        ],
-                      },
-                    ],
-                  },
-                ],
-              },
-
               {
                 type: "div",
                 props: { className: "grid gap-6" },
@@ -1043,105 +984,6 @@ const entrepreneurshipModules = [
                     ],
                   },
 
-                  // Divider (Separator approximation)
-                  {
-                    type: "div",
-                    props: { className: "h-px bg-border" },
-                  },
-
-                  // Card 6: Test Your Knowledge (static header, quiz handled separately)
-                  {
-                    type: "Card",
-                    children: [
-                      {
-                        type: "CardHeader",
-                        children: [
-                          {
-                            type: "CardTitle",
-                            children: ["Test Your Knowledge"],
-                          },
-                          {
-                            type: "CardDescription",
-                            children: [
-                              "Quick quiz about starting a business. Answer the questions below to check your understanding.",
-                            ],
-                          },
-                        ],
-                      },
-                      {
-                        type: "CardContent",
-                        children: [
-                          {
-                            type: "p",
-                            props: { className: "text-sm text-muted-foreground" },
-                            children: [
-                              "Use the mini quiz in the app to see how much you've learned from this lesson.",
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
-
-                  // Card 7: Continue Your Entrepreneurship Journey
-                  {
-                    type: "Card",
-                    props: { className: "bg-primary/5" },
-                    children: [
-                      {
-                        type: "CardContent",
-                        props: { className: "pt-6" },
-                        children: [
-                          {
-                            type: "div",
-                            props: {
-                              className: "text-center space-y-3",
-                            },
-                            children: [
-                              {
-                                type: "h3",
-                                props: { className: "text-lg font-semibold" },
-                                children: [
-                                  "Continue Your Entrepreneurship Journey",
-                                ],
-                              },
-                              {
-                                type: "p",
-                                props: {
-                                  className:
-                                    "text-sm text-muted-foreground max-w-xl mx-auto",
-                                },
-                                children: [
-                                  "Ready for the next step? Explore different business models, get inspired by young entrepreneurs, and try a business game to practice decisions in a safe way.",
-                                ],
-                              },
-                              {
-                                type: "ul",
-                                props: {
-                                  className:
-                                    "mt-3 flex flex-wrap gap-2 justify-center text-sm",
-                                },
-                                children: [
-                                  {
-                                    type: "li",
-                                    children: ["• Business Models"],
-                                  },
-                                  {
-                                    type: "li",
-                                    children: ["• Young Entrepreneur Success Stories"],
-                                  },
-                                  {
-                                    type: "li",
-                                    children: ["• Business Simulation Game"],
-                                  },
-                                ],
-                              },
-                            ],
-                          },
-                        ],
-                      },
-                    ],
-                  },
                 ],
               },
             ],
@@ -1194,13 +1036,13 @@ const entrepreneurshipModules = [
         relationship: "next-step",
       },
       {
-        moduleId: "young-entrepreneurs",
-        title: "Young Entrepreneur Success Stories",
+        moduleId: "risk-vs-reward",
+        title: "Risk vs Reward",
         relationship: "related",
       },
       {
-        moduleId: "entrepreneurship-games",
-        title: "Business Simulation Game",
+        moduleId: "real-stories-of-young-entrepreneurs",
+        title: "Real Stories of Young Entrepreneurs",
         relationship: "related",
       },
     ],
@@ -1230,7 +1072,7 @@ const entrepreneurshipModules = [
               ]},
               { "type": "CardContent", "props": { "className": "space-y-4" }, "children": [
                 { "type": "p", "children": [
-                  "A business model is simply how your business makes money. It's your plan for creating, delivering, and capturing value."
+                  "A business model is simply how your business makes money. It's your plan for creating, delivering, and capturing value. Understanding different models helps you choose the best approach for your idea and situation."
                 ]},
                 {
                   "type": "div",
@@ -1239,13 +1081,13 @@ const entrepreneurshipModules = [
                     { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Key Questions Every Business Model Answers:"] },
                     {
                       "type": "ul",
-                      "props": { "className": "text-sm space-y-1" },
+                      "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                       "children": [
-                        "• Who are your customers?",
-                        "• What value do you provide them?",
-                        "• How do you reach customers?",
-                        "• How do you make money?",
-                        "• What are your main costs?"
+                        { "type": "li", "children": ["Who are your customers?"] },
+                        { "type": "li", "children": ["What value do you provide them?"] },
+                        { "type": "li", "children": ["How do you reach customers?"] },
+                        { "type": "li", "children": ["How do you make money?"] },
+                        { "type": "li", "children": ["What are your main costs?"] }
                       ]
                     }
                   ]
@@ -1289,13 +1131,13 @@ const entrepreneurshipModules = [
                           },
                           {
                             "type": "div",
-                            "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" },
+                            "props": { "className": "grid grid-cols-2 gap-2 text-xs" },
                             "children": [
-                              { "type": "p", "children": ["Pros: Personal service, immediate gratification, local community"] },
-                              { "type": "p", "children": ["Cons: High rent, limited hours, local customer base only"] }
+                              { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Personal service, immediate gratification, local community"] },
+                              { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " High rent, limited hours, local customer base only"] }
                             ]
                           },
-                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": ["Examples: Corner shop, boutique clothing store, local café"] }
+                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Corner shop, boutique clothing store, local café"] }
                         ]
                       },
 
@@ -1315,11 +1157,11 @@ const entrepreneurshipModules = [
                             "type": "div",
                             "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" },
                             "children": [
-                              "Pros: Global reach, 24/7 sales, lower overhead",
-                              "Cons: Competition, shipping logistics, no personal touch"
+                              { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Global reach, 24/7 sales, lower overhead than physical stores"] },
+                              { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Competition, shipping logistics, no personal touch"] }
                             ]
                           },
-                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": ["Examples: Shopify store, Amazon seller, Etsy shop"] }
+                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Shopify store, Amazon seller, Etsy shop"] }
                         ]
                       },
 
@@ -1332,14 +1174,17 @@ const entrepreneurshipModules = [
                             "type": "p",
                             "props": { "className": "text-sm text-muted-foreground mb-2" },
                             "children": [
-                              "Sell products online without holding inventory."
+                              "Sell products online without holding inventory. Supplier ships directly to customer."
                             ]
                           },
                           { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
-                            "Pros: Low startup costs, no inventory risk",
-                            "Cons: Low margins, no quality control"
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Low startup costs, no inventory risk, location independent"] },
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Low margins, no quality control, shipping delays"] }
                           ]},
-                          { "type": "p", "props": { "className": "text-xs text-green-700 dark:text-green-400 mt-2" }, "children": ["Student-Friendly: Can start with under £100"] }
+                          { "type": "p", "props": { "className": "text-xs text-green-700 mt-2" }, "children": [
+                            { "type": "strong", "children": ["Student-Friendly:"] },
+                            " Can start with under £100"
+                          ] }
                         ]
                       }
                     ]
@@ -1375,9 +1220,14 @@ const entrepreneurshipModules = [
                         "props": { "className": "p-4 border rounded-lg bg-blue-50 dark:bg-blue-950/20" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Freelancing / Consulting"] },
-                          { "type": "p", "props": { "className": "text-sm text-muted-foreground mb-2" }, "children": ["Sell your skills and time to clients."]},
-                          { "type": "p", "props": { "className": "text-xs text-blue-700 dark:text-blue-400" }, "children": [
-                            "Examples: Graphic design, tutoring, web development"
+                          { "type": "p", "props": { "className": "text-sm text-muted-foreground mb-2" }, "children": ["Sell your skills and time to clients on a project or hourly basis."]},
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " No inventory, high margins, flexible schedule"] },
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Trading time for money, income can be unpredictable"] }
+                          ]},
+                          { "type": "p", "props": { "className": "text-xs text-blue-700" }, "children": [
+                            { "type": "strong", "children": ["Examples:"] },
+                            " Graphic design, tutoring, web development"
                           ]}
                         ]
                       },
@@ -1390,7 +1240,14 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Customers pay monthly or yearly for an ongoing service."
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": ["Examples: Spotify, Netflix, meal kits"] }
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Predictable revenue, high customer lifetime value"] },
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Need to constantly provide value, high churn risk"] }
+                          ]},
+                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                            { "type": "strong", "children": ["Examples:"] },
+                            " Spotify, Netflix, meal kits"
+                          ] }
                         ]
                       },
 
@@ -1402,7 +1259,14 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Connect buyers and sellers, take a fee or commission."
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": ["Examples: Uber, Airbnb, Etsy, Upwork"] }
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Scalable, network effects, recurring revenue"] },
+                            { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Chicken-and-egg problem, complex to build"] }
+                          ]},
+                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                            { "type": "strong", "children": ["Examples:"] },
+                            " Uber, Airbnb, Etsy, Upwork"
+                          ]}
                         ]
                       }
                     ]
@@ -1433,16 +1297,19 @@ const entrepreneurshipModules = [
                     "type": "div",
                     "props": { "className": "grid gap-4" },
                     "children": [
-                      {
+                          {
                         "type": "div",
-                        "props": { "className": "p-4 border rounded-lg bg-purple-50 dark:bg-purple-950/20" },
+                        "props": { "className": "p-4 border rounded-lg bg-purple-50" },
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Content Creator"] },
-                          { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
-                            "Make videos, posts, tutorials — earn through ads, sponsors, and sales."
+                          { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": ["Create content, monetize through ads, sponsorships, or product sales."] },
+                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                            { "type": "strong", "children": ["Revenue streams:"] },
+                            " YouTube ads, sponsored posts, affiliate marketing, course sales"
                           ]},
                           { "type": "p", "props": { "className": "text-xs" }, "children": [
-                            "Examples: YouTuber, blogger, podcaster"
+                            { "type": "strong", "children": ["Examples:"] },
+                            " YouTuber, blogger, podcaster, social media influencer"
                           ]}
                         ]
                       },
@@ -1453,10 +1320,15 @@ const entrepreneurshipModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Digital Products"] },
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
-                            "Create something once, sell unlimited times — no physical stock."
+                            "Create once, sell many times with no physical inventory."
                           ]},
                           { "type": "p", "props": { "className": "text-xs" }, "children": [
-                            "Examples: eBooks, templates, online courses"
+                            { "type": "strong", "children": ["Examples:"] },
+                            " eBooks, templates, online courses"
+                          ]},
+                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                            { "type": "strong", "children": ["Benefits:"] },
+                            " High margins, scalable, location independent"
                           ]}
                         ]
                       },
@@ -1467,10 +1339,15 @@ const entrepreneurshipModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Software as a Service (SaaS)"] },
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
-                            "Monthly subscription for software access — high profit potential."
+                            "Monthly subscription for access to software/app functionality."
                           ]},
                           { "type": "p", "props": { "className": "text-xs" }, "children": [
-                            "Examples: Notion, Canva, project management tools"
+                            { "type": "strong", "children": ["Examples:"] },
+                            " Notion, Canva, project management tools"
+                          ]},
+                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                            { "type": "strong", "children": ["Challenge:"] },
+                            " HRequires technical skills but can be very profitable"
                           ]}
                         ]
                       }
@@ -1502,14 +1379,14 @@ const entrepreneurshipModules = [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Consider Your:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Available startup capital",
-                              "• Skills and experience",
-                              "• Time commitment available",
-                              "• Risk tolerance",
-                              "• Lifestyle preferences",
-                              "• Technical abilities"
+                              { "type": "li", "children": ["Available startup capital"] },
+                              { "type": "li", "children": ["Skills and experience"] },
+                              { "type": "li", "children": ["Time commitment available"] },
+                              { "type": "li", "children": ["Risk tolerance"] },
+                              { "type": "li", "children": ["Lifestyle preferences"] },
+                              { "type": "li", "children": ["Technical abilities"] }
                             ]
                           }
                         ]
@@ -1521,14 +1398,14 @@ const entrepreneurshipModules = [
                           { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Student-Friendly Models:"] },
                           {
                             "type": "ul",
-                            "props": { "className": "text-sm space-y-1" },
+                            "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                             "children": [
-                              "• Freelancing / consulting",
-                              "• Dropshipping",
-                              "• Digital products",
-                              "• Content creation",
-                              "• Service businesses",
-                              "• Tutoring / teaching"
+                              { "type": "li", "children": ["Freelancing / consulting"] },
+                              { "type": "li", "children": ["Dropshipping"] },
+                              { "type": "li", "children": ["Digital products"] },
+                              { "type": "li", "children": ["Content creation"] },
+                              { "type": "li", "children": ["Service businesses"] },
+                              { "type": "li", "children": ["Tutoring / teaching"] }
                             ]
                           }
                         ]
@@ -1544,7 +1421,7 @@ const entrepreneurshipModules = [
                         "type": "p",
                         "props": { "className": "text-sm" },
                         "children": [
-                          "Many successful businesses combine multiple models or evolve over time. Start with what you can manage now and expand later."
+                          "You don't need to choose one model forever. Many successful businesses combine multiple models or evolve over time. Start with what you can manage now and expand later."
                         ]
                       }
                     ]
@@ -1596,18 +1473,18 @@ const entrepreneurshipModules = [
     },
     relatedLessons: [
       {
-        moduleId: "start-business",
-        title: "How to Start a Business",
+        moduleId: "risk-vs-reward",
+        title: "Risk vs Reward",
         relationship: "next-step"
       },
       {
-        moduleId: "risk-vs-reward",
-        title: "Risk vs Reward",
+        moduleId: "how-to-start-a-business",
+        title: "How to Start a Business",
         relationship: "related"
       },
       {
-        moduleId: "young-entrepreneurs",
-        title: "Success Stories",
+        moduleId: "real-stories-of-young-entrepreneurs",
+        title: "Real Stories of Young Entrepreneurs",
         relationship: "related"
       }
     ],
@@ -1672,7 +1549,8 @@ const entrepreneurshipModules = [
                           "type": "p",
                           "props": { "className": "text-sm" },
                           "children": [
-                            "Never risk more than you can afford to lose. This applies to money, time, relationships, and opportunities. Smart entrepreneurs manage risk while pursuing rewards."
+                            { "type": "strong", "children": ["Never risk more than you can afford to lose."] },
+                            " This applies to money, time, relationships, and opportunities. Smart entrepreneurs manage risk while pursuing rewards."
                           ]
                         }
                       ]
@@ -1683,19 +1561,19 @@ const entrepreneurshipModules = [
                       "children": [
                         {
                           "type": "div",
-                          "props": { "className": "p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800" },
+                          "props": { "className": "p-4 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 " },
                           "children": [
                             { "type": "h4", "props": { "className": "font-semibold text-green-700 dark:text-green-400 mb-2" }, "children": ["Potential Rewards"] },
                             {
                               "type": "ul",
-                              "props": { "className": "text-sm space-y-1" },
+                              "props": { "className": "text-sm list-disc pl-4" },
                               "children": [
-                                "• Financial independence",
-                                "• Flexible lifestyle",
-                                "• Building something meaningful",
-                                "• Learning and personal growth",
-                                "• Unlimited earning potential",
-                                "• Being your own boss"
+                                { "type": "li", "children": ["Financial independence"] },
+                                { "type": "li", "children": ["Flexible lifestyle"] },
+                                { "type": "li", "children": ["Building something meaningful"] },
+                                { "type": "li", "children": ["Learning and personal growth"] },
+                                { "type": "li", "children": ["Unlimited earning potential"] },
+                                { "type": "li", "children": ["Being your own boss"] }
                               ]
                             }
                           ]
@@ -1707,14 +1585,14 @@ const entrepreneurshipModules = [
                             { "type": "h4", "props": { "className": "font-semibold text-red-700 dark:text-red-400 mb-2" }, "children": ["Potential Risks"] },
                             {
                               "type": "ul",
-                              "props": { "className": "text-sm space-y-1" },
+                              "props": { "className": "text-sm list-disc pl-4" },
                               "children": [
-                                "• Financial loss",
-                                "• Income uncertainty",
-                                "• Stress and long hours",
-                                "• Opportunity cost",
-                                "• Relationship strain",
-                                "• Career setbacks if it fails"
+                                { "type": "li", "children": ["Financial loss"] },
+                                { "type": "li", "children": ["Income uncertainty"] },
+                                { "type": "li", "children": ["Stress and long hours"] },
+                                { "type": "li", "children": ["Opportunity cost"] },
+                                { "type": "li", "children": ["Relationship strain"] },
+                                { "type": "li", "children": ["Career setbacks if it fails"] }
                               ]
                             }
                           ]
@@ -1770,10 +1648,22 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 text-semibold" },
                               "children": [
-                                "Examples: Startup costs, inventory, equipment, marketing spend",
-                                "Management: Start lean, bootstrap where possible, separate personal/business finances"
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Examples:"] },
+                                    " Startup costs, inventory, equipment, marketing spend"
+                                  ]
+                                },
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Management:"] },
+                                    " Start lean, bootstrap where possible, separate personal/business finances"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -1798,10 +1688,22 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 text-sembibold" },
                               "children": [
-                                "Examples: Salary from employment, career progression, study time",
-                                "Management: Start part-time, don’t burn bridges, have backup plans"
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Examples:"] },
+                                    " Salary from employment, career progression, study time"
+                                  ]
+                                },
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Management:"] },
+                                    " Start part-time, don't burn bridges, have backup plans"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -1826,10 +1728,22 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 text-semibold" },
                               "children": [
-                                "Examples: No market demand, strong competition, economic downturn",
-                                "Management: Validate early, research competition, focus on customer needs"
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Examples:"] },
+                                    " No market demand, strong competition, economic downturn"
+                                  ]
+                                },
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Management:"] },
+                                    " Validate early, research competition, focus on customer needs"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -1856,8 +1770,20 @@ const entrepreneurshipModules = [
                               "type": "div",
                               "props": { "className": "text-xs space-y-1" },
                               "children": [
-                                "Examples: Stress, burnout, damaged relationships, health issues",
-                                "Management: Set boundaries, maintain work-life balance, seek support"
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Examples:"] },
+                                    " Stress, burnout, damaged relationships, health issues"
+                                  ]
+                                },
+                                {
+                                  "type": "p",
+                                  "children": [
+                                    { "type": "strong", "children": ["Management:"] },
+                                    " Set boundaries, maintain work-life balance, seek support"
+                                  ]
+                                }
                               ]
                             }
                           ]
@@ -1895,60 +1821,114 @@ const entrepreneurshipModules = [
                       "children": [
                         {
                           "type": "div",
-                          "props": { "className": "p-3 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800" },
+                          "props": { "className": "p-3 bg-green-50 rounded border border-green-200" },
                           "children": [
                             {
                               "type": "div",
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
-                                { "type": "h4", "props": { "className": "font-semibold text-green-700 dark:text-green-400" }, "children": ["Lower Risk Options"] },
-                                { "type": "div", "props": { "className": "bg-green-500" }, "children": ["Beginner Friendly"] }
+                                { "type": "h4", "props": { "className": "font-semibold text-green-700" }, "children": ["Lower Risk Options"] },
+                                { "type": "strong", "props": { "className": "bg-green-500 text-white px-2 text-xs py-0.5 rounded-xl" }, "children": ["Beginner Friendly"] }
                               ]
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-sm space-y-1" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
-                                "• Service businesses: Tutoring, consulting, freelancing",
-                                "• Digital products: Online courses, eBooks, apps",
-                                "• Dropshipping: Low inventory, test products easily",
-                                "• Content creation: YouTube, blogging, social media"
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Service businesses"] },
+                                    ": Tutoring, consulting, freelancing"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Digital products"] },
+                                    ": Online courses, eBooks, apps"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Dropshipping"] },
+                                    ": Low inventory, test products easily"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Content creation"] },
+                                    ": YouTube, blogging, social media"
+                                  ]
+                                }
                               ]
                             },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs text-green-600 dark:text-green-400 mt-2" },
-                              "children": ["Why lower risk: Low startup costs, can start part-time, quick to pivot"]
+                              "props": { "className": "text-sm text-green-600 mt-2" },
+                              "children": [
+                                { "type": "strong", "children": ["Why lower risk"] },
+                                ": Low startup costs, can start part-time, quick to pivot"
+                              ]
                             }
                           ]
                         },
 
                         {
                           "type": "div",
-                          "props": { "className": "p-3 bg-yellow-50 dark:bg-yellow-950/20 rounded border border-yellow-200 dark:border-yellow-800" },
+                          "props": { "className": "p-3 bg-yellow-50 rounded border border-yellow-200" },
                           "children": [
                             {
                               "type": "div",
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-yellow-700 dark:text-yellow-400" }, "children": ["Medium Risk Options"] },
-                                { "type": "div", "props": { "variant": "outline" }, "children": ["Some Experience Needed"] }
+                                { "type": "strong", "props": { "className": "text-black px-2 text-xs rounded-xl border border-2 border-gray-599" }, "children": ["Some Experience Needed"] }
                               ]
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-sm space-y-1" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
-                                "• E-commerce: Physical products, inventory management",
-                                "• Franchises: Proven model but higher investment",
-                                "• Software businesses: Higher development costs",
-                                "• Local services: Cleaning, landscaping, delivery"
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["E-commerce"] },
+                                    ": Physical products, inventory management"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Franchises"] },
+                                    ": Proven model but higher investment"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Software businesses"] },
+                                    ": Higher development costs"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Local services"] },
+                                    ": Cleaning, landscaping, delivery"
+                                  ]
+                                }
                               ]
                             },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs text-yellow-600 dark:text-yellow-400 mt-2" },
-                              "children": ["Why medium risk: Higher startup costs, more complexity, longer to break even"]
+                              "props": { "className": "text-sm text-yellow-600 dark:text-yellow-400 mt-2" },
+                              "children": [
+                                { "type": "strong", "children": ["Why medium risk"] },
+                                ": Higher startup costs, more complexity, longer to break even"
+                              ]
                             }
                           ]
                         },
@@ -1962,23 +1942,50 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-red-700 dark:text-red-400" }, "children": ["Higher Risk Options"] },
-                                { "type": "div", "props": { "variant": "destructive" }, "children": ["High Investment"] }
+                                { "type": "strong", "props": { "className": "text-white px-2 text-xs py-0.5 rounded-xl bg-red-500" }, "children": ["High Investment"] }
                               ]
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-sm space-y-1" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
-                                "• Restaurants: High failure rate, big upfront costs",
-                                "• Manufacturing: Heavy machinery, complex supply chains",
-                                "• Real estate: Large capital requirements",
-                                "• Venture-funded startups: High growth pressure"
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Restaurants"] },
+                                    ": High failure rate, big upfront costs"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Manufacturing"] },
+                                    ": Heavy machinery, complex supply chains"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Real estate"] },
+                                    ": Large capital requirements"
+                                  ]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": [
+                                    { "type": "strong", "children": ["Venture-funded startups"] },
+                                    ": High growth pressure"
+                                  ]
+                                }
                               ]
                             },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs text-red-600 dark:text-red-400 mt-2" },
-                              "children": ["Why higher risk: Large investments, long payback periods, high failure rates"]
+                              "props": { "className": "text-sm text-red-600 dark:text-red-400 mt-2" },
+                              "children": [
+                                { "type": "strong", "children": ["Why higher risk"] },
+                                ": Large investments, long payback periods, high failure rates"
+                              ]
                             }
                           ]
                         }
@@ -2027,11 +2034,11 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                               "children": [
-                                "• MVP (Minimum Viable Product) approach",
-                                "• Test with friends and family first",
-                                "• Gradually increase investment as you prove concept"
+                                { "type": "li", "children": ["MVP (Minimum Viable Product) approach"] },
+                                { "type": "li", "children": ["Test with friends and family first"] },
+                                { "type": "li", "children": ["Gradually increase investment as you prove concept"] }
                               ]
                             }
                           ]
@@ -2051,11 +2058,11 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                               "children": [
-                                "• Multiple revenue streams",
-                                "• Different customer segments",
-                                "• Various marketing channels"
+                                { "type": "li", "children": ["Multiple revenue streams"] },
+                                { "type": "li", "children": ["Different customer segments"] },
+                                { "type": "li", "children": ["Various marketing channels"] }
                               ]
                             }
                           ]
@@ -2075,11 +2082,11 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                               "children": [
-                                "• Set clear success/failure metrics",
-                                "• Time-bound your experiments",
-                                "• Keep other options open"
+                                { "type": "li", "children": ["Set clear success/failure metrics"] },
+                                { "type": "li", "children": ["Time-bound your experiments"] },
+                                { "type": "li", "children": ["Keep other options open"] }
                               ]
                             }
                           ]
@@ -2099,12 +2106,24 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
                               "children": [
-                                "• Lower living costs = less financial pressure",
-                                "• Access to university resources and networks",
-                                "• Can afford to take bigger risks early in career",
-                                "• Don't mortgage your education for business"
+                                {
+                                  "type": "li",
+                                  "children": ["Lower living costs = less financial pressure"]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": ["Access to university resources and networks"]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": ["Can afford to take bigger risks early in career"]
+                                },
+                                {
+                                  "type": "li",
+                                  "children": ["Don't mortgage your education for business"]
+                                }
                               ]
                             }
                           ]
@@ -2257,18 +2276,18 @@ const entrepreneurshipModules = [
     },
     relatedLessons: [
       {
-        moduleId: "business-models",
-        title: "Business Models",
-        relationship: "related"
-      },
-      {
-        moduleId: "start-business",
-        title: "How to Start a Business",
+        moduleId: "real-stories-of-young-entrepreneurs",
+        title: "Real Stories of Young Entrepreneurs",
         relationship: "next-step"
       },
       {
-        moduleId: "young-entrepreneurs",
-        title: "Success Stories",
+        moduleId: "how-to-start-a-business",
+        title: "How to Start a Business",
+        relationship: "related"
+      },
+      {
+        moduleId: "business-models",
+        title: "Business Models",
         relationship: "related"
       }
     ],
@@ -2320,7 +2339,7 @@ const entrepreneurshipModules = [
               {
                 type: "p",
                 children: [
-                  "Reading about successful young entrepreneurs isn't about copying their exact path — it's about understanding the mindset, strategies, and principles that helped them succeed. These stories show that age isn't a barrier to building something meaningful."
+                  "Reading about successful young entrepreneurs isn't about copying their exact path - it's about understanding the mindset, principles, and strategies that helped them succeed. These stories show that age isn't a barrier to building something meaningful."
                 ]
               },
               {
@@ -2334,13 +2353,13 @@ const entrepreneurshipModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "text-sm space-y-1" },
+                    props: { className: "text-sm space-y-1 list-disc pl-4" },
                     children: [
-                      { type: "li", children: ["• Started with simple solutions to real problems"] },
-                      { type: "li", children: ["• Learned by doing, not waiting"] },
-                      { type: "li", children: ["• Treated failure as feedback"] },
-                      { type: "li", children: ["• Focused on customer value first"] },
-                      { type: "li", children: ["• Many started part-time while studying"] }
+                      { type: "li", children: ["Most started with simple solutions to real problems"] },
+                      { type: "li", children: ["They learned by doing, not just planning"] },
+                      { type: "li", children: ["Failure was a learning opportunity, not the end"] },
+                      { type: "li", children: ["They focused on serving customers, not getting rich quick"] },
+                      { type: "li", children: ["Many started part-time while studying or working"] }
                     ]
                   }
                 ]
@@ -2355,8 +2374,12 @@ const entrepreneurshipModules = [
       * -------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5"},
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["British Success Stories"] }] },
+          { type: "CardHeader", children: [{ type: "CardTitle", props: {className: "flex flex-row gap-3 items-center"}, children: [
+            {type:"Users", props: {className: "h-5 w-5"}},
+            "British Success Stories"
+          ] }] },
           {
             type: "CardContent",
             props: { className: "space-y-6" },
@@ -2380,20 +2403,44 @@ const entrepreneurshipModules = [
                       {
                         type: "div",
                         children: [
-                          { type: "h4", props: { className: "font-semibold" }, children: ["Jamal Edwards MBE"] },
+                          { type: "h4", props: { className: "font-semibold" }, children: ["Jamal Edwards MBE (1990-2022)"] },
                           { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Founded SBTV"] }
                         ]
                       }
                     ]
                   },
                   {
-                    type: "div",
-                    props: { className: "space-y-2 text-sm" },
+                    type: "ul",
+                    props: { className: "space-y-1 text-sm list-disc pl-4" },
                     children: [
-                      { type: "p", children: ["• Started at 15 with a £20 camera"] },
-                      { type: "p", children: ["• Filmed grime artists and uploaded to YouTube"] },
-                      { type: "p", children: ["• Grew SBTV into the UK's largest youth broadcaster"] },
-                      { type: "p", children: ["• Lesson: Start with what you have, not what you wish you had"] }
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["Started:"] },
+                          " Age 15 with a £20 camera from his mother"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["The idea:"] },
+                          " Film grime music videos and upload to YouTube"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["The growth:"] },
+                          " SBTV became the UK's largest youth broadcaster"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["Key lesson:"] },
+                          ' "Started with what I had, not what I wished I had. Helped launch careers of Ed Sheeran, Dave, and Stormzy."'
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2419,19 +2466,43 @@ const entrepreneurshipModules = [
                         type: "div",
                         children: [
                           { type: "h4", props: { className: "font-semibold" }, children: ["Ben Towers"] },
-                          { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Towers Design"] }
+                          { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Started Towers Design"] }
                         ]
                       }
                     ]
                   },
                   {
-                    type: "div",
-                    props: { className: "space-y-2 text-sm" },
+                    type: "ul",
+                    props: { className: "space-y-1 text-sm list-disc pl-4" },
                     children: [
-                      { type: "p", children: ["• Started at age 13"] },
-                      { type: "p", children: ["• Designed websites for local businesses"] },
-                      { type: "p", children: ["• Hit £100k+ revenue by age 16"] },
-                      { type: "p", children: ["• Lesson: Start local and learn as you go"] }
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["Started:"] },
+                          " Age 13, designing websites in his bedroom"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["The idea:"] },
+                          " Freelance web design for local businesses"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["The growth:"] },
+                          " \u00a3100k+ revenue by age 16, speaking at conferences"
+                        ]
+                      },
+                      {
+                        type: "li",
+                        children: [
+                          { type: "strong", children: ["Key lesson:"] },
+                          " \"Started local, learned on the job. Proved you don't need a degree to provide value.\""
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2466,9 +2537,40 @@ const entrepreneurshipModules = [
                     type: "div",
                     props: { className: "space-y-2 text-sm" },
                     children: [
-                      { type: "p", children: ["• Started coding apps at 15"] },
-                      { type: "p", children: ["• Summly was acquired by Yahoo for $30m at age 17"] },
-                      { type: "p", children: ["• Lesson: Solve your own problems first"] }
+                      {
+                        type: "ul",
+                        props: { className: "space-y-1 text-sm list-disc pl-4" },
+                        children: [
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Started:"] },
+                              " Age 15, creating mobile apps"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["The idea:"] },
+                              " AI-powered news summarization app"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["The exit:"] },
+                              " Sold to Yahoo for $30 million at age 17"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Key lesson:"] },
+                              ' "Focused on solving his own problem - too much news, too little time. Stayed in school throughout."'
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2494,7 +2596,7 @@ const entrepreneurshipModules = [
                         type: "div",
                         children: [
                           { type: "h4", props: { className: "font-semibold" }, children: ["Akshay Ruparelia"] },
-                          { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Founded Doorsteps.co.uk"] }
+                          { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Doorsteps.co.uk founder"] }
                         ]
                       }
                     ]
@@ -2503,10 +2605,40 @@ const entrepreneurshipModules = [
                     type: "div",
                     props: { className: "space-y-2 text-sm" },
                     children: [
-                      { type: "p", children: ["• Started at age 19 while studying"] },
-                      { type: "p", children: ["• Built an online estate agency with ultra-low fees"] },
-                      { type: "p", children: ["• Achieved £12m revenue, valuation ~£25m"] },
-                      { type: "p", children: ["• Lesson: Use tech to improve outdated industries"] }
+                      {
+                        type: "ul",
+                        props: { className: "space-y-1 text-sm list-disc pl-4" },
+                        children: [
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Started:"] },
+                              " Age 19 while studying at university"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["The idea:"] },
+                              " Online estate agency with lower fees"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["The success:"] },
+                              " \u00a312 million revenue, sold portion for \u00a325 million by age 22"
+                            ]
+                          },
+                          {
+                            type: "li",
+                            children: [
+                              { type: "strong", children: ["Key lesson:"] },
+                              ' "Identified industry inefficiency, used technology to solve it. Bootstrapped initial growth."'
+                            ]
+                          }
+                        ]
+                      }
                     ]
                   }
                 ]
@@ -2521,6 +2653,7 @@ const entrepreneurshipModules = [
       * -------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5"},
         children: [
           {
             type: "CardHeader",
@@ -2534,12 +2667,12 @@ const entrepreneurshipModules = [
                 type: "div",
                 props: { className: "p-3 border rounded-lg" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["Mark Zuckerberg — 19"] },
+                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["Mark Zuckerberg (Facebook) - Started age 19"] },
                   {
                     type: "p",
                     props: { className: "text-sm text-muted-foreground" },
                     children: [
-                      "Created Facebook from his Harvard dorm room. Started with a niche audience and expanded gradually."
+                      "Created Facebook in his Harvard dorm room. Key insight: Started for university students, then expanded gradually. \"Move fast and break things\" mentality."
                     ]
                   }
                 ]
@@ -2548,16 +2681,44 @@ const entrepreneurshipModules = [
                 type: "div",
                 props: { className: "p-3 border rounded-lg" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["Evan Spiegel — 21"] },
+                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["Evan Spiegel (Snapchat) - Started age 21"] },
                   {
                     type: "p",
                     props: { className: "text-sm text-muted-foreground" },
                     children: [
-                      "Founder of Snapchat. Understood younger audiences better than competitors; built a product adults thought was ‘pointless’."
+                      "Understood what young people wanted before adults did. Focused on disappearing messages when everyone thought it was crazy."
                     ]
                   }
                 ]
-              }
+              },
+              {
+                type: "div",
+                props: { className: "p-3 border rounded-lg" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["David Karp (Tumblr) - Started age 20"] },
+                  {
+                    type: "p",
+                    props: { className: "text-sm text-muted-foreground" },
+                    children: [
+                      "High school dropout who taught himself programming. Created Tumblr as a simple microblogging platform, sold to Yahoo for $1.1 billion."
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "div",
+                props: { className: "p-3 border rounded-lg" },
+                children: [
+                  { type: "h4", props: { className: "font-semibold mb-1" }, children: ["John Collison (Stripe) - Started age 19"] },
+                  {
+                    type: "p",
+                    props: { className: "text-sm text-muted-foreground" },
+                    children: [
+                      "Irish entrepreneur who co-founded Stripe with his brother. Made online payments simple for developers when it was unnecessarily complex."
+                    ]
+                  }
+                ]
+              },
             ]
           }
         ]
@@ -2568,6 +2729,7 @@ const entrepreneurshipModules = [
       * -------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5"},
         children: [
           {
             type: "CardHeader",
@@ -2585,7 +2747,7 @@ const entrepreneurshipModules = [
             children: [
               {
                 type: "div",
-                props: { className: "grid md:grid-cols-2 gap-4" },
+                props: { className: "grid grid-cols-2 gap-4" },
                 children: [
                   /* COLUMN 1 */
                   {
@@ -2596,24 +2758,54 @@ const entrepreneurshipModules = [
                         type: "div",
                         props: {
                           className:
-                            "p-3 bg-green-50 dark:bg-green-950/20 rounded border border-green-200 dark:border-green-800"
+                            "p-3 bg-green-50 rounded border border-green-200 "
                         },
                         children: [
                           {
                             type: "h4",
                             props: {
-                              className: "font-semibold text-green-700 dark:text-green-400 mb-2"
+                              className: "font-semibold text-green-700 mb-2"
                             },
                             children: ["Mindset Traits"]
                           },
                           {
                             type: "ul",
-                            props: { className: "text-sm space-y-1" },
+                            props: { className: "text-sm space-y-1 list-disc pl-4" },
                             children: [
-                              { type: "li", children: ["• Curiosity"] },
-                              { type: "li", children: ["• Persistence"] },
-                              { type: "li", children: ["• Learning fast"] },
-                              { type: "li", children: ["• Customer obsession"] }
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Curiosity:"] },
+                                  ' Always asking "why" and "what if"'
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Persistence:"] },
+                                  " Kept going when others quit"
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  {
+                                    type: "strong",
+                                    children: ["Learning agility:"]
+                                  },
+                                  " Quick to adapt and improve"
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  {
+                                    type: "strong",
+                                    children: ["Customer focus:"]
+                                  },
+                                  " Solved real problems"
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -2636,24 +2828,117 @@ const entrepreneurshipModules = [
                           {
                             type: "h4",
                             props: {
-                              className: "font-semibold text-blue-700 dark:text-blue-400 mb-2"
+                              className: "font-semibold text-blue-700 mb-2"
                             },
                             children: ["Strategic Choices"]
                           },
                           {
                             type: "ul",
-                            props: { className: "text-sm space-y-1" },
+                            props: { className: "text-sm space-y-1 list-disc pl-4" },
                             children: [
-                              { type: "li", children: ["• Good timing"] },
-                              { type: "li", children: ["• Simplicity"] },
-                              { type: "li", children: ["• Leveraging technology"] },
-                              { type: "li", children: ["• Starting with a niche"] }
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Timing: "] },
+                                  "Spotted emerging trends early"
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Simplicity: "] },
+                                  "Made complex things simple"
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Technology: "] },
+                                  "Used tech as an enabler"
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "strong", children: ["Niche first: "] },
+                                  "Dominated small markets first"
+                                ]
+                              }
                             ]
                           }
                         ]
                       }
                     ]
-                  }
+                  },
+
+                  /* COLUMN 1 */
+                  {
+                    type: "div",
+                    props: { className: "space-y-4" },
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          className:
+                            "p-3 bg-purple-50 rounded border border-purple-200 "
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: {
+                              className: "font-semibold text-purple-700 mb-2"
+                            },
+                            children: ["Practical Actions"]
+                          },
+                          {
+                            type: "ul",
+                            props: { className: "text-sm space-y-1 list-disc pl-4" },
+                            children: [
+                              { type: "li", children: ['Started small and simple'] },
+                              { type: "li", children: ['Got feedback early and often'] },
+                              { type: "li", children: ['Reinvested profits back into growth'] },
+                              { type: "li", children: ['Built networks and learned from others'] },
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  /* COLUMN 2 */
+                  {
+                    type: "div",
+                    props: { className: "space-y-4" },
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          className:
+                            "p-3 bg-orange-50 rounded border border-orange-200 "
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: {
+                              className: "font-semibold text-orange-700 mb-2"
+                            },
+                            children: ["Youth Advantages"]
+                          },
+                          {
+                            type: "ul",
+                            props: { className: "text-sm space-y-1 list-disc pl-4" },
+                            children: [
+                              { type: "li", children: ['Less fear of failure'] },
+                              { type: "li", children: ['More time to recover from mistakes'] },
+                              { type: "li", children: ['Native understanding of new technology'] },
+                              { type: "li", children: ['Lower financial obligations'] },
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
                 ]
               }
             ]
@@ -2666,6 +2951,7 @@ const entrepreneurshipModules = [
       * -------------------------------------------------- */
       {
         type: "Card",
+        props: {className: "mt-5"},
         children: [
           { type: "CardHeader", children: [{ type: "CardTitle", children: ["Lessons for Today’s Students"] }] },
           {
@@ -2681,7 +2967,7 @@ const entrepreneurshipModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "None of these entrepreneurs waited for someone to give them permission. They saw problems and started solving them with the resources they had."
+                      "None of these entrepreneurs waited for someone to give them permission to start. They saw problems and started solving them with whatever resources they had."
                     ]
                   }
                 ]
@@ -2696,7 +2982,7 @@ const entrepreneurshipModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Jamal used a cheap camera. Ben used free tools. Your current resources are enough to begin."
+                      "Jamal Edwards started with a £20 camera. Ben Towers used free web tools. Your current resources are enough to begin."
                     ]
                   }
                 ]
@@ -2711,7 +2997,7 @@ const entrepreneurshipModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "Young entrepreneurs often succeed because they see things differently. Your ‘lack of experience’ is often a fresh perspective."
+                      "Young entrepreneurs often succeed because they see things differently than adults. Your \"inexperience\" might actually be fresh perspective."
                     ]
                   }
                 ]
@@ -2725,7 +3011,7 @@ const entrepreneurshipModules = [
                   {
                     type: "p",
                     props: { className: "text-sm" },
-                    children: ["Every successful entrepreneur failed multiple times. The difference: they learned and continued."]
+                    children: ["Every successful entrepreneur failed multiple times. The difference is they treated failures as learning experiences, not reasons to quit."]
                   }
                 ]
               },
@@ -2739,7 +3025,7 @@ const entrepreneurshipModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "All these entrepreneurs focused on creating value first. Money followed as a result of solving real problems."
+                      "All these entrepreneurs focused on creating value for users first. The money followed as a result of solving real problems well."
                     ]
                   }
                 ]
@@ -2754,7 +3040,7 @@ const entrepreneurshipModules = [
                     type: "p",
                     props: { className: "text-sm" },
                     children: [
-                      "These entrepreneurs started as students just like you. They weren't special — they simply started small, learned fast, and kept improving."
+                      "These entrepreneurs started as students just like you. They weren't special or gifted - they just started, learned, and kept improving. What problem could you solve today?"
                     ]
                   }
                 ]

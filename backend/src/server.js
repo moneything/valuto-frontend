@@ -27,11 +27,7 @@ app.use(helmet());
 
 // CORS configuration
 const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:3001', // Allow alternate port
-  'https://valuto-frontend-test.vercel.app', // Test frontend
-  'https://www.valuto.co.uk', // Live production frontend
-  'https://valuto.co.uk', // Live production frontend (without www)
+  process.env.NEXT_PUBLIC_APP_URL,
 ];
 
 // Add FRONTEND_URL from environment if set

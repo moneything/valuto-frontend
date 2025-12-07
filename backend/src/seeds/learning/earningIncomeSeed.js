@@ -341,7 +341,7 @@ const earningIncomeModules = [
                     children: [
                       { type: "h4", props: { className: "font-semibold text-blue-600" }, children: ["💰 Hourly Pay"] },
                       { type: "p", props: { className: "text-sm mt-1" }, children: ["Most common for students. Pay = hours worked × hourly rate"] },
-                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: 15 hours × £8.50 = £127.50"] }
+                      { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Example: 15 hours × £8.50 = £127.50"] }
                     ]
                   },
 
@@ -351,7 +351,7 @@ const earningIncomeModules = [
                     children: [
                       { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["📅 Salary"] },
                       { type: "p", props: { className: "text-sm mt-1" }, children: ["Fixed annual amount, paid monthly regardless of hours"] },
-                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £25,000/year = £2,083/month"] }
+                      { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Example: £25,000/year = £2,083/month"] }
                     ]
                   },
 
@@ -361,7 +361,7 @@ const earningIncomeModules = [
                     children: [
                       { type: "h4", props: { className: "font-semibold text-purple-600" }, children: ["📈 Commission"] },
                       { type: "p", props: { className: "text-sm mt-1" }, children: ["Earn based on sales or performance"] },
-                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £200 base + 5% of sales"] }
+                      { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Example: £200 base + 5% of sales"] }
                     ]
                   },
 
@@ -371,7 +371,7 @@ const earningIncomeModules = [
                     children: [
                       { type: "h4", props: { className: "font-semibold text-orange-600" }, children: ["💪 Piece Rate"] },
                       { type: "p", props: { className: "text-sm mt-1" }, children: ["Paid per item/task completed"] },
-                      { type: "p", props: { className: "text-xs text-muted-foreground" }, children: ["Example: £2 per delivery completed"] }
+                      { type: "p", props: { className: "text-sm text-muted-foreground" }, children: ["Example: £2 per delivery completed"] }
                     ]
                   }
                 ]
@@ -453,7 +453,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm font-semibold" }, children: ["Very Limited Work"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        props: { className: "list-disc pl-4 text-sm mt-2 space-y-1 text-left" },
                         children: [
                           { type: "li", children: ["Paper rounds"] },
                           { type: "li", children: ["Light agricultural work"] },
@@ -472,7 +472,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm font-semibold" }, children: ["More Options"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        props: { className: "list-disc pl-4 text-sm mt-2 space-y-1 text-left" },
                         children: [
                           { type: "li", children: ["Retail (not during school)"] },
                           { type: "li", children: ["Restaurants (light duties)"] },
@@ -491,7 +491,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm font-semibold" }, children: ["Full Part-Time Work"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs mt-2 space-y-1 text-left" },
+                        props: { className: "list-disc pl-4 text-sm mt-2 space-y-1 text-left" },
                         children: [
                           { type: "li", children: ["Most jobs available"] },
                           { type: "li", children: ["Evening & weekend work"] },
@@ -557,7 +557,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm mb-2" }, children: ["Working in shops, supermarkets, or department stores"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        props: { className: "list-disc pl-4 text-sm space-y-1" },
                         children: [
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £6.40–£8.50/hour"] },
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Evenings/weekends"] },
@@ -576,7 +576,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm mb-2" }, children: ["Restaurants, cafes, fast food"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        props: { className: "list-disc pl-4 text-sm space-y-1" },
                         children: [
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £6.40–£9.00/hour"] },
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Split shifts, weekends"] },
@@ -595,7 +595,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm mb-2" }, children: ["Help younger students succeed in subjects you're good at"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        props: { className: "list-disc pl-4 text-sm space-y-1" },
                         children: [
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £8–£15/hour"] },
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": After school/weekends"] },
@@ -614,7 +614,7 @@ const earningIncomeModules = [
                       { type: "p", props: { className: "text-sm mb-2" }, children: ["Food delivery (17+ with license) or cycling delivery"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-xs space-y-1" },
+                        props: { className: "list-disc pl-4 text-sm space-y-1" },
                         children: [
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Pay"]},": £7–£12/hour + tips"] },
                           { type: "li", children: [{type: "span", props: {className: "font-bold"}, children: ["Hours"]},": Flexible, evenings"] },
@@ -1051,7 +1051,7 @@ const earningIncomeModules = [
                               },
                               {
                                 "type": "p",
-                                "props": { "className": "text-xs" },
+                                "props": { "className": "text-sm" },
                                 "children": [
                                   { "type": "strong", "children": ["Platforms:"] },
                                   " Tutor.com, Preply, Wyzant"
@@ -1114,7 +1114,7 @@ const earningIncomeModules = [
                               },
                               {
                                 "type": "p",
-                                "props": { "className": "text-xs" },
+                                "props": { "className": "text-sm" },
                                 "children": [
                                   { "type": "strong", "children": ["Platforms:"] },
                                   " Upwork, Fiverr, Contently"
@@ -1177,7 +1177,7 @@ const earningIncomeModules = [
                               },
                               {
                                 "type": "p",
-                                "props": { "className": "text-xs" },
+                                "props": { "className": "text-sm" },
                                 "children": [
                                   { "type": "strong", "children": ["Platforms:"] },
                                   " 99designs, Fiverr, Dribbble"
@@ -1240,7 +1240,7 @@ const earningIncomeModules = [
                               },
                               {
                                 "type": "p",
-                                "props": { "className": "text-xs" },
+                                "props": { "className": "text-sm" },
                                 "children": [
                                   { "type": "strong", "children": ["Find clients:"] },
                                   " Local businesses, Upwork"
@@ -1378,7 +1378,7 @@ const earningIncomeModules = [
                       },
                       {
                         "type": "div",
-                        "props": { "className": "text-xs" },
+                        "props": { "className": "text-sm" },
                         "children": [
                           {
                             "type": "p",
@@ -1420,7 +1420,7 @@ const earningIncomeModules = [
                       },
                       {
                         "type": "div",
-                        "props": { "className": "text-xs" },
+                        "props": { "className": "text-sm" },
                         "children": [
                           {
                             "type": "p",
@@ -1462,7 +1462,7 @@ const earningIncomeModules = [
                       },
                       {
                         "type": "div",
-                        "props": { "className": "text-xs" },
+                        "props": { "className": "text-sm" },
                         "children": [
                           {
                             "type": "p",

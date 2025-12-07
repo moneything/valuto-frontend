@@ -131,7 +131,7 @@ export default function AIChatPage() {
               <h1 className="text-xl font-bold green-text-gradient">
                 Valuto AI
               </h1>
-              <p className="text-xs text-valuto-green-600 font-medium">Your friendly financial assistant</p>
+              <p className="text-sm text-valuto-green-600 font-medium">Your friendly financial assistant</p>
             </div>
           </div>
         </div>
@@ -152,7 +152,7 @@ export default function AIChatPage() {
                     )}
                     
                     {/* Timestamp */}
-                    <p className={`text-xs mt-2 ${
+                    <p className={`text-sm mt-2 ${
                       message.role === 'user' ? 'text-green-100' : 'text-gray-500'
                     }`}>
                       {message.timestamp.toLocaleTimeString([], { 

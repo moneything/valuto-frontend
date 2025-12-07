@@ -133,7 +133,7 @@ export default function LearningModulePage({
               href={`/dashboard/learning-modules/${lesson.moduleId}`}
               className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-gray-50 border border-gray-200 text-sm text-gray-800 hover:bg-green-200 hover:opacity-75 transition"
             >
-              <span className="text-xs uppercase tracking-wide text-gray-500">
+              <span className="text-sm uppercase tracking-wide text-gray-500">
                 {lesson.relationship?.replace("-", " ")}
               </span>
               <span className="font-medium">{lesson.title}</span>

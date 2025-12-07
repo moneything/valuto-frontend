@@ -7,6 +7,7 @@ import { useRouter, usePathname } from 'next/navigation';
 import { useUser } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
+import { formatDisplayName } from '@/lib/utils';
 import Link from 'next/link';
 import DashboardDock from '@/components/DashboardDock';
 import Image from 'next/image';
@@ -83,8 +84,10 @@ console.log("🔍 DEBUG: isSignedIn =", isSignedIn);
             {/* User Info */}
             <div className="flex items-center space-x-4">
               <div className="hidden sm:block text-right">
-                <p className="text-sm font-semibold text-gray-900">{profile?.name}</p>
-                <p className="text-xs text-gray-500">{profile?.school || 'Valuto Student'}</p>
+                <p className="text-sm font-semibold text-gray-900">
+                  {formatDisplayName(profile || {}, { useFirstNameForStudents: false })}
+                </p>
+                <p className="text-sm text-gray-500">{profile?.school || 'Valuto Student'}</p>
               </div>
               <UserButton 
                 afterSignOutUrl="/"
@@ -110,5 +113,3 @@ console.log("🔍 DEBUG: isSignedIn =", isSignedIn);
     </div>
   );
 }
-
-

@@ -18,7 +18,7 @@ export default function CompanyCarousel() {
   return (
     <section className="bg-white/60 backdrop-blur-sm py-8 sm:py-12 border-y border-gray-200/50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <h3 className="text-center text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wide mb-6 sm:mb-8">
+        <h3 className="text-center text-sm sm:text-sm font-semibold text-gray-500 uppercase tracking-wide mb-6 sm:mb-8">
           Trusted by Leading Financial Institutions
         </h3>
         

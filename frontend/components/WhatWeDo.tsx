@@ -119,7 +119,7 @@ export default function WhatWeDo() {
                 
                 {/* Content */}
                 <div className="p-8 md:p-10 lg:p-12 flex flex-col justify-center bg-white">
-                  <div className="inline-block px-3 py-1 bg-valuto-green-50 text-valuto-green-700 rounded-md text-xs font-semibold mb-4 w-fit uppercase tracking-wide">
+                  <div className="inline-block px-3 py-1 bg-valuto-green-50 text-valuto-green-700 rounded-md text-sm font-semibold mb-4 w-fit uppercase tracking-wide">
                     Real-World Skills
                   </div>
                   <h3 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 mb-4">

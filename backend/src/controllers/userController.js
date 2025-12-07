@@ -65,13 +65,14 @@ const completeOnboarding = asyncHandler(async (req, res) => {
  * @access Private
  */
 const createOrUpdateUser = asyncHandler(async (req, res) => {
-  const { name, email, role, age, school, grade, subject, completedOnboarding } = req.body;
+  const { name, title, email, role, age, school, grade, subject, completedOnboarding } = req.body;
   const { userId } = req.auth;
 
   let user = await User.findOne({ clerkUserId: userId });
 
   if (user) {
     user.name = name || user.name;
+    user.title = title !== undefined ? title : user.title;
     user.email = email || user.email;
     user.role = role || user.role;
     if (age !== undefined) user.age = age;
@@ -92,6 +93,7 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
     user = await User.create({
       clerkUserId: userId,
       name,
+      title,
       email,
       role: role || 'student',
       age,
@@ -133,12 +135,13 @@ const getUserProfile = asyncHandler(async (req, res) => {
  */
 const updateUserProfile = asyncHandler(async (req, res) => {
   const { userId } = req.auth;
-  const { name, age, school, grade, subject } = req.body;
+  const { name, title, age, school, grade, subject } = req.body;
 
   const user = await User.findOne({ clerkUserId: userId });
   if (!user) throw new AppError('User profile not found', 404);
 
   if (name) user.name = name;
+  if (title !== undefined) user.title = title;
   if (age !== undefined) user.age = age;
   if (school !== undefined) user.school = school;
   if (grade !== undefined) user.grade = grade;
@@ -168,14 +171,15 @@ const getUserStats = asyncHandler(async (req, res) => {
     const { clerkClient } = require('@clerk/clerk-sdk-node');
     const clerkUser = await clerkClient.users.getUser(userId);
 
-    user = await User.create({
-      clerkUserId: userId,
-      name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || 'User',
-      email: clerkUser.emailAddresses[0]?.emailAddress || `user_${userId}@placeholder.com`,
-      role: 'student',
-      completedOnboarding: false,
-    });
-  }
+      user = await User.create({
+        clerkUserId: userId,
+        name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || 'User',
+        title: null,
+        email: clerkUser.emailAddresses[0]?.emailAddress || `user_${userId}@placeholder.com`,
+        role: 'student',
+        completedOnboarding: false,
+      });
+    }
 
   const GameResult = require('../models/GameResult');
   const LearningProgress = require('../models/LearningProgress');
@@ -192,6 +196,7 @@ const getUserStats = asyncHandler(async (req, res) => {
     data: {
       user: {
         name: user.name,
+        title: user.title,
         email: user.email,
         role: user.role,
         school: user.school,
@@ -454,6 +459,7 @@ const getUserStatsById = asyncHandler(async (req, res) => {
     data: {
       user: {
         name: targetUser.name,
+        title: targetUser.title,
         email: targetUser.email,
         role: targetUser.role,
         school: targetUser.school,

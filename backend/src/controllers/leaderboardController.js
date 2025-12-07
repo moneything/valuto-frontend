@@ -135,7 +135,7 @@ const getTopPerformers = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
 
   const topPerformers = await User.find({ role: 'student', isActive: true })
-    .select('name email school totalPoints gamesPlayed lessonsCompleted currentStreak')
+    .select('name title role email school totalPoints gamesPlayed lessonsCompleted currentStreak')
     .sort({ totalPoints: -1 })
     .limit(parseInt(limit))
     .lean();

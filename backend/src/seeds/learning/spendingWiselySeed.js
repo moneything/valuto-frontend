@@ -618,7 +618,7 @@ const spendingWiselyModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Get your student loan forgiven instantly for just £99!\""] },
                           {
                             "type": "div",
-                            "props": { "className": "text-xs text-red-600" },
+                            "props": { "className": "text-sm text-red-600" },
                             "children": [
                               { "type": "span", "props": { "className": "font-semibold" }, "children": ["Reality"] },
                               ": Legitimate loan forgiveness is free and takes time. No quick fixes exist."
@@ -635,7 +635,7 @@ const spendingWiselyModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Work from home, earn £500/week, no experience needed!\""] },
                           {
                             "type": "div",
-                            "props": { "className": "text-xs text-red-600" },
+                            "props": { "className": "text-sm text-red-600" },
                             
                             "children": [
                               { "type": "span", "props": { "className": "font-semibold" }, "children": ["Red flags"] },
@@ -651,7 +651,7 @@ const spendingWiselyModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["📱 Phone/Text Scams"] },
                           { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Your bank account is compromised. Click here to secure it now!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": [
+                          { "type": "div", "props": { "className": "text-sm text-red-600" }, "children": [
                             { "type": "span", "props": { "className": "font-semibold" }, "children": ["Truth"] },
                              ": Banks never ask for passwords via text. Always call them directly."
                             ] 
@@ -665,7 +665,7 @@ const spendingWiselyModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["🛒 Fake Shopping Sites"] },
                           { "type": "p", "props": { "className": "text-sm mb-2" }, "children": ["\"Brand new iPhone for just £200 - limited time offer!\""] },
-                          { "type": "div", "props": { "className": "text-xs text-red-600" }, "children": [
+                          { "type": "div", "props": { "className": "text-sm text-red-600" }, "children": [
                             { "type": "span", "props": { "className": "font-semibold" }, "children": ["Warning"] }, 
                             ": If prices seem too good to be true, they usually are."
                           ] }
@@ -2067,7 +2067,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["Bills included (electricity, internet, cleaning)"] },
                                       { "type": "li", "children": ["Easy to make friends"] },
@@ -2083,7 +2083,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["More expensive"] },
                                       { "type": "li", "children": ["Less privacy"] },
@@ -2121,7 +2121,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["Often cheaper than halls"] },
                                       { "type": "li", "children": ["More independence"] },
@@ -2138,7 +2138,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["Bills on top of rent"] },
                                       { "type": "li", "children": ["Need deposit (usually 1-2 months rent)"] },
@@ -2176,7 +2176,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-green-600 mt-2" }, "children": ["Pros:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["Cheapest option"] },
                                       { "type": "li", "children": ["Home-cooked meals"] },
@@ -2192,7 +2192,7 @@ const spendingWiselyModules = [
                                   { "type": "h5", "props": { "className": "font-medium text-red-600" }, "children": ["Cons:"] },
                                   {
                                     "type": "ul",
-                                    "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                                    "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                                     "children": [
                                       { "type": "li", "children": ["Commute costs and time"] },
                                       { "type": "li", "children": ["Miss out on uni social life"] },

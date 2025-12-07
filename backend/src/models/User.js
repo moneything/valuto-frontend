@@ -20,6 +20,10 @@ const userSchema = new mongoose.Schema(
       required: true,
       trim: true,
     },
+    title: {
+      type: String,
+      trim: true,
+    },
     email: {
       type: String,
       required: true,
@@ -173,7 +177,7 @@ userSchema.statics.getLeaderboard = async function (options = {}) {
   }
 
   return this.find(query)
-    .select('name email school totalPoints gamesPlayed lessonsCompleted')
+    .select('name title role email school totalPoints gamesPlayed lessonsCompleted')
     .sort({ totalPoints: -1 })
     .limit(limit)
     .lean();

@@ -613,7 +613,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs text-muted-foreground space-y-1 pl-4", style: {"list-style": "disc",} },
+                        props: { className: "text-sm text-muted-foreground space-y-1 pl-4", style: {"list-style": "disc",} },
                         children: [
                           {type: "li", children: ["Low fees (often 0.1-0.5% per year)"],},
                           {type: "li", children: ["Instant diversification"],},
@@ -637,7 +637,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs text-muted-foreground space-y-1 pl-4" },
+                        props: { className: "text-sm text-muted-foreground space-y-1 pl-4" },
                         children: [
                           {type: "li", children: ["Higher fees (1-2% per year)"],},
                           {type: "li", children: ["Professional management"],},
@@ -697,7 +697,7 @@ const investingAssetsModules = [
                         props: { className: "text-right" },
                         children: [
                           { type: "div", props: { className: "text-sm text-green-600 dark:text-green-400" }, children: ["Low Risk"] },
-                          { type: "div", props: { className: "text-xs text-muted-foreground" }, children: ["2–4% returns"] }
+                          { type: "div", props: { className: "text-sm text-muted-foreground" }, children: ["2–4% returns"] }
                         ]
                       }
                     ]
@@ -716,7 +716,7 @@ const investingAssetsModules = [
                         props: { className: "text-right" },
                         children: [
                           { type: "div", props: { className: "text-sm text-yellow-600 dark:text-yellow-400" }, children: ["Medium-Low Risk"] },
-                          { type: "div", props: { className: "text-xs text-muted-foreground" }, children: ["4–7% returns"] }
+                          { type: "div", props: { className: "text-sm text-muted-foreground" }, children: ["4–7% returns"] }
                         ]
                       }
                     ]
@@ -735,7 +735,7 @@ const investingAssetsModules = [
                         props: { className: "text-right" },
                         children: [
                           { type: "div", props: { className: "text-sm text-orange-600 dark:text-orange-400" }, children: ["Medium Risk"] },
-                          { type: "div", props: { className: "text-xs text-muted-foreground" }, children: ["7–10% historical avg"] }
+                          { type: "div", props: { className: "text-sm text-muted-foreground" }, children: ["7–10% historical avg"] }
                         ]
                       }
                     ]
@@ -754,7 +754,7 @@ const investingAssetsModules = [
                         props: { className: "text-right" },
                         children: [
                           { type: "div", props: { className: "text-sm text-red-600 dark:text-red-400" }, children: ["High Risk"] },
-                          { type: "div", props: { className: "text-xs text-muted-foreground" }, children: ["Highly variable"] }
+                          { type: "div", props: { className: "text-sm text-muted-foreground" }, children: ["Highly variable"] }
                         ]
                       }
                     ]
@@ -1264,7 +1264,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                                "px-2 py-0.5 text-sm rounded bg-red-100 text-red-600"
                             },
                             children: ["High Risk"]
                           }
@@ -1298,7 +1298,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                                "px-2 py-0.5 text-sm rounded bg-red-100 text-red-600"
                             },
                             children: ["Very High Risk"]
                           }
@@ -1332,7 +1332,7 @@ const investingAssetsModules = [
                             type: "div",
                             props: {
                               className:
-                                "px-2 py-0.5 text-xs rounded bg-red-100 text-red-600"
+                                "px-2 py-0.5 text-sm rounded bg-red-100 text-red-600"
                             },
                             children: ["Scam Alert"]
                           }
@@ -1725,7 +1725,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: [{ type: "strong", children: ["Stocks"] }, ": 60-80% (higher growth potential)"] },
                           { type: "li", children: [{ type: "strong", children: ["Bonds"] }, ": 15-30% (stability and income)"] },
@@ -1758,7 +1758,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: [{ type: "strong", children: ["UK"] }, ": 25-40% (your home market)"] },
                           { type: "li", children: [{ type: "strong", children: ["US"] }, ": 30-50% (world's largest market)"] },
@@ -1793,7 +1793,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: ["Technology"] },
                           { type: "li", children: ["Healthcare"] },
@@ -2065,7 +2065,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-xs space-y-1 pl-4", style: { listStyle: "disc" } },
+                        props: { className: "text-sm space-y-1 pl-4", style: { listStyle: "disc" } },
                         children: [
                           { type: "li", children: ["Thousands of companies"] },
                           { type: "li", children: ["Multiple countries and currencies"] },
@@ -2075,7 +2075,7 @@ const investingAssetsModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-xs text-muted-foreground mt-2" },
+                        props: { className: "text-sm text-muted-foreground mt-2" },
                         children: [
                           "Examples: Vanguard All-World ETF, iShares MSCI World"
                         ]

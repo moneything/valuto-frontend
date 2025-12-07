@@ -30,7 +30,7 @@ export default function DashboardCard({
         
         {/* Badge */}
         {badge && (
-          <div className="absolute top-4 right-4 bg-valuto-green-100 text-valuto-green-700 text-xs font-semibold px-3 py-1 rounded-full z-10">
+          <div className="absolute top-4 right-4 bg-valuto-green-100 text-valuto-green-700 text-sm font-semibold px-3 py-1 rounded-full z-10">
             {badge}
           </div>
         )}

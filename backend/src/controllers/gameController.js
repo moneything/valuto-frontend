@@ -1,5 +1,6 @@
 const GameResult = require('../models/GameResult');
 const User = require('../models/User');
+const Challenge = require('../models/Challenge');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
@@ -55,6 +56,60 @@ const submitGameResult = asyncHandler(async (req, res) => {
   user.gamesPlayed += 1;
   user.updateStreak();
   await user.save();
+
+  // Update related challenges (e.g., daily trivia)
+  try {
+    if (user.role === 'teacher') {
+      // Teachers do not have student challenges
+      return;
+    }
+
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+    const endOfDay = new Date(startOfDay);
+    endOfDay.setHours(23, 59, 59, 999);
+
+    let triviaChallenge = await Challenge.findOne({
+      userId: user._id.toString(),
+      challengeType: 'daily_trivia',
+      challengeDate: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    if (!triviaChallenge) {
+      console.log('[Challenge] No trivia challenge found for user', user._id.toString(), '— creating');
+      await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
+      triviaChallenge = await Challenge.findOne({
+        userId: user._id.toString(),
+        challengeType: 'daily_trivia',
+        challengeDate: { $gte: startOfDay, $lte: endOfDay },
+      });
+    }
+
+    if (triviaChallenge && !triviaChallenge.completed) {
+      const before = triviaChallenge.currentProgress;
+      await triviaChallenge.updateProgress(1);
+      console.log('[Challenge] Trivia progress updated', {
+        userId: user._id.toString(),
+        challengeId: triviaChallenge._id.toString(),
+        before,
+        after: triviaChallenge.currentProgress,
+        completed: triviaChallenge.completed,
+      });
+
+      if (triviaChallenge.completed) {
+        user.totalPoints += triviaChallenge.pointsEarned * triviaChallenge.bonusMultiplier;
+        user.updateStreak();
+        await user.save();
+      }
+    } else {
+      console.log('[Challenge] Trivia challenge already completed or missing after creation', {
+        userId: user._id.toString(),
+        hasChallenge: !!triviaChallenge,
+      });
+    }
+  } catch (err) {
+    console.error('Failed to update trivia challenge progress:', err);
+  }
 
   res.status(201).json({
     success: true,

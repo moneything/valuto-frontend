@@ -26,6 +26,7 @@ import {
   TrendingUpIcon,
 } from "@/components/icons";
 import StatsCard from "@/components/theme/StatsCard";
+import { formatDisplayName } from "@/lib/utils";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -103,6 +104,8 @@ export default function DashboardPage() {
 
   // ✅ this now works correctly
   if (!profile) return null;
+
+  const teacherDisplayName = formatDisplayName(profile, { useFirstNameForStudents: true });
 
   const studentCards: Array<{
     title: string;
@@ -182,6 +185,12 @@ export default function DashboardPage() {
       href: '/dashboard/trivia'
     },
     {
+      title: 'Leaderboard',
+      description: 'Track class standings and top performers',
+      icon: <CrownIcon className="w-8 h-8" />,
+      href: '/dashboard/leaderboard'
+    },
+    {
       title: 'Interactive Learning Modules',
       description: 'Browse and assign interactive learning content to students',
       icon: <BookOpenIcon className="w-8 h-8" />,
@@ -225,7 +234,7 @@ export default function DashboardPage() {
         {/* Welcome Section */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-            Welcome back, <span className="text-valuto-green-600">{profile?.name?.split(' ')[0]}</span>! 👋
+            Welcome back, <span className="text-valuto-green-600">{teacherDisplayName}</span>! 👋
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             {isTeacher 
@@ -300,4 +309,3 @@ export default function DashboardPage() {
     </div>
   );
 }
-

@@ -1695,7 +1695,7 @@ const borrowingDebtModules = [
                             type: "div",
                             props: {
                               className:
-                                "mt-2 text-xs bg-white p-2 rounded border"
+                                "mt-2 text-sm bg-white p-2 rounded border"
                             },
                             children: [
                               {type: "p", children:["Credit Card A: £2,500",]},

@@ -2276,7 +2276,7 @@ const futurePlanningModules = [
                             children: [
                               {
                                 type: "span",
-                                props: { className: "text-xs text-white font-medium" },
+                                props: { className: "text-sm text-white font-medium" },
                                 children: [label]
                               }
                             ]

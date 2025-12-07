@@ -180,7 +180,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
             <div key={category.name || category} className="space-y-2">
               <label className="block text-sm font-medium text-gray-700">
                 {category.name || category}
-                <span className="text-xs text-gray-500 ml-2">({category.type || 'expense'})</span>
+                <span className="text-sm text-gray-500 ml-2">({category.type || 'expense'})</span>
               </label>
               <input
                 type="number"

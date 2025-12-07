@@ -53,7 +53,7 @@ export function AnnouncementBadge({
   return (
     <span
       className={cn(
-        "inline-flex items-center justify-center rounded-full px-2 py-0.5 text-xs font-bold",
+        "inline-flex items-center justify-center rounded-full px-2 py-0.5 text-sm font-bold",
         variant === "default" && "bg-gray-100 text-gray-900",
         variant === "success" && "bg-valuto-green-100 text-valuto-green-700",
         variant === "warning" && "bg-yellow-100 text-yellow-700",

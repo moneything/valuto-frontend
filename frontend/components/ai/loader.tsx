@@ -28,7 +28,7 @@ export function Loader({ className, text = "Valuto AI is thinking...", ...props 
             style={{ animationDelay: "0.2s" }} 
           />
         </div>
-        <span className="text-xs text-gray-600 font-medium">{text}</span>
+        <span className="text-sm text-gray-600 font-medium">{text}</span>
       </div>
     </div>
   );

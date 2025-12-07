@@ -25,7 +25,7 @@ export default function TriviaResultsPage() {
         }
 
         const baseUrl =
-          process.env.NEXT_PUBLIC_API_URL || "http://localhost:5001";
+          process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5001";
 
         const res = await axios.get(
           `${baseUrl}/api/trivia/session/${sessionId}/results`,

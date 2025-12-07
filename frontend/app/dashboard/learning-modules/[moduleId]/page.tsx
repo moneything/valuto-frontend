@@ -73,6 +73,7 @@ export default function LearningModulePage({
       JSON.stringify({
         moduleId,
         responses: answers,
+        timeSpent: totalTime,
         sessionData: {
           startTime: safeStart,
           endTime: new Date().toISOString(),
@@ -186,6 +187,10 @@ export default function LearningModulePage({
               {module.difficultyLevel}
             </span>
           )}
+          <span className="px-3 py-1 rounded-full bg-gray-100 text-sm flex items-center gap-1">
+            <ClockIcon className="w-4 h-4" />
+            {Math.floor(pageElapsed / 60)}:{(pageElapsed % 60).toString().padStart(2, "0")} elapsed
+          </span>
         </>
       }
     >

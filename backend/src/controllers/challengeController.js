@@ -1,5 +1,6 @@
 const Challenge = require('../models/Challenge');
 const User = require('../models/User');
+const LearningProgress = require('../models/LearningProgress');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
@@ -14,6 +15,7 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 const getDailyChallenges = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
+  console.log("[Challenges] Fetch daily challenges for clerkUserId:", clerkUserId);
 
   // Get user
   const user = await User.findOne({ clerkUserId });
@@ -21,22 +23,144 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
   if (!user) {
     throw new AppError('User profile not found', 404);
   }
+  console.log("[Challenges] Found user:", user._id.toString(), "role:", user.role);
 
   // Teachers do not receive challenges
   if (user.role === 'teacher') {
+    console.log("[Challenges] User is teacher; returning empty challenges.");
     return res.status(200).json({
       success: true,
       data: [],
     });
   }
 
+  // Date boundaries for today
+  const today = new Date();
+  const startOfDay = new Date(today);
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(today);
+  endOfDay.setHours(23, 59, 59, 999);
+
   // Check if challenges exist for today
   let challenges = await Challenge.getDailyChallenges(user._id.toString());
+  console.log("[Challenges] Existing challenges today:", challenges.length);
 
-  // If no challenges exist, create them
-  if (challenges.length === 0) {
-    await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
+  // Ensure daily challenges exist (backfill missing types)
+  const ensured = await Challenge.ensureDailyChallenges(user._id.toString(), clerkUserId, startOfDay);
+  if (ensured || challenges.length === 0) {
+    console.log("[Challenges] Ensured daily challenges; refetching.");
     challenges = await Challenge.getDailyChallenges(user._id.toString());
+    console.log("[Challenges] Challenge count after ensure:", challenges.length);
+  }
+
+  const streakChallenges = await Challenge.find({
+    userId: user._id.toString(),
+    challengeType: { $in: ['learning_streak', 'learning_streak_6', 'learning_streak_7', 'learning_streak_9'] },
+    challengeDate: { $gte: startOfDay, $lte: endOfDay },
+  });
+
+  let didModifyChallenges = false;
+
+  if (streakChallenges.length > 0) {
+    for (const streakChallenge of streakChallenges) {
+      const periodStart = new Date(streakChallenge.challengeDate);
+      periodStart.setHours(0, 0, 0, 0);
+      const periodEnd = new Date(periodStart.getTime() + 7 * 24 * 60 * 60 * 1000 - 1);
+
+      const lessonsCompletedThisWeek = await LearningProgress.countDocuments({
+        userId: user._id.toString(),
+        status: 'completed',
+        completedAt: { $gte: periodStart, $lte: periodEnd },
+      });
+
+      console.log("[Challenges] Learning streak lessons in window:", lessonsCompletedThisWeek, "window:", periodStart.toISOString(), "-", periodEnd.toISOString(), "type:", streakChallenge.challengeType);
+
+      console.log("[Challenges] Found streak challenge:", streakChallenge._id.toString());
+      const newProgress = Math.min(lessonsCompletedThisWeek, streakChallenge.targetProgress);
+      const wasCompleted = streakChallenge.completed;
+
+      if (streakChallenge.currentProgress !== newProgress) {
+        console.log("[Challenges] Updating streak progress from", streakChallenge.currentProgress, "to", newProgress);
+        streakChallenge.currentProgress = newProgress;
+      }
+
+      if (!streakChallenge.completed && newProgress >= streakChallenge.targetProgress) {
+        console.log("[Challenges] Streak completed via sync.");
+        streakChallenge.completed = true;
+        streakChallenge.completedAt = new Date();
+        streakChallenge.currentProgress = streakChallenge.targetProgress;
+      }
+
+      if (streakChallenge.isModified()) {
+        await streakChallenge.save();
+        didModifyChallenges = true;
+        console.log("[Challenges] Saved streak challenge updates.");
+
+        if (!wasCompleted && streakChallenge.completed) {
+          const bonusMultiplier = streakChallenge.bonusMultiplier || 1;
+          console.log("[Challenges] Awarding streak points:", streakChallenge.pointsEarned * bonusMultiplier);
+          user.totalPoints += streakChallenge.pointsEarned * bonusMultiplier;
+          user.updateStreak();
+          await user.save();
+        }
+      }
+    }
+  } else {
+    console.log("[Challenges] No streak challenge found for today.");
+  }
+
+  // Daily lesson challenge auto-sync (complete 1 lesson today)
+  const dailyLessonChallenge = await Challenge.findOne({
+    userId: user._id.toString(),
+    challengeType: 'daily_lesson',
+    challengeDate: { $gte: startOfDay, $lte: endOfDay },
+  });
+
+  if (dailyLessonChallenge) {
+    const lessonsCompletedToday = await LearningProgress.countDocuments({
+      userId: user._id.toString(),
+      status: 'completed',
+      completedAt: { $gte: startOfDay, $lte: endOfDay },
+    });
+
+    console.log("[Challenges] Lessons completed today:", lessonsCompletedToday);
+
+    const newProgress = Math.min(lessonsCompletedToday, dailyLessonChallenge.targetProgress);
+    const wasCompleted = dailyLessonChallenge.completed;
+
+    if (dailyLessonChallenge.currentProgress !== newProgress) {
+      console.log("[Challenges] Updating daily lesson progress from", dailyLessonChallenge.currentProgress, "to", newProgress);
+      dailyLessonChallenge.currentProgress = newProgress;
+    }
+
+    if (!dailyLessonChallenge.completed && newProgress >= dailyLessonChallenge.targetProgress) {
+      console.log("[Challenges] Daily lesson completed via sync.");
+      dailyLessonChallenge.completed = true;
+      dailyLessonChallenge.completedAt = new Date();
+      dailyLessonChallenge.currentProgress = dailyLessonChallenge.targetProgress;
+    }
+
+    if (dailyLessonChallenge.isModified()) {
+      await dailyLessonChallenge.save();
+      didModifyChallenges = true;
+      console.log("[Challenges] Saved daily lesson challenge updates.");
+
+      if (!wasCompleted && dailyLessonChallenge.completed) {
+        const bonusMultiplier = dailyLessonChallenge.bonusMultiplier || 1;
+        console.log("[Challenges] Awarding daily lesson points:", dailyLessonChallenge.pointsEarned * bonusMultiplier);
+        user.totalPoints += dailyLessonChallenge.pointsEarned * bonusMultiplier;
+        user.updateStreak();
+        await user.save();
+      }
+    }
+  } else {
+    console.log("[Challenges] No daily lesson challenge found for today.");
+  }
+
+  // Refresh challenges list with latest values if modified
+  if (didModifyChallenges) {
+    challenges = await Challenge.getDailyChallenges(user._id.toString());
+    console.log("[Challenges] Refetched challenges after sync. Count:", challenges.length);
   }
 
   res.status(200).json({

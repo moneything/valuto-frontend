@@ -2463,6 +2463,17 @@ const futurePlanningModules = [
 
 ];
 
+
+// Ensure passingScore matches number of quiz questions
+function applyPassingScore(modules) {
+  modules.forEach((mod) => {
+    if (mod.quiz && Array.isArray(mod.quiz.questions)) {
+      mod.quiz.passingScore = mod.quiz.questions.length;
+    }
+  });
+}
+applyPassingScore(futurePlanningModules);
+
 // =====================================================
 // Seed Function
 // =====================================================

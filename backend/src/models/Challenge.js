@@ -30,6 +30,10 @@ const challengeSchema = new mongoose.Schema(
       enum: [
         'daily_trivia',
         'learning_streak',
+        'learning_streak_6',
+        'learning_streak_7',
+        'learning_streak_9',
+        'daily_lesson',
         'calculator_expert',
         'perfect_score',
         'speed_demon',
@@ -201,53 +205,124 @@ challengeSchema.statics.getUserChallengeStats = async function (userId) {
 challengeSchema.statics.createDailyChallenges = async function (userId, clerkUserId) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
+  return this.ensureDailyChallenges(userId, clerkUserId, today);
+};
 
-  // Check if challenges already exist for today
-  const existing = await this.findOne({ userId, challengeDate: today });
-  if (existing) {
-    return null; // Already created for today
-  }
-
-  const dailyChallenges = [
+// Helper to build the daily challenge templates
+challengeSchema.statics.buildDailyChallenges = function (dayStart, userId, clerkUserId) {
+  const t = dayStart.getTime();
+  return [
     {
       userId,
       clerkUserId,
-      challengeId: `daily_trivia_${Date.now()}`,
+      challengeId: `daily_trivia_${t}`,
       challengeType: 'daily_trivia',
       challengeName: 'Daily Trivia',
       challengeDescription: 'Play one trivia game today',
       pointsEarned: 50,
       targetProgress: 1,
-      challengeDate: today,
-      expiresAt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 24 * 60 * 60 * 1000),
     },
     {
       userId,
       clerkUserId,
-      challengeId: `learning_streak_${Date.now()}`,
+      challengeId: `learning_streak_${t}`,
       challengeType: 'learning_streak',
       challengeName: 'Learning Streak',
       challengeDescription: 'Complete 3 lessons this week',
       pointsEarned: 200,
       targetProgress: 3,
-      challengeDate: today,
-      expiresAt: new Date(today.getTime() + 7 * 24 * 60 * 60 * 1000),
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 7 * 24 * 60 * 60 * 1000),
     },
     {
       userId,
       clerkUserId,
-      challengeId: `calculator_expert_${Date.now()}`,
+      challengeId: `learning_streak_6_${t}`,
+      challengeType: 'learning_streak_6',
+      challengeName: 'Learning Streak (6x)',
+      challengeDescription: 'Complete 6 lessons this week',
+      pointsEarned: 400,
+      targetProgress: 6,
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 7 * 24 * 60 * 60 * 1000),
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `learning_streak_7_${t}`,
+      challengeType: 'learning_streak_7',
+      challengeName: 'Learning Streak (7x)',
+      challengeDescription: 'Complete 7 lessons this week',
+      pointsEarned: 500,
+      targetProgress: 7,
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 7 * 24 * 60 * 60 * 1000),
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `learning_streak_9_${t}`,
+      challengeType: 'learning_streak_9',
+      challengeName: 'Learning Streak (9x)',
+      challengeDescription: 'Complete 9 lessons this week',
+      pointsEarned: 650,
+      targetProgress: 9,
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 7 * 24 * 60 * 60 * 1000),
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `daily_lesson_${t}`,
+      challengeType: 'daily_lesson',
+      challengeName: 'Daily Lesson',
+      challengeDescription: 'Complete 1 lesson today',
+      pointsEarned: 75,
+      targetProgress: 1,
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 24 * 60 * 60 * 1000),
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `calculator_expert_${t}`,
       challengeType: 'calculator_expert',
       challengeName: 'Calculator Expert',
       challengeDescription: 'Use the calculator 5 times',
       pointsEarned: 100,
       targetProgress: 5,
-      challengeDate: today,
-      expiresAt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+      challengeDate: dayStart,
+      expiresAt: new Date(dayStart.getTime() + 24 * 60 * 60 * 1000),
     },
   ];
+};
 
-  return this.insertMany(dailyChallenges);
+// Ensure each daily challenge type exists for the given day/user
+challengeSchema.statics.ensureDailyChallenges = async function (userId, clerkUserId, date = new Date()) {
+  const dayStart = new Date(date);
+  dayStart.setHours(0, 0, 0, 0);
+  const dayEnd = new Date(dayStart);
+  dayEnd.setHours(23, 59, 59, 999);
+
+  const templates = this.buildDailyChallenges(dayStart, userId, clerkUserId);
+  let createdAny = false;
+
+  for (const template of templates) {
+    const existing = await this.findOne({
+      userId,
+      challengeType: template.challengeType,
+      challengeDate: { $gte: dayStart, $lte: dayEnd },
+    });
+
+    if (!existing) {
+      await this.create(template);
+      createdAny = true;
+    }
+  }
+
+  return createdAny;
 };
 
 const Challenge = mongoose.model('Challenge', challengeSchema);

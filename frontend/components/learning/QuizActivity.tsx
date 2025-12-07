@@ -1,7 +1,7 @@
 // frontend/components/learning/QuizActivity.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Card from "@/components/theme/Card";
 import Button from "@/components/theme/Button";
 import { CheckCircleIcon, XCircleIcon } from "@/components/icons";
@@ -20,37 +20,21 @@ interface QuizActivityProps {
   questions: QuizQuestion[];
   onComplete: (results: any[]) => void; // array of quiz responses
   onProgress?: (currentQuestion: number, totalQuestions: number) => void;
+  elapsedSeconds?: number;
 }
 
 export default function QuizActivity({
   questions,
   onComplete,
   onProgress,
+  elapsedSeconds = 0,
 }: QuizActivityProps) {
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<number[]>([]);
   const [showResult, setShowResult] = useState(false);
   const [results, setResults] = useState<any[]>([]);
-  const [timeSpent, setTimeSpent] = useState(0);
-  const [questionStart, setQuestionStart] = useState(Date.now());
-
   const question = questions[index];
   const isLast = index === questions.length - 1;
-
-  /* -----------------------------------------
-   * Timer per question
-   * ----------------------------------------- */
-  useEffect(() => {
-    setQuestionStart(Date.now());
-  }, [index]);
-
-  /* -----------------------------------------
-   * Total timer
-   * ----------------------------------------- */
-  useEffect(() => {
-    const timer = setInterval(() => setTimeSpent((t) => t + 1), 1000);
-    return () => clearInterval(timer);
-  }, []);
 
   /* -----------------------------------------
    * Select answer
@@ -205,8 +189,8 @@ export default function QuizActivity({
 
       {/* Timer */}
       <div className="text-center text-sm text-gray-500">
-        Time spent: {Math.floor(timeSpent / 60)}:
-        {(timeSpent % 60).toString().padStart(2, "0")}
+        Time spent: {Math.floor(elapsedSeconds / 60)}:
+        {(elapsedSeconds % 60).toString().padStart(2, "0")}
       </div>
     </div>
   );

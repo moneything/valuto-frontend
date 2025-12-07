@@ -37,6 +37,7 @@ export default function LearningModulePage({
 
   const [step, setStep] = useState<StepState>("intro");
   const [sessionStart, setSessionStart] = useState<Date | null>(null);
+  const [pageElapsed, setPageElapsed] = useState<number>(0);
   const [quizResult, setQuizResult] = useState<any>(null);
 
   useEffect(() => {
@@ -45,6 +46,18 @@ export default function LearningModulePage({
     }
   }, [module, sessionStart]);
 
+  useEffect(() => {
+    const start = new Date();
+    setSessionStart(start);
+    const timer = setInterval(() => {
+      setPageElapsed(Math.floor((Date.now() - start.getTime()) / 1000));
+    }, 1000);
+    return () => {
+      clearInterval(timer);
+      setPageElapsed(Math.floor((Date.now() - start.getTime()) / 1000));
+    };
+  }, []);
+
   const handleQuizComplete = async (answers: any[]) => {
     setStep("complete");
 
@@ -52,9 +65,9 @@ export default function LearningModulePage({
       ? sessionStart.toISOString()
       : new Date().toISOString();
 
-    const totalTime = sessionStart
+    const totalTime = pageElapsed || (sessionStart
       ? Math.floor((Date.now() - sessionStart.getTime()) / 1000)
-      : 0;
+      : 0);
 
     const payload = JSON.parse(
       JSON.stringify({
@@ -237,6 +250,7 @@ export default function LearningModulePage({
           <QuizActivity
             questions={module.quiz!.questions}
             onComplete={handleQuizComplete}
+            elapsedSeconds={pageElapsed}
           />
         </Card>
       )}

@@ -3,16 +3,23 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { leaderboardApi } from '@/lib/api';
+import { useUser } from '@/lib/userContext';
+import { formatDisplayName } from '@/lib/utils';
 
 export default function LeaderboardPage() {
   const { getToken } = useAuth();
+  const { isTeacher, isStudent, isLoadingProfile } = useUser();
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
+    if (isLoadingProfile) return;
+
     const fetchLeaderboard = async () => {
       try {
+        setLoading(true);
+        setError('');
         const token = await getToken({ template: "default" });
 
         if (!token) {
@@ -20,11 +27,16 @@ export default function LeaderboardPage() {
           return;
         }
 
-        const response = await leaderboardApi.getGlobal(token, 10);
-        if (response.success && response.data) {
-          setLeaderboard(response.data);
+        if (isTeacher) {
+          const enriched = await leaderboardApi.getEnrichedLeaderboard(token);
+          setLeaderboard(enriched || []);
         } else {
-          setError(response.error || 'Failed to load leaderboard');
+          const response = await leaderboardApi.getGlobal(token, 10);
+          if (response.success && response.data?.leaderboard) {
+            setLeaderboard(response.data.leaderboard);
+          } else {
+            setError(response.error || 'Failed to load leaderboard');
+          }
         }
       } catch (err: any) {
         console.error('Failed to fetch leaderboard:', err);
@@ -35,7 +47,7 @@ export default function LeaderboardPage() {
     };
 
     fetchLeaderboard();
-  }, [getToken]);
+  }, [getToken, isTeacher, isLoadingProfile]);
 
   if (loading) {
     return (
@@ -54,10 +66,12 @@ export default function LeaderboardPage() {
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-          Leaderboard 👑
+          {isTeacher ? 'Class Leaderboard 👑' : 'Leaderboard 👑'}
         </h1>
         <p className="text-lg text-gray-600">
-          See how you rank against other students
+          {isTeacher
+            ? 'Track your students’ standings, activity, and progress'
+            : 'See how you rank against other students'}
         </p>
       </div>
 
@@ -79,16 +93,55 @@ export default function LeaderboardPage() {
       {leaderboard.length === 0 ? (
         <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-12 text-center">
           <div className="text-6xl mb-4">📊</div>
-          <h3 className="text-xl font-bold text-gray-900 mb-2">No Rankings Yet</h3>
+          <h3 className="text-xl font-bold text-gray-900 mb-2">
+            {isTeacher ? 'No student activity yet' : 'No Rankings Yet'}
+          </h3>
           <p className="text-gray-600 mb-6">
-            Be the first to play games and earn points!
+            {isTeacher
+              ? 'Invite your students to play trivia to populate the leaderboard.'
+              : 'Be the first to play games and earn points!'}
           </p>
           <a
             href="/dashboard/trivia"
             className="inline-block bg-valuto-green-600 hover:bg-valuto-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors"
           >
-            Play Trivia Games
+            {isTeacher ? 'Create a Trivia Game' : 'Play Trivia Games'}
           </a>
+        </div>
+      ) : isTeacher ? (
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
+          <div className="grid grid-cols-10 text-sm font-semibold text-gray-600 mb-3 px-2">
+            <div className="col-span-1 text-center">Place</div>
+            <div className="col-span-4">Student</div>
+            <div className="col-span-2 text-right">Games</div>
+            <div className="col-span-2 text-right">Lessons</div>
+            <div className="col-span-1 text-right">Points</div>
+          </div>
+          <div className="divide-y divide-gray-100">
+            {leaderboard.map((student: any, index: number) => (
+              <div key={`${student.rank}-${student.name}-${index}`} className="grid grid-cols-10 items-center py-3 px-2">
+                {/* Trophy for top 3 */}
+                {index < 1 ? (
+                  <div className="text-3xl text-center">
+                    {index === 0 ? '🏆' : index === 1 ? '🥈' : '🥉'}
+                  </div>
+                ) : (
+                  <div 
+                    className="w-fit pl-2 pr-2 items-center justify-self-center col-span-1 text-3xl font-bold bg-gray-500 text-white rounded-full">
+                    {student.rank}
+                  </div>
+                )}
+                <div className="col-span-4">
+                  <p className="font-semibold text-gray-900">{student.name}</p>
+                </div>
+                <div className="col-span-2 text-right text-gray-700">{student.gamesPlayed}</div>
+                <div className="col-span-2 text-right text-gray-700">{student.lessonsCompleted}</div>
+                <div className="col-span-1 text-right font-bold text-valuto-green-600">
+                  {student.points?.toLocaleString() || 0}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       ) : (
         <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
@@ -119,12 +172,12 @@ export default function LeaderboardPage() {
                   index === 2 ? 'bg-amber-600' :
                   'bg-valuto-green-600'
                 }`}>
-                  {user.name?.charAt(0)?.toUpperCase() || '?'}
+                  {formatDisplayName(user).charAt(0).toUpperCase() || '?'}
                 </div>
 
                 {/* User Info */}
                 <div className="flex-1">
-                  <p className="font-bold text-gray-900">{user.name || 'Anonymous'}</p>
+                  <p className="font-bold text-gray-900">{formatDisplayName(user)}</p>
                   {user.school && (
                     <p className="text-sm text-gray-600">{user.school}</p>
                   )}
@@ -135,7 +188,7 @@ export default function LeaderboardPage() {
                   <p className="text-2xl font-bold text-valuto-green-600">
                     {user.totalPoints?.toLocaleString() || 0}
                   </p>
-                  <p className="text-xs text-gray-500">points</p>
+                  <p className="text-sm text-gray-500">points</p>
                 </div>
 
                 {/* Trophy for top 3 */}

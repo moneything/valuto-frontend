@@ -198,7 +198,7 @@ challengeSchema.statics.getUserChallengeStats = async function (userId) {
 };
 
 // Static method to create default daily challenges for user
-challengeSchema.statics.createDailyChallenges = async function (userId) {
+challengeSchema.statics.createDailyChallenges = async function (userId, clerkUserId) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
 
@@ -211,6 +211,7 @@ challengeSchema.statics.createDailyChallenges = async function (userId) {
   const dailyChallenges = [
     {
       userId,
+      clerkUserId,
       challengeId: `daily_trivia_${Date.now()}`,
       challengeType: 'daily_trivia',
       challengeName: 'Daily Trivia',
@@ -222,6 +223,7 @@ challengeSchema.statics.createDailyChallenges = async function (userId) {
     },
     {
       userId,
+      clerkUserId,
       challengeId: `learning_streak_${Date.now()}`,
       challengeType: 'learning_streak',
       challengeName: 'Learning Streak',
@@ -233,6 +235,7 @@ challengeSchema.statics.createDailyChallenges = async function (userId) {
     },
     {
       userId,
+      clerkUserId,
       challengeId: `calculator_expert_${Date.now()}`,
       challengeType: 'calculator_expert',
       challengeName: 'Calculator Expert',

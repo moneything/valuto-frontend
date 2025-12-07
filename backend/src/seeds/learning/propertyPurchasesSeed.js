@@ -895,7 +895,7 @@ const propertyPurchasesModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        props: { className: "text-sm space-y-1" },
                         children: [
                           {
                             type: "p",
@@ -936,7 +936,7 @@ const propertyPurchasesModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        props: { className: "text-sm space-y-1" },
                         children: [
                           {
                             type: "p",
@@ -977,7 +977,7 @@ const propertyPurchasesModules = [
                       },
                       {
                         type: "div",
-                        props: { className: "text-xs space-y-1" },
+                        props: { className: "text-sm space-y-1" },
                         children: [
                           {
                             type: "p",
@@ -2564,7 +2564,7 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "div",
-                            "props": { "className": "text-xs space-y-1" },
+                            "props": { "className": "text-sm space-y-1" },
                             "children": [
                               {
                                 "type": "ul",
@@ -2617,7 +2617,7 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "ul",
-                            "props": { "className": "text-xs space-y-1" },
+                            "props": { "className": "text-sm space-y-1" },
                             "children": [
                               {
                                 "type": "p",
@@ -2664,7 +2664,7 @@ const propertyPurchasesModules = [
                           },
                           {
                             "type": "div",
-                            "props": { "className": "text-xs space-y-1" },
+                            "props": { "className": "text-sm space-y-1" },
                             "children": [
                               {
                                 "type": "p",

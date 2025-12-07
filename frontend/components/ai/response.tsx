@@ -28,7 +28,7 @@ export function Response({
           ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
           li: ({ children }) => <li className="ml-2">{children}</li>,
           code: ({ children }) => (
-            <code className="px-1.5 py-0.5 bg-valuto-green-50 text-valuto-green-700 rounded text-xs font-mono">
+            <code className="px-1.5 py-0.5 bg-valuto-green-50 text-valuto-green-700 rounded text-sm font-mono">
               {children}
             </code>
           ),

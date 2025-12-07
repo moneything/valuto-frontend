@@ -5,6 +5,7 @@ export interface UserProfile {
   name: string;
   email: string;
   role: 'student' | 'teacher';
+  title?: string;
   age?: number;
   school?: string;
   grade?: string;
@@ -39,5 +40,4 @@ export const hasCompletedOnboarding = (): boolean => {
   const profile = getUserProfile();
   return profile?.completedOnboarding || false;
 };
-
 

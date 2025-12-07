@@ -15,7 +15,8 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 const getNews = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
-  const news = await fetchFinancialNews(parseInt(limit));
+  const perCategory = Math.max(parseInt(limit), 5);
+  const news = await fetchFinancialNews(perCategory);
 
   res.status(200).json({
     success: true,
@@ -65,9 +66,10 @@ const getEvents = asyncHandler(async (req, res) => {
  */
 const getNewsAndEvents = asyncHandler(async (req, res) => {
   const { newsLimit = 5, eventsLimit = 5 } = req.query;
+  const perCategory = Math.max(parseInt(newsLimit), 5);
 
   const [news, events] = await Promise.all([
-    fetchFinancialNews(parseInt(newsLimit)),
+    fetchFinancialNews(perCategory),
     Event.find({ isActive: true })
       .sort({ eventDate: 1 })
       .limit(parseInt(eventsLimit))

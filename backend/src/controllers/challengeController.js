@@ -22,12 +22,20 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
     throw new AppError('User profile not found', 404);
   }
 
+  // Teachers do not receive challenges
+  if (user.role === 'teacher') {
+    return res.status(200).json({
+      success: true,
+      data: [],
+    });
+  }
+
   // Check if challenges exist for today
   let challenges = await Challenge.getDailyChallenges(user._id.toString());
 
   // If no challenges exist, create them
   if (challenges.length === 0) {
-    await Challenge.createDailyChallenges(user._id.toString());
+    await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
     challenges = await Challenge.getDailyChallenges(user._id.toString());
   }
 

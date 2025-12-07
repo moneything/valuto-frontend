@@ -191,7 +191,7 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
               <div className="flex justify-between items-start mb-2">
                 <h3 className="text-xl font-bold text-gray-900 flex-1">{session.title}</h3>
                 <span
-                  className={`px-3 py-1 rounded-full text-xs font-semibold ${
+                  className={`px-3 py-1 rounded-full text-sm font-semibold ${
                     session.status === 'active'
                       ? 'bg-green-100 text-green-700'
                       : session.status === 'waiting'
@@ -215,7 +215,7 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
 
             {/* Game Code */}
             <div className="bg-valuto-green-50 rounded-lg p-4 mb-4">
-              <p className="text-xs text-gray-600 mb-1">Game Code</p>
+              <p className="text-sm text-gray-600 mb-1">Game Code</p>
               <p className="text-3xl font-mono font-bold text-valuto-green-600 tracking-wider">
                 {session.joinCode}
               </p>
@@ -225,11 +225,11 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
             <div className="flex gap-4 text-center mb-6 flex-1">
               <div className="flex-1 bg-gray-50 rounded-lg p-3">
                 <p className="text-2xl font-bold text-gray-900">{session.playerCount || 0}</p>
-                <p className="text-xs text-gray-600">Players</p>
+                <p className="text-sm text-gray-600">Players</p>
               </div>
               <div className="flex-1 bg-gray-50 rounded-lg p-3">
                 <p className="text-2xl font-bold text-gray-900">{session.questionCount || 0}</p>
-                <p className="text-xs text-gray-600">Questions</p>
+                <p className="text-sm text-gray-600">Questions</p>
               </div>
             </div>
 

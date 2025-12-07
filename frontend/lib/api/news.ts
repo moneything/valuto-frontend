@@ -57,9 +57,13 @@ export async function fetchNetworkingEvents(): Promise<EventItem[]> {
 }
 
 // Fetch both news and events
-export async function fetchNewsAndEvents(): Promise<NewsAndEvents> {
+export async function fetchNewsAndEvents(params?: { newsLimit?: number; eventsLimit?: number }): Promise<NewsAndEvents> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/news/all`);
+    const query = new URLSearchParams();
+    if (params?.newsLimit) query.append('newsLimit', params.newsLimit.toString());
+    if (params?.eventsLimit) query.append('eventsLimit', params.eventsLimit.toString());
+
+    const response = await fetch(`${API_BASE_URL}/api/news/all${query.toString() ? `?${query.toString()}` : ''}`);
     if (!response.ok) {
       throw new Error('Failed to fetch news and events');
     }

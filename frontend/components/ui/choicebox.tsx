@@ -73,7 +73,7 @@ export const ChoiceboxItemSubtitle = ({
   ...props
 }: ChoiceboxItemSubtitleProps) => (
   <span
-    className={cn('font-normal text-muted-foreground text-xs', className)}
+    className={cn('font-normal text-muted-foreground text-sm', className)}
     {...props}
   />
 );

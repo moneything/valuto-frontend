@@ -32,6 +32,7 @@ export default function OnboardingPage() {
   const { getToken } = useAuth();
 
   const [formData, setFormData] = useState({
+    title: "",
     name: "",
     email: "",
     role: "student" as "student" | "teacher",
@@ -59,8 +60,14 @@ export default function OnboardingPage() {
       const token = await getToken({ template: "default" });
       if (!token) throw new Error("No Clerk token found!");
 
+      if (formData.role === "teacher" && !formData.title.trim()) {
+        alert("Title is required for teachers (e.g., Mr, Mrs, Ms, Dr).");
+        return;
+      }
+
       const profile: UserProfile = {
         clerkUserId: user?.id || "",
+        title: formData.role === "teacher" ? formData.title || "" : formData.title,
         name: formData.name,
         email: formData.email,
         role: formData.role,
@@ -123,6 +130,22 @@ export default function OnboardingPage() {
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
               className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
               placeholder="Enter your full name"
+            />
+          </div>
+
+          {/* Title */}
+          <div className="space-y-2">
+            <Label htmlFor="title" className="text-sm font-semibold text-gray-700">
+              Title (optional)
+            </Label>
+            <Input
+              id="title"
+              type="text"
+              value={formData.title}
+              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              required={formData.role === "teacher"}
+              className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+              placeholder="e.g., Mr, Mrs, Ms, Dr"
             />
           </div>
 

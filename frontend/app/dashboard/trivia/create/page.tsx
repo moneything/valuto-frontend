@@ -222,7 +222,7 @@ export default function CreateTriviaPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-gray-500 mt-2">
+              <p className="text-sm text-gray-500 mt-2">
                 Click the circle to mark the correct answer
               </p>
             </div>

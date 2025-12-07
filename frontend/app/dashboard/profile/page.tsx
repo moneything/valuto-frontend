@@ -14,6 +14,7 @@ export default function ProfilePage() {
   const { profile, updateProfile, isTeacher, isStudent } = useUserProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
+    title: profile?.title || '',
     name: profile?.name || '',
     age: profile?.age || '',
     school: profile?.school || '',
@@ -62,45 +63,7 @@ export default function ProfilePage() {
       if (achievementsResponse.success && achievementsResponse.data) {
         setAchievements(achievementsResponse.data);
       } else {
-        // Default achievements if API doesn't return any
-        setAchievements([
-          { 
-            icon: '🏆', 
-            title: 'First Game', 
-            description: 'Play your first trivia game', 
-            unlocked: statsResponse.data?.gamesPlayed > 0 
-          },
-          { 
-            icon: '📚', 
-            title: 'Knowledge Seeker', 
-            description: 'Complete 5 learning modules', 
-            unlocked: statsResponse.data?.lessonsCompleted >= 5 
-          },
-          { 
-            icon: '💰', 
-            title: 'Investment Pro', 
-            description: 'Reach 1000 total points', 
-            unlocked: statsResponse.data?.totalPoints >= 1000 
-          },
-          { 
-            icon: '🔥', 
-            title: 'On Fire!', 
-            description: 'Maintain a 7-day learning streak', 
-            unlocked: statsResponse.data?.streak >= 7 
-          },
-          { 
-            icon: '⭐', 
-            title: 'Perfect Score', 
-            description: 'Get 100% on a trivia game', 
-            unlocked: statsResponse.data?.averageScore === 100 
-          },
-          { 
-            icon: '👑', 
-            title: 'Top Student', 
-            description: 'Reach #1 on leaderboard', 
-            unlocked: statsResponse.data?.rank === 1 
-          },
-        ]);
+        setAchievements([]);
       }
 
       // Fetch recent activity
@@ -144,6 +107,7 @@ export default function ProfilePage() {
     if (profile) {
       const updatedProfile: UserProfile = {
         ...profile,
+        title: formData.title,
         name: formData.name,
         age: formData.age ? parseInt(formData.age.toString()) : undefined,
         school: formData.school,
@@ -175,9 +139,14 @@ export default function ProfilePage() {
             <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 flex items-center justify-center text-4xl text-white font-bold">
               {profile?.name?.charAt(0).toUpperCase()}
             </div>
-            <h2 className="text-xl font-bold text-gray-900 mb-1">{profile?.name}</h2>
+            {(() => {
+              const parts = (profile?.name || '').trim().split(/\s+/).filter(Boolean);
+              const lastName = parts.length ? parts[parts.length - 1] : profile?.name || '';
+              const displayName = profile?.title ? `${profile.title} ${lastName}` : profile?.name;
+              return <h2 className="text-xl font-bold text-gray-900 mb-1">{displayName}</h2>;
+            })()}
             <p className="text-sm text-gray-600 mb-1">{profile?.email}</p>
-            <span className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
+            <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
               isTeacher ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
             }`}>
               {isTeacher ? '👨‍🏫 Teacher' : '🎓 Student'}
@@ -268,6 +237,20 @@ export default function ProfilePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
+                <Label className="text-sm font-semibold text-gray-700">Title</Label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    value={formData.title}
+                    onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                  />
+                ) : (
+                  <p className="text-gray-900">{profile?.title || 'Not set'}</p>
+                )}
+              </div>
+
+              <div className="space-y-2">
                 <Label className="text-sm font-semibold text-gray-700">Name</Label>
                 {isEditing ? (
                   <Input
@@ -277,7 +260,11 @@ export default function ProfilePage() {
                     className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
                   />
                 ) : (
-                  <p className="text-gray-900">{profile?.name || 'Not set'}</p>
+                  <p className="text-gray-900">
+                    {(() => {
+                      return profile?.name || 'Not set';
+                    })()}
+                  </p>
                 )}
               </div>
 
@@ -351,33 +338,43 @@ export default function ProfilePage() {
           {/* Achievements */}
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Achievements</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {achievements.map((achievement, index) => (
-                <div
-                  key={index}
-                  className={`p-4 rounded-lg border-2 transition-all ${
-                    achievement.unlocked
-                      ? 'border-valuto-green-200 bg-valuto-green-50'
-                      : 'border-gray-200 bg-gray-50 opacity-60'
-                  }`}
-                >
-                  <div className="text-3xl mb-2">{achievement.icon}</div>
-                  <h4 className="font-bold text-gray-900 text-sm mb-1">{achievement.title}</h4>
-                  <p className="text-xs text-gray-600">{achievement.description}</p>
-                  {achievement.unlocked && (
-                    <span className="inline-block mt-2 text-xs font-semibold text-valuto-green-600">
-                      ✓ Unlocked
-                    </span>
-                  )}
-                </div>
-              ))}
-            </div>
+            {isTeacher ? (
+              <p className="text-sm text-gray-500">
+                Teacher achievements are coming soon. Assign activities and track class progress from your dashboard.
+              </p>
+            ) : achievements.length === 0 ? (
+              <p className="text-sm text-gray-500">No achievements yet. Play games and complete modules to earn badges!</p>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                {achievements.map((achievement, index) => (
+                  <div
+                    key={index}
+                    className={`p-4 rounded-lg border-2 transition-all ${
+                      achievement.unlocked
+                        ? 'border-valuto-green-200 bg-valuto-green-50'
+                        : 'border-gray-200 bg-gray-50 opacity-60'
+                    }`}
+                  >
+                    <div className="text-3xl mb-2">{achievement.icon}</div>
+                    <h4 className="font-bold text-gray-900 text-sm mb-1">{achievement.title}</h4>
+                    <p className="text-sm text-gray-600">{achievement.description}</p>
+                    {achievement.unlocked && (
+                      <span className="inline-block mt-2 text-sm font-semibold text-valuto-green-600">
+                        ✓ Unlocked
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
 
           {/* Activity Log */}
           <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h3>
-            {loading ? (
+            <h3 className="text-xl font-bold text-gray-900 mb-4">{isTeacher ? 'Class Activity' : 'Recent Activity'}</h3>
+            {isTeacher ? (
+              <p className="text-sm text-gray-500">Class-level activity insights will appear here once available.</p>
+            ) : loading ? (
               <div className="space-y-3 animate-pulse">
                 <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
                   <div className="w-8 h-8 bg-gray-200 rounded"></div>
@@ -401,7 +398,7 @@ export default function ProfilePage() {
                     <span className="text-2xl">{activity.icon || '✨'}</span>
                     <div className="flex-1">
                       <p className="text-sm font-semibold text-gray-900">{activity.title}</p>
-                      <p className="text-xs text-gray-500">
+                      <p className="text-sm text-gray-500">
                         {activity.timeAgo}{activity.points ? ` • +${activity.points} points` : ''}
                       </p>
                     </div>
@@ -420,4 +417,3 @@ export default function ProfilePage() {
     </div>
   );
 }
-

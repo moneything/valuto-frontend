@@ -160,7 +160,7 @@ export default function InvestmentCalculatorPage() {
     }).format(isFinite(v) ? v : 0);
 
   const Pill = ({ children }: { children: React.ReactNode }) => (
-    <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-xs font-semibold text-gray-700">
+    <span className="inline-flex items-center gap-2 rounded-full bg-gray-100 px-3 py-1 text-sm font-semibold text-gray-700">
       {children}
     </span>
   );
@@ -215,7 +215,7 @@ export default function InvestmentCalculatorPage() {
             <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">1</div>
             <div>
               <div className="font-medium text-sm">Be Realistic</div>
-              <p className="text-xs text-gray-600">
+              <p className="text-sm text-gray-600">
                 Use conservative returns (5–8% for stocks, 2–4% for bonds). Markets fluctuate—don’t assume constant high returns.
               </p>
             </div>
@@ -224,7 +224,7 @@ export default function InvestmentCalculatorPage() {
             <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">2</div>
             <div>
               <div className="font-medium text-sm">Account for Inflation</div>
-              <p className="text-xs text-gray-600">
+              <p className="text-sm text-gray-600">
                 £1 today won’t buy the same in 20 years. Factor in ~2–3% annual inflation.
               </p>
             </div>
@@ -233,7 +233,7 @@ export default function InvestmentCalculatorPage() {
             <div className="h-8 w-8 flex items-center justify-center rounded-full bg-emerald-50 text-emerald-700 font-bold">3</div>
             <div>
               <div className="font-medium text-sm">Start Small</div>
-              <p className="text-xs text-gray-600">
+              <p className="text-sm text-gray-600">
                 Even £10–50/month compounds into meaningful wealth over time.
               </p>
             </div>
@@ -259,7 +259,7 @@ export default function InvestmentCalculatorPage() {
               <span className="text-emerald-600">💲</span>
               <h3 className="text-lg font-bold">Investment Details</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">
+            <p className="text-sm text-gray-600 mb-4">
               Enter your investment parameters to see how compound interest works
             </p>
 
@@ -288,7 +288,7 @@ export default function InvestmentCalculatorPage() {
                   value={compound.annualRate}
                   onChange={(e) => setCompound({ ...compound, annualRate: Number(e.target.value) })}
                 />
-                <p className="text-xs text-gray-500">
+                <p className="text-sm text-gray-500">
                   Historical stock market average: 7–10%. Be conservative with estimates.
                 </p>
               </div>
@@ -309,22 +309,22 @@ export default function InvestmentCalculatorPage() {
               <span className="text-emerald-600">📊</span>
               <h3 className="text-lg font-bold">Results</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">See how your money grows over time</p>
+            <p className="text-sm text-gray-600 mb-4">See how your money grows over time</p>
 
             <div className="grid grid-cols-2 gap-4">
               <div className="rounded-lg bg-emerald-50 p-4 text-center">
                 <div className="text-2xl font-bold text-emerald-700">{fmtGBP(compoundResults.totalValue)}</div>
-                <div className="text-xs text-gray-600 mt-1">Final Value</div>
+                <div className="text-sm text-gray-600 mt-1">Final Value</div>
               </div>
               <div className="rounded-lg bg-emerald-50 p-4 text-center">
                 <div className="text-2xl font-bold text-emerald-700">{fmtGBP(compoundResults.totalGrowth)}</div>
-                <div className="text-xs text-gray-600 mt-1">Interest Earned</div>
+                <div className="text-sm text-gray-600 mt-1">Interest Earned</div>
               </div>
             </div>
 
             {/* Progress (Your money vs interest) */}
             <div className="mt-5 space-y-2">
-              <div className="flex justify-between text-xs">
+              <div className="flex justify-between text-sm">
                 <span>Your Contributions: {fmtGBP(compoundResults.totalContributions)}</span>
                 <span>Growth: {compoundResults.growthPct}%</span>
               </div>
@@ -359,7 +359,7 @@ export default function InvestmentCalculatorPage() {
               <span className="text-amber-600">📆</span>
               <h3 className="text-lg font-bold">Retirement Planning</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">Plan for a comfortable retirement starting today</p>
+            <p className="text-sm text-gray-600 mb-4">Plan for a comfortable retirement starting today</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
@@ -425,11 +425,11 @@ export default function InvestmentCalculatorPage() {
               <span className="text-amber-600">🐷</span>
               <h3 className="text-lg font-bold">Retirement Projections</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">Your estimated retirement fund and income</p>
+            <p className="text-sm text-gray-600 mb-4">Your estimated retirement fund and income</p>
 
             <div className="rounded-lg bg-amber-50 p-5 text-center">
               <div className="text-3xl font-bold text-amber-700">{fmtGBP(retirementResults.totalFund)}</div>
-              <div className="text-xs text-gray-600">Total Retirement Fund</div>
+              <div className="text-sm text-gray-600">Total Retirement Fund</div>
               <div className="text-[11px] text-gray-500 mt-1">
                 In {retirementResults.yearsToRetirement} years
               </div>
@@ -438,12 +438,12 @@ export default function InvestmentCalculatorPage() {
             <div className="grid grid-cols-2 gap-4 mt-4">
               <div className="rounded-lg bg-emerald-50 p-4 text-center">
                 <div className="text-xl font-bold text-emerald-700">{fmtGBP(retirementResults.monthlyIncome)}</div>
-                <div className="text-xs text-gray-600">Monthly Income</div>
+                <div className="text-sm text-gray-600">Monthly Income</div>
                 <div className="text-[11px] text-gray-500">(4% rule)</div>
               </div>
               <div className="rounded-lg bg-blue-50 p-4 text-center">
                 <div className="text-xl font-bold text-blue-700">{fmtGBP(retirementResults.realValue)}</div>
-                <div className="text-xs text-gray-600">Today's Value</div>
+                <div className="text-sm text-gray-600">Today's Value</div>
                 <div className="text-[11px] text-gray-500">(inflation-adjusted)</div>
               </div>
             </div>
@@ -466,7 +466,7 @@ export default function InvestmentCalculatorPage() {
               <span className="text-indigo-600">🎯</span>
               <h3 className="text-lg font-bold">Savings Goal</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">Calculate how much to save monthly for your goal</p>
+            <p className="text-sm text-gray-600 mb-4">Calculate how much to save monthly for your goal</p>
 
             <div className="space-y-4">
               <div className="space-y-2">
@@ -476,7 +476,7 @@ export default function InvestmentCalculatorPage() {
                   value={goal.targetAmount}
                   onChange={(e) => setGoal({ ...goal, targetAmount: Number(e.target.value) })}
                 />
-                <p className="text-xs text-gray-500">e.g. £5,000 emergency fund, £20,000 house deposit</p>
+                <p className="text-sm text-gray-500">e.g. £5,000 emergency fund, £20,000 house deposit</p>
               </div>
               <div className="space-y-2">
                 <Label>Timeframe (Years)</Label>
@@ -511,11 +511,11 @@ export default function InvestmentCalculatorPage() {
               <span className="text-indigo-600">➡️</span>
               <h3 className="text-lg font-bold">Monthly Savings Required</h3>
             </div>
-            <p className="text-xs text-gray-600 mb-4">Here's what you need to save each month</p>
+            <p className="text-sm text-gray-600 mb-4">Here's what you need to save each month</p>
 
             <div className="rounded-lg bg-indigo-50 p-5 text-center">
               <div className="text-3xl font-bold text-indigo-700">{fmtGBP(goalResults.monthlyPayment)}</div>
-              <div className="text-xs text-gray-600">Per Month</div>
+              <div className="text-sm text-gray-600">Per Month</div>
               <div className="text-[11px] text-gray-500 mt-1">For {goal.timeframe} years</div>
             </div>
 
@@ -552,7 +552,7 @@ export default function InvestmentCalculatorPage() {
           <span className="text-emerald-600">📈</span>
           <h3 className="text-lg font-bold">Historical Average Returns Reference</h3>
         </div>
-        <p className="text-xs text-gray-600 mb-4">
+        <p className="text-sm text-gray-600 mb-4">
           Use these long-term averages as guidance (past performance doesn’t guarantee future results).
         </p>
 
@@ -589,7 +589,7 @@ export default function InvestmentCalculatorPage() {
           <h4 className="font-medium text-sm mb-3 flex items-center gap-2">
             <span>💡</span> Smart Portfolio Allocation Examples
           </h4>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-xs">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
             <AllocCard
               title="Conservative (Age 50+)"
               lines={["• 60% Bonds/Cash: ~3%", "• 40% Stocks: ~8%"]}
@@ -615,7 +615,7 @@ export default function InvestmentCalculatorPage() {
           <span className="text-emerald-600">🔑</span>
           <h3 className="text-lg font-bold">Key Investment Principles</h3>
         </div>
-        <p className="text-xs text-gray-600 mb-4">Essential rules for successful long-term investing</p>
+        <p className="text-sm text-gray-600 mb-4">Essential rules for successful long-term investing</p>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           <PrincipleCard title="Time in Market">
@@ -665,7 +665,7 @@ function RefCard({
         </span>
       </div>
       <div className={`text-2xl font-bold ${toneMap[tone]}`}>{value}</div>
-      <p className="text-xs text-gray-600">{children}</p>
+      <p className="text-sm text-gray-600">{children}</p>
     </div>
   );
 }
@@ -689,7 +689,7 @@ function PrincipleCard({ title, children }: { title: string; children: React.Rea
         <span className="text-valuto-green-600">•</span>
         <span className="font-medium text-sm">{title}</span>
       </div>
-      <p className="text-xs text-gray-600">{children}</p>
+      <p className="text-sm text-gray-600">{children}</p>
     </div>
   );
 }

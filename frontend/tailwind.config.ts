@@ -64,6 +64,7 @@ const config: Config = {
     "from-green-50",
     "text-primary",
     "border-gray-50",
+    "border-blue-500",
     "px-1",
     "px-2",
     "grid",

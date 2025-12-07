@@ -296,7 +296,7 @@ Replace with real logos by using `<Image />` components:
 <div className="absolute -bottom-4 left-1/2 -translate-x-1/2">
   <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-4">
     <span className="text-2xl">💡</span>
-    <div className="text-xs text-gray-500">Lessons</div>
+    <div className="text-sm text-gray-500">Lessons</div>
     <div className="text-lg font-bold text-valuto-green-600">500+</div>
   </div>
 </div>

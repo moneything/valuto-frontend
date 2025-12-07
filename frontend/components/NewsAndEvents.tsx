@@ -13,23 +13,37 @@ interface NewsAndEventsProps {
 
 export default function NewsAndEvents({ className }: NewsAndEventsProps) {
   const [activeTab, setActiveTab] = useState<'news' | 'events'>('news');
+  const [activeCategory, setActiveCategory] = useState<string>('All');
+  const [newsLimit, setNewsLimit] = useState<number>(5);
   const [news, setNews] = useState<NewsItem[]>([]);
   const [events, setEvents] = useState<EventItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
+  const categories = [
+    'All',
+    'Bills',
+    'Benefits',
+    'Jobs',
+    'Savings',
+    'Investing',
+    'Property',
+    'Scams'
+  ];
+
   useEffect(() => {
     loadData();
   }, []);
 
-  const loadData = async () => {
+  const loadData = async (limit = newsLimit) => {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchNewsAndEvents();
+      const data = await fetchNewsAndEvents({ newsLimit: limit });
       setNews(data.news);
       setEvents(data.events);
+      setNewsLimit(limit);
       setLastUpdated(new Date());
     } catch (err: any) {
       setError(err.message || 'Failed to load news and events');
@@ -70,43 +84,84 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
     }
   };
 
-  const renderNewsItem = (item: NewsItem, index: number) => (
-    <motion.div
-      key={item.id}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: index * 0.1 }}
-      className="group"
-    >
-      <Card className="p-4 hover:shadow-md transition-all duration-200 cursor-pointer border-l-4 border-l-blue-500">
-        <div className="flex justify-between items-start mb-2">
-          <h4 className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors line-clamp-2">
+  const categoryStyle = (category: string) => {
+    switch (category) {
+      case 'Bills':
+        return { border: 'border-l-emerald-500 border-r-emerald-500 border-t-emerald-500 border-b-emerald-500', accent: 'text-emerald-600', pill: 'bg-emerald-100 text-emerald-700' };
+      case 'Benefits':
+        return { border: 'border-l-pink-500 border-r-pink-500 border-t-pink-500 border-b-pink-500', accent: 'text-pink-600', pill: 'bg-pink-100 text-pink-700' };
+      case 'Jobs':
+        return { border: 'border-l-amber-500 border-r-amber-500 border-t-amber-500 border-b-amber-500', accent: 'text-amber-600', pill: 'bg-amber-100 text-amber-700' };
+      case 'Savings':
+        return { border: 'border-l-teal-500 border-r-teal-500 border-t-teal-500 border-b-teal-500', accent: 'text-teal-600', pill: 'bg-teal-100 text-teal-700' };
+      case 'Investing':
+        return { border: 'border-l-blue-500 border-r-blue-500 border-t-blue-500 border-b-blue-500', accent: 'text-blue-600', pill: 'bg-blue-100 text-blue-700' };
+      case 'Property':
+        return { border: 'border-l-purple-500 border-r-purple-500 border-t-purple-500 border-b-purple-500', accent: 'text-purple-600', pill: 'bg-purple-100 text-purple-700' };
+      case 'Scams':
+        return { border: 'border-l-red-500 border-r-red-500 border-t-red-500 border-b-red-500', accent: 'text-red-600', pill: 'bg-red-100 text-red-700' };
+      default:
+        return { border: 'border-l-gray-400 border-r-gray-400 border-t-gray-400 border-b-gray-400', accent: 'text-gray-700', pill: 'bg-gray-100 text-gray-700' };
+    }
+  };
+
+  const renderNewsItem = (item: NewsItem, index: number) => {
+    const style = categoryStyle(item.category);
+
+    return (
+      <motion.div
+        key={item.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: index * 0.05 }}
+        className="group"
+      >
+        <Card className={cn(
+          "p-5 hover:shadow-lg transition-all duration-200 cursor-pointer border rounded-2xl",
+          style.border,
+          "h-full flex flex-col"
+        )}>
+          <div className="flex items-center justify-between mb-3">
+            <span className={cn("px-3 py-1 rounded-full text-sm font-semibold", style.pill)}>
+              {item.category || 'All'}
+            </span>
+            <span className="text-sm text-gray-500 flex-shrink-0">
+              {formatTime(item.time)}
+            </span>
+          </div>
+
+          <h4 className="font-semibold text-gray-900 text-lg mb-3 leading-snug">
             {item.title}
           </h4>
-          <span className="text-xs text-gray-500 ml-2 flex-shrink-0">
-            {formatTime(item.time)}
-          </span>
-        </div>
-        <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-          {item.summary}
-        </p>
-        <div className="flex justify-between items-center">
-          <span className="text-xs text-blue-600 font-medium">
-            {item.source}
-          </span>
-          <a
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-xs text-blue-600 hover:text-blue-800 font-medium"
-            onClick={(e) => e.stopPropagation()}
-          >
-            Read more →
-          </a>
-        </div>
-      </Card>
-    </motion.div>
-  );
+
+          <p className="text-sm text-gray-700 mb-4 leading-relaxed">
+            {item.summary}
+          </p>
+
+          <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100">
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn("text-sm font-medium flex items-center gap-1", style.accent, "hover:underline")}
+              onClick={(e) => e.stopPropagation()}
+            >
+              {item.source} ↗
+            </a>
+            <a
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm px-4 py-2 rounded-lg bg-gray-50 text-gray-800 hover:bg-gray-100 border border-gray-200"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Read more
+            </a>
+          </div>
+        </Card>
+      </motion.div>
+    );
+  };
 
   const renderEventItem = (item: EventItem, index: number) => (
     <motion.div
@@ -121,7 +176,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           <h4 className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2">
             {item.title}
           </h4>
-          <span className="text-xs text-gray-500 ml-2 flex-shrink-0">
+          <span className="text-sm text-gray-500 ml-2 flex-shrink-0">
             {formatEventDate(item.date)}
           </span>
         </div>
@@ -134,14 +189,14 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-xs text-green-600 font-medium">
+          <span className="text-sm text-green-600 font-medium">
             {item.source}
           </span>
           <a
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-xs text-green-600 hover:text-green-800 font-medium"
+            className="text-sm text-green-600 hover:text-green-800 font-medium"
             onClick={(e) => e.stopPropagation()}
           >
             View event →
@@ -194,7 +249,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           onClick={loadData}
           variant="outline"
           size="sm"
-          className="text-xs"
+          className="text-sm"
         >
           🔄 Refresh
         </Button>
@@ -238,13 +293,50 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
               transition={{ duration: 0.2 }}
               className="space-y-4"
             >
+              <div className="flex flex-wrap gap-2 mb-2">
+                {categories.map((category) => {
+                  const isActive = activeCategory === category;
+                  const count = category === 'All'
+                    ? news.length
+                    : news.filter((n) => n.category === category).length;
+                  return (
+                    <button
+                      key={category}
+                      onClick={() => setActiveCategory(category)}
+                      className={cn(
+                        "px-3 py-1.5 rounded-full border text-sm transition-colors",
+                        isActive
+                          ? "bg-blue-600 text-white border-blue-600"
+                          : "text-gray-600 border-gray-200 hover:bg-gray-100"
+                      )}
+                    >
+                      {category} ({count})
+                    </button>
+                  );
+                })}
+              </div>
               {news.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-4">📰</div>
                   <p className="text-gray-600">No financial news available at the moment.</p>
                 </div>
               ) : (
-                news.map((item, index) => renderNewsItem(item, index))
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {news
+                    .filter((item) => activeCategory === 'All' || item.category === activeCategory)
+                    .map((item, index) => renderNewsItem(item, index))}
+                </div>
+              )}
+              {news.length > 0 && (
+                <div className="flex justify-center mt-4">
+                  <Button
+                    onClick={() => loadData(newsLimit + 5)}
+                    variant="outline"
+                    disabled={loading}
+                  >
+                    {loading ? 'Loading...' : 'See 5 more'}
+                  </Button>
+                </div>
               )}
             </motion.div>
           ) : (
@@ -272,7 +364,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
       {/* Footer */}
       {lastUpdated && (
         <div className="mt-6 pt-4 border-t border-gray-200">
-          <p className="text-xs text-gray-500 text-center">
+          <p className="text-sm text-gray-500 text-center">
             Last updated: {lastUpdated.toLocaleTimeString()}
           </p>
         </div>

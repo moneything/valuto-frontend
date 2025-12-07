@@ -193,7 +193,7 @@ const entrepreneurshipModules = [
                                   {
                                     type: "ul",
                                     props: {
-                                      className: "text-xs space-y-1",
+                                      className: "text-sm space-y-1",
                                     },
                                     children: [
                                       {
@@ -265,7 +265,7 @@ const entrepreneurshipModules = [
                                   {
                                     type: "ul",
                                     props: {
-                                      className: "text-xs space-y-1",
+                                      className: "text-sm space-y-1",
                                     },
                                     children: [
                                       {
@@ -346,7 +346,7 @@ const entrepreneurshipModules = [
                                     type: "div",
                                     props: {
                                       className:
-                                        "grid md:grid-cols-2 gap-3 text-xs",
+                                        "grid md:grid-cols-2 gap-3 text-sm",
                                     },
                                     children: [
                                       {
@@ -468,7 +468,7 @@ const entrepreneurshipModules = [
                                   {
                                     type: "ul",
                                     props: {
-                                      className: "text-xs space-y-1",
+                                      className: "text-sm space-y-1",
                                     },
                                     children: [
                                       {
@@ -544,7 +544,7 @@ const entrepreneurshipModules = [
                                   {
                                     type: "ul",
                                     props: {
-                                      className: "text-xs space-y-1",
+                                      className: "text-sm space-y-1",
                                     },
                                     children: [
                                       {
@@ -1131,13 +1131,13 @@ const entrepreneurshipModules = [
                           },
                           {
                             "type": "div",
-                            "props": { "className": "grid grid-cols-2 gap-2 text-xs" },
+                            "props": { "className": "grid grid-cols-2 gap-2 text-sm" },
                             "children": [
                               { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Personal service, immediate gratification, local community"] },
                               { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " High rent, limited hours, local customer base only"] }
                             ]
                           },
-                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Corner shop, boutique clothing store, local café"] }
+                          { "type": "p", "props": { "className": "text-sm mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Corner shop, boutique clothing store, local café"] }
                         ]
                       },
 
@@ -1155,13 +1155,13 @@ const entrepreneurshipModules = [
                           },
                           {
                             "type": "div",
-                            "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" },
+                            "props": { "className": "grid md:grid-cols-2 gap-2 text-sm" },
                             "children": [
                               { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Global reach, 24/7 sales, lower overhead than physical stores"] },
                               { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Competition, shipping logistics, no personal touch"] }
                             ]
                           },
-                          { "type": "p", "props": { "className": "text-xs mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Shopify store, Amazon seller, Etsy shop"] }
+                          { "type": "p", "props": { "className": "text-sm mt-2" }, "children": [{ "type": "strong", "children": ["Examples:"] }, " Shopify store, Amazon seller, Etsy shop"] }
                         ]
                       },
 
@@ -1177,11 +1177,11 @@ const entrepreneurshipModules = [
                               "Sell products online without holding inventory. Supplier ships directly to customer."
                             ]
                           },
-                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-sm" }, "children": [
                             { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Low startup costs, no inventory risk, location independent"] },
                             { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Low margins, no quality control, shipping delays"] }
                           ]},
-                          { "type": "p", "props": { "className": "text-xs text-green-700 mt-2" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm text-green-700 mt-2" }, "children": [
                             { "type": "strong", "children": ["Student-Friendly:"] },
                             " Can start with under £100"
                           ] }
@@ -1221,11 +1221,11 @@ const entrepreneurshipModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Freelancing / Consulting"] },
                           { "type": "p", "props": { "className": "text-sm text-muted-foreground mb-2" }, "children": ["Sell your skills and time to clients on a project or hourly basis."]},
-                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-sm" }, "children": [
                             { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " No inventory, high margins, flexible schedule"] },
                             { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Trading time for money, income can be unpredictable"] }
                           ]},
-                          { "type": "p", "props": { "className": "text-xs text-blue-700" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm text-blue-700" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " Graphic design, tutoring, web development"
                           ]}
@@ -1240,11 +1240,11 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Customers pay monthly or yearly for an ongoing service."
                           ]},
-                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-sm" }, "children": [
                             { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Predictable revenue, high customer lifetime value"] },
                             { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Need to constantly provide value, high churn risk"] }
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " Spotify, Netflix, meal kits"
                           ] }
@@ -1259,11 +1259,11 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Connect buyers and sellers, take a fee or commission."
                           ]},
-                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-xs" }, "children": [
+                          { "type": "div", "props": { "className": "grid md:grid-cols-2 gap-2 text-sm" }, "children": [
                             { "type": "p", "children": [{ "type": "strong", "children": ["Pros:"] }, " Scalable, network effects, recurring revenue"] },
                             { "type": "p", "children": [{ "type": "strong", "children": ["Cons:"] }, " Chicken-and-egg problem, complex to build"] }
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " Uber, Airbnb, Etsy, Upwork"
                           ]}
@@ -1303,11 +1303,11 @@ const entrepreneurshipModules = [
                         "children": [
                           { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Content Creator"] },
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": ["Create content, monetize through ads, sponsorships, or product sales."] },
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Revenue streams:"] },
                             " YouTube ads, sponsored posts, affiliate marketing, course sales"
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " YouTuber, blogger, podcaster, social media influencer"
                           ]}
@@ -1322,11 +1322,11 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Create once, sell many times with no physical inventory."
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " eBooks, templates, online courses"
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Benefits:"] },
                             " High margins, scalable, location independent"
                           ]}
@@ -1341,11 +1341,11 @@ const entrepreneurshipModules = [
                           { "type": "p", "props": { "className": "text-sm mb-2 text-muted-foreground" }, "children": [
                             "Monthly subscription for access to software/app functionality."
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Examples:"] },
                             " Notion, Canva, project management tools"
                           ]},
-                          { "type": "p", "props": { "className": "text-xs" }, "children": [
+                          { "type": "p", "props": { "className": "text-sm" }, "children": [
                             { "type": "strong", "children": ["Challenge:"] },
                             " HRequires technical skills but can be very profitable"
                           ]}
@@ -1648,7 +1648,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1 text-semibold" },
+                              "props": { "className": "text-sm space-y-1 text-semibold" },
                               "children": [
                                 {
                                   "type": "p",
@@ -1688,7 +1688,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1 text-sembibold" },
+                              "props": { "className": "text-sm space-y-1 text-sembibold" },
                               "children": [
                                 {
                                   "type": "p",
@@ -1728,7 +1728,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1 text-semibold" },
+                              "props": { "className": "text-sm space-y-1 text-semibold" },
                               "children": [
                                 {
                                   "type": "p",
@@ -1768,7 +1768,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "div",
-                              "props": { "className": "text-xs space-y-1" },
+                              "props": { "className": "text-sm space-y-1" },
                               "children": [
                                 {
                                   "type": "p",
@@ -1828,7 +1828,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-green-700" }, "children": ["Lower Risk Options"] },
-                                { "type": "strong", "props": { "className": "bg-green-500 text-white px-2 text-xs py-0.5 rounded-xl" }, "children": ["Beginner Friendly"] }
+                                { "type": "strong", "props": { "className": "bg-green-500 text-white px-2 text-sm py-0.5 rounded-xl" }, "children": ["Beginner Friendly"] }
                               ]
                             },
                             {
@@ -1885,7 +1885,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-yellow-700 dark:text-yellow-400" }, "children": ["Medium Risk Options"] },
-                                { "type": "strong", "props": { "className": "text-black px-2 text-xs rounded-xl border border-2 border-gray-599" }, "children": ["Some Experience Needed"] }
+                                { "type": "strong", "props": { "className": "text-black px-2 text-sm rounded-xl border border-2 border-gray-599" }, "children": ["Some Experience Needed"] }
                               ]
                             },
                             {
@@ -1942,7 +1942,7 @@ const entrepreneurshipModules = [
                               "props": { "className": "flex justify-between items-center mb-2" },
                               "children": [
                                 { "type": "h4", "props": { "className": "font-semibold text-red-700 dark:text-red-400" }, "children": ["Higher Risk Options"] },
-                                { "type": "strong", "props": { "className": "text-white px-2 text-xs py-0.5 rounded-xl bg-red-500" }, "children": ["High Investment"] }
+                                { "type": "strong", "props": { "className": "text-white px-2 text-sm py-0.5 rounded-xl bg-red-500" }, "children": ["High Investment"] }
                               ]
                             },
                             {
@@ -2034,7 +2034,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
                                 { "type": "li", "children": ["MVP (Minimum Viable Product) approach"] },
                                 { "type": "li", "children": ["Test with friends and family first"] },
@@ -2058,7 +2058,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
                                 { "type": "li", "children": ["Multiple revenue streams"] },
                                 { "type": "li", "children": ["Different customer segments"] },
@@ -2082,7 +2082,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
                                 { "type": "li", "children": ["Set clear success/failure metrics"] },
                                 { "type": "li", "children": ["Time-bound your experiments"] },
@@ -2106,7 +2106,7 @@ const entrepreneurshipModules = [
                             },
                             {
                               "type": "ul",
-                              "props": { "className": "text-xs space-y-1 list-disc pl-4" },
+                              "props": { "className": "text-sm space-y-1 list-disc pl-4" },
                               "children": [
                                 {
                                   "type": "li",
@@ -2164,7 +2164,7 @@ const entrepreneurshipModules = [
                             { "type": "h4", "props": { "className": "font-semibold mb-1" }, "children": ["💰 Financial"] },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs" },
+                              "props": { "className": "text-sm" },
                               "children": [
                                 "Can I afford to lose this money? Do I have emergency funds? How will I pay bills if this fails?"
                               ]
@@ -2178,7 +2178,7 @@ const entrepreneurshipModules = [
                             { "type": "h4", "props": { "className": "font-semibold mb-1" }, "children": ["⏰ Time"] },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs" },
+                              "props": { "className": "text-sm" },
                               "children": [
                                 "How much time can I realistically commit? Will this impact my studies/current job? What's my timeline?"
                               ]
@@ -2192,7 +2192,7 @@ const entrepreneurshipModules = [
                             { "type": "h4", "props": { "className": "font-semibold mb-1" }, "children": ["🎯 Opportunity"] },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs" },
+                              "props": { "className": "text-sm" },
                               "children": [
                                 "What am I giving up? Are there other opportunities I'm missing? Is the timing right?"
                               ]
@@ -2206,7 +2206,7 @@ const entrepreneurshipModules = [
                             { "type": "h4", "props": { "className": "font-semibold mb-1" }, "children": ["👥 Personal"] },
                             {
                               "type": "p",
-                              "props": { "className": "text-xs" },
+                              "props": { "className": "text-sm" },
                               "children": [
                                 "How will this affect my relationships? Can I handle the stress? Do I have support systems?"
                               ]

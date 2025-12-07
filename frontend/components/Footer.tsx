@@ -57,10 +57,10 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="border-t border-gray-800 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-xs sm:text-sm text-center md:text-left">
+          <p className="text-gray-400 text-sm sm:text-sm text-center md:text-left">
             © 2025 Valuto. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-xs sm:text-sm">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-sm">
             <a href="#" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Privacy Policy</a>
             <a href="#" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Terms of Service</a>
           </div>

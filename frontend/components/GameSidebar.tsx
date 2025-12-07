@@ -74,7 +74,7 @@ export default function GameSidebar() {
       {/* Quick Stats (when expanded) */}
       {!isCollapsed && (
         <div className="absolute bottom-0 left-0 right-0 p-4 border-t border-gray-200 bg-gradient-to-br from-valuto-green-50 to-white">
-          <div className="text-xs text-gray-600 mb-1">Quick Stats</div>
+          <div className="text-sm text-gray-600 mb-1">Quick Stats</div>
           <div className="flex justify-between text-sm">
             <span>Points:</span>
             <span className="font-bold text-valuto-green-600">2,450</span>

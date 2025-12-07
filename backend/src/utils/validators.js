@@ -40,6 +40,19 @@ const validateUserCreation = [
     .isIn(["student", "teacher"])
     .withMessage("Role must be either student or teacher"),
 
+  body("title")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 20 })
+    .withMessage("Title must be between 2 and 20 characters")
+    .bail()
+    .custom((value, { req }) => {
+      if (req.body.role === "teacher" && (!value || !value.trim())) {
+        throw new Error("Title is required for teachers");
+      }
+      return true;
+    }),
+
   body("age").optional().isInt({ min: 5, max: 120 }),
 
   body("school").optional().trim().isLength({ max: 200 }),
@@ -53,6 +66,11 @@ const validateUserCreation = [
 
 const validateUserUpdate = [
   body("name").optional().trim().isLength({ min: 2, max: 100 }),
+  body("title")
+    .optional()
+    .trim()
+    .isLength({ min: 2, max: 20 })
+    .withMessage("Title must be between 2 and 20 characters"),
   body("age").optional().isInt({ min: 5, max: 120 }),
   body("school").optional().trim().isLength({ max: 200 }),
   body("grade").optional().trim().isLength({ max: 50 }),
@@ -485,4 +503,3 @@ module.exports = {
   validateLearningModuleCreate,
   validateLearningModuleUpdate,
 };
-

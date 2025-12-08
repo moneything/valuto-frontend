@@ -97,13 +97,17 @@ const saveProgress = asyncHandler(async (req, res) => {
   // -----------------------
   // COMPLETION LOGIC
   // -----------------------
-  const isCompleted =
-    status === "completed" ||
-    (effectiveScore !== null && effectiveScore >= 70);
+  const scoreStatus =
+    effectiveScore !== null
+      ? effectiveScore >= 70
+        ? "completed"
+        : "in_progress"
+      : null;
 
-  const effectiveStatus = isCompleted
-    ? "completed"
-    : status || "in_progress";
+  const effectiveStatus =
+    status === "completed"
+      ? "completed"
+      : status || "in_progress";
 
   // -----------------------
   // FIND EXISTING PROGRESS
@@ -116,9 +120,13 @@ const saveProgress = asyncHandler(async (req, res) => {
   let pointsEarned = 0;
   let isFirstCompletion = false;
 
+  const nextStatus = scoreStatus || progress?.status || effectiveStatus;
+  const isCompleted = nextStatus === "completed" || progress?.status === "completed";
+
   if (progress) {
+    const wasCompleted = progress.status === "completed";
     // ========== UPDATE EXISTING ==========
-    progress.status = effectiveStatus;
+    progress.status = nextStatus;
 
     if (effectiveScore !== null) {
       progress.quizScore = effectiveScore;
@@ -132,7 +140,7 @@ const saveProgress = asyncHandler(async (req, res) => {
     progress.lastAccessedAt = new Date();
 
     // Award points on FIRST completion only
-    if (isCompleted && !progress.completedAt) {
+    if (nextStatus === "completed" && !progress.completedAt) {
       progress.completedAt = new Date();
       isFirstCompletion = true;
 
@@ -154,7 +162,7 @@ const saveProgress = asyncHandler(async (req, res) => {
       clerkUserId,
       moduleId: module.topic,
       moduleName,
-      status: effectiveStatus,
+      status: nextStatus,
       quizScore: effectiveScore,
       quizPassed: effectiveScore ? effectiveScore >= 70 : false,
       timeSpent: timeSpent || sessionData?.totalTime || 0,
@@ -162,7 +170,7 @@ const saveProgress = asyncHandler(async (req, res) => {
     });
 
     // Award points ONLY if completed immediately
-    if (isCompleted) {
+    if (nextStatus === "completed") {
       isFirstCompletion = true;
       pointsEarned = calculatePoints(module.points, effectiveScore);
 

@@ -6,6 +6,7 @@ interface CardProps {
   hover?: boolean;
   gradient?: boolean;
   padding?: 'sm' | 'md' | 'lg';
+  title?: string;
 }
 
 export default function Card({ 
@@ -13,7 +14,8 @@ export default function Card({
   className = "", 
   hover = true,
   gradient = false,
-  padding = 'md'
+  padding = 'md',
+  title
 }: CardProps) {
   const paddingClasses = {
     sm: 'p-4',
@@ -30,9 +32,8 @@ export default function Card({
   `;
 
   return (
-    <div className={baseClasses}>
+    <div className={baseClasses} title={title}>
       {children}
     </div>
   );
 }
-

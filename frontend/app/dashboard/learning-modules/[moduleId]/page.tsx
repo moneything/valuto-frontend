@@ -1,7 +1,7 @@
 // app/dashboard/learning-modules/[moduleId]/page.tsx
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -39,6 +39,8 @@ export default function LearningModulePage({
   const [sessionStart, setSessionStart] = useState<Date | null>(null);
   const [pageElapsed, setPageElapsed] = useState<number>(0);
   const [quizResult, setQuizResult] = useState<any>(null);
+  const lastReportedRef = useRef(0);
+  const elapsedRef = useRef(0);
 
   useEffect(() => {
     if (module && !sessionStart) {
@@ -58,6 +60,57 @@ export default function LearningModulePage({
     };
   }, []);
 
+  useEffect(() => {
+    elapsedRef.current = pageElapsed;
+  }, [pageElapsed]);
+
+  const flushTimeSpent = useCallback(async () => {
+    const current = elapsedRef.current;
+    const delta = current - lastReportedRef.current;
+    if (delta <= 0) return;
+
+    const safeStart = sessionStart
+      ? sessionStart.toISOString()
+      : new Date(Date.now() - current * 1000).toISOString();
+
+    try {
+      await saveProgress({
+        moduleId,
+        status: "in_progress",
+        timeSpent: delta,
+        sessionData: {
+          startTime: safeStart,
+          endTime: new Date().toISOString(),
+          totalTime: delta,
+        },
+      });
+      lastReportedRef.current = current;
+    } catch (err) {
+      console.error("Failed to flush time spent", err);
+    }
+  }, [moduleId, saveProgress, sessionStart]);
+
+  useEffect(() => {
+    const handleVisibility = () => {
+      if (document.visibilityState === "hidden") {
+        flushTimeSpent();
+      }
+    };
+
+    const handleBeforeUnload = () => {
+      flushTimeSpent();
+    };
+
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    document.addEventListener("visibilitychange", handleVisibility);
+
+    return () => {
+      flushTimeSpent();
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      document.removeEventListener("visibilitychange", handleVisibility);
+    };
+  }, [flushTimeSpent]);
+
   const handleQuizComplete = async (answers: any[]) => {
     setStep("complete");
 
@@ -73,7 +126,6 @@ export default function LearningModulePage({
       JSON.stringify({
         moduleId,
         responses: answers,
-        timeSpent: totalTime,
         sessionData: {
           startTime: safeStart,
           endTime: new Date().toISOString(),

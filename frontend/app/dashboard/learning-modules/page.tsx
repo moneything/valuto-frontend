@@ -100,8 +100,15 @@ export default function LearningModulesPage() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <StatItem label="Modules Completed 🎯" value={stats.completedModules} />
-            <StatItem label="In Progress 🚀" value={stats.inProgressModules} />
+            <StatItem 
+            label="Modules Completed 🎯" 
+            value={stats.completedModules} 
+            tooltip="Quizzes are recorded as completed only when all quiz questions are answered correctly."
+            />
+            <StatItem
+              label="In Progress 🚀"
+              value={stats.inProgressModules}
+            />
             <StatItem label="Average Score ⭐" value={Math.round(stats.averageQuizScore)} />
             <StatItem label="Minutes Spent ⏱️" value={Math.round((stats.totalTimeSpent || 0) / 60)} />
           </div>
@@ -137,14 +144,21 @@ export default function LearningModulesPage() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {modules.map((module: any) => {
                 const status = getModuleStatus(module.topic);
-                const isSelected = status === "in_progress" || status === "completed";
+                const isCompleted = status === "completed";
+                const isInProgress = status === "in_progress";
 
                 return (
                   <Link key={module.topic} href={`/dashboard/learning-modules/${module.topic}`}>
                     <div
                       className={`
                         p-6 border rounded-2xl transition
-                        ${isSelected ? "bg-green-50 border-green-200" : "bg-white border-gray-200"}
+                        ${
+                          isCompleted
+                            ? "bg-green-50 border-green-200"
+                            : isInProgress
+                              ? "bg-yellow-50 border-yellow-200"
+                              : "bg-white border-gray-200"
+                        }
                         hover:bg-gray-50
                       `}
                     >
@@ -152,7 +166,13 @@ export default function LearningModulesPage() {
                         <h3
                           className={`
                             text-xl font-semibold
-                            ${isSelected ? "text-green-700" : "text-gray-900"}
+                            ${
+                              isCompleted
+                                ? "text-green-700"
+                                : isInProgress
+                                  ? "text-yellow-800"
+                                  : "text-gray-900"
+                            }
                           `}
                         >
                           {module.title}
@@ -181,13 +201,28 @@ export default function LearningModulesPage() {
 type StatItemProps = {
   label: string;
   value: number;
+  tooltip?: string;
 };
 
-function StatItem({ label, value }: StatItemProps) {
-  return (
+function StatItem({ label, value, tooltip }: StatItemProps) {
+  const cardContent = (
     <Card className="text-center">
       <div className="text-4xl font-bold mb-2 text-valuto-green-500 ">{value}</div>
       <div className="text-sm opacity-90 font-bold">{label}</div>
     </Card>
+  );
+
+  if (!tooltip) return cardContent;
+
+  return (
+    <div className="relative group">
+      {cardContent}
+      <div className="pointer-events-none absolute left-0 top-full translate-y-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition duration-200 w-full">
+        <div className="bg-white text-black text-xs rounded-2xl py-3 px-3 whitespace-normal shadow-lg backdrop-blur-sm border border-valuto-green-200 w-full text-center">
+          {tooltip}
+          <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 w-3 h-3 bg-white rotate-45 border border-valuto-green-200 border-b-0 border-r-0" />
+        </div>
+      </div>
+    </div>
   );
 }

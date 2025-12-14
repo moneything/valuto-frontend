@@ -40,6 +40,25 @@ const userSchema = new mongoose.Schema(
       required: true,
     },
 
+    // Billing / Subscription
+    subscriptionStatus: {
+      type: String,
+      enum: ['inactive', 'active', 'past_due', 'canceled', 'trialing'],
+      default: 'inactive',
+      index: true,
+    },
+    stripeCustomerId: {
+      type: String,
+      index: true,
+    },
+    stripeSubscriptionId: {
+      type: String,
+      index: true,
+    },
+    subscriptionCurrentPeriodEnd: {
+      type: Date,
+    },
+
     // Optional Profile Details
     age: {
       type: Number,

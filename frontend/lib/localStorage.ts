@@ -11,6 +11,10 @@ export interface UserProfile {
   grade?: string;
   subject?: string;
   completedOnboarding: boolean;
+  subscriptionStatus?: 'inactive' | 'active' | 'past_due' | 'canceled' | 'trialing';
+  stripeCustomerId?: string;
+  stripeSubscriptionId?: string;
+  subscriptionCurrentPeriodEnd?: string;
   createdAt: string;
 }
 
@@ -40,4 +44,3 @@ export const hasCompletedOnboarding = (): boolean => {
   const profile = getUserProfile();
   return profile?.completedOnboarding || false;
 };
-

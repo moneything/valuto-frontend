@@ -12,9 +12,9 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  * @access Private
  */
 const getOrCreateUser = asyncHandler(async (req, res) => {
-  const { userId, emailAddress } = req.auth;
+  const { userId, emailAddress, firstName, lastName } = req.auth;
 
-  const user = await User.findOneAndUpdate(
+  let user = await User.findOneAndUpdate(
     { clerkUserId: userId },
     {
       clerkUserId: userId,
@@ -22,8 +22,18 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
       isActive: true,
       lastActiveDate: new Date(),
     },
-    { new: true, upsert: true }
+    { new: true, upsert: true, setDefaultsOnInsert: true }
   );
+
+  if (!user.name) {
+    user.name = `${firstName || ''} ${lastName || ''}`.trim() || 'User';
+  }
+
+  if (!user.subscriptionStatus) {
+    user.subscriptionStatus = 'inactive';
+  }
+
+  await user.save();
 
   res.status(200).json({
     success: true,

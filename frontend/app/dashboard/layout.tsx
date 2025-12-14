@@ -43,6 +43,11 @@ console.log("🔍 DEBUG: isSignedIn =", isSignedIn);
     // only redirect if the user definitely has completedOnboarding === false
     if (profile && profile.completedOnboarding === false) {
       router.push('/onboarding');
+      return;
+    }
+
+    if (profile && !['active', 'trialing'].includes(profile.subscriptionStatus || 'inactive')) {
+      router.push('/subscribe');
     }
   }, [isLoaded, isSignedIn, loading, profile, router]);
 

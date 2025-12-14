@@ -13,6 +13,7 @@ const { connectDatabase } = require('./config/database');
 const { errorHandler, notFound } = require('./utils/errorHandler');
 const { initializeSocketIO } = require('./config/socket');
 const { registerTriviaSocketHandlers } = require('./sockets/triviaSocketHandlers');
+const { handleStripeWebhook } = require('./controllers/billingController');
 
 // Initialize Express app
 const app = express();
@@ -61,6 +62,9 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 
+// Stripe webhook must consume the raw body
+app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
+
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 // app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -105,6 +109,7 @@ const challengeRoutes = require('./routes/challengeRoutes');
 const triviaRoutes = require('./routes/triviaRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const categoryRoutes = require("./routes/categoryRoutes");
+const billingRoutes = require('./routes/billingRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -115,6 +120,7 @@ app.use('/api/challenges', challengeRoutes);
 app.use('/api/trivia', triviaRoutes);
 app.use('/api/news', newsRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use('/api/billing', billingRoutes);
 
 // ==================== ERROR HANDLING ====================
 

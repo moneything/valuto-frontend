@@ -6,7 +6,6 @@ const stripeSecret = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: '2023-10-16' }) : null;
 
 const appBaseUrl =
-  process.env.NEXT_PUBLIC_APP_URL ||
   process.env.FRONTEND_URL ||
   'http://localhost:3000';
 

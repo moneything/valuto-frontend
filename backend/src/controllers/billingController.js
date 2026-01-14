@@ -6,8 +6,7 @@ const stripeSecret = process.env.STRIPE_SECRET_KEY;
 const stripe = stripeSecret ? new Stripe(stripeSecret, { apiVersion: '2023-10-16' }) : null;
 
 const appBaseUrl =
-  process.env.FRONTEND_URL ||
-  'http://localhost:3000';
+  process.env.NEXT_PUBLIC_APP_URL;
 
 const successUrl = `${appBaseUrl}/dashboard?checkout=success`;
 const cancelUrl = `${appBaseUrl}/subscribe?checkout=cancelled`;

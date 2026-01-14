@@ -133,6 +133,17 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: true,
     },
+
+    // AI chat daily usage tracking
+    aiChatUsageDate: {
+      type: String,
+      default: '',
+    },
+    aiChatUsageCount: {
+      type: Number,
+      default: 0,
+      min: 0,
+    },
   },
   {
     timestamps: true, // Adds createdAt and updatedAt automatically

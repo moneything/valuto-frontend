@@ -28,7 +28,7 @@ import {
 export default function OnboardingPage() {
   const router = useRouter();
   const { user, isLoaded } = useUser();
-  const { updateProfile } = useUserProfile();
+  const { profile, updateProfile, isLoadingProfile } = useUserProfile();
   const { getToken } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -51,6 +51,12 @@ export default function OnboardingPage() {
       }));
     }
   }, [isLoaded, user]);
+
+  useEffect(() => {
+    if (!isLoadingProfile && profile?.completedOnboarding) {
+      router.replace("/dashboard");
+    }
+  }, [isLoadingProfile, profile, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

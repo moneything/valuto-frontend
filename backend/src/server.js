@@ -31,9 +31,9 @@ const allowedOrigins = [
   process.env.NEXT_PUBLIC_APP_URL,
 ];
 
-// Add FRONTEND_URL from environment if set
-if (process.env.FRONTEND_URL) {
-  allowedOrigins.push(process.env.FRONTEND_URL);
+// Add NEXT_PUBLIC_APP_URL from environment if set
+if (process.env.NEXT_PUBLIC_APP_URL) {
+  allowedOrigins.push(process.env.NEXT_PUBLIC_APP_URL);
 }
 
 const corsOptions = {
@@ -110,6 +110,7 @@ const triviaRoutes = require('./routes/triviaRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const categoryRoutes = require("./routes/categoryRoutes");
 const billingRoutes = require('./routes/billingRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -121,6 +122,7 @@ app.use('/api/trivia', triviaRoutes);
 app.use('/api/news', newsRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use('/api/billing', billingRoutes);
+app.use('/api/ai', aiRoutes);
 
 // ==================== ERROR HANDLING ====================
 

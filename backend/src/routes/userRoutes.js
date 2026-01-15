@@ -28,7 +28,7 @@ const { validateUserCreation, validateUserUpdate } = require('../utils/validator
 // 🔹 Clerk → Mongo sync
 // --------------------------------------------------------------------
 
-// @route   GET /api/users/me
+// @route   GET /api/user/me
 // @desc    Ensure user exists in MongoDB and return profile
 // @access  Private
 router.get('/me', authenticateClerkUser, getOrCreateUser);

@@ -8,7 +8,7 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
  * @desc Ensure user exists after Clerk login
- * @route GET /api/users/me
+ * @route GET /api/user/me
  * @access Private
  */
 const getOrCreateUser = asyncHandler(async (req, res) => {

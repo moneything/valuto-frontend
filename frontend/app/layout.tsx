@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UserProvider } from "@/lib/userContext";
+import ConsoleGuard from "@/components/ConsoleGuard";
 import { Dancing_Script } from "next/font/google";
 import "./globals.css";
 
@@ -43,6 +44,7 @@ export default function RootLayout({
       <html lang="en">
         <body>
           <UserProvider>
+            <ConsoleGuard />
             {children}
           </UserProvider>
         </body>
@@ -50,4 +52,3 @@ export default function RootLayout({
     </ClerkProvider>
   );
 }
-

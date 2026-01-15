@@ -4,6 +4,11 @@
  */
 
 require('dotenv').config();
+
+if (process.env.NODE_ENV === 'production') {
+  console.log = () => {};
+}
+
 const express = require('express');
 const http = require('http');
 const cors = require('cors');

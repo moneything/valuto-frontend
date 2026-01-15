@@ -21,8 +21,9 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export function UserProvider({ children }: { children: React.ReactNode }) {
   const { user, isLoaded } = useClerkUser();
   const { getToken } = useAuth();
-  const [profile, setProfile] = useState<UserProfile | null>(null);
-  const [loading, setLoading] = useState(true);
+  const cachedProfile = getUserProfile();
+  const [profile, setProfile] = useState<UserProfile | null>(cachedProfile);
+  const [loading, setLoading] = useState(!cachedProfile);
 
   // ✅ Sync Clerk user with backend on load
   useEffect(() => {

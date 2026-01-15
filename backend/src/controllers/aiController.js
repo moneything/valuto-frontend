@@ -2,7 +2,7 @@ const { GoogleGenerativeAI } = require('@google/generative-ai');
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
-const DAILY_CHAT_LIMIT = 5;
+const DAILY_CHAT_LIMIT = 50;
 
 const getTodayKey = () => new Date().toISOString().slice(0, 10);
 

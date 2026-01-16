@@ -4,9 +4,7 @@ import { useEffect } from "react";
 
 export default function ConsoleGuard() {
   useEffect(() => {
-    if (process.env.NODE_ENV === "production") {
-      console.log = () => {};
-    }
+    // Intentionally no-op: keep console logs available in production for debugging.
   }, []);
 
   return null;

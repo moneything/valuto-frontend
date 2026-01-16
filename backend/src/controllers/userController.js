@@ -13,12 +13,14 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 const getOrCreateUser = asyncHandler(async (req, res) => {
   const { userId, emailAddress, firstName, lastName } = req.auth;
+  const fallbackEmail = `user_${userId}@placeholder.com`;
+  const resolvedEmail = emailAddress || fallbackEmail;
 
   let user = await User.findOneAndUpdate(
     { clerkUserId: userId },
     {
       clerkUserId: userId,
-      email: emailAddress,
+      email: resolvedEmail,
       isActive: true,
       lastActiveDate: new Date(),
     },
@@ -31,6 +33,9 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
 
   if (!user.subscriptionStatus) {
     user.subscriptionStatus = 'inactive';
+  }
+  if (!user.email) {
+    user.email = resolvedEmail;
   }
 
   await user.save();

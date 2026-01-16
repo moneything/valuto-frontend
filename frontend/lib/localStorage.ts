@@ -18,29 +18,52 @@ export interface UserProfile {
   createdAt: string;
 }
 
-const PROFILE_KEY = 'valuto_user_profile';
+const PROFILE_KEY_PREFIX = 'valuto_user_profile';
 
-export const saveUserProfile = (profile: UserProfile): void => {
+const getProfileKey = (userId?: string) =>
+  userId ? `${PROFILE_KEY_PREFIX}_${userId}` : PROFILE_KEY_PREFIX;
+
+export const saveUserProfile = (profile: UserProfile, userId?: string): void => {
   if (typeof window !== 'undefined') {
-    localStorage.setItem(PROFILE_KEY, JSON.stringify(profile));
+    const key = getProfileKey(userId);
+    localStorage.setItem(key, JSON.stringify(profile));
   }
 };
 
-export const getUserProfile = (): UserProfile | null => {
+export const getUserProfile = (userId?: string): UserProfile | null => {
   if (typeof window !== 'undefined') {
-    const data = localStorage.getItem(PROFILE_KEY);
-    return data ? JSON.parse(data) : null;
+    const primaryKey = getProfileKey(userId);
+    const data = localStorage.getItem(primaryKey);
+    if (data) {
+      return JSON.parse(data);
+    }
+
+    // Backward-compat: migrate legacy key if it matches this user.
+    if (userId) {
+      const legacyData = localStorage.getItem(getProfileKey());
+      if (legacyData) {
+        const legacyProfile = JSON.parse(legacyData);
+        if (legacyProfile?.clerkUserId === userId) {
+          localStorage.setItem(primaryKey, legacyData);
+          localStorage.removeItem(getProfileKey());
+          return legacyProfile;
+        }
+      }
+    }
   }
   return null;
 };
 
-export const clearUserProfile = (): void => {
+export const clearUserProfile = (userId?: string): void => {
   if (typeof window !== 'undefined') {
-    localStorage.removeItem(PROFILE_KEY);
+    localStorage.removeItem(getProfileKey(userId));
+    if (!userId) {
+      localStorage.removeItem(getProfileKey());
+    }
   }
 };
 
-export const hasCompletedOnboarding = (): boolean => {
-  const profile = getUserProfile();
+export const hasCompletedOnboarding = (userId?: string): boolean => {
+  const profile = getUserProfile(userId);
   return profile?.completedOnboarding || false;
 };

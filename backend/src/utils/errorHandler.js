@@ -18,10 +18,8 @@ const errorHandler = (err, req, res, next) => {
   // Don't clone error — preserve Mongoose / Error props
   let error = err;
 
-  // Dev logging
-  if (process.env.NODE_ENV === "development") {
-    console.error("❌ Error:", err);
-  }
+  // Always log errors (Railway logs surface console output)
+  console.error("❌ Error:", err);
 
   /** ------------------------------------
    * Mongoose: CastError (invalid ObjectId)

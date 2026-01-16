@@ -15,6 +15,7 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
   const { userId, emailAddress, firstName, lastName } = req.auth;
   const fallbackEmail = `user_${userId}@placeholder.com`;
   const resolvedEmail = emailAddress || fallbackEmail;
+  const computedName = `${firstName || ''} ${lastName || ''}`.trim() || 'User';
 
   let user = await User.findOneAndUpdate(
     { clerkUserId: userId },
@@ -27,30 +28,33 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
     { new: true, upsert: true, setDefaultsOnInsert: true }
   );
 
-  if (!user.name) {
-    user.name = `${firstName || ''} ${lastName || ''}`.trim() || 'User';
-  }
+  const missingUpdates = {};
+  if (!user.name) missingUpdates.name = computedName;
+  if (!user.subscriptionStatus) missingUpdates.subscriptionStatus = 'inactive';
+  if (!user.email) missingUpdates.email = resolvedEmail;
 
-  if (!user.subscriptionStatus) {
-    user.subscriptionStatus = 'inactive';
-  }
-  if (!user.email) {
-    user.email = resolvedEmail;
-  }
   if (user.createdAt && !(user.createdAt instanceof Date)) {
-    const createdAt = user.createdAt?.$date ? new Date(user.createdAt.$date) : new Date(user.createdAt);
+    const createdAt = user.createdAt?.$date
+      ? new Date(user.createdAt.$date)
+      : new Date(user.createdAt);
     if (!Number.isNaN(createdAt.getTime())) {
-      user.createdAt = createdAt;
-    }
-  }
-  if (user.updatedAt && !(user.updatedAt instanceof Date)) {
-    const updatedAt = user.updatedAt?.$date ? new Date(user.updatedAt.$date) : new Date(user.updatedAt);
-    if (!Number.isNaN(updatedAt.getTime())) {
-      user.updatedAt = updatedAt;
+      missingUpdates.createdAt = createdAt;
     }
   }
 
-  await user.save();
+  if (user.updatedAt && !(user.updatedAt instanceof Date)) {
+    const updatedAt = user.updatedAt?.$date
+      ? new Date(user.updatedAt.$date)
+      : new Date(user.updatedAt);
+    if (!Number.isNaN(updatedAt.getTime())) {
+      missingUpdates.updatedAt = updatedAt;
+    }
+  }
+
+  if (Object.keys(missingUpdates).length > 0) {
+    await User.updateOne({ _id: user._id }, { $set: missingUpdates });
+    user = await User.findById(user._id);
+  }
 
   res.status(200).json({
     success: true,

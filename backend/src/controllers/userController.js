@@ -37,6 +37,18 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
   if (!user.email) {
     user.email = resolvedEmail;
   }
+  if (user.createdAt && !(user.createdAt instanceof Date)) {
+    const createdAt = user.createdAt?.$date ? new Date(user.createdAt.$date) : new Date(user.createdAt);
+    if (!Number.isNaN(createdAt.getTime())) {
+      user.createdAt = createdAt;
+    }
+  }
+  if (user.updatedAt && !(user.updatedAt instanceof Date)) {
+    const updatedAt = user.updatedAt?.$date ? new Date(user.updatedAt.$date) : new Date(user.updatedAt);
+    if (!Number.isNaN(updatedAt.getTime())) {
+      user.updatedAt = updatedAt;
+    }
+  }
 
   await user.save();
 

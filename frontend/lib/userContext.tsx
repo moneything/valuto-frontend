@@ -4,7 +4,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
-import { UserProfile, getUserProfile, saveUserProfile, clearUserProfile } from "./localStorage";
+import { UserProfile } from "./localStorage";
 
 interface UserContextType {
   profile: UserProfile | null;
@@ -24,23 +24,11 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [loading, setLoading] = useState(true);
 
-  // ✅ Load cached profile (if any) for the signed-in user
   useEffect(() => {
     if (!isLoaded) return;
     if (!user) {
       setProfile(null);
       setLoading(false);
-      return;
-    }
-
-    const cachedProfile = getUserProfile(user.id);
-    if (cachedProfile) {
-      if (cachedProfile.clerkUserId && cachedProfile.clerkUserId !== user.id) {
-        clearUserProfile(user.id);
-      } else {
-        setProfile(cachedProfile);
-        setLoading(false);
-      }
     }
   }, [isLoaded, user]);
 
@@ -61,7 +49,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
         if (res.ok) {
           const data = await res.json();
           setProfile(data.data);
-          saveUserProfile(data.data, user.id);
         } else {
           console.warn("⚠️ User sync failed:", res.status);
         }
@@ -79,11 +66,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
   const updateProfile = async (newProfile: UserProfile) => {
     try {
       setProfile(newProfile);
-      if (user?.id) {
-        saveUserProfile(newProfile, user.id);
-      } else {
-        saveUserProfile(newProfile);
-      }
 
       const token = await getToken({ template: "default" });
       const res = await fetch(
@@ -103,7 +85,6 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
       if (data.success && data.data) {
         // 🔁 ensure we store the backend-confirmed version
         setProfile(data.data);
-        saveUserProfile(data.data, user?.id);
       } else {
         console.warn("Backend profile update failed:", data);
       }

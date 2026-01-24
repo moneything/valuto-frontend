@@ -23,7 +23,7 @@ Before starting, ensure you have:
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd valuto-frontend-test
+cd valuto-frontend
 
 # Install backend dependencies
 cd backend
@@ -70,7 +70,8 @@ npm install
 
 ```bash
 cd backend
-cp .env.example .env
+# Create .env manually (no .env.example in this repo)
+touch .env
 ```
 
 Edit `backend/.env`:
@@ -79,7 +80,7 @@ NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/valuto-dev  # Or your Atlas URI
 CLERK_SECRET_KEY=sk_test_your_key_here
-CLERK_PUBLISHABLE_KEY=pk_test_your_key_here
+NEXT_PUBLIC_APP_URL=http://localhost:3000
 FRONTEND_URL=http://localhost:3000
 ```
 
@@ -94,14 +95,14 @@ Create `frontend/.env.local`:
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_your_key_here
 CLERK_SECRET_KEY=sk_test_your_key_here
 
-# Clerk URLs
+# Clerk URLs (optional, only if you customize hosted pages)
 NEXT_PUBLIC_CLERK_SIGN_IN_URL=/sign-in
 NEXT_PUBLIC_CLERK_SIGN_UP_URL=/sign-up
 NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL=/dashboard
 NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL=/onboarding
 
 # Backend API URL
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
 ```
 
 ### Step 6: Start Development Servers
@@ -172,13 +173,13 @@ ready - started server on 0.0.0.0:3000
 
 4. **Add Environment Variables:**
    - Go to "Environment" tab
-   - Add all variables from `.env.example`:
+   - Add the same variables you use locally (there is no `.env.example`):
      ```
      NODE_ENV=production
      PORT=5000
      MONGODB_URI=<your-atlas-uri>
      CLERK_SECRET_KEY=sk_live_...  (use LIVE keys!)
-     CLERK_PUBLISHABLE_KEY=pk_live_...
+     NEXT_PUBLIC_APP_URL=<your-frontend-url>
      FRONTEND_URL=<your-frontend-url>
      ```
 
@@ -206,7 +207,7 @@ ready - started server on 0.0.0.0:3000
      ```
      NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
      CLERK_SECRET_KEY=sk_live_...
-     NEXT_PUBLIC_API_URL=https://valuto-backend.onrender.com/api
+     NEXT_PUBLIC_BACKEND_URL=https://valuto-backend.onrender.com
      ```
 
 4. **Redeploy:**
@@ -279,7 +280,7 @@ PORT=5001
 **Error**: `Access to fetch at '...' from origin '...' has been blocked by CORS`
 
 **Solutions:**
-1. Ensure `FRONTEND_URL` in backend `.env` matches your frontend URL
+1. Ensure `NEXT_PUBLIC_APP_URL` and `FRONTEND_URL` in backend `.env` match your frontend URL
 2. For production, update to production frontend URL
 3. Restart backend server after changes
 
@@ -432,4 +433,3 @@ If you encounter issues not covered here:
 **Setup Guide Version**: 1.0.0  
 **Last Updated**: October 22, 2025  
 **Tested On**: Node.js v18+, MongoDB 7.0+, Next.js 14+
-

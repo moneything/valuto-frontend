@@ -38,7 +38,7 @@ This guide uses the following production-ready stack:
 
 4️⃣ Update Backend CORS (1 min)
    └─→ Go back to Render.com
-   └─→ Update FRONTEND_URL with Vercel URL from Step 3
+   └─→ Set NEXT_PUBLIC_APP_URL and FRONTEND_URL with the Vercel URL from Step 3
    └─→ Auto-redeploys
 
 5️⃣ Test End-to-End (2 min)
@@ -64,8 +64,9 @@ Add these in **Render Dashboard → Environment**:
 # Required
 NODE_ENV=production
 PORT=5000
-MONGO_URI=mongodb+srv://valutoadmin:your_password@valuto-cluster.xxxxx.mongodb.net/valuto?retryWrites=true&w=majority
+MONGODB_URI=mongodb+srv://valutoadmin:your_password@valuto-cluster.xxxxx.mongodb.net/valuto?retryWrites=true&w=majority
 CLERK_SECRET_KEY=sk_live_your_production_clerk_key_from_clerk_dashboard
+NEXT_PUBLIC_APP_URL=https://your-app.vercel.app
 FRONTEND_URL=https://your-app.vercel.app
 
 # Optional
@@ -73,8 +74,9 @@ LOG_LEVEL=info
 ```
 
 **Where to get these values:**
-- `MONGO_URI`: From MongoDB Atlas (see Database Setup section)
+- `MONGODB_URI`: From MongoDB Atlas (see Database Setup section)
 - `CLERK_SECRET_KEY`: From https://dashboard.clerk.com → API Keys
+- `NEXT_PUBLIC_APP_URL`: Frontend base URL (used for billing redirects + API CORS)
 - `FRONTEND_URL`: From Vercel after deploying frontend
 
 ### Frontend Environment Variables (Vercel)
@@ -132,7 +134,7 @@ vercel --prod
 
 1. Click **"New +"** → **"Web Service"**
 2. Connect your GitHub repository
-3. Select your repository: `valuto-frontend-test` (or your repo name)
+3. Select your repository: `valuto-frontend` (or your repo name)
 
 #### Step 3: Configure Service
 
@@ -161,13 +163,15 @@ Add each variable:
 |-----|-------|---------|
 | `NODE_ENV` | `production` | `production` |
 | `PORT` | `5000` | `5000` |
-| `MONGO_URI` | Your MongoDB Atlas connection string | `mongodb+srv://user:pass@cluster.mongodb.net/valuto` |
+| `MONGODB_URI` | Your MongoDB Atlas connection string | `mongodb+srv://user:pass@cluster.mongodb.net/valuto` |
 | `CLERK_SECRET_KEY` | Your Clerk production key | `sk_live_...` |
+| `NEXT_PUBLIC_APP_URL` | Your frontend base URL | `https://valuto.vercel.app` |
 | `FRONTEND_URL` | Your Vercel frontend URL | `https://valuto.vercel.app` |
 
 **Where to get these:**
-- `MONGO_URI`: From MongoDB Atlas (see Database Setup section below)
+- `MONGODB_URI`: From MongoDB Atlas (see Database Setup section below)
 - `CLERK_SECRET_KEY`: From https://dashboard.clerk.com → API Keys
+- `NEXT_PUBLIC_APP_URL`: Frontend base URL (used for billing redirects + API CORS)
 - `FRONTEND_URL`: You'll add this after deploying frontend (can update later)
 
 #### Step 6: Deploy
@@ -255,8 +259,7 @@ Expected response:
 
 6. **Update Backend CORS:**
    - Go to Render Dashboard → Your Backend Service → **Environment**
-   - Find `FRONTEND_URL` variable
-   - Update value to your Vercel frontend URL: `https://your-app.vercel.app`
+   - Update `NEXT_PUBLIC_APP_URL` and `FRONTEND_URL` to your Vercel URL: `https://your-app.vercel.app`
    - Click **"Save Changes"**
    - Render will automatically redeploy
 
@@ -350,12 +353,12 @@ Expected response:
 
 1. **For local development** (`backend/.env`):
    ```env
-   MONGO_URI=mongodb+srv://valutoadmin:your_password@valuto-cluster.xxxxx.mongodb.net/valuto?retryWrites=true&w=majority
+   MONGODB_URI=mongodb+srv://valutoadmin:your_password@valuto-cluster.xxxxx.mongodb.net/valuto?retryWrites=true&w=majority
    ```
 
 2. **For production** (Render.com environment variables):
    - Go to Render Dashboard → Service → Environment
-   - Add variable: `MONGO_URI`
+   - Add variable: `MONGODB_URI`
    - Value: Your full connection string
    - Click "Save Changes"
 
@@ -504,15 +507,15 @@ const socket = io('https://your-backend.com', {
 ### Issue: CORS errors
 
 **Check:**
-1. `FRONTEND_URL` matches actual frontend domain
+1. `NEXT_PUBLIC_APP_URL` matches actual frontend domain
 2. Backend CORS middleware configured
 3. Credentials enabled
 
 **Solution:**
 ```javascript
-// In backend
+// In backend (REST CORS)
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.NEXT_PUBLIC_APP_URL,
   credentials: true,
 }));
 ```
@@ -730,4 +733,3 @@ Database (MongoDB Atlas)
 **Good luck with your deployment!** 🎓🎮
 
 **Last Updated:** October 22, 2025
-

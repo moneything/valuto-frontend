@@ -59,15 +59,13 @@ Place `database.js` in your project (e.g., `/config/database.js`).
 
 # 🔧 Environment Variables
 
-Set one of the following in `.env`:
+Set the following in `.env`:
 
 ```
-MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
-# or
-MONGODB_URI=mongodb://localhost:27017/mydb
+MONGODB_URI=mongodb+srv://username:password@cluster.mongodb.net/dbname
 ```
 
-At least one **must** be defined.
+This module only reads `MONGODB_URI`.
 
 ---
 

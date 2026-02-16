@@ -8,6 +8,7 @@ import { useUser } from '@clerk/nextjs';
 import { UserButton } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { formatDisplayName } from '@/lib/utils';
+import { hasActiveSubscription, isFreeDashboardPath } from '@/lib/subscriptionAccess';
 import Link from 'next/link';
 import DashboardDock from '@/components/DashboardDock';
 import Image from 'next/image';
@@ -46,10 +47,13 @@ console.log("🔍 DEBUG: isSignedIn =", isSignedIn);
       return;
     }
 
-    if (profile && !['active', 'trialing'].includes(profile.subscriptionStatus || 'inactive')) {
+    const hasSubscription = hasActiveSubscription(profile?.subscriptionStatus);
+    const freePath = isFreeDashboardPath(pathname);
+
+    if (profile && !hasSubscription && !freePath) {
       router.push('/subscribe');
     }
-  }, [isLoaded, isSignedIn, loading, profile, router]);
+  }, [isLoaded, isSignedIn, loading, pathname, profile, router]);
 
 
   if (!isLoaded || loading) {

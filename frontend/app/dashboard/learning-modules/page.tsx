@@ -214,18 +214,23 @@ export default function LearningModulesPage() {
                     {isLocked ? (
                       <Button
                         className="mt-4"
-                        variant="outline"
+                        variant="primary"
                         onClick={() => router.push("/subscribe")}
                       >
                         Subscribe to Unlock
                       </Button>
                     ) : (
-                      <Link
-                        href={`/dashboard/learning-modules/${module.topic}`}
-                        className="inline-block mt-4 text-sm font-semibold text-valuto-green-700 hover:text-valuto-green-800"
-                      >
-                        Open Module
-                      </Link>
+                      <Button
+                        className=" mt-4"
+                        variant="outline"
+                        >
+                        <Link
+                          href={`/dashboard/learning-modules/${module.topic}`}
+                          className="inline-block text-sm font-semibold"
+                        >
+                          Open Module
+                        </Link>
+                      </Button>
                     )}
                   </div>
                 );

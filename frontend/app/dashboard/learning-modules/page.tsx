@@ -179,7 +179,7 @@ export default function LearningModulesPage() {
                   <div key={module.topic} className={cardClassName}>
                     <div className="flex items-center justify-between mb-2">
                       <ModuleTitle
-                        title={module.title}
+                        moduleTitle={module.title}
                         className={
                           isCompleted
                             ? "text-green-700"
@@ -239,7 +239,7 @@ export default function LearningModulesPage() {
           </section>
         );
       })}
-      <style jsx>{`
+      <style jsx global>{`
         .module-title-marquee {
           display: inline-block;
           will-change: transform;
@@ -260,11 +260,11 @@ export default function LearningModulesPage() {
 }
 
 type ModuleTitleProps = {
-  title: string;
+  moduleTitle: string;
   className: string;
 };
 
-function ModuleTitle({ title, className }: ModuleTitleProps) {
+function ModuleTitle({ moduleTitle, className }: ModuleTitleProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLHeadingElement>(null);
   const [shift, setShift] = useState(0);
@@ -274,7 +274,19 @@ function ModuleTitle({ title, className }: ModuleTitleProps) {
       const containerWidth = containerRef.current?.clientWidth ?? 0;
       const textWidth = textRef.current?.scrollWidth ?? 0;
       const overflow = textWidth - containerWidth;
-      setShift(overflow > 0 ? -overflow : 0);
+      const threshold = containerWidth * 0.9;
+
+      if (overflow > 0) {
+        setShift(-overflow);
+        return;
+      }
+
+      if (textWidth > threshold) {
+        setShift(-(textWidth - threshold));
+        return;
+      }
+
+      setShift(0);
     };
 
     updateShift();
@@ -284,7 +296,7 @@ function ModuleTitle({ title, className }: ModuleTitleProps) {
     if (textRef.current) observer.observe(textRef.current);
 
     return () => observer.disconnect();
-  }, [title]);
+  }, [moduleTitle]);
 
   const shouldMarquee = shift < 0;
   const style = shouldMarquee
@@ -298,7 +310,7 @@ function ModuleTitle({ title, className }: ModuleTitleProps) {
         style={style}
         className={`text-xl font-semibold whitespace-nowrap pr-8 ${className} ${shouldMarquee ? "module-title-marquee" : ""}`}
       >
-        {title}
+        {moduleTitle}
       </h3>
     </div>
   );

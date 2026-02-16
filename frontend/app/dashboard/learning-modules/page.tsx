@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
@@ -178,20 +178,16 @@ export default function LearningModulesPage() {
                 return (
                   <div key={module.topic} className={cardClassName}>
                     <div className="flex items-center justify-between mb-2">
-                      <h3
-                        className={`
-                          text-xl font-semibold
-                          ${
-                            isCompleted
-                              ? "text-green-700"
-                              : isInProgress
-                                ? "text-yellow-800"
-                                : "text-gray-900"
-                          }
-                        `}
-                      >
-                        {module.title}
-                      </h3>
+                      <ModuleTitle
+                        title={module.title}
+                        className={
+                          isCompleted
+                            ? "text-green-700"
+                            : isInProgress
+                              ? "text-yellow-800"
+                              : "text-gray-900"
+                        }
+                      />
 
                       <div className="flex items-center gap-2">
                         {isLocked && (
@@ -238,7 +234,68 @@ export default function LearningModulesPage() {
           </section>
         );
       })}
+      <style jsx>{`
+        .module-title-marquee {
+          display: inline-block;
+          will-change: transform;
+          animation: module-title-marquee-scroll 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes module-title-marquee-scroll {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(var(--marquee-shift));
+          }
+        }
+      `}</style>
     </PageLayout>
+  );
+}
+
+type ModuleTitleProps = {
+  title: string;
+  className: string;
+};
+
+function ModuleTitle({ title, className }: ModuleTitleProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLHeadingElement>(null);
+  const [shift, setShift] = useState(0);
+
+  useEffect(() => {
+    const updateShift = () => {
+      const containerWidth = containerRef.current?.clientWidth ?? 0;
+      const textWidth = textRef.current?.scrollWidth ?? 0;
+      const overflow = textWidth - containerWidth;
+      setShift(overflow > 0 ? -overflow : 0);
+    };
+
+    updateShift();
+
+    const observer = new ResizeObserver(updateShift);
+    if (containerRef.current) observer.observe(containerRef.current);
+    if (textRef.current) observer.observe(textRef.current);
+
+    return () => observer.disconnect();
+  }, [title]);
+
+  const shouldMarquee = shift < 0;
+  const style = shouldMarquee
+    ? ({ "--marquee-shift": `${shift}px` } as CSSProperties)
+    : undefined;
+
+  return (
+    <div ref={containerRef} className="flex-1 min-w-0 overflow-hidden">
+      <h3
+        ref={textRef}
+        style={style}
+        className={`text-xl font-semibold whitespace-nowrap pr-8 ${className} ${shouldMarquee ? "module-title-marquee" : ""}`}
+      >
+        {title}
+      </h3>
+    </div>
   );
 }
 

@@ -1,6 +1,7 @@
 "use client";
 
 import { SignIn } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function SignInPage() {
   return (
@@ -57,9 +58,23 @@ export default function SignInPage() {
             Back to Home
           </a>
         </div>
+
+        <div className="text-center mt-3 flex items-center justify-center gap-3 text-sm">
+          <Link
+            href="/privacy-policy"
+            className="text-gray-500 hover:text-valuto-green-600 transition-colors"
+          >
+            Privacy Policy
+          </Link>
+          <span className="text-gray-400">•</span>
+          <Link
+            href="/terms-and-conditions"
+            className="text-gray-500 hover:text-valuto-green-600 transition-colors"
+          >
+            Terms & Conditions
+          </Link>
+        </div>
       </div>
     </div>
   );
 }
-
-

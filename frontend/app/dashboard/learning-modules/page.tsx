@@ -2,9 +2,17 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 import PageLayout from "@/components/theme/PageLayout";
 import Card from "@/components/theme/Card";
+import Button from "@/components/theme/Button";
+import { useUser } from "@/lib/userContext";
+import {
+  getFirstModuleTopicInCategory,
+  hasActiveSubscription,
+  sortLearningModulesForAccess,
+} from "@/lib/subscriptionAccess";
 
 import {
   useLearningModules,
@@ -13,12 +21,15 @@ import {
 } from "@/lib/hooks/useLearningModules";
 
 import * as LucideIcons from "lucide-react";
-import { ClockIcon, HelpCircle } from "lucide-react";
+import { ClockIcon, HelpCircle, Lock } from "lucide-react";
 
 export default function LearningModulesPage() {
+  const router = useRouter();
+  const { profile } = useUser();
   const { modules, loading: modulesLoading } = useLearningModules();
   const { categories, loading: categoriesLoading } = useLearningCategories();
   const { progress, stats } = useUserLearningProgress();
+  const hasSubscription = hasActiveSubscription(profile?.subscriptionStatus);
 
   const [grouped, setGrouped] = useState<any>({});
 
@@ -121,6 +132,9 @@ export default function LearningModulesPage() {
 
         if (!modules.length) return null; // Hide empty categories
 
+        const sortedModules = [...modules].sort(sortLearningModulesForAccess);
+        const freeModuleTopic = getFirstModuleTopicInCategory(sortedModules);
+
         // Try to get icon: Example "Wallet" → LucideIcons.Wallet
         const IconComponent =
           (LucideIcons as any)[category.icon] || HelpCircle;
@@ -142,52 +156,82 @@ export default function LearningModulesPage() {
 
             {/* Module Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {modules.map((module: any) => {
+              {sortedModules.map((module: any) => {
                 const status = getModuleStatus(module.topic);
                 const isCompleted = status === "completed";
                 const isInProgress = status === "in_progress";
+                const isFreeModule = module.topic === freeModuleTopic;
+                const isLocked = !hasSubscription && !isFreeModule;
+
+                const cardClassName = `
+                  p-6 border rounded-2xl transition
+                  ${
+                    isCompleted
+                      ? "bg-green-50 border-green-200"
+                      : isInProgress
+                        ? "bg-yellow-50 border-yellow-200"
+                        : "bg-white border-gray-200"
+                  }
+                  ${isLocked ? "opacity-80" : "hover:bg-gray-50"}
+                `;
 
                 return (
-                  <Link key={module.topic} href={`/dashboard/learning-modules/${module.topic}`}>
-                    <div
-                      className={`
-                        p-6 border rounded-2xl transition
-                        ${
-                          isCompleted
-                            ? "bg-green-50 border-green-200"
-                            : isInProgress
-                              ? "bg-yellow-50 border-yellow-200"
-                              : "bg-white border-gray-200"
-                        }
-                        hover:bg-gray-50
-                      `}
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <h3
-                          className={`
-                            text-xl font-semibold
-                            ${
-                              isCompleted
-                                ? "text-green-700"
-                                : isInProgress
-                                  ? "text-yellow-800"
-                                  : "text-gray-900"
-                            }
-                          `}
-                        >
-                          {module.title}
-                        </h3>
+                  <div key={module.topic} className={cardClassName}>
+                    <div className="flex items-center justify-between mb-2">
+                      <h3
+                        className={`
+                          text-xl font-semibold
+                          ${
+                            isCompleted
+                              ? "text-green-700"
+                              : isInProgress
+                                ? "text-yellow-800"
+                                : "text-gray-900"
+                          }
+                        `}
+                      >
+                        {module.title}
+                      </h3>
 
-                        {/* Time badge */}
+                      <div className="flex items-center gap-2">
+                        {isLocked && (
+                          <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full inline-flex items-center gap-1">
+                            <Lock className="w-3 h-3" />
+                            Subscriber only
+                          </span>
+                        )}
+                        {isFreeModule && !hasSubscription && (
+                          <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                            Free
+                          </span>
+                        )}
+
                         <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full flex items-center gap-1">
                           <ClockIcon className="w-4 h-4" />
                           {module?.visual?.readTime} min
                         </span>
                       </div>
-
-                      <p className="text-gray-600 text-sm">{module.description}</p>
                     </div>
-                  </Link>
+
+                    <p className="text-gray-600 text-sm">{module.description}</p>
+
+                    {isLocked ? (
+                      <Button
+                        className="mt-4"
+                        variant="outline"
+                        onClick={() => router.push("/subscribe")}
+                      >
+                        Subscribe to Unlock
+                      </Button>
+                    ) : (
+                      <Link
+                        href={`/dashboard/learning-modules/${module.topic}`}
+                        className="inline-block mt-4 text-sm font-semibold text-valuto-green-700 hover:text-valuto-green-800"
+                      >
+                        Open Module
+                      </Link>
+                    )}
+                  </div>
                 );
               })}
             </div>

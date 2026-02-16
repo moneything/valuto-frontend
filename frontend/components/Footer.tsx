@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Footer() {
   return (
     <footer className="bg-gray-900/95 backdrop-blur-sm text-white relative">
@@ -57,12 +59,11 @@ export default function Footer() {
             © 2026 Valuto. All rights reserved.
           </p>
           <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-sm">
-            <a href="#" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Privacy Policy</a>
-            <a href="#" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Terms of Service</a>
+            <Link href="/privacy-policy" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Terms & Conditions</Link>
           </div>
         </div>
       </div>
     </footer>
   );
 }
-

@@ -16,7 +16,10 @@ import { BookOpenIcon, ClockIcon, StarIcon } from "@/components/icons";
 import {
   useLearningModule,
   useLearningProgress,
+  useLearningModules,
 } from "@/lib/hooks/useLearningModules";
+import { useUser } from "@/lib/userContext";
+import { hasActiveSubscription, isFreeLearningModule } from "@/lib/subscriptionAccess";
 
 import { JsonRenderer } from "@/components/JsonRenderer";
 import * as LucideIcons from "lucide-react";
@@ -31,9 +34,12 @@ export default function LearningModulePage({
 }) {
   const router = useRouter();
   const moduleId = params.moduleId;
+  const { profile, loading: profileLoading } = useUser();
 
   const { module, loading, error } = useLearningModule(moduleId);
+  const { modules, loading: modulesLoading } = useLearningModules();
   const { saveProgress } = useLearningProgress(moduleId);
+  const hasSubscription = hasActiveSubscription(profile?.subscriptionStatus);
 
   const [step, setStep] = useState<StepState>("intro");
   const [sessionStart, setSessionStart] = useState<Date | null>(null);
@@ -63,6 +69,17 @@ export default function LearningModulePage({
   useEffect(() => {
     elapsedRef.current = pageElapsed;
   }, [pageElapsed]);
+
+  useEffect(() => {
+    if (profileLoading || loading || modulesLoading || !module) return;
+    if (hasSubscription) return;
+    if (!modules.length) return;
+
+    const freeModule = isFreeLearningModule(modules, module.topic, module.categoryId);
+    if (!freeModule) {
+      router.replace("/subscribe");
+    }
+  }, [hasSubscription, loading, module, modules, modulesLoading, profileLoading, router]);
 
   const flushTimeSpent = useCallback(async () => {
     const current = elapsedRef.current;

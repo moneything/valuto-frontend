@@ -2,7 +2,15 @@
 
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
-const isPublicRoute = createRouteMatcher(["/", "/auth(.*)", "/sign-in(.*)", "/sign-up(.*)", "/.well-known(.*)"]);
+const isPublicRoute = createRouteMatcher([
+  "/",
+  "/auth(.*)",
+  "/sign-in(.*)",
+  "/sign-up(.*)",
+  "/privacy-policy(.*)",
+  "/terms-and-conditions(.*)",
+  "/.well-known(.*)",
+]);
 
 export default clerkMiddleware(async (auth, request) => {
   // Protect all routes except public ones
@@ -19,4 +27,3 @@ export const config = {
     "/(api|trpc)(.*)",
   ],
 };
-

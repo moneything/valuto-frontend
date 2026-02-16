@@ -4,6 +4,7 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import PageLayout from "@/components/theme/PageLayout";
 import Card from "@/components/theme/Card";
 import Button from "@/components/theme/Button";
@@ -112,6 +113,17 @@ export default function SubscribePage() {
             <p>✅ Email receipts and billing portal</p>
           </div>
         </Card>
+      </div>
+      <div className="mt-6 text-sm text-gray-600 text-center">
+        By subscribing, you agree to our{" "}
+        <Link href="/privacy-policy" className="text-valuto-green-700 hover:text-valuto-green-800 underline">
+          Privacy Policy
+        </Link>
+        {" "}and{" "}
+        <Link href="/terms-and-conditions" className="text-valuto-green-700 hover:text-valuto-green-800 underline">
+          Terms & Conditions
+        </Link>
+        .
       </div>
     </PageLayout>
   );

@@ -366,7 +366,7 @@ export default function LearningModulePage({
                 Review Lesson
               </Button>
               <Button
-                variant="outline"
+                variant="secondary"
                 onClick={() => router.push("/dashboard/learning-modules")}
               >
                 Back to All Lessons

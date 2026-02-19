@@ -15,8 +15,8 @@ The backend/frontend integration is active and supports:
 
 ## Deployment Model
 
-- Frontend: Vercel (`frontend` root)
-- Backend: Render Web Service (`backend` root)
+- Frontend: Railway (`frontend` root)
+- Backend: Railway (`backend` root)
 - Database: MongoDB Atlas
 - Auth: Clerk
 

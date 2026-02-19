@@ -1,5 +1,8 @@
 # Animated Beams Integration ✨
 
+Last validated against code: February 19, 2026
+
+
 ## Overview
 Successfully integrated [shadcn's AnimatedBeam component](https://www.shadcn.io/components/special-effects/animated-beam) across the Valuto landing page to create dynamic visual connections between related elements.
 

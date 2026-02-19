@@ -3,7 +3,7 @@
 ## Problem
 Production was throwing 404 errors:
 ```
-GET https://valuto-frontend-test.onrender.com/api/learning-modules/user/progress 404 (Not Found)
+GET https://valuto-frontend-test.up.railway.app/api/learning-modules/user/progress 404 (Not Found)
 ```
 
 ## Root Cause
@@ -96,4 +96,3 @@ After deployment, verify:
 ---
 
 **Status**: ✅ FIXED - Ready to deploy
-

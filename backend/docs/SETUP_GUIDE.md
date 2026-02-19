@@ -70,8 +70,8 @@ npm run dev
 
 ## Production Setup (High Level)
 
-- Deploy backend from `backend/` (Render Web Service recommended)
-- Deploy frontend from `frontend/` (Vercel recommended)
+- Deploy backend from `backend/` on Railway
+- Deploy frontend from `frontend/` on Railway
 - Set backend production env vars before go-live
 - Set frontend `NEXT_PUBLIC_BACKEND_URL` to deployed backend URL
 - Update backend CORS env vars to deployed frontend URL

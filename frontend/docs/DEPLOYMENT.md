@@ -7,31 +7,31 @@ Current deployment guide for `frontend/`.
 
 ## Platform
 
-Deploy on Vercel with:
+Deploy on Railway with:
 - Framework: Next.js
 - Root Directory: `frontend`
 
 ## Required Environment Variables
 
-Set in Vercel Project Settings:
+Set in Railway Variables:
 
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
 CLERK_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_BACKEND_URL=https://your-backend.onrender.com
+NEXT_PUBLIC_BACKEND_URL=https://your-backend.up.railway.app
 ```
 
 Optional:
 
 ```env
-NEXT_PUBLIC_APP_URL=https://your-frontend.vercel.app
+NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 ```
 
 Important: always set `NEXT_PUBLIC_BACKEND_URL` explicitly.
 
 ## Deploy Steps
 
-1. Import repository into Vercel.
+1. Create/import the frontend service in Railway.
 2. Set Root Directory to `frontend`.
 3. Add environment variables above.
 4. Deploy.

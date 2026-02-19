@@ -296,7 +296,7 @@ With animated bounce effect.
 ```
 
 **Purpose:**
-- `ai` + `@ai-sdk/react`: Vercel AI SDK for state management
+- `ai` + `@ai-sdk/react`: AI SDK for state management
 - `@ai-sdk/openai`: OpenAI integration (future use)
 - `zod`: Schema validation
 - `react-markdown`: Markdown rendering
@@ -375,7 +375,7 @@ const suggestions = [
 
 ### Ready for Real AI Integration
 
-The components are designed to work seamlessly with Vercel AI SDK:
+The components are designed to work seamlessly with AI SDK:
 
 ```typescript
 import { useChat } from '@ai-sdk/react';
@@ -451,7 +451,7 @@ export default function AIChatPage() {
 - Performance optimized
 
 ### 5. **Future-Proof**
-- Built for Vercel AI SDK integration
+- Built for AI SDK integration
 - Supports streaming responses
 - Ready for tool calling
 - Extensible architecture
@@ -511,4 +511,3 @@ To verify the integration:
 **Last Updated**: October 23, 2025
 **Based on**: shadcn.io AI Elements
 **License**: Components are owned by Valuto (derived from Apache 2.0)
-

@@ -1,70 +1,58 @@
 # Valuto Backend API
 
-Production-ready Express.js + MongoDB backend with Clerk authentication, Stripe billing, Gemini AI chat, and Socket.IO trivia.
+Express + MongoDB backend for Valuto, with Clerk auth, Socket.IO trivia, Stripe billing, and Gemini chat.
 
-## Overview
+## Tech
 
-This backend provides a REST API for user profiles, learning modules, challenges, games, leaderboards, trivia sessions, news/events, categories, billing, and AI chat. It also runs a Socket.IO server for real-time trivia gameplay.
+- Node.js (CommonJS)
+- Express
+- MongoDB + Mongoose
+- Clerk server SDK
+- Socket.IO
+- Stripe
+- Google Generative AI (Gemini)
 
-## Architecture
+## Scripts
 
+From `backend/`:
+
+```bash
+npm run dev
+npm start
+npm run format
+npm run format:check
+npm test
 ```
-backend/
-├── src/
-│   ├── config/         # Database and Socket.IO setup
-│   ├── controllers/    # Business logic
-│   ├── middleware/     # Auth + validators
-│   ├── models/         # Mongoose schemas
-│   ├── routes/         # Express routes
-│   ├── sockets/        # Trivia socket handlers
-│   ├── utils/          # Error handling + helpers
-│   └── server.js       # App entry
-└── docs/               # API + Socket.IO docs
-```
 
-## Prerequisites
+## Environment
 
-- Node.js >= 18
-- npm >= 9
-- MongoDB instance
-- Clerk account (JWT secret)
+Create `backend/.env`.
 
-## Environment Variables
-
-Create `backend/.env` manually (no example file in repo).
-
-Required:
+Core:
 
 ```env
+NODE_ENV=development
+PORT=5000
 MONGODB_URI=mongodb://localhost:27017/valuto-dev
 CLERK_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_APP_URL=http://localhost:3000
-```
-
-Recommended for local Socket.IO CORS:
-
-```env
 FRONTEND_URL=http://localhost:3000
 ```
 
-Optional (feature-specific):
+Optional:
 
 ```env
-# Stripe billing
+# Stripe
 STRIPE_SECRET_KEY=sk_test_...
 STRIPE_PRICE_ID=price_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 
-# Gemini AI chat
+# Gemini
 GEMINI_API_KEY=...
 GEMINI_MODEL=gemini-1.5-flash
-
-# Server
-NODE_ENV=development
-PORT=5000
 ```
 
-## Quick Start
+## Run Locally
 
 ```bash
 cd backend
@@ -72,109 +60,45 @@ npm install
 npm run dev
 ```
 
-- API base: `http://localhost:5000/api`
-- Health: `http://localhost:5000/api/health`
+- Server root: `http://localhost:5000/`
+- API health: `http://localhost:5000/api/health`
 
-## REST API Overview
+## Route Mounts (Current)
 
-See `docs/API_DOCUMENTATION.md` for the full list and usage notes. Summary below is kept in sync with route files.
+Mounted in `src/server.js`:
+- `/api/auth`
+- `/api/user`
+- `/api/game`
+- `/api/leaderboard`
+- `/api/learning`
+- `/api/challenges`
+- `/api/trivia`
+- `/api/news`
+- `/api/categories`
+- `/api/billing`
+- `/api/ai`
+- `/api/webhooks`
 
-### Auth (`/api/auth`)
-- POST `/verify`
-- GET `/session`
-- GET `/health`
+Special handling:
+- `POST /api/billing/webhook` uses raw body middleware for Stripe signature verification.
 
-### Users (`/api/user`)
-- GET `/me`
-- POST `/onboarding`
-- POST `/`
-- GET `/`
-- PUT `/`
-- GET `/stats`
-- GET `/:id/stats`
-- POST `/points`
-- POST `/game-played`
-- POST `/lesson-completed`
-- POST `/achievement`
-- GET `/achievements`
-- GET `/activity`
-- DELETE `/`
+## Realtime
 
-### Games (`/api/game`)
-- POST `/result`
-- GET `/history`
-- GET `/result/:id`
-- GET `/leaderboard/:gameCode`
-- GET `/stats`
-- GET `/recent`
+Socket.IO is initialized on the same HTTP server and currently used for trivia session gameplay.
 
-### Leaderboards (`/api/leaderboard`)
-- GET `/`
-- GET `/rank`
-- GET `/school/:schoolName`
-- GET `/top`
-- GET `/with-context`
-- GET `/stats`
+## Structure
 
-### Learning (`/api/learning`)
-- GET `/modules`
-- GET `/modules/:id`
-- POST `/modules`
-- PUT `/modules/:id`
-- DELETE `/modules/:id`
-- POST `/progress`
-- GET `/progress/:moduleId`
-- GET `/progress`
-- PUT `/time/:moduleId`
-- GET `/leaderboard/:moduleId`
-- GET `/stats`
-
-### Challenges (`/api/challenges`)
-- GET `/daily`
-- PUT `/:challengeId/progress`
-- PUT `/:challengeId/complete`
-- GET `/completed`
-- GET `/stats`
-- POST `/create`
-- DELETE `/:challengeId`
-
-### Trivia (`/api/trivia`)
-- POST `/session/:sessionId/restart`
-- POST `/session`
-- GET `/session/code/:joinCode`
-- GET `/session/:sessionId`
-- GET `/sessions`
-- GET `/session/:sessionId/results`
-- GET `/history`
-- GET `/stats`
-- DELETE `/session/:sessionId`
-
-### News & Events (`/api/news`)
-- GET `/all`
-- GET `/news`
-- GET `/events`
-- POST `/news`
-- POST `/events`
-
-### Categories (`/api/categories`)
-- GET `/`
-- GET `/:id`
-- POST `/`
-- PUT `/:id`
-- DELETE `/:id`
-
-### Billing (`/api/billing`)
-- POST `/checkout`
-- POST `/portal`
-- POST `/webhook` (raw body)
-
-### AI (`/api/ai`)
-- POST `/chat`
-
-### Webhooks (`/api/webhooks`)
-- POST `/clerk`
-
-## Socket.IO Trivia
-
-See `docs/SOCKETS-API.md` for events and payloads.
-
+```text
+backend/
+├── src/
+│   ├── config/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── models/
+│   ├── routes/
+│   ├── sockets/
+│   ├── utils/
+│   └── server.js
+├── docs/
+└── package.json
+```

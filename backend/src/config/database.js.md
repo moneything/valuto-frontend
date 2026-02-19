@@ -8,7 +8,7 @@ It includes:
 * Connection pooling and timeout configuration
 * Simple helpers for connection state and manual disconnects
 
-Designed to work in **Express apps**, **Docker**, **Kubernetes**, **Railway**, **Render**, **Heroku**, and other cloud environments.
+Designed to work in **Express apps**, **Docker**, **Kubernetes**, **Railway**, **Heroku**, and other cloud environments.
 
 ---
 

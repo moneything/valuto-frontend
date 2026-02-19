@@ -47,7 +47,7 @@ const io = initializeSocketIO(server);
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:3001',
-  'https://valuto-frontend-test.vercel.app',
+  'https://valuto-frontend-test.up.railway.app',
 ];
 ```
 

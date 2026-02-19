@@ -1,5 +1,8 @@
 # Dashboard Dock Integration 🎯
 
+Last validated against code: February 19, 2026
+
+
 ## Overview
 Integrated [shadcn's macOS-style Dock component](https://www.shadcn.io/components/dock/dock) into the Valuto dashboard for quick access to all games and features.
 

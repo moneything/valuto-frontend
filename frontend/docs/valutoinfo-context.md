@@ -1,5 +1,8 @@
 # About Valuto
 
+Last validated against code: February 19, 2026
+
+
 
 Valuto is a new way to teach money skills to young people aged 11–18.
 

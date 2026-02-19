@@ -4,14 +4,14 @@ Current deployment checklist for the monorepo (`frontend/` + `backend/`).
 
 ## Recommended Hosting
 
-- Frontend: Vercel (root dir `frontend`)
-- Backend: Render Web Service (root dir `backend`)
+- Frontend: Railway (root dir `frontend`)
+- Backend: Railway (root dir `backend`)
 - Database: MongoDB Atlas
 - Auth: Clerk
 
 Reason: backend uses Socket.IO and should run on a persistent server process.
 
-## 1) Backend Deployment Checklist (Render)
+## 1) Backend Deployment Checklist (Railway)
 
 ### Build/runtime settings
 - Root Directory: `backend`
@@ -26,8 +26,8 @@ NODE_ENV=production
 PORT=5000
 MONGODB_URI=mongodb+srv://...
 CLERK_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_APP_URL=https://your-frontend.vercel.app
-FRONTEND_URL=https://your-frontend.vercel.app
+NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
+FRONTEND_URL=https://your-frontend.up.railway.app
 ```
 
 ### Optional env vars
@@ -45,7 +45,7 @@ GEMINI_MODEL=gemini-1.5-flash
 - `POST /api/billing/webhook` reachable (for Stripe)
 - Socket.IO connection succeeds from deployed frontend
 
-## 2) Frontend Deployment Checklist (Vercel)
+## 2) Frontend Deployment Checklist (Railway)
 
 ### Project settings
 - Root Directory: `frontend`
@@ -56,13 +56,13 @@ GEMINI_MODEL=gemini-1.5-flash
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_live_...
 CLERK_SECRET_KEY=sk_live_...
-NEXT_PUBLIC_BACKEND_URL=https://your-backend.onrender.com
+NEXT_PUBLIC_BACKEND_URL=https://your-backend.up.railway.app
 ```
 
 Optional:
 
 ```env
-NEXT_PUBLIC_APP_URL=https://your-frontend.vercel.app
+NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 ```
 
 ### Smoke tests
@@ -82,6 +82,6 @@ NEXT_PUBLIC_APP_URL=https://your-frontend.vercel.app
 
 ## 4) Rollback Plan
 
-- Keep last successful Render deployment available for instant rollback
-- Keep last successful Vercel deployment promoted/tagged
+- Keep last successful Railway backend deployment available for instant rollback
+- Keep last successful Railway frontend deployment available for instant rollback
 - Revert env var changes first if outage is config-related

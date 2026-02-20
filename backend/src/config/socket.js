@@ -8,15 +8,9 @@ const socketAuthMiddleware = require('../middleware/socketAuth');
 const initializeSocketIO = (httpServer) => {
   // Allowed origins for Socket.IO
   const allowedOrigins = [
-    'http://localhost:3000',
-    'http://localhost:3001', // Allow alternate port
-    'https://valuto-frontend-test.vercel.app', // Production frontend
+    process.env.NEXT_PUBLIC_APP_URL,
+    process.env.FRONTEND_URL,
   ];
-
-  // Add FRONTEND_URL from environment if set
-  if (process.env.FRONTEND_URL) {
-    allowedOrigins.push(process.env.FRONTEND_URL);
-  }
 
   const io = new Server(httpServer, {
     cors: {

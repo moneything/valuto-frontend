@@ -121,7 +121,6 @@ const sessionSchema = new mongoose.Schema(
 );
 
 // Indexes
-sessionSchema.index({ joinCode: 1 });
 sessionSchema.index({ hostId: 1, status: 1 });
 sessionSchema.index({ status: 1, createdAt: -1 });
 

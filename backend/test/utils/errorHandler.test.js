@@ -65,8 +65,11 @@ test('errorHandler maps mongoose CastError to 400 invalid ID response', () => {
   const req = {};
   const res = createMockRes();
   const castError = { name: 'CastError', value: 'abc123' };
+  const originalConsoleError = console.error;
+  console.error = () => {};
 
   errorHandler(castError, req, res, () => {});
+  console.error = originalConsoleError;
 
   assert.equal(res.statusCode, 400);
   assert.equal(res.body.success, false);
@@ -80,12 +83,14 @@ test('errorHandler maps duplicate key errors to 400 with fields', () => {
     code: 11000,
     keyPattern: { email: 1, clerkUserId: 1 },
   };
+  const originalConsoleError = console.error;
+  console.error = () => {};
 
   errorHandler(duplicateError, req, res, () => {});
+  console.error = originalConsoleError;
 
   assert.equal(res.statusCode, 400);
   assert.equal(res.body.success, false);
   assert.match(res.body.message, /Duplicate value for: email, clerkUserId/);
   assert.deepEqual(res.body.errors, ['email', 'clerkUserId']);
 });
-

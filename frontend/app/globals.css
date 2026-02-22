@@ -8,9 +8,9 @@
 
 @layer base {
   :root {
-    --valuto-green: #16a34a;
-    --valuto-green-dark: #15803d;
-    --valuto-green-light: #22c55e;
+    --valuto-green: #00E676;
+    --valuto-green-dark: #0dab5e;
+    --valuto-green-light: #66f9b2;
     
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
@@ -32,6 +32,8 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 142 76% 36%;
     --radius: 0.5rem;
+    --gradient-primary: linear-gradient(135deg, hsl(152 100% 45%), hsl(160 90% 40%));
+    
   }
  
   .dark {
@@ -66,6 +68,7 @@ body {
   font-family: 'Poppins', system-ui, -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: black;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -287,3 +290,9 @@ h2 {
   display: none;  /* Safari and Chrome */
 }
 
+.text-gradient-primary {
+    background: var(--gradient-primary);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }

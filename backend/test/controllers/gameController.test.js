@@ -91,8 +91,14 @@ test('submitGameResult creates result and updates user stats for student flow', 
     },
   };
   const res = createMockRes();
+  const originalConsoleLog = console.log;
+  console.log = () => {};
 
-  await submitGameResult(req, res, () => {});
+  try {
+    await submitGameResult(req, res, () => {});
+  } finally {
+    console.log = originalConsoleLog;
+  }
 
   assert.equal(res.statusCode, 201);
   assert.equal(res.body.success, true);
@@ -126,4 +132,3 @@ test('getGameResult returns 403 when requesting another user result', async () =
   assert.equal(captured.statusCode, 403);
   assert.match(captured.message, /Access denied/);
 });
-

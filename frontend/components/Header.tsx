@@ -8,8 +8,8 @@ export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-50 pt-4 px-4">
-      <nav className="mx-auto max-w-7xl backdrop-blur-md bg-black rounded-2xl px-6 border-border border-2">
+    <header className="sticky top-0 z-50 pt-4 px-4 mb-3">
+      <nav className="mx-auto max-w-7xl bg-card/60 backdrop-blur-md rounded-2xl px-6 border-border border-2">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">

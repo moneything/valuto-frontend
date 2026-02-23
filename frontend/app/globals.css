@@ -6,6 +6,7 @@
 
 @layer base {
   :root {
+<<<<<<< HEAD
     /* Keep if Valuto depends on these */
     --valuto-green: #00E676;
     --valuto-green-dark: #0dab5e;
@@ -79,6 +80,32 @@
     /* fonts */
     --font-display: 'Orbitron', sans-serif;
     --font-body: 'Space Grotesk', sans-serif;
+=======
+    --valuto-green: #16a34a;
+    --valuto-green-dark: #15803d;
+    --valuto-green-light: #22c55e;
+    
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 142 76% 36%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 142 76% 36%;
+    --radius: 0.5rem;
+>>>>>>> parent of bc328f9 (chore: update color variables and add gradient-primary to globals.css)
   }
 
   /* Optional: Lovable doesn't really need a separate .dark if :root is already dark-first.
@@ -93,10 +120,18 @@ html {
   scroll-behavior: smooth;
 }
 
+<<<<<<< HEAD
 @layer base {
   * {
     @apply border-border;
   }
+=======
+body {
+  font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+>>>>>>> parent of bc328f9 (chore: update color variables and add gradient-primary to globals.css)
 
   body {
     @apply bg-background text-foreground;
@@ -313,6 +348,7 @@ html {
   display: none;  /* Safari and Chrome */
 }
 
+<<<<<<< HEAD
 .text-gradient-primary {
     background: var(--gradient-primary);
     -webkit-background-clip: text;
@@ -339,3 +375,5 @@ html {
   }
 }
 
+=======
+>>>>>>> parent of bc328f9 (chore: update color variables and add gradient-primary to globals.css)

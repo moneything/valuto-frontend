@@ -9,7 +9,7 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen relative overflow-hidden bg-black">
+    <main className="min-h-screen relative overflow-hidden">
       
       {/* Content with higher z-index */}
       <div className="relative z-10">

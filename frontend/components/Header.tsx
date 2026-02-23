@@ -24,13 +24,8 @@ export default function Header() {
   }, []);
 
   return (
-<<<<<<< HEAD
-    <header className="sticky top-0 z-50 pt-4 px-4 mb-3">
-      <nav className="mx-auto max-w-7xl bg-card/60 backdrop-blur-md rounded-2xl px-6 border-border border-2">
-=======
     <header className="fixed top-0 z-50 min-w-[-webkit-fill-available] bg-hero/90 backdrop-blur-lg border-b border-primary/10">
       <nav className="px-10 mx-auto bg-gray-700 backdrop-blur-md shadow-lg">
->>>>>>> leap-back-in-time-and-correct
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">

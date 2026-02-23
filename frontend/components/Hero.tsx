@@ -1,179 +1,65 @@
 "use client";
 
-import { useRef } from "react";
-import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
-import { ContainerTextFlip } from "@/components/ui/shadcn-io/container-text-flip";
-import { Announcement, AnnouncementBadge } from "@/components/ui/announcement";
-import { Marquee } from "@/components/ui/marquee";
 import Image from "next/image";
+import Button from "@/components/theme/Button";
 
 export default function Hero() {
-  const statsContainerRef = useRef<HTMLDivElement>(null);
-  const stat1Ref = useRef<HTMLDivElement>(null);
-  const stat2Ref = useRef<HTMLDivElement>(null);
-  const stat3Ref = useRef<HTMLDivElement>(null);
-
-  const partnerLogos = [
-    "💼 Schools", "🏦 Banks", "📊 Finance Edu", "🎓 Universities", 
-    "💰 Investment Firms", "📚 EdTech", "🌟 Startups", "🏢 Corporations"
-  ];
-
   return (
-    <section className="relative bg-white/40 backdrop-blur-sm overflow-hidden">
-      {/* Announcement Bar */}
-      <div className="relative z-20 pt-4 flex justify-center animate-in fade-in slide-in-from-top-4 duration-1000">
-        <Announcement href="#workshops">
-          <AnnouncementBadge variant="success">NEW</AnnouncementBadge>
-          <span>🎉 Full-day workshops now available for ages 11-18</span>
-          <span className="ml-1">→</span>
-        </Announcement>
+    <section className="relative overflow-hidden bg-[#050b14] text-white">
+      <div className="pointer-events-none absolute inset-0">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.16)_0%,rgba(5,11,20,0.9)_52%,rgba(5,11,20,1)_100%)]" />
+        <div className="absolute -right-24 top-1/2 h-[540px] w-[540px] -translate-y-1/2 rounded-full bg-emerald-500/20 blur-[140px]" />
       </div>
 
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-10 md:py-12 lg:py-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10 items-center mb-8 md:mb-12">
-          {/* Left Content */}
-          <div className="text-center lg:text-left space-y-4 animate-in fade-in slide-in-from-left-8 duration-1000">
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 leading-relaxed">
-              Teaching Money Skills
-              <br />
-              <span className="text-valuto-green-600 inline-block mt-4">
-                Before It's Too{" "}
-                <span className="inline-block align-middle">
-                  <ContainerTextFlip
-                    words={["Late", "Hard", "Risky", "Costly"]}
-                    interval={2500}
-                    animationDuration={600}
-                    className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl bg-gradient-to-br from-valuto-green-500 to-valuto-green-700 shadow-lg border-2 border-valuto-green-400"
-                    textClassName="text-gray-900 font-bold italic"
-                  />
-                </span>
-              </span>
-            </h1>
-            
-            <p className="text-base sm:text-lg md:text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto lg:mx-0">
-              Valuto is a new way to teach money skills to young people aged 11–18. 
-              We help every student feel confident with money before they leave education.
+      <div className="mx-auto max-w-7xl w-full px-4 sm:px-8 lg:px-10 relative z-10 min-h-[88vh] flex items-center py-16">
+        <div className="grid lg:grid-cols-2 gap-10 xl:gap-16 items-center w-full">
+          <div className="animate-in fade-in slide-in-from-left-6 duration-700">
+            <p className="text-valuto-green-500 font-semibold text-sm mb-7 tracking-wide uppercase">
+              The future of money education
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start items-stretch sm:items-center">
-              <button className="btn-primary w-full sm:w-auto text-sm sm:text-base group">
-                Book a Workshop
-                <span className="inline-block ml-2 transition-transform group-hover:translate-x-1">→</span>
-              </button>
-              <button className="btn-secondary w-full sm:w-auto text-sm sm:text-base">
-                Learn More
-              </button>
-            </div>
-          </div>
-
-          {/* Right Image Grid */}
-          <div className="flex justify-center lg:justify-end mt-6 lg:mt-0 animate-in fade-in slide-in-from-right-8 duration-1000">
-            <div className="relative w-full max-w-sm sm:max-w-md lg:max-w-lg">
-              {/* Main Image */}
-              <div className="relative group">
-                <div className="absolute inset-0 bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 rounded-2xl transform rotate-3 transition-transform group-hover:rotate-6 duration-300"></div>
-                <div className="relative">
-                  <Image 
-                    src="/study.png" 
-                    alt="Students learning financial skills" 
-                    width={600}
-                    height={400}
-                    className="relative rounded-2xl shadow-2xl border-4 border-white w-full transform transition-transform group-hover:scale-[1.02] duration-300"
-                    priority
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Stats Row with Animated Beams - Compact Hero Style */}
-        <div ref={statsContainerRef} className="relative grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 max-w-3xl mx-auto px-4 lg:px-0">
-          <div 
-            ref={stat1Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">11-18</div>
-            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Age Range</div>
-          </div>
-          <div 
-            ref={stat2Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">£500+</div>
-            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Prize Investment</div>
-          </div>
-          <div 
-            ref={stat3Ref}
-            className="relative z-10 bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 text-white p-4 sm:p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
-          >
-            <div className="text-3xl sm:text-4xl font-bold mb-2 tracking-tight">Full Day</div>
-            <div className="font-medium text-sm text-white/90 uppercase tracking-wide">Workshops</div>
-          </div>
-
-          {/* Animated Beams connecting the stats - Black Theme */}
-          <AnimatedBeam
-            containerRef={statsContainerRef}
-            fromRef={stat1Ref}
-            toRef={stat2Ref}
-            curvature={-60}
-            duration={3}
-            pathColor="#1f2937"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#374151"
-            gradientStopColor="#1f2937"
-          />
-          <AnimatedBeam
-            containerRef={statsContainerRef}
-            fromRef={stat2Ref}
-            toRef={stat3Ref}
-            curvature={60}
-            duration={3.5}
-            delay={0.3}
-            pathColor="#1f2937"
-            pathWidth={2}
-            pathOpacity={0.3}
-            gradientStartColor="#374151"
-            gradientStopColor="#1f2937"
-          />
-          {/* Add a reverse beam for circular flow */}
-          <AnimatedBeam
-            containerRef={statsContainerRef}
-            fromRef={stat3Ref}
-            toRef={stat1Ref}
-            curvature={0}
-            duration={5}
-            delay={0.8}
-            reverse={true}
-            pathColor="#1f2937"
-            pathWidth={1.5}
-            pathOpacity={0.2}
-            gradientStartColor="#374151"
-            gradientStopColor="#1f2937"
-          />
-        </div>
-      </div>
-
-      {/* Trusted By Marquee - Full Width */}
-      <div className="mt-10 md:mt-14 w-full">
-        <p className="text-center text-sm font-semibold text-gray-500 mb-4">
-          TRUSTED BY LEADING ORGANIZATIONS
-        </p>
-        <Marquee duration={25} pauseOnHover className="py-2">
-          {partnerLogos.map((logo, index) => (
-            <div
-              key={index}
-              className="flex items-center justify-center px-6 py-2 bg-white/70 backdrop-blur-sm rounded-lg border border-valuto-green-100 shadow-sm hover:shadow-md transition-shadow mx-2"
-            >
-              <span className="text-base font-semibold text-gray-700 whitespace-nowrap">
-                {logo}
+            <h1 className="text-5xl sm:text-6xl xl:text-7xl font-bold text-white leading-[0.98] tracking-[-0.02em]">
+              Money should be taught.{" "}
+              <span className="text-valuto-green-400">
+                So we built Valuto.
               </span>
+            </h1>
+
+            <p className="mt-8 text-2xl text-slate-400 max-w-[42rem] leading-relaxed">
+              A modern, gamified finance platform built for young people, giving them the skills schools do not teach.
+            </p>
+
+            <div className="mt-8 flex flex-wrap gap-4">
+              <Button size="lg" className="text-base px-8">
+                Start for £1/month
+              </Button>
+              <Button
+                size="lg"
+                className="text-base px-8 bg-white text-valuto-green-600 hover:bg-gray-100 border border-valuto-green-300"
+              >
+                Go to Valuto
+              </Button>
             </div>
-          ))}
-        </Marquee>
+
+            <p className="mt-6 text-slate-400 text-base sm:text-lg">Join the next generation of money-smart teens 🚀</p>
+          </div>
+
+          <div className="hidden lg:block animate-in fade-in slide-in-from-right-6 duration-700 delay-100">
+            <div className="relative rounded-[28px] border border-emerald-400/20 bg-[#070d1c]/90 p-2 shadow-[0_0_120px_rgba(16,185,129,0.35)]">
+              <Image
+                src="/study2.png"
+                alt="Valuto platform"
+                width={1400}
+                height={880}
+                className="relative rounded-3xl shadow-2xl w-full h-auto"
+                priority
+              />
+            </div>
+          </div>
+        </div>
       </div>
+
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce text-slate-500 text-3xl">⌄</div>
     </section>
   );
 }
-

@@ -30,13 +30,8 @@ export default function Header() {
           {/* Logo */}
           <div className="flex items-center">
             <a href="/" className="flex items-center">
-              {/* <Image src="favicon.svg" alt="Valuto Logo" width={40} height={40} /> */}
-              <span
-                style={{fontFamily: "Orbitron, sans-serif"}} 
-                className="text-gradient-primary flex items-end font-display text-4xl font-black uppercase mt-1"
-                >
-                  VALUTO
-              </span>
+              <Image src="favicon.svg" alt="Valuto Logo" width={40} height={40} />
+              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end" style={{'height': "-webkit-fill-available"}}>aluto</span>
             </a>
           </div>
 

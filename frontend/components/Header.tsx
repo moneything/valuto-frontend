@@ -47,20 +47,6 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
-<<<<<<< HEAD
-            <a href="#about" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              About
-            </a>
-            <a href="#how-it-works" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              How It Works
-            </a>
-            <a href="#impact" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              Impact
-            </a>
-            <a href="#pricing" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              Pricing
-            </a>
-=======
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -74,38 +60,23 @@ export default function Header() {
                 {link.label}
               </a>
             ))}
->>>>>>> leap-back-in-time-and-correct
           </div>
 
           {/* Right side buttons */}
           <div className="flex items-center space-x-3">
           <SignedOut>
-<<<<<<< HEAD
-            <a href="/auth">
-              <button className="text-lg bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
-                Launch App
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
-=======
             <a href="/auth" className="hidden md:block">
               <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
                 Start for £1/month
->>>>>>> leap-back-in-time-and-correct
               </button>
             </a>
           </SignedOut>
           
             <SignedIn>
-<<<<<<< HEAD
-              <a href="/dashboard" style={{fontFamily: "Orbitron, sans-serif"}} className="hidden sm:block text-valuto-green-600 hover:text-valuto-green-700 font-semibold transition-colors text-lg mr-3">
-                Dashboard
-=======
               <a href="/dashboard" className="hidden sm:block">
                 <button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
                   Go to Valuto
                 </button>
->>>>>>> leap-back-in-time-and-correct
               </a>
               <UserButton 
                 afterSignOutUrl="/"
@@ -133,27 +104,6 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4">
             <div className="flex flex-col space-y-3">
-<<<<<<< HEAD
-              <a href="#about" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-                About
-              </a>
-              <a href="#how-it-works" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-                How It Works
-              </a>
-              <a href="#impact" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-                Impact
-              </a>
-              <a href="#pricing" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-                Pricing
-              </a>
-
-                <SignedOut>
-                  <a href="/auth" className="text-lg bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
-                    Launch App →
-                  </a>
-                </SignedOut>
-                
-=======
               {navLinks.map((link) => (
                 <a
                   key={link.href}
@@ -176,7 +126,6 @@ export default function Header() {
                   </button>
                 </a>
               </SignedOut>
->>>>>>> leap-back-in-time-and-correct
             </div>
           </div>
         )}

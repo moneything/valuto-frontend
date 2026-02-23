@@ -1,15 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("#home");
+
+  useEffect(() => {
+    const setHash = () => setActiveHash(window.location.hash || "#home");
+    setHash();
+    window.addEventListener("hashchange", setHash);
+    return () => window.removeEventListener("hashchange", setHash);
+  }, []);
 
   return (
-    <header className="sticky top-0 z-50 pt-4 px-4">
-      <nav className="mx-auto max-w-7xl bg-white/90 backdrop-blur-md shadow-lg rounded-full px-6 sm:px-8 lg:px-10">
+    <header className="fixed top-0 z-50 min-w-[-webkit-fill-available] bg-hero/90 backdrop-blur-lg border-b border-primary/10">
+      <nav className="px-10 mx-auto bg-gray-700 backdrop-blur-md shadow-lg">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -21,36 +37,36 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
-            <a href="#about" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              About
-            </a>
-            <a href="#how-it-works" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              How It Works
-            </a>
-            <a href="#impact" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              Impact
-            </a>
-            <a href="#pricing" className="text-gray-700 hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
-              Pricing
-            </a>
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors lg:text-base ${
+                  activeHash === link.href
+                    ? "text-primary"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
           </div>
 
           {/* Right side buttons */}
           <div className="flex items-center space-x-3">
           <SignedOut>
-            <a href="/auth">
-              <button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
-                Launch App
-                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                </svg>
+            <a href="/auth" className="hidden md:block">
+              <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                Start for £1/month
               </button>
             </a>
           </SignedOut>
           
             <SignedIn>
-              <a href="/dashboard" className="hidden sm:block text-valuto-green-600 hover:text-valuto-green-700 font-semibold transition-colors text-sm mr-3">
-                Dashboard
+              <a href="/dashboard" className="hidden sm:block">
+                <button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                  Go to Valuto
+                </button>
               </a>
               <UserButton 
                 afterSignOutUrl="/"
@@ -64,7 +80,7 @@ export default function Header() {
               
             {/* Mobile menu button */}
             <button
-              className="md:hidden text-gray-700"
+              className="md:hidden text-white pl-4"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -78,23 +94,28 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4">
             <div className="flex flex-col space-y-3">
-              <a href="#about" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
-                About
-              </a>
-              <a href="#how-it-works" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
-                How It Works
-              </a>
-              <a href="#impact" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
-                Impact
-              </a>
-                <a href="#pricing" className="text-gray-700 hover:text-valuto-green-600 font-medium text-sm">
-                  Pricing
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveHash(link.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-base font-medium ${
+                    activeHash === link.href ? "text-primary" : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  {link.label}
                 </a>
-                <SignedOut>
-                  <a href="/auth" className="text-valuto-green-600 font-semibold text-sm text-left sm:hidden">
-                    Launch App →
-                  </a>
-                </SignedOut>
+              ))}
+              <SignedOut>
+                <a href="/auth">
+                  <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                    Start for £1/month
+                  </button>
+                </a>
+              </SignedOut>
             </div>
           </div>
         )}
@@ -102,4 +123,3 @@ export default function Header() {
     </header>
   );
 }
-

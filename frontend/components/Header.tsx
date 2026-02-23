@@ -1,15 +1,36 @@
 "use client";
 
-import { useState } from "react";
-import { SignInButton, SignUpButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useEffect, useState } from "react";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
+
+const navLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Features", href: "#features" },
+  { label: "Pricing", href: "#pricing" },
+  { label: "About", href: "#about" },
+  { label: "Contact", href: "#contact" },
+];
 
 export default function Header() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [activeHash, setActiveHash] = useState("#home");
+
+  useEffect(() => {
+    const setHash = () => setActiveHash(window.location.hash || "#home");
+    setHash();
+    window.addEventListener("hashchange", setHash);
+    return () => window.removeEventListener("hashchange", setHash);
+  }, []);
 
   return (
+<<<<<<< HEAD
     <header className="sticky top-0 z-50 pt-4 px-4 mb-3">
       <nav className="mx-auto max-w-7xl bg-card/60 backdrop-blur-md rounded-2xl px-6 border-border border-2">
+=======
+    <header className="fixed top-0 z-50 min-w-[-webkit-fill-available] bg-hero/90 backdrop-blur-lg border-b border-primary/10">
+      <nav className="px-10 mx-auto bg-gray-700 backdrop-blur-md shadow-lg">
+>>>>>>> leap-back-in-time-and-correct
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -26,6 +47,7 @@ export default function Header() {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
+<<<<<<< HEAD
             <a href="#about" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
               About
             </a>
@@ -38,24 +60,52 @@ export default function Header() {
             <a href="#pricing" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
               Pricing
             </a>
+=======
+            {navLinks.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className={`text-sm font-medium transition-colors lg:text-base ${
+                  activeHash === link.href
+                    ? "text-primary"
+                    : "text-gray-300 hover:text-white"
+                }`}
+              >
+                {link.label}
+              </a>
+            ))}
+>>>>>>> leap-back-in-time-and-correct
           </div>
 
           {/* Right side buttons */}
           <div className="flex items-center space-x-3">
           <SignedOut>
+<<<<<<< HEAD
             <a href="/auth">
               <button className="text-lg bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-full transition-all duration-200 shadow-md hover:shadow-lg flex items-center gap-2">
                 Launch App
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
+=======
+            <a href="/auth" className="hidden md:block">
+              <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                Start for £1/month
+>>>>>>> leap-back-in-time-and-correct
               </button>
             </a>
           </SignedOut>
           
             <SignedIn>
+<<<<<<< HEAD
               <a href="/dashboard" style={{fontFamily: "Orbitron, sans-serif"}} className="hidden sm:block text-valuto-green-600 hover:text-valuto-green-700 font-semibold transition-colors text-lg mr-3">
                 Dashboard
+=======
+              <a href="/dashboard" className="hidden sm:block">
+                <button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                  Go to Valuto
+                </button>
+>>>>>>> leap-back-in-time-and-correct
               </a>
               <UserButton 
                 afterSignOutUrl="/"
@@ -69,7 +119,7 @@ export default function Header() {
               
             {/* Mobile menu button */}
             <button
-              className="md:hidden text-gray-700"
+              className="md:hidden text-white pl-4"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -83,6 +133,7 @@ export default function Header() {
         {mobileMenuOpen && (
           <div className="md:hidden py-4">
             <div className="flex flex-col space-y-3">
+<<<<<<< HEAD
               <a href="#about" style={{fontFamily: "Orbitron, sans-serif"}} className="text-white hover:text-valuto-green-600 font-medium transition-colors text-sm lg:text-base">
                 About
               </a>
@@ -102,6 +153,30 @@ export default function Header() {
                   </a>
                 </SignedOut>
                 
+=======
+              {navLinks.map((link) => (
+                <a
+                  key={link.href}
+                  href={link.href}
+                  onClick={() => {
+                    setActiveHash(link.href);
+                    setMobileMenuOpen(false);
+                  }}
+                  className={`text-base font-medium ${
+                    activeHash === link.href ? "text-primary" : "text-gray-300 hover:text-white"
+                  }`}
+                >
+                  {link.label}
+                </a>
+              ))}
+              <SignedOut>
+                <a href="/auth">
+                  <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                    Start for £1/month
+                  </button>
+                </a>
+              </SignedOut>
+>>>>>>> leap-back-in-time-and-correct
             </div>
           </div>
         )}
@@ -109,4 +184,3 @@ export default function Header() {
     </header>
   );
 }
-

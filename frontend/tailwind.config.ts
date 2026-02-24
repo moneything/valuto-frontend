@@ -133,6 +133,11 @@ const config: Config = {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+        hero: {
+            DEFAULT: "hsl(var(--hero-bg))",
+            foreground: "hsl(var(--hero-foreground))",
+            muted: "hsl(var(--hero-muted))",
+          },
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
@@ -156,9 +161,9 @@ const config: Config = {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
-        serif: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-      },
+          display: ["var(--font-space-grotesk)", "system-ui", "sans-serif"],
+          body: ["Inter", "system-ui", "sans-serif"],
+        },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -178,4 +183,3 @@ const config: Config = {
   plugins: [require("tailwindcss-animate")],
 };
 export default config;
-

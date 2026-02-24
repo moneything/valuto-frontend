@@ -5,7 +5,7 @@ import Button from "@/components/theme/Button";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden bg-[#050b14] text-white">
+    <section id="home" className="relative overflow-hidden bg-[#050b14] text-white mt-12">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(16,185,129,0.16)_0%,rgba(5,11,20,0.9)_52%,rgba(5,11,20,1)_100%)]" />
         <div className="absolute -right-24 top-1/2 h-[540px] w-[540px] -translate-y-1/2 rounded-full bg-emerald-500/20 blur-[140px]" />

@@ -24,8 +24,8 @@ export default function Header() {
   }, []);
 
   return (
-    <header className="fixed top-0 z-50 min-w-[-webkit-fill-available] bg-hero/90 backdrop-blur-lg border-b border-primary/10 bg-hero/90">
-      <nav className="px-10 mx-auto backdrop-blur-md shadow-lg">
+    <header className="fixed top-0 z-50 min-w-[-webkit-fill-available]  backdrop-blur-lg border-b border-primary/10">
+      <nav className="px-10 mx-auto backdrop-blur-md shadow-lg bg-hero/90">
         <div className="flex h-16 items-center justify-between">
           {/* Logo */}
           <div className="flex items-center">
@@ -56,7 +56,7 @@ export default function Header() {
           <div className="flex items-center space-x-3">
           <SignedOut>
             <a href="/auth" className="hidden md:block">
-              <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+              <button className="bg-white hover:bg-hero/90 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
                 Start for £1/month
               </button>
             </a>
@@ -111,7 +111,7 @@ export default function Header() {
               ))}
               <SignedOut>
                 <a href="/auth">
-                  <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                  <button className="bg-white hover:bg-hero/90 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
                     Start for £1/month
                   </button>
                 </a>

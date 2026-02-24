@@ -35,19 +35,6 @@ export default function Hero() {
     },
   ];
   
-  const testimonials = [
-    { name: "Amara, 16", role: "Student", text: "Valuto made me actually understand how investing works. I wish we had this in school!" },
-    { name: "David R.", role: "Parent", text: "My daughter talks about compound interest at dinner now. Worth every penny of that £1." },
-    { name: "Ms. Patel", role: "Teacher", text: "I recommend Valuto to all my students. It fills a massive gap in the curriculum." },
-  ];
-  
-  const faqs = [
-    { q: "Is Valuto safe for young people?", a: "Absolutely. Valuto is designed specifically for 11–18 year olds. No real money is used in simulations, and all content is age-appropriate." },
-    { q: "What does £1/month include?", a: "Everything. All modules, simulators, games, AI helper, news feed, and future updates. No hidden costs." },
-    { q: "Can parents track progress?", a: "Yes! Parents get visibility into their child's learning journey and achievements." },
-    { q: "Is this a real investment platform?", a: "No. Valuto is an educational platform. Our simulators use virtual money to teach real skills." },
-  ];
-  
   
   return (
     <>

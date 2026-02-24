@@ -3,6 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import Button from "./theme/Button";
+import { SignedOut } from "@clerk/nextjs";
 
 export default function FrequentlyAskedQuestions() {
     
@@ -14,6 +15,7 @@ export default function FrequentlyAskedQuestions() {
     ];
     
   return (
+    <>
    <section id="faqs" className="py-24 section-dark">
        <div className="container mx-auto px-4 max-w-2xl">
          <AnimatedSection className="text-center mb-12">
@@ -34,6 +36,23 @@ export default function FrequentlyAskedQuestions() {
          </div>
        </div>
      </section>
+     <section className="py-24 section-light text-center">
+         <div className="container mx-auto px-4">
+           <AnimatedSection>
+             <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">Ready to get money-smart?</h2>
+             <p className="text-muted-foreground mb-8 max-w-md mx-auto">Join thousands of young people building their financial future with Valuto.</p>
+             <div className="flex flex-wrap justify-center gap-4">
+               
+               <SignedOut>
+                   <a href="/auth">
+                     <Button size="md" className="text-base px-8 hover:bg-emerald-500">Start for £1/month</Button>
+                   </a>
+                 </SignedOut>
+             </div>
+           </AnimatedSection>
+         </div>
+       </section>
+       </>
   );
 }
 

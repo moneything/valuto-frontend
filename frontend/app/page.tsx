@@ -6,6 +6,8 @@ import WhyWeExist from "@/components/WhyWeExist";
 import WhatPeopleSay from "@/components/WhatWeDo";
 import Footer from "@/components/Footer";
 import AuroraShaders from "@/components/ui/shadcn-io/aurora-shaders";
+import SimplePricing from "@/components/SimplePricing";
+import FrequentlyAskedQuestions from "@/components/FrequentlyAskedQuestions";
 
 export default function Home() {
   return (
@@ -30,6 +32,8 @@ export default function Home() {
         <Hero />
         <WhyWeExist />
         <WhatPeopleSay />
+        <SimplePricing />
+        <FrequentlyAskedQuestions />
         <Footer />
       </div>
     </main>

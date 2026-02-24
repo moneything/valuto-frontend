@@ -1,181 +1,168 @@
 import type { Config } from "tailwindcss";
 
-const config: Config = {
+export default {
   darkMode: ["class"],
+
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
-  safelist: [
-    "to-orange-50",
-    "bg-blue-500",
-    "bg-blue-50",
-    "text-blue-500",
-    "bg-green-500",
-    "bg-orange-500",
-    "bg-purple-500",
-    "bg-indigo-500",
-    "bg-red-500",
-    "bg-yellow-500",
-    "bg-teal-500",
-    "bg-pink-500",
-    "bg-gradient-to-r",
-    "from-green-50",
-    "to-blue-50",
-    "from-red-50",
-    "via-yellow-50",
-    "bg-orange-50",
-    "text-orange-700",
-    "to-green-50",
-    "bg-primary/5",
-    "bg-primary/10",
-    "bg-red-500",
-    "w-3",
-    "h-3",
-    "bg-primary/20",
-    "bg-primary/30",
-    "bg-primary/10",
-    "bg-primary/5",
-    "bg-primary/40",
-    "text-blue-500",
-    "text-blue-700",
-    "text-green-500",
-    "to-green-800",
-    "to-green-700",
-    "to-green-600",
-    "to-green-500",
-    "to-green-400",
-    "text-pink-500",
-    "to-green-300",
-    "to-green-200",
-    "to-green-100",
-    "to-green-50",
-    "text-yellow",
-    "bg-yellow-600",
-    "from-green-800",
-    "from-green-700",
-    "from-green-600",
-    "from-green-500",
-    "from-green-400",
-    "from-green-300",
-    "from-green-200",
-    "from-green-100",
-    "from-green-50",
-    "text-primary",
-    "border-gray-50",
-    "border-blue-500",
-    "px-1",
-    "px-2",
-    "grid",
-    "grid-cols-3",
-    "gap-4",
-    "px-3",
-    "px-4",
-    "px-5",
-    "py-0.5",
-    "bg-secondary/20",
-    "text-purple-700",
-    "bg-purple-50",
-    "border-purple-200",
-    "text-green-600",
-    "text-red-600",
-    "text-yellow-600",
-    "text-green-700",
-    "text-red-700",
-    "bg-yellow-50",
-    "border-yellow-200",
-    "space-y-4",
-    "space-y-3",
-    "space-y-2",
-    "space-y-1",
-    "text-lg",
-    "text-sm",
-    "grid",
-    "md:grid-cols-2",
-    "gap-4",
-    "bg-green-50",
-    "bg-red-50",
-    "border-green-200",
-    "border-red-200",
-  ],
+
   theme: {
+    container: {
+      center: true,
+      padding: "2rem",
+      screens: {
+        "2xl": "1400px",
+      },
+    },
+
     extend: {
+      /* ===============================
+         FONTS (Lovable pairing)
+      =============================== */
+      fontFamily: {
+        display: ["Space Grotesk", "system-ui", "sans-serif"],
+        body: ["Inter", "system-ui", "sans-serif"],
+      },
+
+      /* ===============================
+         COLOR TOKENS
+      =============================== */
       colors: {
-        valuto: {
-          green: {
-            50: '#f0fdf4',
-            100: '#dcfce7',
-            200: '#bbf7d0',
-            300: '#86efac',
-            400: '#4ade80',
-            500: '#22c55e',
-            600: '#16a34a',
-            700: '#15803d',
-            800: '#166534',
-            900: '#14532d',
-          },
-        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
+
         secondary: {
           DEFAULT: "hsl(var(--secondary))",
           foreground: "hsl(var(--secondary-foreground))",
         },
+
         destructive: {
           DEFAULT: "hsl(var(--destructive))",
           foreground: "hsl(var(--destructive-foreground))",
         },
+
         muted: {
           DEFAULT: "hsl(var(--muted))",
           foreground: "hsl(var(--muted-foreground))",
         },
+
         accent: {
           DEFAULT: "hsl(var(--accent))",
           foreground: "hsl(var(--accent-foreground))",
         },
+
         popover: {
           DEFAULT: "hsl(var(--popover))",
           foreground: "hsl(var(--popover-foreground))",
         },
+
         card: {
           DEFAULT: "hsl(var(--card))",
           foreground: "hsl(var(--card-foreground))",
         },
+
+        /* Hero Section */
+        hero: {
+          DEFAULT: "hsl(var(--hero-bg))",
+          foreground: "hsl(var(--hero-foreground))",
+          muted: "hsl(var(--hero-muted))",
+        },
+
+        /* Surface Dark */
+        "surface-dark": {
+          DEFAULT: "hsl(var(--surface-dark))",
+          foreground: "hsl(var(--surface-dark-foreground))",
+        },
+
+        /* Sidebar */
+        sidebar: {
+          DEFAULT: "hsl(var(--sidebar-background))",
+          foreground: "hsl(var(--sidebar-foreground))",
+          primary: "hsl(var(--sidebar-primary))",
+          "primary-foreground": "hsl(var(--sidebar-primary-foreground))",
+          accent: "hsl(var(--sidebar-accent))",
+          "accent-foreground": "hsl(var(--sidebar-accent-foreground))",
+          border: "hsl(var(--sidebar-border))",
+          ring: "hsl(var(--sidebar-ring))",
+        },
       },
+
+      /* ===============================
+         BORDER RADIUS
+      =============================== */
       borderRadius: {
         lg: "var(--radius)",
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
-      fontFamily: {
-        sans: ['Poppins', 'system-ui', 'sans-serif'],
-        serif: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
-      },
+
+      /* ===============================
+         ANIMATIONS
+      =============================== */
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
           to: { height: "var(--radix-accordion-content-height)" },
         },
+
         "accordion-up": {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+
+        "fade-up": {
+          "0%": { opacity: "0", transform: "translateY(30px)" },
+          "100%": { opacity: "1", transform: "translateY(0)" },
+        },
+
+        "fade-in": {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+
+        "scale-in": {
+          "0%": { opacity: "0", transform: "scale(0.95)" },
+          "100%": { opacity: "1", transform: "scale(1)" },
+        },
+
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-10px)" },
+        },
+
+        pulse_glow: {
+          "0%, 100%": {
+            boxShadow: "0 0 20px hsl(142 72% 42% / 0.2)",
+          },
+          "50%": {
+            boxShadow: "0 0 40px hsl(142 72% 42% / 0.4)",
+          },
+        },
       },
+
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "fade-up": "fade-up 0.6s ease-out forwards",
+        "fade-in": "fade-in 0.5s ease-out forwards",
+        "scale-in": "scale-in 0.4s ease-out forwards",
+        float: "float 3s ease-in-out infinite",
+        pulse_glow: "pulse_glow 2s ease-in-out infinite",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-};
-export default config;
 
+  plugins: [require("tailwindcss-animate")],
+} satisfies Config;

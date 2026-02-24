@@ -2,9 +2,8 @@
 
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
-import ImpactStats from "@/components/ImpactStats";
-import WhatMakesUsDifferent from "@/components/WhatMakesUsDifferent";
-import WhatWeDo from "@/components/WhatWeDo";
+import WhyWeExist from "@/components/WhyWeExist";
+import WhatPeopleSay from "@/components/WhatWeDo";
 import Footer from "@/components/Footer";
 import AuroraShaders from "@/components/ui/shadcn-io/aurora-shaders";
 
@@ -29,9 +28,8 @@ export default function Home() {
       <div className="relative z-10">
         <Header />
         <Hero />
-        <ImpactStats />
-        <WhatMakesUsDifferent />
-        <WhatWeDo />
+        <WhyWeExist />
+        <WhatPeopleSay />
         <Footer />
       </div>
     </main>

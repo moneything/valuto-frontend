@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Button from "@/components/theme/Button";
-import { BookOpen, Calculator, ChevronDown, Flame, Gamepad2, Newspaper, Target, TrendingUp, Trophy } from "lucide-react";
+import { BookOpen, Calculator, ChevronDown, Flame, Gamepad2, MessageCircle, Newspaper, Sparkles, Target, TrendingUp, Trophy } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 export default function Hero() {
@@ -16,6 +16,38 @@ export default function Hero() {
     { icon: Newspaper, title: "Financial News", desc: "All the news that impacts your future — explained simply." },
     { icon: Target, title: "Progress Tracking", desc: "See how far you've come and what's next." },
   ];
+
+  const spicyFeatures = [
+    {
+      icon: Sparkles,
+      title: '"Future You" Simulator',
+      desc: "See how your money grows over time with interactive sliders for savings, investing, inflation, and compound interest.",
+    },
+    {
+      icon: Flame,
+      title: "Streaks + Achievements",
+      desc: "Daily streaks, milestones, badges, and rewards to keep you coming back.",
+    },
+    {
+      icon: MessageCircle,
+      title: "Ask Valuto AI",
+      desc: "A friendly helper that explains money simply. No judgement. No jargon.",
+    },
+  ];
+  
+  const testimonials = [
+    { name: "Amara, 16", role: "Student", text: "Valuto made me actually understand how investing works. I wish we had this in school!" },
+    { name: "David R.", role: "Parent", text: "My daughter talks about compound interest at dinner now. Worth every penny of that £1." },
+    { name: "Ms. Patel", role: "Teacher", text: "I recommend Valuto to all my students. It fills a massive gap in the curriculum." },
+  ];
+  
+  const faqs = [
+    { q: "Is Valuto safe for young people?", a: "Absolutely. Valuto is designed specifically for 11–18 year olds. No real money is used in simulations, and all content is age-appropriate." },
+    { q: "What does £1/month include?", a: "Everything. All modules, simulators, games, AI helper, news feed, and future updates. No hidden costs." },
+    { q: "Can parents track progress?", a: "Yes! Parents get visibility into their child's learning journey and achievements." },
+    { q: "Is this a real investment platform?", a: "No. Valuto is an educational platform. Our simulators use virtual money to teach real skills." },
+  ];
+  
   
   return (
     <>
@@ -100,6 +132,29 @@ export default function Hero() {
               </div>
             </div>
           </section>
+
+      {/* Next-level features */}
+        <section id="next-level-features" className="py-24 section-dark">
+          <div className="container mx-auto px-4">
+            <AnimatedSection className="text-center mb-16">
+              <p className="text-primary font-semibold text-sm mb-2 uppercase tracking-wide">🔥 Next-level features</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-hero-foreground">Built different</h2>
+            </AnimatedSection>
+            <div className="grid md:grid-cols-3 gap-8">
+              {spicyFeatures.map((f, i) => (
+                <AnimatedSection key={f.title} delay={i * 0.1}>
+                  <div className="bg-hero/50 border border-primary/20 rounded-2xl p-8 hover:border-primary/40 transition-all duration-300 h-full">
+                    <div className="w-14 h-14 rounded-xl bg-primary/10 flex items-center justify-center mb-5">
+                      <f.icon className="text-primary" size={28} />
+                    </div>
+                    <h3 className="font-display font-semibold text-xl mb-3 text-hero-foreground">{f.title}</h3>
+                    <p className="text-hero-muted leading-relaxed">{f.desc}</p>
+                  </div>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
     </>
   );
 }

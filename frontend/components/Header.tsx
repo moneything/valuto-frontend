@@ -9,9 +9,9 @@ const navLinks = [
   { label: "Features", href: "#features" },
   { label: "Next-level features", href: "#next-level-features" },
   { label: "Why we exist", href: "#why-we-exist" },
-  { label: "Pricing", href: "#pricing" },
-  { label: "About", href: "#about" },
-  { label: "Contact", href: "#contact" },
+  { label: "What people say", href: "#what-people-say" },
+  { label: "Simple pricing", href: "#simple-pricing" },
+  { label: "FAQs", href: "#faqs" },
 ];
 
 export default function Header() {

@@ -1,66 +1,85 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Footer() {
+  const year = new Date().getFullYear();
+
   return (
-    <footer className="bg-gray-900/95 backdrop-blur-sm text-white relative">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
-          {/* Brand */}
-          <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center mb-4">
-              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-400 to-valuto-green-600 bg-clip-text text-transparent">Valuto</span>
+    <footer className="relative border-t border-emerald-900/30 bg-[#040d18] text-white">
+      <div className="mx-auto max-w-[1800px] px-20 py-16">
+        <div className="grid grid-cols-3">
+          <div className="flex flex-col gap-10 max-w-64">
+            <div className="">
+              <a href="/" className="flex-start bg-black flex">
+                <Image src="/favicon.svg" alt="Valuto logo" width={26} height={26} />
+                <span className="h-8 m-0 text-lg font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end">aluto</span>
+              </a>
+              <p className="mt-3 max-w-sm text-md leading-relaxed text-slate-400">
+                Teaching young people the money skills schools don't.
+              </p>
             </div>
-            <p className="text-gray-400 max-w-md mb-4">
-              We're committed to helping young people aged 11-18 build a better financial future 
-              through engaging workshops and year-round gamified learning.
-            </p>
-            <div className="flex space-x-4">
-              <a href="https://www.linkedin.com/company/valutouk/posts/?feedView=all" className="text-gray-400 hover:text-valuto-green-400 transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.047c.476-.9 1.637-1.85 3.37-1.85 3.601 0 4.265 2.37 4.265 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.064 2.063-2.064 1.14 0 2.064.926 2.064 2.064 0 1.139-.925 2.065-2.064 2.065zM7.119 20.452H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.727v20.545C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.273V1.727C24 .774 23.2 0 22.222 0z"/>
-                </svg>
-              </a>
-             
-              <a href="https://www.instagram.com/valutouk" className="text-gray-400 hover:text-valuto-green-400 transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-                </svg>
-              </a>
+            <div>
+              <h3 className="text-xl font-semibold text-slate-100">Get In Touch</h3>
+              <ul className="mt-3 space-y-3 text-md text-slate-400">
+                <li>Email: jakebpb1@gmail.com</li>
+              </ul>
             </div>
           </div>
 
-          {/* Quick Links */}
           <div>
-            <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4">Quick Links</h3>
-            <ul className="space-y-2 text-sm sm:text-base">
-              <li><a href="#about" className="text-gray-400 hover:text-valuto-green-400 transition-colors">About</a></li>
-              <li><a href="#how-it-works" className="text-gray-400 hover:text-valuto-green-400 transition-colors">How It Works</a></li>
-              <li><a href="#impact" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Impact</a></li>
-              <li><a href="#schools" className="text-gray-400 hover:text-valuto-green-400 transition-colors">For Schools</a></li>
+            <h3 className="text-xl font-semibold text-slate-100">Quick Links</h3>
+            <ul className="mt-6 space-y-3 text-md text-slate-400">
+              <li><a href="/#home" className="transition-colors hover:text-valuto-green-400">Home</a></li>
+              <li><a href="/features" className="transition-colors hover:text-valuto-green-400">Features</a></li>
+              <li><a href="/pricing" className="transition-colors hover:text-valuto-green-400">Pricing</a></li>
+              <li><a href="/about" className="transition-colors hover:text-valuto-green-400">About</a></li>
+              <li><a href="/contact" className="transition-colors hover:text-valuto-green-400">Contact</a></li>
             </ul>
           </div>
 
-          {/* Contact */}
           <div>
-            <h3 className="font-bold text-base sm:text-lg mb-3 sm:mb-4">Get In Touch</h3>
-            <ul className="space-y-2 text-gray-400 text-sm sm:text-base">
-              <li className="break-words">Email: Jakebpb1@gmail.com</li>
-              {/* <li>Phone: +44 (0) 20 1234 5678</li> */}
-              <li className="pt-3 sm:pt-4">
-                <button className="btn-primary w-full text-sm sm:text-base">Book a Demo</button>
+            <div className="flex items-center gap-1">
+              <a
+                href="https://www.linkedin.com/company/valutouk/posts/?feedView=all"
+                className="text-slate-400 transition-colors hover:text-valuto-green-400"
+                aria-label="Valuto social links"
+              >
+                <svg className="h-5 w-5" fill="#f1f5f9" viewBox="0 0 122.88 122.88" aria-hidden="true">
+                  <path d="M60.54,34.07A7.65,7.65,0,0,1,49.72,23.25l13-12.95a35.38,35.38,0,0,1,49.91,0l.07.08a35.37,35.37,0,0,1-.07,49.83l-13,12.95A7.65,7.65,0,0,1,88.81,62.34l13-13a20.08,20.08,0,0,0,0-28.23l-.11-.11a20.08,20.08,0,0,0-28.2.07l-12.95,13Zm14,3.16A7.65,7.65,0,0,1,85.31,48.05L48.05,85.31A7.65,7.65,0,0,1,37.23,74.5L74.5,37.23ZM62.1,89.05A7.65,7.65,0,0,1,72.91,99.87l-12.7,12.71a35.37,35.37,0,0,1-49.76.14l-.28-.27a35.38,35.38,0,0,1,.13-49.78L23,50A7.65,7.65,0,1,1,33.83,60.78L21.12,73.49a20.09,20.09,0,0,0,0,28.25l0,0a20.07,20.07,0,0,0,28.27,0L62.1,89.05Z" />
+                </svg>
+              </a>
+              <h3 className="text-xl font-semibold text-slate-100">Connect</h3>
+            </div>
+            <ul className="mt-6 space-y-3 text-md text-slate-400">
+              <li>
+                <a href="https://www.linkedin.com/company/valutouk/posts/?feedView=all" className="inline-flex items-center gap-2 transition-colors hover:text-valuto-green-400">
+                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.86 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z" />
+                  </svg>
+                  LinkedIn
+                </a>
+              </li>
+              <li>
+                <a href="https://www.instagram.com/valutouk" className="inline-flex items-center gap-2 transition-colors hover:text-valuto-green-400">
+                  <svg className="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 2.16c3.2 0 3.58.01 4.85.07 3.25.15 4.77 1.69 4.92 4.92.06 1.26.07 1.64.07 4.85 0 3.2-.01 3.58-.07 4.85-.15 3.22-1.66 4.77-4.92 4.92-1.27.06-1.64.07-4.85.07s-3.58-.01-4.85-.07c-3.26-.15-4.77-1.7-4.92-4.92A69.8 69.8 0 0 1 2.16 12c0-3.21.01-3.59.07-4.85.15-3.23 1.67-4.77 4.92-4.92C8.42 2.17 8.8 2.16 12 2.16zm0 3.68A6.16 6.16 0 1 0 12 18.16 6.16 6.16 0 0 0 12 5.84zm0 10.16A4 4 0 1 1 12 8a4 4 0 0 1 0 8zm6.41-11.85a1.44 1.44 0 1 0 0 2.88 1.44 1.44 0 0 0 0-2.88z" />
+                  </svg>
+                  Instagram
+                </a>
               </li>
             </ul>
           </div>
         </div>
+      </div>
 
-        {/* Bottom Bar */}
-        <div className="border-t border-gray-800 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-gray-400 text-sm sm:text-sm text-center md:text-left">
-            © 2026 Valuto. All rights reserved.
+      <div className="border-t border-emerald-900/30 px-6 py-6">
+        <div className="mx-auto flex max-w-[1800px] flex-col items-center justify-between gap-4">
+          <p className="text-md text-slate-400">
+          © {year} Valuto. All rights reserved.
           </p>
-          <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-sm sm:text-sm">
-            <Link href="/privacy-policy" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Privacy Policy</Link>
-            <Link href="/terms-and-conditions" className="text-gray-400 hover:text-valuto-green-400 transition-colors">Terms & Conditions</Link>
+          <div className="flex flex-wrap justify-center gap-4 text-base text-slate-400">
+            <Link href="/privacy-policy" className="transition-colors hover:text-valuto-green-400">Privacy Policy</Link>
+            <Link href="/terms-and-conditions" className="transition-colors hover:text-valuto-green-400">Terms & Conditions</Link>
           </div>
         </div>
       </div>

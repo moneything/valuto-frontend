@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { AnimatedBeam } from "@/components/ui/shadcn-io/animated-beam";
 
-export default function WhatWeDo() {
+export default function WhatPeopleSay() {
   const containerRef = useRef<HTMLDivElement>(null);
   const step1Ref = useRef<HTMLDivElement>(null);
   const step2Ref = useRef<HTMLDivElement>(null);

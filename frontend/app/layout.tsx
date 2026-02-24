@@ -2,12 +2,14 @@ import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UserProvider } from "@/lib/userContext";
 import ConsoleGuard from "@/components/ConsoleGuard";
-import { Dancing_Script } from "next/font/google";
+import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
-const cursiveFont = Dancing_Script({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  weight: ["700"],
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-space-grotesk",
+  display: "swap",
 });
 
 
@@ -42,7 +44,7 @@ export default function RootLayout({
       }}
     >
       <html lang="en">
-        <body>
+        <body className={spaceGrotesk.variable}>
           <UserProvider>
             <ConsoleGuard />
             {children}

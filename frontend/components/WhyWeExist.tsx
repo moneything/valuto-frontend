@@ -23,25 +23,30 @@ export default function WhyWeExist() {
               Valuto is built to change that. One lesson, one challenge, one young person at a time.
             </p>
             
-            <SignedOut>
-              <a href="/auth" className="hidden md:block">
-                <Button size="md" className="mt-8 hover:bg-emerald-500">Join the Movement</Button>
-              </a>
-            </SignedOut>
-              
-            <SignedIn>
-              <a href="/dashboard" className="hidden sm:block">
-                <Button size="md" className="mt-8 hover:bg-emerald-500">Join the Movement</Button>
-              </a>
-              <UserButton 
-                afterSignOutUrl="/"
-                appearance={{
-                  elements: {
-                    avatarBox: "w-9 h-9"
-                  }
-                }}
-              />
-            </SignedIn>
+            <div className="grid grid-cols-2 gap-4 mt-8">
+              <SignedOut>
+                  <a href="/auth" className="hidden md:block">
+                    <Button size="md" className="hover:bg-emerald-500 w-[-webkit-fill-available]">Join the Movement</Button>
+                  </a>
+                </SignedOut>
+                  
+                <SignedIn>
+                  <a href="/dashboard" className="hidden sm:block">
+                    <Button size="md" className="hover:bg-emerald-500 w-[-webkit-fill-available]">Join the Movement</Button>
+                  </a>
+                  <UserButton 
+                    afterSignOutUrl="/"
+                    appearance={{
+                      elements: {
+                        avatarBox: "w-9 h-9"
+                      }
+                    }}
+                  />
+                </SignedIn>
+                <a href="/about" className="">
+                  <Button variant="secondary" size="md" className="w-[-webkit-fill-available]">Learn More</Button>
+                </a>
+            </div>
                   
           </AnimatedSection>
         </div>

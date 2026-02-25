@@ -30,7 +30,7 @@ export default function Features() {
         <section className="section-dark py-24 lg:py-32">
             <div className="container mx-auto px-4 text-center">
               <AnimatedSection>
-                <p className="text-primary font-semibold text-sm mb-4 uppercase tracking-wide">Features</p>
+                <p className="text-primary font-semibold text-md mb-4 uppercase tracking-wide">Features</p>
                 <h1 className="text-4xl sm:text-5xl font-display font-bold text-hero-foreground mb-4">
                   Everything you need to get <span className="gradient-text">money-smart</span>
                 </h1>

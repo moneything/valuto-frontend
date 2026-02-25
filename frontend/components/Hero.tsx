@@ -4,6 +4,7 @@ import Image from "next/image";
 import Button from "@/components/theme/Button";
 import { BookOpen, Calculator, ChevronDown, Flame, Gamepad2, MessageCircle, Newspaper, Sparkles, Target, TrendingUp, Trophy } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 export default function Hero() {
   const features = [
@@ -62,22 +63,40 @@ export default function Hero() {
                   A modern, gamified finance platform built for young people, giving them the skills schools do not teach.
                 </p>
       
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <Button size="lg" className="text-base px-8">
-                    Start for £1/month
-                  </Button>
-                  <Button
-                    size="lg"
-                    className="text-base px-8 bg-white text-green-600 hover:bg-gray-100 border border-valuto-green-300"
-                  >
-                    Go to Valuto
-                  </Button>
+                <div className="mt-8 flex ">
+                  <SignedOut>
+                    <a href="/auth" className="w-[-webkit-fill-available]">
+                      <Button size="lg" className="text-base px-8 w-[-webkit-fill-available]">
+                        Start for £1/month
+                      </Button>
+                    </a>
+                  </SignedOut>
+                  
+                  
+                  <SignedIn>
+                    <a href="/dashboard" className="w-[-webkit-fill-available]">
+                      <Button
+                        size="lg"
+                        className="text-base px-8 bg-white text-green-600 hover:bg-gray-100 border border-valuto-green-300 w-[-webkit-fill-available]"
+                      >
+                        Go to Valuto
+                      </Button>
+                    </a>
+                    <UserButton 
+                      afterSignOutUrl="/"
+                      appearance={{
+                        elements: {
+                          avatarBox: "w-9 h-9"
+                        }
+                      }}
+                    />
+                  </SignedIn>
                 </div>
       
                 <p className="mt-6 text-slate-400 text-md">Join the next generation of money-smart teens</p>
               </div>
       
-              <div className="hidden lg:block animate-in fade-in slide-in-from-right-6 duration-700 delay-100">
+              <div className="block animate-in fade-in slide-in-from-right-6 duration-700 delay-100">
                 <div className="relative rounded-[28px] border border-emerald-400/20 bg-[#070d1c]/90 p-2 shadow-[0_0_120px_rgba(16,185,129,0.35)]">
                   <Image
                     src="/study2.png"
@@ -97,14 +116,14 @@ export default function Hero() {
         </section>
 
         {/* What you can do */}
-          <section id="features" className="py-24 section-light">
+          <section id="features" className="py-24 section-light pb-16">
             <div className="container mx-auto px-4">
               <AnimatedSection className="text-center mb-16">
                 <p className="text-primary font-semibold text-sm mb-2 uppercase tracking-wide">Everything in one place</p>
-                <h2 className="text-3xl sm:text-4xl font-display font-bold">What you can do inside Valuto</h2>
+                <h2 className="text-3xl font-display font-bold">What you can do inside Valuto</h2>
                 <p className="mt-4 text-muted-foreground max-w-2xl mx-auto">This app has everything you need to become money-smart.</p>
               </AnimatedSection>
-              <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              <div className="grid grid-cols-4 gap-6">
                 {features.map((f, i) => (
                   <AnimatedSection key={f.title} delay={i * 0.05}>
                     <div className="feature-card h-full">
@@ -117,6 +136,11 @@ export default function Hero() {
                   </AnimatedSection>
                 ))}
               </div>
+              <div className="min-w-[-webkit-fill-available] flex items-center m-3 justify-center mt-8">
+                <a href="/features">
+                <Button variant="secondary" className="">Learn More</Button>
+                </a>
+              </div>
             </div>
           </section>
 
@@ -125,9 +149,9 @@ export default function Hero() {
           <div className="container mx-auto px-4">
             <AnimatedSection className="text-center mb-16">
               <p className="text-primary font-semibold text-sm mb-2 uppercase tracking-wide">🔥 Next-level features</p>
-              <h2 className="text-3xl sm:text-4xl font-display font-bold text-hero-foreground">Built different</h2>
+              <h2 className="text-4xl font-display font-bold text-hero-foreground">Built different</h2>
             </AnimatedSection>
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid grid-cols-3 gap-8">
               {spicyFeatures.map((f, i) => (
                 <AnimatedSection key={f.title} delay={i * 0.1}>
                   <div className="bg-hero/50 border border-primary/20 rounded-2xl p-8 hover:border-primary/40 transition-all duration-300 h-full">

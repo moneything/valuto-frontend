@@ -32,11 +32,16 @@ export default function SimplePricing() {
                   </li>
                 ))}
               </ul>
-              <SignedOut>
-                <a href="/auth" className="">
-                  <Button size="md" className="w-[-webkit-fill-available] text-base hover:bg-emerald-500">Start for £1/month</Button>
-                </a>
-              </SignedOut>
+              <div className="grid grid-cols-2 gap-4">
+                <SignedOut>
+                    <a href="/auth" className="">
+                      <Button size="md" className="w-[-webkit-fill-available] text-base hover:bg-emerald-500">Start for £1/month</Button>
+                    </a>
+                  </SignedOut>
+                  <a href="/pricing" className="">
+                    <Button variant="secondary" size="md" className="w-[-webkit-fill-available]">Learn More</Button>
+                  </a>
+              </div>
             </div>
           </AnimatedSection>
         </div>

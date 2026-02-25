@@ -5,13 +5,13 @@ import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import Image from "next/image";
 
 const navLinks = [
-  { label: "Home", href: "#home" },
-  { label: "Features", href: "#features" },
-  { label: "Next-level features", href: "#next-level-features" },
-  { label: "Why we exist", href: "#why-we-exist" },
-  { label: "What people say", href: "#what-people-say" },
-  { label: "Simple pricing", href: "#simple-pricing" },
-  { label: "FAQs", href: "#faqs" },
+  { label: "Home", href: "/#home" },
+  { label: "Features", href: "/#features" },
+  { label: "Next-level features", href: "/#next-level-features" },
+  { label: "Why we exist", href: "/#why-we-exist" },
+  { label: "What people say", href: "/#what-people-say" },
+  { label: "Simple pricing", href: "/#simple-pricing" },
+  { label: "FAQs", href: "/#faqs" },
 ];
 
 export default function Header() {

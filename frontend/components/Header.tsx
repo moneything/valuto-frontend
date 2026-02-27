@@ -33,12 +33,14 @@ export default function Header() {
           <div className="flex items-center">
             <a href="/" className="flex items-center">
               <Image src="favicon.svg" alt="Valuto Logo" width={40} height={40} />
-              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end" style={{'height': "-webkit-fill-available"}}>aluto</span>
+              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end h-[-webkit-fill-available]">aluto</span>
             </a>
           </div>
 
+       
+
           {/* Desktop Navigation */}
-          <div className="hidden md:flex md:items-center md:space-x-6 lg:space-x-8">
+          <div className="hidden xl:flex xl:items-center lg:space-x-6 xl:space-x-8">
             {navLinks.map((link) => (
               <a
                 key={link.href}
@@ -82,7 +84,7 @@ export default function Header() {
               
             {/* Mobile menu button */}
             <button
-              className="md:hidden text-white pl-4"
+              className="xl:hidden text-white pl-4"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
               <svg className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -90,11 +92,12 @@ export default function Header() {
               </svg>
             </button>
           </div>
+          
         </div>
 
         {/* Mobile menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden py-4">
+          <div className="xl:hidden py-4">
             <div className="flex flex-col space-y-3">
               {navLinks.map((link) => (
                 <a
@@ -113,7 +116,7 @@ export default function Header() {
               ))}
               <SignedOut>
                 <a href="/auth">
-                  <button className="bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
+                  <button className="md:hidden bg-white hover:bg-gray-700 hover:text-white hover:border-green-500 hover:border text-valuto-green-500 font-semibold px-5 py-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg text-sm flex items-center gap-2">
                     Start for £1/month
                   </button>
                 </a>

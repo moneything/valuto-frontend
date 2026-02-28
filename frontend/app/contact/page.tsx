@@ -250,12 +250,14 @@ function sanitizeFieldValue(field: keyof ContactFormData, value: string): string
   }
 
   const normalized = withoutNulls
-    .replace(/\s+/g, " ")
-    .replace(/[\u0001-\u001F\u007F]/g, "")
-    .trim();
+    .replace(/[\u0001-\u001F\u007F]/g, "");
 
   if (field === "email") {
-    return normalized.slice(0, MAX_EMAIL_LENGTH).toLowerCase();
+    return normalized
+      .replace(/\s+/g, " ")
+      .trim()
+      .slice(0, MAX_EMAIL_LENGTH)
+      .toLowerCase();
   }
 
   if (field === "name") {

@@ -246,8 +246,7 @@ function sanitizeFieldValue(field: keyof ContactFormData, value: string): string
     return withoutNulls
       .replace(/[^\S\r\n]+/g, " ")
       .replace(/[\u0001-\u0008\u000B\u000C\u000E-\u001F\u007F]/g, "")
-      .slice(0, MAX_MESSAGE_LENGTH)
-      .trim();
+      .slice(0, MAX_MESSAGE_LENGTH);
   }
 
   const normalized = withoutNulls

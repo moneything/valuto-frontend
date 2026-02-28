@@ -114,6 +114,7 @@ const newsRoutes = require('./routes/newsRoutes');
 const categoryRoutes = require("./routes/categoryRoutes");
 const billingRoutes = require('./routes/billingRoutes');
 const aiRoutes = require('./routes/aiRoutes');
+const contactRoutes = require('./routes/contactRoutes');
 
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
@@ -126,6 +127,7 @@ app.use('/api/news', newsRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/ai', aiRoutes);
+app.use('/api/contact', contactRoutes);
 
 // ==================== ERROR HANDLING ====================
 

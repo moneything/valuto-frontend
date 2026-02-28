@@ -120,6 +120,9 @@ export default function Features() {
               <div className="grid md:grid-cols-2 gap-12">
                 <AnimatedSection>
                   <h2 className="text-2xl font-display font-bold mb-6">Send us a message</h2>
+                  <div className="mb-4 rounded-xl border border-amber-300/40 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                    Contact form sending is temporarily unavailable while email delivery is being configured. You can still fill this out, but the message will not send yet.
+                  </div>
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-1">
                       <Input

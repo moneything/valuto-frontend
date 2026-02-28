@@ -106,23 +106,21 @@ export default function Features() {
         <section className="section-dark py-24 lg:py-32">
             <div className="container mx-auto px-4 text-center">
               <AnimatedSection>
-                <p className="text-primary font-semibold text-sm mb-4 uppercase tracking-wide">Contact</p>
+                <p className="text-primary font-semibold text-md mb-4 uppercase tracking-wide">Contact</p>
                 <h1 className="text-4xl sm:text-5xl font-display font-bold text-hero-foreground mb-4">
                   Get in <span className="gradient-text">touch</span>
                 </h1>
                 <p className="text-hero-muted text-lg">Got a question? We'd love to hear from you.</p>
               </AnimatedSection>
             </div>
-          </section>
+        </section>
         
-          <section className="py-24 section-light">
+        <section className="py-24 section-light">
             <div className="container mx-auto px-4 max-w-4xl">
               <div className="grid md:grid-cols-2 gap-12">
                 <AnimatedSection>
                   <h2 className="text-2xl font-display font-bold mb-6">Send us a message</h2>
-                  <div className="mb-4 rounded-xl border border-amber-300/40 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                    Contact form sending is temporarily unavailable while email delivery is being configured. You can still fill this out, but the message will not send yet.
-                  </div>
+                  
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div className="space-y-1">
                       <Input
@@ -133,7 +131,7 @@ export default function Features() {
                         autoComplete="name"
                         required
                       />
-                      {errors.name ? <p className="text-sm text-red-500">{errors.name}</p> : null}
+                      {errors.name ? <p className="text-md text-red-500">{errors.name}</p> : null}
                     </div>
                     <div className="space-y-1">
                       <Input
@@ -146,7 +144,7 @@ export default function Features() {
                         inputMode="email"
                         required
                       />
-                      {errors.email ? <p className="text-sm text-red-500">{errors.email}</p> : null}
+                      {errors.email ? <p className="text-md text-red-500">{errors.email}</p> : null}
                     </div>
                     <div className="space-y-1">
                       <Input
@@ -156,7 +154,7 @@ export default function Features() {
                         maxLength={MAX_SUBJECT_LENGTH}
                         required
                       />
-                      {errors.subject ? <p className="text-sm text-red-500">{errors.subject}</p> : null}
+                      {errors.subject ? <p className="text-md text-red-500">{errors.subject}</p> : null}
                     </div>
                     <div className="space-y-1">
                       <Textarea
@@ -167,7 +165,7 @@ export default function Features() {
                         maxLength={MAX_MESSAGE_LENGTH}
                         required
                       />
-                      <div className="flex items-center justify-between text-sm text-muted-foreground">
+                      <div className="flex items-center justify-between text-md text-muted-foreground">
                         <span>{errors.message ? <span className="text-red-500">{errors.message}</span> : "Keep it clear and avoid sharing sensitive data."}</span>
                         <span>{formData.message.length}/{MAX_MESSAGE_LENGTH}</span>
                       </div>
@@ -179,50 +177,53 @@ export default function Features() {
                 </AnimatedSection>
         
                 <AnimatedSection delay={0.1}>
-                  <div className="space-y-8">
-                    <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <Mail className="text-primary" size={20} />
+                    <div className="mb-5 rounded-xl border border-amber-300/40 bg-amber-50 px-4 py-3 text-sm text-amber-900">
+                        Contact form sending is temporarily unavailable while email delivery is being configured. You can still fill this out, but the message will not send yet.
+                    </div>
+                    <div className="space-y-6">
+                        <div>
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <Mail className="text-primary" size={20} />
+                                </div>
+                                <h3 className="font-display font-semibold text-lg">Email us</h3>
+                            </div>
+                            <p className="text-muted-foreground text-md">jakebpb1@gmail.com</p>
                         </div>
-                        <h3 className="font-display font-semibold text-lg">Email us</h3>
-                      </div>
-                      <p className="text-muted-foreground text-sm">jakebpb1@gmail.com</p>
-                    </div>
         
-                    <div>
-                      <div className="flex items-center gap-3 mb-3">
-                        <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-                          <School className="text-primary" size={20} />
+                        <div>
+                            <div className="flex items-center gap-3 mb-3">
+                                <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
+                                <School className="text-primary" size={20} />
+                                </div>
+                                <h3 className="font-display font-semibold text-lg">For schools & partnerships</h3>
+                            </div>
+                            <p className="text-muted-foreground text-md mb-4">
+                                Want to bring Valuto to your school or organisation? We offer special pricing and dedicated support for educational institutions.
+                            </p>
+                            <p className="text-muted-foreground text-md">jakebpb1@gmail.com</p>
                         </div>
-                        <h3 className="font-display font-semibold text-lg">For schools & partnerships</h3>
-                      </div>
-                      <p className="text-muted-foreground text-sm mb-4">
-                        Want to bring Valuto to your school or organisation? We offer special pricing and dedicated support for educational institutions.
-                      </p>
-                      <p className="text-muted-foreground text-sm">jakebpb1@gmail.com</p>
-                    </div>
         
-                    <div>
-                      <h3 className="font-display font-semibold text-lg mb-3">Follow us</h3>
-                      <div className="flex gap-3">
-                        <a 
-                            key="Instagram" 
-                            href="https://www.instagram.com/valutouk" 
-                            className="px-4 py-2 rounded-lg bg-muted text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors"
-                        >
-                            Instagram
-                        </a>
-                        
-                        <a 
-                            key="LinkedIn" 
-                            href="https://www.linkedin.com/company/valutouk/posts/?feedView=all"
-                            className="px-4 py-2 rounded-lg bg-muted text-sm font-medium hover:bg-primary/10 hover:text-primary transition-colors"
-                        >
-                            LinkedIn
-                        </a>
-                      </div>
-                    </div>
+                        <div>
+                            <h3 className="font-display font-semibold text-lg mb-3">Follow us</h3>
+                            <div className="flex gap-3">
+                                <a 
+                                    key="Instagram" 
+                                    href="https://www.instagram.com/valutouk" 
+                                    className="px-4 py-2 rounded-lg bg-muted text-md font-medium hover:bg-primary/10 hover:text-primary transition-colors"
+                                >
+                                    Instagram
+                                </a>
+                                
+                                <a 
+                                    key="LinkedIn" 
+                                    href="https://www.linkedin.com/company/valutouk/posts/?feedView=all"
+                                    className="px-4 py-2 rounded-lg bg-muted text-md font-medium hover:bg-primary/10 hover:text-primary transition-colors"
+                                >
+                                    LinkedIn
+                                </a>
+                            </div>
+                        </div>
                   </div>
                 </AnimatedSection>
               </div>

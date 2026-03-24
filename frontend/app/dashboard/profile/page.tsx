@@ -48,13 +48,17 @@ export default function ProfilePage() {
       // Fetch user stats
       const statsResponse = await userApi.getStats(token);
       if (statsResponse.success && statsResponse.data) {
+        const data = statsResponse.data;
+        const progression = data.progression || {};
+        const nestedStats = data.stats || {};
+
         setStats({
-          gamesPlayed: statsResponse.data.gamesPlayed || 0,
-          totalPoints: statsResponse.data.totalPoints || 0,
-          lessonsCompleted: statsResponse.data.lessonsCompleted || 0,
-          averageScore: statsResponse.data.averageScore || 0,
-          streak: statsResponse.data.streak || 0,
-          rank: statsResponse.data.rank || 0
+          gamesPlayed: data.gamesPlayed ?? nestedStats.gamesPlayed ?? 0,
+          totalPoints: data.totalPoints ?? nestedStats.totalPoints ?? progression.xp ?? 0,
+          lessonsCompleted: data.lessonsCompleted ?? nestedStats.lessonsCompleted ?? 0,
+          averageScore: data.averageScore ?? nestedStats.averageScore ?? progression.accuracy ?? 0,
+          streak: data.streak ?? nestedStats.currentStreak ?? progression.streak ?? 0,
+          rank: data.rank ?? nestedStats.rank ?? progression.rank ?? 0
         });
       }
 

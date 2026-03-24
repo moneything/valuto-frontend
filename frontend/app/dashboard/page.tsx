@@ -25,7 +25,6 @@ import {
   UserIcon,
   TrendingUpIcon,
 } from "@/components/icons";
-import StatsCard from "@/components/theme/StatsCard";
 import { formatDisplayName } from "@/lib/utils";
 
 export default function DashboardPage() {
@@ -50,9 +49,11 @@ export default function DashboardPage() {
 
       const response = await userApi.getStats(token);
       if (response.success && response.data) {
-        // Flatten the structure for easy access
         setUserStats({
+          ...response.data,
           ...response.data.stats,
+          ...response.data.progression,
+          progression: response.data.progression,
           user: response.data.user,
         });
       }
@@ -227,6 +228,34 @@ export default function DashboardPage() {
   };
 
   const cards = isTeacher ? teacherCards : studentCards;
+  const progression = userStats?.progression;
+
+  const progressionCards = [
+    {
+      label: "XP",
+      value: loadingStats ? "..." : (progression?.xp ?? 0).toLocaleString(),
+      icon: <TrophyIcon className="w-7 h-7 text-amber-300" />,
+      accent: "from-amber-500/20 to-orange-500/10 border-amber-400/30",
+    },
+    {
+      label: "Day Streak",
+      value: loadingStats ? "..." : `${progression?.streak ?? 0} days`,
+      icon: <TargetIcon className="w-7 h-7 text-rose-300" />,
+      accent: "from-rose-500/20 to-pink-500/10 border-rose-400/30",
+    },
+    {
+      label: "Accuracy",
+      value: loadingStats ? "..." : `${Math.round(progression?.accuracy ?? 0)}%`,
+      icon: <ChartBarIcon className="w-7 h-7 text-cyan-300" />,
+      accent: "from-cyan-500/20 to-sky-500/10 border-cyan-400/30",
+    },
+    {
+      label: "Level",
+      value: loadingStats ? "..." : `${progression?.level ?? 1}`,
+      icon: <CrownIcon className="w-7 h-7 text-valuto-green-200" />,
+      accent: "from-valuto-green-500/20 to-emerald-500/10 border-valuto-green-400/30",
+    },
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
@@ -244,29 +273,40 @@ export default function DashboardPage() {
           </p>
         </div>
 
-        {/* Stats Row (for students) */}
-        {isStudent && (
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 mb-12 max-w-4xl mx-auto">
-            <StatsCard
-              value={loadingStats ? '...' : (userStats?.gamesPlayed || 0).toString()}
-              label="Games Played"
-              icon={<GameControllerIcon className="w-12 h-12 text-valuto-green-600" />}
-              color="green"
-            />
-            <StatsCard
-              value={loadingStats ? '...' : `${userStats?.lessonsCompleted || 0}/20`}
-              label="Lessons Completed"
-              icon={<BookOpenIcon className="w-12 h-12 text-blue-600" />}
-              color="blue"
-            />
-            <StatsCard
-              value={loadingStats ? '...' : (userStats?.totalPoints || 0).toLocaleString()}
-              label="Total Points"
-              icon={<TrophyIcon className="w-12 h-12 text-orange-600" />}
-              color="orange"
-            />
+        <div className="mb-12 overflow-hidden rounded-[28px] border border-white/50 bg-slate-950 text-white shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
+          <div className="bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.28),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.16),_transparent_24%)] p-6 sm:p-8">
+            <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-valuto-green-200/80">
+                  Progression Snapshot
+                </p>
+                <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
+                  Your dashboard is now tracking platform-wide progress.
+                </h2>
+              </div>
+              <div className="text-sm text-slate-300">
+                XP maps directly to your existing total points.
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
+              {progressionCards.map((card) => (
+                <div
+                  key={card.label}
+                  className={`rounded-2xl border bg-gradient-to-br p-5 backdrop-blur-sm ${card.accent}`}
+                >
+                  <div className="mb-6 flex items-center justify-between">
+                    <span className="text-sm font-medium uppercase tracking-[0.18em] text-slate-300">
+                      {card.label}
+                    </span>
+                    {card.icon}
+                  </div>
+                  <div className="text-3xl font-bold sm:text-4xl">{card.value}</div>
+                </div>
+              ))}
+            </div>
           </div>
-        )}
+        </div>
 
         {/* Main Cards Grid - Full Width */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

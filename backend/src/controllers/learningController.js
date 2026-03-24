@@ -5,6 +5,26 @@ const LearningModule = require('../models/LearningModule');
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
+function normalizeQuizAnswers({ quizAnswers, responses }) {
+  if (Array.isArray(quizAnswers) && quizAnswers.length > 0) {
+    return quizAnswers.map((answer) => ({
+      question: answer.question,
+      selectedAnswer: answer.selectedAnswer,
+      isCorrect: !!answer.isCorrect,
+    }));
+  }
+
+  if (Array.isArray(responses) && responses.length > 0) {
+    return responses.map((response) => ({
+      question: response.question,
+      selectedAnswer: response.selectedAnswer,
+      isCorrect: !!response.isCorrect,
+    }));
+  }
+
+  return [];
+}
+
 /**
  * LEARNING Controller
  * Works with the NEW LearningModule + LearningProgress schemas
@@ -93,6 +113,7 @@ const saveProgress = asyncHandler(async (req, res) => {
   }
 
   const effectiveScore = finalScore ?? null;
+  const normalizedQuizAnswers = normalizeQuizAnswers({ quizAnswers, responses });
 
   // -----------------------
   // COMPLETION LOGIC
@@ -134,6 +155,10 @@ const saveProgress = asyncHandler(async (req, res) => {
       progress.quizAttempts = (progress.quizAttempts || 0) + 1;
     }
 
+    if (normalizedQuizAnswers.length > 0) {
+      progress.quizAnswers = normalizedQuizAnswers;
+    }
+
     const timeToAdd = timeSpent || sessionData?.totalTime || 0;
     if (timeToAdd > 0) progress.timeSpent += timeToAdd;
 
@@ -167,6 +192,7 @@ const saveProgress = asyncHandler(async (req, res) => {
       quizPassed: effectiveScore ? effectiveScore >= 70 : false,
       timeSpent: timeSpent || sessionData?.totalTime || 0,
       quizAttempts: effectiveScore ? 1 : 0,
+      quizAnswers: normalizedQuizAnswers,
     });
 
     // Award points ONLY if completed immediately

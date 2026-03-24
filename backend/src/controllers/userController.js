@@ -1,6 +1,113 @@
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
+function calculateLevelFromXp(xp = 0) {
+  return Math.max(1, Math.floor(xp / 100) + 1);
+}
+
+function getLevelBounds(level) {
+  const safeLevel = Math.max(1, level);
+  return {
+    currentLevelXp: (safeLevel - 1) * 100,
+    nextLevelXp: safeLevel * 100,
+  };
+}
+
+function summarizeLearningAccuracy(learningStats = []) {
+  let totalQuestions = 0;
+  let totalCorrect = 0;
+  let fallbackQuizCount = 0;
+  let fallbackQuizScoreTotal = 0;
+
+  for (const progress of learningStats) {
+    const quizAnswers = Array.isArray(progress?.quizAnswers) ? progress.quizAnswers : [];
+
+    if (quizAnswers.length > 0) {
+      totalQuestions += quizAnswers.length;
+      totalCorrect += quizAnswers.filter((answer) => answer?.isCorrect).length;
+      continue;
+    }
+
+    if (typeof progress?.quizScore === 'number') {
+      fallbackQuizCount += 1;
+      fallbackQuizScoreTotal += progress.quizScore;
+    }
+  }
+
+  const accuracyFromAnswers =
+    totalQuestions > 0 ? (totalCorrect / totalQuestions) * 100 : null;
+  const accuracyFromScores =
+    fallbackQuizCount > 0 ? fallbackQuizScoreTotal / fallbackQuizCount : null;
+
+  return {
+    totalQuestions,
+    totalCorrect,
+    accuracyFromAnswers,
+    accuracyFromScores,
+    quizCount: fallbackQuizCount,
+  };
+}
+
+function buildProgressionSnapshot(user, gameStats, learningStats, rank = 0) {
+  const xp = user.totalPoints || 0;
+  const streak = user.currentStreak || 0;
+  const level = calculateLevelFromXp(xp);
+  const { currentLevelXp, nextLevelXp } = getLevelBounds(level);
+
+  const gameQuestions = gameStats?.totalQuestions || 0;
+  const gameCorrect = gameStats?.totalCorrect || 0;
+  const learningAccuracy = summarizeLearningAccuracy(learningStats);
+
+  const exactQuestionTotal = gameQuestions + learningAccuracy.totalQuestions;
+  const exactCorrectTotal = gameCorrect + learningAccuracy.totalCorrect;
+
+  let accuracy = 0;
+
+  if (exactQuestionTotal > 0) {
+    accuracy = (exactCorrectTotal / exactQuestionTotal) * 100;
+  } else {
+    const weightedAccuracyParts = [];
+
+    if (typeof gameStats?.avgAccuracy === 'number' && (gameStats?.totalGames || 0) > 0) {
+      weightedAccuracyParts.push({
+        value: gameStats.avgAccuracy,
+        weight: gameStats.totalGames,
+      });
+    }
+
+    if (
+      typeof learningAccuracy.accuracyFromScores === 'number' &&
+      learningAccuracy.quizCount > 0
+    ) {
+      weightedAccuracyParts.push({
+        value: learningAccuracy.accuracyFromScores,
+        weight: learningAccuracy.quizCount,
+      });
+    }
+
+    const totalWeight = weightedAccuracyParts.reduce((sum, part) => sum + part.weight, 0);
+
+    if (totalWeight > 0) {
+      accuracy =
+        weightedAccuracyParts.reduce((sum, part) => sum + part.value * part.weight, 0) /
+        totalWeight;
+    }
+  }
+
+  const roundedAccuracy = Math.round(accuracy * 100) / 100;
+
+  return {
+    xp,
+    streak,
+    accuracy: roundedAccuracy,
+    level,
+    rank,
+    currentLevelXp,
+    nextLevelXp,
+    xpToNextLevel: Math.max(0, nextLevelXp - xp),
+  };
+}
+
 /**
  * User Controller
  * Handles all user-related operations (CRUD, stats, profile management)
@@ -222,9 +329,24 @@ const getUserStats = asyncHandler(async (req, res) => {
     Challenge.getUserChallengeStats(user._id.toString()),
   ]);
 
+  const usersAbove = await User.countDocuments({
+    role: user.role,
+    isActive: true,
+    totalPoints: { $gt: user.totalPoints },
+  });
+
+  const rank = usersAbove + 1;
+  const progression = buildProgressionSnapshot(user, gameStats, learningStats, rank);
+
   res.status(200).json({
     success: true,
     data: {
+      totalPoints: user.totalPoints,
+      gamesPlayed: user.gamesPlayed,
+      lessonsCompleted: user.lessonsCompleted,
+      averageScore: progression.accuracy,
+      streak: progression.streak,
+      rank: progression.rank,
       user: {
         name: user.name,
         title: user.title,
@@ -240,7 +362,10 @@ const getUserStats = asyncHandler(async (req, res) => {
         currentStreak: user.currentStreak,
         longestStreak: user.longestStreak,
         achievements: user.achievements.length,
+        averageScore: progression.accuracy,
+        rank: progression.rank,
       },
+      progression,
       gameStats,
       learningStats,
       challengeStats,
@@ -485,9 +610,24 @@ const getUserStatsById = asyncHandler(async (req, res) => {
     Challenge.getUserChallengeStats(targetUser._id.toString()),
   ]);
 
+  const usersAbove = await User.countDocuments({
+    role: targetUser.role,
+    isActive: true,
+    totalPoints: { $gt: targetUser.totalPoints },
+  });
+
+  const rank = usersAbove + 1;
+  const progression = buildProgressionSnapshot(targetUser, gameStats, learningStats, rank);
+
   res.status(200).json({
     success: true,
     data: {
+      totalPoints: targetUser.totalPoints,
+      gamesPlayed: targetUser.gamesPlayed,
+      lessonsCompleted: targetUser.lessonsCompleted,
+      averageScore: progression.accuracy,
+      streak: progression.streak,
+      rank: progression.rank,
       user: {
         name: targetUser.name,
         title: targetUser.title,
@@ -502,7 +642,10 @@ const getUserStatsById = asyncHandler(async (req, res) => {
         lessonsCompleted: targetUser.lessonsCompleted,
         currentStreak: targetUser.currentStreak,
         longestStreak: targetUser.longestStreak,
+        averageScore: progression.accuracy,
+        rank: progression.rank,
       },
+      progression,
       gameStats,
       learningStats,
       challengeStats,

@@ -6,11 +6,12 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award } from "lucide-react";
+import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award, ChevronRight } from "lucide-react";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import NewsAndEvents from "@/components/NewsAndEvents";
 import { triviaApi, userApi } from "@/lib/api";
+import { useLearningCategories, useLearningModules } from "@/lib/hooks/useLearningModules";
 import {
   GameControllerIcon,
   CalculatorIcon,
@@ -30,6 +31,8 @@ export default function DashboardPage() {
 
   // ✅ align names with userContext
   const { profile, isLoadingProfile, isTeacher } = useUser();
+  const { categories } = useLearningCategories();
+  const { modules } = useLearningModules();
 
   const [userStats, setUserStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(true);
@@ -296,6 +299,39 @@ export default function DashboardPage() {
     },
   ];
 
+  const battleColorMap: Record<string, string> = {
+    "core-money-skills": "border-primary/40 hover:border-primary shadow-[0_0_30px_hsl(152_100%_45%_/_0.22)]",
+    "earning-income": "border-emerald-500/40 hover:border-emerald-400 shadow-[0_0_30px_rgba(34,197,94,0.18)]",
+    "spending-wisely": "border-amber-500/40 hover:border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.18)]",
+    "investing-assets": "border-yellow-500/40 hover:border-yellow-400 shadow-[0_0_30px_rgba(234,179,8,0.18)]",
+    entrepreneurship: "border-green-500/40 hover:border-green-400 shadow-[0_0_30px_rgba(34,197,94,0.18)]",
+    "borrowing-debt": "border-blue-500/40 hover:border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.18)]",
+    "money-society": "border-red-500/40 hover:border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.18)]",
+  };
+
+  const battleEmojiMap: Record<string, string> = {
+    "core-money-skills": "💰",
+    "earning-income": "📈",
+    "spending-wisely": "🛍️",
+    "investing-assets": "📉",
+    entrepreneurship: "💼",
+    "borrowing-debt": "🏦",
+    "money-society": "🌍",
+  };
+
+  const battleCategories = useMemo(() => {
+    if (!categories?.length) return [];
+
+    return categories
+      .map((category: any) => ({
+        ...category,
+        questionCount:
+          modules?.filter((module: any) => module.categoryId === category.id).length || 0,
+      }))
+      .filter((category: any) => category.questionCount > 0)
+      .slice(0, 5);
+  }, [categories, modules]);
+
   const handleStartQuiz = () => {
     router.push("/dashboard/trivia");
   };
@@ -310,6 +346,10 @@ export default function DashboardPage() {
 
   const handleCreateGame = () => {
     router.push("/dashboard/trivia/create");
+  };
+
+  const handleSelectBattleCategory = (categoryId: string) => {
+    router.push(`/dashboard/learning-modules?category=${categoryId}`);
   };
 
   return (
@@ -464,6 +504,54 @@ export default function DashboardPage() {
                 )}
               </div>
             </motion.div>
+          </div>
+        </section>
+
+        <section id="categories" className="px-4 py-12">
+          <div className="mx-auto max-w-6xl">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-8 text-center"
+            >
+              <h2 className="mb-2 font-display text-3xl font-bold uppercase tracking-tight text-white md:text-4xl lg:text-6xl">
+                Choose Your Battle
+              </h2>
+              <p className="text-lg text-muted-foreground md:text-xl">
+                Pick a topic and prove your knowledge
+              </p>
+            </motion.div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+              {battleCategories.map((cat: any, i: number) => (
+                <motion.button
+                  key={cat.id}
+                  className={`group flex min-h-[220px] flex-col items-start gap-3 rounded-[2rem] border bg-[#242425]/95 p-8 text-left transition-all duration-300 ${
+                    battleColorMap[cat.id] || battleColorMap["core-money-skills"]
+                  }`}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.05 }}
+                  whileHover={{ scale: 1.03, y: -4 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => handleSelectBattleCategory(cat.id)}
+                >
+                  <span className="text-5xl leading-none">{battleEmojiMap[cat.id] || "🎯"}</span>
+                  <div>
+                    <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
+                      {cat.title}
+                    </h3>
+                    <p className="mt-2 text-lg text-[#9a9a9d]">{cat.description}</p>
+                  </div>
+                  <div className="mt-auto flex w-full items-center justify-between pt-6">
+                    <span className="text-base text-[#9a9a9d]">{cat.questionCount} questions</span>
+                    <ChevronRight className="h-6 w-6 text-[#9a9a9d] transition-transform group-hover:translate-x-1" />
+                  </div>
+                </motion.button>
+              ))}
+            </div>
           </div>
         </section>
 

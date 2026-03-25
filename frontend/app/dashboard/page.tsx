@@ -2,11 +2,11 @@
 
 "use client";
 
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { Zap, Flame, Target, Award } from "lucide-react";
+import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award } from "lucide-react";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import NewsAndEvents from "@/components/NewsAndEvents";
@@ -33,6 +33,16 @@ export default function DashboardPage() {
 
   const [userStats, setUserStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(true);
+  const arenaParticles = useMemo(
+    () =>
+      Array.from({ length: 20 }, () => ({
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        duration: 3 + Math.random() * 2,
+        delay: Math.random() * 2,
+      })),
+    []
+  );
 
   const fetchStats = useCallback(async () => {
     if (!profile) return;
@@ -235,25 +245,47 @@ export default function DashboardPage() {
       label: "Streak",
       value: loadingStats ? "..." : `${progression?.streak ?? 0} days`,
       icon: Flame,
-      color: "text-accent",
+      color: "text-yellow-500",
     },
     {
       label: "Accuracy",
       value: loadingStats ? "..." : `${Math.round(progression?.accuracy ?? 0)}%`,
       icon: Target,
-      color: "text-success",
+      color: "text-primary",
     },
     {
       value: loadingStats ? "..." : `${progression?.level ?? 1}`,
       label: "Level",
       icon: Award,
-      color: "text-secondary",
+      color: "text-blue-500",
     },
   ];
 
+  const arenaStats = [
+    { icon: Users, label: "Players", value: "12.4K" },
+    { icon: Trophy, label: "Games Today", value: "847" },
+    { icon: Zap, label: "Questions", value: "50+" },
+  ];
+
+  const handleStartQuiz = () => {
+    router.push("/dashboard/trivia");
+  };
+
+  const handleDailyChallenge = () => {
+    router.push("/dashboard/challenges");
+  };
+
+  const handleJoinGame = () => {
+    router.push("/dashboard/trivia");
+  };
+
+  const handleCreateGame = () => {
+    router.push("/dashboard/trivia/create");
+  };
+
   return (
     <div className="min-h-screen">
-      <div className="mx-auto w-full max-w-[1800px] px-4 py-8 sm:px-6 lg:px-12 md:py-12">
+      <div className="mx-auto w-full max-w-[1800px] px-4 sm:px-6 lg:px-12 py-1">
         <div className="mb-12 px-1 py-1 sm:px-4 sm:py-4">
           <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-[#1b1b1d]/90 px-4 py-3 shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-md md:px-6">
             {progressionCards.map((stat, i) => (
@@ -266,13 +298,145 @@ export default function DashboardPage() {
               >
                 <stat.icon className={`h-4 w-4 ${stat.color}`} />
                 <div>
-                  <span className="font-display text-sm font-bold text-foreground">{stat.value}</span>
-                  <span className="ml-1 hidden text-xs text-muted-foreground sm:inline">{stat.label}</span>
+                  <span className="font-display text-sm font-bold text-foreground text-white">{stat.value}</span>
+                  <span> </span>
+                  <span className="ml-1 hidden text-xs text-muted-foreground sm:inline ">{stat.label}</span>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
+
+        <section className="relative overflow-hidden px-4 pb-12 pt-1 md:pb-20">
+          <div className="pointer-events-none absolute inset-0">
+            {arenaParticles.map((particle, index) => (
+              <motion.div
+                key={`arena-particle-${index}`}
+                className="absolute h-2 w-2 rounded-full bg-primary/30"
+                style={{
+                  left: particle.left,
+                  top: particle.top,
+                }}
+                animate={{
+                  y: [0, -30, 0],
+                  opacity: [0.2, 0.8, 0.2],
+                  scale: [1, 1.5, 1],
+                }}
+                transition={{
+                  duration: particle.duration,
+                  repeat: Infinity,
+                  delay: particle.delay,
+                }}
+              />
+            ))}
+          </div>
+
+          <div className="relative mx-auto max-w-5xl text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              <motion.div
+                className="mb-6 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-2"
+                animate={{
+                  boxShadow: [
+                    "0 0 20px hsl(152 100% 45% / 0.2)",
+                    "0 0 40px hsl(152 100% 45% / 0.4)",
+                    "0 0 20px hsl(152 100% 45% / 0.2)",
+                  ],
+                }}
+                transition={{ duration: 2, repeat: Infinity }}
+              >
+                <Flame className="h-4 w-4 text-yellow-500" />
+                <span className="font-body text-sm font-medium text-primary">
+                  UK Financial Literacy - Live Now
+                </span>
+              </motion.div>
+
+              <h1 className="mb-4 font-display text-5xl font-black uppercase tracking-tight md:text-7xl lg:text-8xl">
+                <span className="text-gradient-primary">Valuto</span>{" "}
+                <span className="text-white">Arena</span>
+              </h1>
+
+              <p className="mx-auto mb-8 max-w-4xl font-body text-lg text-[#9a9a9d] md:text-xl lg:text-[1.5rem] lg:leading-tight">
+                The ultimate UK money trivia battleground. Master budgeting,
+                investing, credit &amp; more. Compete with friends and level up your
+                financial literacy.
+              </p>
+
+              <div className="mb-10 flex items-center justify-center gap-6 md:gap-10">
+                {arenaStats.map((stat, i) => (
+                  <motion.div
+                    key={stat.label}
+                    className="flex flex-col items-center gap-1"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 + i * 0.1 }}
+                  >
+                    <stat.icon className="h-5 w-5 text-primary" />
+                    <span className="font-display text-xl font-bold text-white md:text-2xl">
+                      {stat.value}
+                    </span>
+                    <span className="text-xs text-muted-foreground">{stat.label}</span>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="flex flex-col items-center gap-4 sm:flex-row sm:flex-wrap sm:justify-center">
+                <motion.button
+                  className="w-full rounded-2xl bg-primary px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-primary-foreground sm:w-auto"
+                  onClick={handleStartQuiz}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsl(152 100% 45% / 0.5)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Zap className="h-5 w-5" />
+                    Play Now
+                  </span>
+                </motion.button>
+
+                <motion.button
+                  className="w-full rounded-2xl border-2 border-yellow-500 bg-yellow-500/10 px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-yellow-500 sm:w-auto"
+                  onClick={handleDailyChallenge}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsl(45 100% 55% / 0.4)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Flame className="h-5 w-5" />
+                    Daily Challenge
+                  </span>
+                </motion.button>
+
+                <motion.button
+                  className="w-full rounded-2xl border border-border bg-muted/30 px-8 py-4 font-body text-lg font-semibold text-white sm:w-auto"
+                  onClick={handleJoinGame}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <Users className="h-5 w-5" />
+                    Join Game
+                  </span>
+                </motion.button>
+
+                {isTeacher && (
+                  <motion.button
+                    className="w-full rounded-2xl border-2 border-primary/50 bg-primary/10 px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-primary sm:w-auto"
+                    onClick={handleCreateGame}
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsl(152 100% 45% / 0.4)" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    <span className="flex items-center justify-center gap-2">
+                      <PlusLucide className="h-5 w-5" />
+                      Create Game
+                    </span>
+                  </motion.button>
+                )}
+              </div>
+            </motion.div>
+          </div>
+        </section>
 
         {/* Main Cards Grid - Full Width */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">

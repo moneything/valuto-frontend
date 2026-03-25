@@ -117,19 +117,19 @@ export default function DashboardLayout({
       <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 h-72 w-72 rounded-full bg-valuto-green-400/10 blur-3xl"></div>
       <div className="absolute top-1/3 left-40 translate-y-12 h-96 w-96 rounded-full bg-emerald-300/8 blur-3xl"></div>
       <div className="absolute bottom-0 right-1/4 translate-y-12 h-80 w-80 rounded-full bg-cyan-300/5 blur-3xl"></div>
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+      <div className="pointer-events-none absolute inset-0 z-10 overflow-hidden">
         {floatingParticles.map((particle, index) => (
           <motion.div
             key={`${particle.left}-${particle.top}-${index}`}
-            className="absolute h-1.5 w-1.5 rounded-full bg-valuto-green-400/35 shadow-[0_0_14px_rgba(74,222,128,0.55)]"
+            className="absolute h-3 w-3 rounded-full bg-valuto-green-400/70 shadow-[0_0_20px_rgba(74,222,128,0.9)]"
             style={{
               left: particle.left,
               top: particle.top,
             }}
             animate={{
-              y: [0, -30, 0],
-              opacity: [0.2, 0.85, 0.2],
-              scale: [1, 1.5, 1],
+              y: [0, -34, 0],
+              opacity: [0.3, 1, 0.3],
+              scale: [1, 1.8, 1],
             }}
             transition={{
               duration: particle.duration,
@@ -235,7 +235,7 @@ export default function DashboardLayout({
       <DashboardDock />
 
       {/* Main Content - Add left padding to accommodate dock on desktop */}
-      <main className="relative pt-20 lg:pl-24">
+      <main className="relative z-20 pt-20 lg:pl-24">
         {children}
       </main>
     </div>

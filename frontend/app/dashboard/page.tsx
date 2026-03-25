@@ -10,7 +10,7 @@ import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award } from "lu
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import NewsAndEvents from "@/components/NewsAndEvents";
-import { userApi } from "@/lib/api";
+import { triviaApi, userApi } from "@/lib/api";
 import {
   GameControllerIcon,
   CalculatorIcon,
@@ -33,6 +33,11 @@ export default function DashboardPage() {
 
   const [userStats, setUserStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(true);
+  const [platformStats, setPlatformStats] = useState({
+    players: 0,
+    gamesToday: 0,
+    questions: 0,
+  });
   const arenaParticles = useMemo(
     () =>
       Array.from({ length: 20 }, () => ({
@@ -53,7 +58,11 @@ export default function DashboardPage() {
 
       if (!token) return;
 
-      const response = await userApi.getStats(token);
+      const [response, platformResponse] = await Promise.all([
+        userApi.getStats(token),
+        triviaApi.getPlatformStats(),
+      ]);
+
       if (response.success && response.data) {
         setUserStats({
           ...response.data,
@@ -61,6 +70,14 @@ export default function DashboardPage() {
           ...response.data.progression,
           progression: response.data.progression,
           user: response.data.user,
+        });
+      }
+
+      if (platformResponse.success && platformResponse.data) {
+        setPlatformStats({
+          players: platformResponse.data.players ?? 0,
+          gamesToday: platformResponse.data.gamesToday ?? 0,
+          questions: platformResponse.data.questions ?? 0,
         });
       }
 
@@ -262,9 +279,21 @@ export default function DashboardPage() {
   ];
 
   const arenaStats = [
-    { icon: Users, label: "Players", value: "12.4K" },
-    { icon: Trophy, label: "Games Today", value: "847" },
-    { icon: Zap, label: "Questions", value: "50+" },
+    {
+      icon: Users,
+      label: "Players",
+      value: loadingStats ? "..." : platformStats.players.toLocaleString(),
+    },
+    {
+      icon: Trophy,
+      label: "Games Today",
+      value: loadingStats ? "..." : platformStats.gamesToday.toLocaleString(),
+    },
+    {
+      icon: Zap,
+      label: "Questions",
+      value: loadingStats ? "..." : platformStats.questions.toLocaleString(),
+    },
   ];
 
   const handleStartQuiz = () => {

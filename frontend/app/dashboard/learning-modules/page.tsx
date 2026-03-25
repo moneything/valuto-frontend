@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, type CSSProperties } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 import PageLayout from "@/components/theme/PageLayout";
 import Card from "@/components/theme/Card";
@@ -25,6 +25,7 @@ import { ClockIcon, HelpCircle, Lock } from "lucide-react";
 
 export default function LearningModulesPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const { profile } = useUser();
   const { modules, loading: modulesLoading } = useLearningModules();
   const { categories, loading: categoriesLoading } = useLearningCategories();
@@ -32,6 +33,7 @@ export default function LearningModulesPage() {
   const hasSubscription = hasActiveSubscription(profile?.subscriptionStatus);
 
   const [grouped, setGrouped] = useState<any>({});
+  const selectedCategoryId = searchParams.get("category");
 
   // Group modules by category after both load
   useEffect(() => {
@@ -103,6 +105,17 @@ export default function LearningModulesPage() {
       title="Learn Money Skills"
       subtitle="Master essential financial skills with our student-friendly guides."
     >
+      {selectedCategoryId && (
+        <div className="mb-8 flex items-center justify-between rounded-2xl border border-valuto-green-200 bg-white/80 p-4">
+          <p className="text-sm text-gray-700">
+            Filtering modules for the selected category.
+          </p>
+          <Button variant="outline" onClick={() => router.push("/dashboard/learning-modules")}>
+            Clear Filter
+          </Button>
+        </div>
+      )}
+
       {/* Stats Card */}
       {stats && (
         <div className="mb-12 border-0">
@@ -127,7 +140,9 @@ export default function LearningModulesPage() {
       )}
 
       {/* CATEGORY SECTIONS */}
-      {Object.values(grouped).map((group: any) => {
+      {Object.values(grouped)
+        .filter((group: any) => !selectedCategoryId || group.category.id === selectedCategoryId)
+        .map((group: any) => {
         const { category, modules } = group;
 
         if (!modules.length) return null; // Hide empty categories

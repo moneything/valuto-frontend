@@ -214,6 +214,15 @@ export const triviaApi = {
   },
 
   /**
+   * Get live platform trivia statistics
+   */
+  async getPlatformStats() {
+    return apiRequest('/api/trivia/platform-stats', {
+      method: 'GET',
+    });
+  },
+
+  /**
    * Delete session
    */
   async deleteSession(token: string, sessionId: string) {
@@ -411,4 +420,3 @@ export const healthCheck = async () => {
     return { success: false, error: 'Backend not reachable' };
   }
 };
-

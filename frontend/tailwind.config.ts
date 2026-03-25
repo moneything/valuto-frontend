@@ -17,6 +17,7 @@ const config: Config = {
     "bg-purple-500",
     "bg-indigo-500",
     "bg-red-500",
+    "text-orange",
     "bg-yellow-500",
     "bg-teal-500",
     "bg-pink-500",

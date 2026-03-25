@@ -9,6 +9,7 @@ const {
   getSessionResults,
   getUserHistory,
   getUserTriviaStats,
+  getPlatformTriviaStats,
   deleteSession,
 } = require('../controllers/triviaController');
 const { authenticateClerkUser } = require('../middleware/auth');
@@ -79,6 +80,11 @@ router.get('/history', authenticateClerkUser, getUserHistory);
 // @desc    Get user's trivia statistics
 // @access  Private
 router.get('/stats', authenticateClerkUser, getUserTriviaStats);
+
+// @route   GET /api/trivia/platform-stats
+// @desc    Get live platform trivia statistics
+// @access  Public
+router.get('/platform-stats', getPlatformTriviaStats);
 
 // @route   DELETE /api/trivia/session/:sessionId
 // @desc    Delete session

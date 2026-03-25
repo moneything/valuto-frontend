@@ -5,6 +5,8 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
+import { motion } from "framer-motion";
+import { Zap, Flame, Target, Award } from "lucide-react";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import NewsAndEvents from "@/components/NewsAndEvents";
@@ -13,19 +15,13 @@ import {
   GameControllerIcon,
   CalculatorIcon,
   BookOpenIcon,
-  TrophyIcon,
   CrownIcon,
   TargetIcon,
   LightBulbIcon,
   PlusIcon,
-  UsersIcon,
-  ChartBarIcon,
-  CogIcon,
-  AcademicCapIcon,
   UserIcon,
   TrendingUpIcon,
 } from "@/components/icons";
-import { formatDisplayName } from "@/lib/utils";
 
 export default function DashboardPage() {
   const router = useRouter();
@@ -33,7 +29,7 @@ export default function DashboardPage() {
   const { user: clerkUser, isLoaded: isClerkLoaded } = useClerkUser();
 
   // ✅ align names with userContext
-  const { profile, isLoadingProfile, isTeacher, isStudent } = useUser();
+  const { profile, isLoadingProfile, isTeacher } = useUser();
 
   const [userStats, setUserStats] = useState<any>(null);
   const [loadingStats, setLoadingStats] = useState(true);
@@ -105,8 +101,6 @@ export default function DashboardPage() {
 
   // ✅ this now works correctly
   if (!profile) return null;
-
-  const teacherDisplayName = formatDisplayName(profile, { useFirstNameForStudents: true });
 
   const studentCards: Array<{
     title: string;
@@ -234,77 +228,49 @@ export default function DashboardPage() {
     {
       label: "XP",
       value: loadingStats ? "..." : (progression?.xp ?? 0).toLocaleString(),
-      icon: <TrophyIcon className="w-7 h-7 text-amber-300" />,
-      accent: "from-amber-500/20 to-orange-500/10 border-amber-400/30",
+      icon: Zap,
+      color: "text-primary",
     },
     {
-      label: "Day Streak",
+      label: "Streak",
       value: loadingStats ? "..." : `${progression?.streak ?? 0} days`,
-      icon: <TargetIcon className="w-7 h-7 text-rose-300" />,
-      accent: "from-rose-500/20 to-pink-500/10 border-rose-400/30",
+      icon: Flame,
+      color: "text-accent",
     },
     {
       label: "Accuracy",
       value: loadingStats ? "..." : `${Math.round(progression?.accuracy ?? 0)}%`,
-      icon: <ChartBarIcon className="w-7 h-7 text-cyan-300" />,
-      accent: "from-cyan-500/20 to-sky-500/10 border-cyan-400/30",
+      icon: Target,
+      color: "text-success",
     },
     {
-      label: "Level",
       value: loadingStats ? "..." : `${progression?.level ?? 1}`,
-      icon: <CrownIcon className="w-7 h-7 text-valuto-green-200" />,
-      accent: "from-valuto-green-500/20 to-emerald-500/10 border-valuto-green-400/30",
+      label: "Level",
+      icon: Award,
+      color: "text-secondary",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
-      <div className="w-full px-4 sm:px-6 lg:px-12 py-8 md:py-12 max-w-[1800px] mx-auto">
-        {/* Welcome Section */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4">
-            Welcome back, <span className="text-valuto-green-600">{teacherDisplayName}</span>! 👋
-          </h1>
-          <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-            {isTeacher 
-              ? 'Ready to create engaging financial lessons for your students?' 
-              : 'Ready to level up your financial knowledge today?'
-            }
-          </p>
-        </div>
-
-        <div className="mb-12 overflow-hidden rounded-[28px] border border-white/50 bg-slate-950 text-white shadow-[0_24px_80px_rgba(15,23,42,0.22)]">
-          <div className="bg-[radial-gradient(circle_at_top_left,_rgba(34,197,94,0.28),_transparent_28%),radial-gradient(circle_at_bottom_right,_rgba(14,165,233,0.16),_transparent_24%)] p-6 sm:p-8">
-            <div className="mb-6 flex flex-col gap-3 lg:flex-row lg:items-end lg:justify-between">
-              <div>
-                <p className="text-sm font-semibold uppercase tracking-[0.22em] text-valuto-green-200/80">
-                  Progression Snapshot
-                </p>
-                <h2 className="mt-2 text-2xl font-bold sm:text-3xl">
-                  Your dashboard is now tracking platform-wide progress.
-                </h2>
-              </div>
-              <div className="text-sm text-slate-300">
-                XP maps directly to your existing total points.
-              </div>
-            </div>
-
-            <div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-4">
-              {progressionCards.map((card) => (
-                <div
-                  key={card.label}
-                  className={`rounded-2xl border bg-gradient-to-br p-5 backdrop-blur-sm ${card.accent}`}
-                >
-                  <div className="mb-6 flex items-center justify-between">
-                    <span className="text-sm font-medium uppercase tracking-[0.18em] text-slate-300">
-                      {card.label}
-                    </span>
-                    {card.icon}
-                  </div>
-                  <div className="text-3xl font-bold sm:text-4xl">{card.value}</div>
+    <div className="min-h-screen">
+      <div className="mx-auto w-full max-w-[1800px] px-4 py-8 sm:px-6 lg:px-12 md:py-12">
+        <div className="mb-12 px-1 py-1 sm:px-4 sm:py-4">
+          <div className="mx-auto flex max-w-5xl items-center justify-between gap-2 overflow-x-auto rounded-2xl border border-white/10 bg-[#1b1b1d]/90 px-4 py-3 shadow-[0_18px_40px_rgba(0,0,0,0.28)] backdrop-blur-md md:px-6">
+            {progressionCards.map((stat, i) => (
+              <motion.div
+                key={stat.label}
+                className="flex items-center gap-2 whitespace-nowrap"
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+              >
+                <stat.icon className={`h-4 w-4 ${stat.color}`} />
+                <div>
+                  <span className="font-display text-sm font-bold text-foreground">{stat.value}</span>
+                  <span className="ml-1 hidden text-xs text-muted-foreground sm:inline">{stat.label}</span>
                 </div>
-              ))}
-            </div>
+              </motion.div>
+            ))}
           </div>
         </div>
 

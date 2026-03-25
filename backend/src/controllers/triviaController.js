@@ -252,6 +252,76 @@ const getUserTriviaStats = asyncHandler(async (req, res) => {
 });
 
 /**
+ * @desc    Get platform trivia statistics for dashboard hero
+ * @route   GET /api/trivia/platform-stats
+ * @access  Public
+ */
+const getPlatformTriviaStats = asyncHandler(async (_req, res) => {
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const [liveSessionStats, todaySessionStats] = await Promise.all([
+    Session.aggregate([
+      {
+        $match: {
+          status: { $in: ['waiting', 'active'] },
+        },
+      },
+      {
+        $project: {
+          playerCount: {
+            $size: {
+              $filter: {
+                input: '$players',
+                as: 'player',
+                cond: { $eq: ['$$player.isConnected', true] },
+              },
+            },
+          },
+          questionCount: { $size: '$questions' },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          livePlayers: { $sum: '$playerCount' },
+          liveQuestions: { $sum: '$questionCount' },
+          liveGames: { $sum: 1 },
+        },
+      },
+    ]),
+    Session.aggregate([
+      {
+        $match: {
+          createdAt: { $gte: startOfDay },
+        },
+      },
+      {
+        $group: {
+          _id: null,
+          gamesToday: { $sum: 1 },
+          questionsToday: { $sum: { $size: '$questions' } },
+        },
+      },
+    ]),
+  ]);
+
+  const live = liveSessionStats[0] || {};
+  const today = todaySessionStats[0] || {};
+
+  res.status(200).json({
+    success: true,
+    data: {
+      players: live.livePlayers || 0,
+      gamesToday: today.gamesToday || 0,
+      questions: live.liveQuestions || 0,
+      liveGames: live.liveGames || 0,
+      questionsToday: today.questionsToday || 0,
+    },
+  });
+});
+
+/**
  * @desc    Delete session
  * @route   DELETE /api/trivia/session/:sessionId
  * @access  Private (Host only)
@@ -322,6 +392,7 @@ module.exports = {
   getSessionResults,
   getUserHistory,
   getUserTriviaStats,
+  getPlatformTriviaStats,
   deleteSession,
   restartSession,
 };

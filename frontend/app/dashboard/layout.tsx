@@ -3,6 +3,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { useRouter, usePathname } from "next/navigation";
 import { useUser, UserButton } from "@clerk/nextjs";
 import { useUserProfile } from "@/lib/userContext";
@@ -20,6 +21,29 @@ const dashboardNavLinks = [
   { label: "Investment", href: "/dashboard/investment" },
   { label: "AI Chat", href: "/dashboard/ai-chat" },
   { label: "Profile", href: "/dashboard/profile" },
+];
+
+const floatingParticles = [
+  { left: "6%", top: "18%", duration: 3.4, delay: 0.2 },
+  { left: "14%", top: "72%", duration: 4.1, delay: 1.1 },
+  { left: "21%", top: "36%", duration: 3.8, delay: 0.7 },
+  { left: "28%", top: "12%", duration: 4.5, delay: 1.6 },
+  { left: "33%", top: "64%", duration: 3.2, delay: 0.5 },
+  { left: "39%", top: "28%", duration: 4.7, delay: 1.9 },
+  { left: "45%", top: "82%", duration: 3.6, delay: 0.3 },
+  { left: "52%", top: "20%", duration: 4.2, delay: 1.4 },
+  { left: "57%", top: "58%", duration: 3.9, delay: 0.9 },
+  { left: "63%", top: "10%", duration: 4.8, delay: 1.7 },
+  { left: "68%", top: "76%", duration: 3.3, delay: 0.4 },
+  { left: "72%", top: "34%", duration: 4.3, delay: 1.2 },
+  { left: "78%", top: "52%", duration: 3.7, delay: 0.8 },
+  { left: "83%", top: "16%", duration: 4.6, delay: 1.5 },
+  { left: "88%", top: "68%", duration: 3.5, delay: 0.6 },
+  { left: "92%", top: "26%", duration: 4.4, delay: 1.8 },
+  { left: "10%", top: "48%", duration: 3.1, delay: 0.1 },
+  { left: "26%", top: "88%", duration: 4.0, delay: 1.0 },
+  { left: "61%", top: "42%", duration: 3.75, delay: 1.3 },
+  { left: "86%", top: "90%", duration: 4.9, delay: 0.95 },
 ];
 
 export default function DashboardLayout({
@@ -62,21 +86,59 @@ export default function DashboardLayout({
 
   if (!isLoaded || loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
+      <div
+        className="min-h-screen flex items-center justify-center text-white"
+        style={{
+          backgroundColor: "hsl(0 0% 7%)",
+          backgroundImage:
+            "linear-gradient(160deg, hsl(0 0% 7%), hsl(0 0% 9%), hsl(152 20% 8%))",
+          backgroundAttachment: "fixed",
+        }}
+      >
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-4 border-valuto-green-600 border-t-transparent mx-auto mb-4"></div>
-          <p className="text-gray-600 font-medium">Loading...</p>
+          <p className="font-medium text-gray-300">Loading...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen animate-gradient relative overflow-hidden">
+    <div
+      className="min-h-screen relative overflow-hidden text-white"
+      style={{
+        backgroundColor: "hsl(0 0% 7%)",
+        backgroundImage:
+          "linear-gradient(160deg, hsl(0 0% 7%), hsl(0 0% 9%), hsl(152 20% 8%))",
+        backgroundAttachment: "fixed",
+      }}
+    >
       {/* Decorative elements - adjusted to avoid dock area */}
-      <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 w-72 h-72 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob"></div>
-      <div className="absolute top-1/3 left-40 translate-y-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 right-1/4 translate-y-12 w-80 h-80 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
+      <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 h-72 w-72 rounded-full bg-valuto-green-400/10 blur-3xl"></div>
+      <div className="absolute top-1/3 left-40 translate-y-12 h-96 w-96 rounded-full bg-emerald-300/8 blur-3xl"></div>
+      <div className="absolute bottom-0 right-1/4 translate-y-12 h-80 w-80 rounded-full bg-cyan-300/5 blur-3xl"></div>
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {floatingParticles.map((particle, index) => (
+          <motion.div
+            key={`${particle.left}-${particle.top}-${index}`}
+            className="absolute h-1.5 w-1.5 rounded-full bg-valuto-green-400/35 shadow-[0_0_14px_rgba(74,222,128,0.55)]"
+            style={{
+              left: particle.left,
+              top: particle.top,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              opacity: [0.2, 0.85, 0.2],
+              scale: [1, 1.5, 1],
+            }}
+            transition={{
+              duration: particle.duration,
+              repeat: Infinity,
+              delay: particle.delay,
+            }}
+          />
+        ))}
+      </div>
 
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md">

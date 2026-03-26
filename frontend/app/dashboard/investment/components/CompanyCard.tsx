@@ -29,7 +29,7 @@ export default function CompanyCard({
 
   return (
     <>
-      <div className="bg-white border border-gray-100 shadow-sm rounded-xl p-6 flex flex-col justify-between hover:shadow-md transition">
+      <div className="flex flex-col justify-between rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)] transition hover:shadow-[0_28px_70px_rgba(0,0,0,0.38)]">
 
         <Header company={company} onOpenNews={() => setShowNews(true)} />
 
@@ -37,7 +37,7 @@ export default function CompanyCard({
 
         <RiskRow company={company} />
 
-        <div className="border-t border-gray-200 my-4" />
+        <div className="my-4 border-t border-white/10" />
 
         <InvestSection
           company={company}

@@ -22,18 +22,18 @@ export function Response({
         remarkPlugins={[remarkGfm]}
         components={{
           p: ({ children }) => <p className="mb-2 last:mb-0 leading-relaxed">{children}</p>,
-          strong: ({ children }) => <strong className="font-bold text-gray-900">{children}</strong>,
+          strong: ({ children }) => <strong className="font-bold text-white">{children}</strong>,
           em: ({ children }) => <em className="italic">{children}</em>,
           ul: ({ children }) => <ul className="list-disc list-inside mb-2 space-y-1">{children}</ul>,
           ol: ({ children }) => <ol className="list-decimal list-inside mb-2 space-y-1">{children}</ol>,
           li: ({ children }) => <li className="ml-2">{children}</li>,
           code: ({ children }) => (
-            <code className="px-1.5 py-0.5 bg-valuto-green-50 text-valuto-green-700 rounded text-sm font-mono">
+            <code className="rounded bg-white/[0.06] px-1.5 py-0.5 text-sm font-mono text-valuto-green-300">
               {children}
             </code>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-valuto-green-300 pl-4 italic text-gray-700">
+            <blockquote className="border-l-4 border-valuto-green-300 pl-4 italic text-[#d7d7db]">
               {children}
             </blockquote>
           ),
@@ -47,4 +47,3 @@ export function Response({
     </div>
   );
 }
-

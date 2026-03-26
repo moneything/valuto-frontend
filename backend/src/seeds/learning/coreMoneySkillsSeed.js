@@ -321,7 +321,7 @@ const coreMoneySkillsModules = [
                         children: [
                           { type: "h3", props: { className: "text-xl font-bold text-green-400" }, children: ["50%"] },
                           { type: "h4", props: { className: "font-semibold text-green-300" }, children: ["NEEDS"] },
-                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Rent, food, transport, phone"] }
+                          { type: "p", props: { className: "text-md text-[#d7d7db]" }, children: ["Rent, food, transport, phone"] }
                         ]
                       },
                       {
@@ -332,7 +332,7 @@ const coreMoneySkillsModules = [
                         children: [
                           { type: "h3", props: { className: "text-xl font-bold text-blue-400" }, children: ["30%"] },
                           { type: "h4", props: { className: "font-semibold text-blue-300" }, children: ["WANTS"] },
-                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Fun, eating out, entertainment"] }
+                          { type: "p", props: { className: "text-md text-[#d7d7db]" }, children: ["Fun, eating out, entertainment"] }
                         ]
                       },
                       {
@@ -343,7 +343,7 @@ const coreMoneySkillsModules = [
                         children: [
                           { type: "h3", props: { className: "text-xl font-bold text-violet-400" }, children: ["20%"] },
                           { type: "h4", props: { className: "font-semibold text-violet-300" }, children: ["SAVINGS"] },
-                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Emergency fund, future goals"] }
+                          { type: "p", props: { className: "text-md text-[#d7d7db]" }, children: ["Emergency fund, future goals"] }
                         ]
                       }
                     ]
@@ -362,7 +362,7 @@ const coreMoneySkillsModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "space-y-1 text-sm pl-4 text-[#d7d7db]", style: { listStyleType: "disc" } },
+                        props: { className: "space-y-1 text-md pl-4 text-[#d7d7db]", style: { listStyleType: "disc" } },
                         children: [
                           { type: "li", children: ["£500 for needs (rent, food, transport)"] },
                           { type: "li", children: ["£300 for wants (fun, eating out)"] },
@@ -424,7 +424,7 @@ const coreMoneySkillsModules = [
                             type: "div",
                             children: [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Track Your Income"] },
-                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Add up all money coming in: part-time job, student loan, family support"] }
+                              { type: "p", props: { className: "text-md text-[#9a9a9d]" }, children: ["Add up all money coming in: part-time job, student loan, family support"] }
                             ]
                           }
                         ]
@@ -447,7 +447,7 @@ const coreMoneySkillsModules = [
                             type: "div",
                             children: [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["List Your Expenses"] },
-                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Write down everything you spend money on for a week"] }
+                              { type: "p", props: { className: "text-md text-[#9a9a9d]" }, children: ["Write down everything you spend money on for a week"] }
                             ]
                           }
                         ]
@@ -470,7 +470,7 @@ const coreMoneySkillsModules = [
                             type: "div",
                             children: [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Apply the 50/30/20 Rule"] },
-                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Split your income and adjust your spending to fit"] }
+                              { type: "p", props: { className: "text-md text-[#9a9a9d]" }, children: ["Split your income and adjust your spending to fit"] }
                             ]
                           }
                         ]
@@ -652,7 +652,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-2 text-md text-[#d7d7db]" },
                             children: ["Unexpected expenses won't stress you out"]
                           }
                         ]
@@ -670,7 +670,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-2 text-md text-[#d7d7db]" },
                             children: ["Holiday, laptop, car deposit"]
                           }
                         ]
@@ -688,7 +688,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-2 text-md text-[#d7d7db]" },
                             children: ["Job course, starting a business"]
                           }
                         ]
@@ -935,13 +935,41 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 text-sm text-[#e5e5e7]"
+                              className: "space-y-2 text-md text-[#e5e5e7]"
                             },
                             children: [
-                              { type: "li", children: ["✅ High-interest savings account"] },
-                              { type: "li", children: ["✅ Easy access account"] },
-                              { type: "li", children: ["❌ Not invested (too risky)"] },
-                              { type: "li", children: ["❌ Not your main spending account"] }
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#e5e5e7]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "mr-2 h-5 w-5 self-center shrink-0 text-green-400" }, children: [] },
+                                  { type: "span", children: ["High-interest savings account"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#e5e5e7]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "mr-2 h-5 w-5 self-center shrink-0 text-green-400" }, children: [] },
+                                  { type: "span", children: ["Easy access account"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#e5e5e7]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "mr-2 h-5 w-5 self-center shrink-0 text-orange-400" }, children: [] },
+                                  { type: "span", children: ["Not invested (too risky)"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#e5e5e7]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "mr-2 h-5 w-5 self-center shrink-0 text-orange-400" }, children: [] },
+                                  { type: "span", children: ["Not your main spending account"] }
+                                ]
+                              }
                             ]
                           }
                         ]
@@ -1143,7 +1171,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1170,7 +1198,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1267,7 +1295,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "ol",
                         props: {
-                          className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                          className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                           style: { listStyleType: "decimal" }
                         },
                         children: [
@@ -1411,7 +1439,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1446,7 +1474,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1542,7 +1570,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -1570,7 +1598,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -1601,7 +1629,7 @@ const coreMoneySkillsModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#e5e5e7]" },
+                        props: { className: "text-md text-[#e5e5e7]" },
                         children: [
                           "Look for accounts with the highest AER (Annual Equivalent Rate) - that's the real interest rate you'll get!"
                         ]
@@ -1657,7 +1685,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              className: "mt-3 space-y-1 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1684,7 +1712,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              className: "mt-3 space-y-1 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1711,7 +1739,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              className: "mt-3 space-y-1 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -1794,7 +1822,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -1822,7 +1850,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -1853,7 +1881,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -2000,7 +2028,7 @@ const coreMoneySkillsModules = [
   
                       {
                         type: "div",
-                        props: { className: "grid grid-cols-1 gap-3 text-center text-sm sm:grid-cols-2 lg:grid-cols-5" },
+                        props: { className: "grid grid-cols-1 gap-3 text-center text-md sm:grid-cols-2 lg:grid-cols-5" },
                         children: [
                           {
                             type: "div",
@@ -2120,7 +2148,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -2152,7 +2180,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                               style: { listStyleType: "disc" }
                             },
                             children: [
@@ -2182,7 +2210,7 @@ const coreMoneySkillsModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#e5e5e7]" },
+                        props: { className: "text-md text-[#e5e5e7]" },
                         children: [
                           "On a £200,000 mortgage: Excellent credit (1.5% rate) vs Poor credit (4.5% rate) = £3,000+ difference per year in payments!"
                         ]
@@ -2244,7 +2272,7 @@ const coreMoneySkillsModules = [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Payment History"] },
                               {
                                 type: "p",
-                                props: { className: "text-sm text-[#9a9a9d]" },
+                                props: { className: "text-md text-[#9a9a9d]" },
                                 children: ["Do you pay bills on time?"]
                               }
                             ]
@@ -2272,7 +2300,7 @@ const coreMoneySkillsModules = [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Credit Utilization"] },
                               {
                                 type: "p",
-                                props: { className: "text-sm text-[#9a9a9d]" },
+                                props: { className: "text-md text-[#9a9a9d]" },
                                 children: ["How much of your available credit do you use?"]
                               }
                             ]
@@ -2300,7 +2328,7 @@ const coreMoneySkillsModules = [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Length of Credit History"] },
                               {
                                 type: "p",
-                                props: { className: "text-sm text-[#9a9a9d]" },
+                                props: { className: "text-md text-[#9a9a9d]" },
                                 children: ["How long have you had credit accounts?"]
                               }
                             ]
@@ -2328,7 +2356,7 @@ const coreMoneySkillsModules = [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["Credit Mix"] },
                               {
                                 type: "p",
-                                props: { className: "text-sm text-[#9a9a9d]" },
+                                props: { className: "text-md text-[#9a9a9d]" },
                                 children: ["Variety of credit types (cards, loans, etc.)"]
                               }
                             ]
@@ -2356,7 +2384,7 @@ const coreMoneySkillsModules = [
                               { type: "h4", props: { className: "font-semibold text-white" }, children: ["New Credit"] },
                               {
                                 type: "p",
-                                props: { className: "text-sm text-[#9a9a9d]" },
+                                props: { className: "text-md text-[#9a9a9d]" },
                                 children: ["Recent credit applications and new accounts"]
                               }
                             ]
@@ -2410,7 +2438,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "text-sm text-[#e5e5e7]" },
+                            props: { className: "text-md text-[#e5e5e7]" },
                             children: [
                               "Most students have no credit history, which means \"no score\" rather than a bad score. This is normal!"
                             ]
@@ -2438,7 +2466,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -2468,7 +2496,7 @@ const coreMoneySkillsModules = [
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                                  className: "space-y-2 pl-4 text-md text-[#e5e5e7]",
                                   style: { listStyleType: "disc" }
                                 },
                                 children: [
@@ -2541,7 +2569,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-1 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-1 text-md text-[#d7d7db]" },
                             children: ["Most comprehensive, used by most lenders"]
                           }
                         ]
@@ -2558,7 +2586,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-1 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-1 text-md text-[#d7d7db]" },
                             children: ["Good for spotting errors, different scoring"]
                           }
                         ]
@@ -2575,7 +2603,7 @@ const coreMoneySkillsModules = [
                           },
                           {
                             type: "p",
-                            props: { className: "mt-1 text-sm text-[#d7d7db]" },
+                            props: { className: "mt-1 text-md text-[#d7d7db]" },
                             children: ["Growing in popularity, good insights"]
                           }
                         ]
@@ -2596,7 +2624,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "ul",
                         props: {
-                          className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                          className: "space-y-1 pl-4 text-md text-[#e5e5e7]",
                           style: { listStyleType: "disc" }
                         },
                         children: [

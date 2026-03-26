@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/propertyPurchasesSeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Property & Big Purchases — Learning Modules
@@ -2902,7 +2901,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(propertyPurchasesModules);
-applyDarkThemeToModules(propertyPurchasesModules);
 
 // =====================================================
 // Seed Function

@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/futurePlanningSeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Future Planning — Learning Modules
@@ -2474,7 +2473,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(futurePlanningModules);
-applyDarkThemeToModules(futurePlanningModules);
 
 // =====================================================
 // Seed Function

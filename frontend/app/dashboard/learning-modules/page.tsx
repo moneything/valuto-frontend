@@ -196,10 +196,7 @@ export default function LearningModulesPage() {
                 return (
                   <div key={module.topic} className={cardClassName}>
                     {isInProgress && (
-                      <>
-                        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
-                        <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-[linear-gradient(90deg,transparent,rgba(250,204,21,0.42),transparent)] animate-[module-card-shimmer_2.4s_linear_infinite]" />
-                      </>
+                      <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
                     )}
                     <div className="flex items-center justify-between mb-2">
                       <ModuleTitle
@@ -270,12 +267,12 @@ export default function LearningModulesPage() {
           animation: module-title-marquee-scroll 6s ease-in-out infinite alternate;
         }
 
-        @keyframes module-card-shimmer {
+        @keyframes average-score-border-spin {
           0% {
-            transform: translateX(-10%);
+            transform: rotate(0deg);
           }
           100% {
-            transform: translateX(420%);
+            transform: rotate(360deg);
           }
         }
 
@@ -357,22 +354,46 @@ type StatItemProps = {
 
 function StatItem({ label, value, tooltip }: StatItemProps) {
   const isCompletedModulesCard = label === "Modules Completed 🎯";
+  const isInProgressCard = label === "In Progress 🚀";
+  const isAverageScoreCard = label === "Average Score ⭐";
+  const isDefaultAnimatedCard =
+    !isCompletedModulesCard && !isInProgressCard && !isAverageScoreCard;
   const cardContent = (
     <Card
       className={`relative overflow-hidden text-center ${
         isCompletedModulesCard
           ? "border-emerald-400/80 shadow-[0_0_28px_rgba(16,185,129,0.2)]"
+          : isInProgressCard
+            ? "border-yellow-400/80 shadow-[0_0_28px_rgba(250,204,21,0.18)]"
+            : isAverageScoreCard
+              ? "border-violet-400/80 shadow-[0_0_28px_rgba(167,139,250,0.18)]"
+              : isDefaultAnimatedCard
+                ? "border-sky-400/80 shadow-[0_0_28px_rgba(56,189,248,0.16)]"
           : ""
       }`}
     >
-      {isCompletedModulesCard && (
+      {isDefaultAnimatedCard && (
         <>
-          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-emerald-300/60" />
-          <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-[linear-gradient(90deg,transparent,rgba(52,211,153,0.4),transparent)] animate-[module-card-shimmer_2.4s_linear_infinite]" />
+          <div className="pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent bg-[conic-gradient(from_0deg,rgba(56,189,248,0.1),rgba(125,211,252,0.82),rgba(56,189,248,0.1),rgba(56,189,248,0.1))] animate-[average-score-border-spin_2.4s_linear_infinite]" />
+          <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-sky-300/60" />
         </>
       )}
-      <div className="mb-2 text-4xl font-bold text-primary">{value}</div>
-      <div className="text-sm font-bold text-[#d7d7db]">{label}</div>
+      {isAverageScoreCard && (
+        <>
+          <div className="pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent bg-[conic-gradient(from_0deg,rgba(167,139,250,0.12),rgba(196,181,253,0.88),rgba(167,139,250,0.12),rgba(167,139,250,0.12))] animate-[average-score-border-spin_2.2s_linear_infinite]" />
+          <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-violet-300/60" />
+        </>
+      )}
+      {isCompletedModulesCard && (
+        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-emerald-300/60" />
+      )}
+      {isInProgressCard && (
+        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
+      )}
+      <div className="relative z-10 mb-2 text-4xl font-bold text-primary">{value}</div>
+      <div className="relative z-10 text-sm font-bold text-[#d7d7db]">{label}</div>
     </Card>
   );
 

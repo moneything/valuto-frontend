@@ -159,17 +159,17 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
+          <h3 className="mb-2 text-xl font-bold text-white">
             {simulation.title || scenario?.title || 'Budget Allocation Simulator'}
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="mb-4 text-[#d7d7db]">
             {simulation.description || scenario?.description || 'Allocate your monthly income across different categories'}
           </p>
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-blue-800 mb-2">
+          <div className="mb-6 rounded-lg border border-blue-400/30 bg-blue-500/10 p-4">
+            <p className="mb-2 text-sm text-blue-200">
               <strong>Monthly Income:</strong> £{monthlyIncome.toLocaleString()}
             </p>
-            <p className="text-sm text-blue-800">
+            <p className="text-sm text-blue-200">
               <strong>Target:</strong> {targetRatios.needs}% Needs, {targetRatios.wants}% Wants, {targetRatios.savings}% Savings
             </p>
           </div>
@@ -178,7 +178,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {categories.map((category: any) => (
             <div key={category.name || category} className="space-y-2">
-              <label className="block text-sm font-medium text-gray-700">
+              <label className="block text-sm font-medium text-[#d7d7db]">
                 {category.name || category}
                 <span className="text-sm text-gray-500 ml-2">({category.type || 'expense'})</span>
               </label>
@@ -188,7 +188,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
                 max={category.max || monthlyIncome}
                 step="10"
                 defaultValue={category.suggested || 0}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
                 placeholder={`£${category.suggested || 0}`}
                 onChange={(e) => {
                   const amount = parseInt(e.target.value) || 0;
@@ -214,17 +214,17 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
     return (
       <div className="space-y-6">
         <div className="text-center">
-          <h3 className="text-xl font-bold text-gray-900 mb-2">
+          <h3 className="mb-2 text-xl font-bold text-white">
             {scenario.title}
           </h3>
-          <p className="text-gray-600 mb-4">
+          <p className="mb-4 text-[#d7d7db]">
             {scenario.description}
           </p>
-          <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-            <p className="text-sm text-green-800">
+          <div className="mb-6 rounded-lg border border-green-400/30 bg-green-500/10 p-4">
+            <p className="text-sm text-green-200">
               <strong>Available cash:</strong> £{currentData.cash}
             </p>
-            <p className="text-sm text-green-800">
+            <p className="text-sm text-green-200">
               <strong>Goal:</strong> Diversify your portfolio
             </p>
           </div>
@@ -233,7 +233,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
         <div className="space-y-4">
           {assets.map(asset => (
             <div key={asset} className="flex items-center gap-4">
-              <label className="flex-1 text-sm font-medium text-gray-700 capitalize">
+              <label className="flex-1 text-sm font-medium capitalize text-[#d7d7db]">
                 {asset.replace('_', ' ')}
               </label>
               <input
@@ -241,7 +241,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
                 min="0"
                 max={currentData.cash}
                 step="100"
-                className="w-32 px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+                className="w-32 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
                 placeholder="£0"
                 onChange={(e) => {
                   const amount = parseInt(e.target.value) || 0;
@@ -270,10 +270,10 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
           <div className="text-6xl mb-4">
             {result.efficiency >= 80 ? '🎉' : result.efficiency >= 60 ? '👍' : '📚'}
           </div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-2">
+          <h3 className="mb-2 text-2xl font-bold text-white">
             Simulation Complete!
           </h3>
-          <p className="text-gray-600">
+          <p className="text-[#d7d7db]">
             {result.efficiency >= 80 
               ? 'Excellent work! You made great financial decisions.'
               : result.efficiency >= 60 
@@ -288,19 +288,19 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
             <div className="text-3xl font-bold text-valuto-green-600 mb-1">
               {result.finalScore}
             </div>
-            <div className="text-sm text-gray-600">Final Score</div>
+            <div className="text-sm text-[#9a9a9d]">Final Score</div>
           </Card>
           <Card className="p-4 text-center">
             <div className="text-3xl font-bold text-blue-600 mb-1">
               {result.efficiency}%
             </div>
-            <div className="text-sm text-gray-600">Efficiency</div>
+            <div className="text-sm text-[#9a9a9d]">Efficiency</div>
           </Card>
           <Card className="p-4 text-center">
             <div className="text-3xl font-bold text-purple-600 mb-1">
               {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}
             </div>
-            <div className="text-sm text-gray-600">Time Spent</div>
+            <div className="text-sm text-[#9a9a9d]">Time Spent</div>
           </Card>
         </div>
 
@@ -318,7 +318,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
   return (
     <div className="space-y-6">
       {/* Progress Bar */}
-      <div className="bg-gray-200 rounded-full h-2">
+      <div className="h-2 rounded-full bg-white/10">
         <div 
           className="bg-valuto-green-600 h-2 rounded-full transition-all duration-300"
           style={{ width: `${((currentStep + 1) / scenariosCount) * 100}%` }}
@@ -327,7 +327,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
 
       {/* Step Counter */}
       {scenariosCount > 1 && (
-        <div className="text-center text-sm text-gray-600">
+        <div className="text-center text-sm text-[#9a9a9d]">
           Step {currentStep + 1} of {scenariosCount}
         </div>
       )}
@@ -339,7 +339,7 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
       </Card>
 
       {/* Timer */}
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-[#9a9a9d]">
         Time spent: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}
       </div>
     </div>

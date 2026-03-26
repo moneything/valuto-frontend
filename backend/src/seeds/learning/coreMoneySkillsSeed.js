@@ -141,7 +141,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "h3",
                             props: { className: "text-lg font-semibold text-green-400" },
-                            children: ["✅ NEEDS (Must Have)"]
+                            children: ["✅ NEEDS (Must Have)"] // todo: update so it uses icon instead of emoji uses span 
                           },
                           {
                             type: "ul",

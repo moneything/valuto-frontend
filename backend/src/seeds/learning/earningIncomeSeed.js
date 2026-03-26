@@ -1,5 +1,6 @@
 // backend/src/seeds/learning/earningIncomeSeed.js
 const LearningModule = require("../../models/LearningModule");
+const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Earning & Income — Learning Modules
@@ -2044,6 +2045,7 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(earningIncomeModules);
+applyDarkThemeToModules(earningIncomeModules);
 
 // =====================================================
 // Seed Function

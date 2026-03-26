@@ -387,10 +387,18 @@ function StatItem({ label, value, tooltip }: StatItemProps) {
         </>
       )}
       {isCompletedModulesCard && (
-        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-emerald-300/60" />
+        <>
+          <div className="pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent bg-[conic-gradient(from_0deg,rgba(16,185,129,0.1),rgba(52,211,153,0.86),rgba(16,185,129,0.1),rgba(16,185,129,0.1))] animate-[average-score-border-spin_2.3s_linear_infinite]" />
+          <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-emerald-300/60" />
+        </>
       )}
       {isInProgressCard && (
-        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
+        <>
+          <div className="pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent bg-[conic-gradient(from_0deg,rgba(250,204,21,0.1),rgba(253,224,71,0.88),rgba(250,204,21,0.1),rgba(250,204,21,0.1))] animate-[average-score-border-spin_2.5s_linear_infinite]" />
+          <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
+        </>
       )}
       <div className="relative z-10 mb-2 text-4xl font-bold text-primary">{value}</div>
       <div className="relative z-10 text-sm font-bold text-[#d7d7db]">{label}</div>

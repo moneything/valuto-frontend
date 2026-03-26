@@ -88,17 +88,17 @@ export default function QuizActivity({
   const getBtnClass = (i: number) => {
     if (!showResult) {
       return selected[index] === i
-        ? "border-valuto-green-600 bg-valuto-green-50"
-        : "border-gray-200 hover:bg-valuto-green-50 hover:border-valuto-green-300";
+        ? "border-valuto-green-500 bg-valuto-green-500/10 text-white"
+        : "border-white/10 bg-white/[0.03] text-[#e5e5e7] hover:bg-white/[0.06] hover:border-valuto-green-400/50";
     }
 
     const isCorrect = i === question.correctAnswer;
     const wasSelected = i === selected[index];
 
-    if (isCorrect) return "border-green-500 bg-green-50";
-    if (wasSelected) return "border-red-500 bg-red-50";
+    if (isCorrect) return "border-green-500 bg-green-500/10 text-white";
+    if (wasSelected) return "border-red-500 bg-red-500/10 text-white";
 
-    return "border-gray-200 bg-gray-50 text-gray-500";
+    return "border-white/10 bg-white/[0.03] text-[#9a9a9d]";
   };
 
   const getIcon = (i: number) => {
@@ -118,7 +118,7 @@ export default function QuizActivity({
   return (
     <div className="space-y-6">
       {/* Progress bar */}
-      <div className="bg-gray-200 rounded-full h-2">
+      <div className="h-2 rounded-full bg-white/10">
         <div
           className="bg-valuto-green-600 h-2 rounded-full"
           style={{ width: `${((index + 1) / questions.length) * 100}%` }}
@@ -126,13 +126,13 @@ export default function QuizActivity({
       </div>
 
       {/* Counter */}
-      <div className="text-center text-sm text-gray-600">
+      <div className="text-center text-sm text-[#9a9a9d]">
         Question {index + 1} / {questions.length}
       </div>
 
       {/* Question */}
       <Card className="p-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-6">
+        <h3 className="mb-6 text-xl font-bold text-white">
           {question.question}
         </h3>
 
@@ -167,17 +167,17 @@ export default function QuizActivity({
             <div
               className={`p-4 rounded-lg ${
                 selected[index] === question.correctAnswer
-                  ? "bg-green-50 border border-green-200"
-                  : "bg-red-50 border border-red-200"
+                  ? "border border-green-400/30 bg-green-500/10"
+                  : "border border-red-400/30 bg-red-500/10"
               }`}
             >
-              <div className="font-semibold mb-2">
+              <div className="mb-2 font-semibold text-white">
                 {selected[index] === question.correctAnswer
                   ? "Correct!"
                   : "Incorrect"}
               </div>
 
-              <p className="text-sm text-gray-700">{question.explanation}</p>
+              <p className="text-sm text-[#d7d7db]">{question.explanation}</p>
             </div>
 
             <Button className="w-full" onClick={handleNext}>
@@ -188,7 +188,7 @@ export default function QuizActivity({
       </Card>
 
       {/* Timer */}
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-[#9a9a9d]">
         Time spent: {Math.floor(elapsedSeconds / 60)}:
         {(elapsedSeconds % 60).toString().padStart(2, "0")}
       </div>

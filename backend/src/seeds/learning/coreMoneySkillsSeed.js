@@ -568,248 +568,129 @@ const coreMoneySkillsModules = [
     description: "Setting goals, emergency funds, paying yourself first",
     categoryId: "core-money-skills",
     topic: "saving-strategies",
-
+  
     visual: {
       icon: "PiggyBank",
       iconColor: "bg-green-500",
       badge: "Core Money Skills",
       readTime: 3
     },
-
+  
     uiTree: [
       {
-        "type": "Card",
-        "children": [
+        type: "div",
+        props: { className: "grid gap-6 text-white" },
+        children: [
+  
+          /* ------------------------------------------------
+              CARD 1 — Why Save Money?
+          ------------------------------------------------ */
           {
-            "type": "CardHeader",
-            "children": [
+            type: "Card",
+            props: {
+              className:
+                "overflow-hidden rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
               {
-                "type": "h3",
-                "props": {"className": "flex flex-row text-2xl font-semibold leading-none tracking-tight"},
-                "children": [
-                  { "type": "TrendingUp", "props": { "className": "h-7 w-7 mr-2 text-black", "style": {"align-self": "anchor-center"} } },
-                  "Why Save Money?"
-                ]
-              }
-            ]
-          },
-          {
-            "type": "CardContent",
-            "children": [
-              {
-                "type": "p",
-                "props": { "className": "text-lg mb-4" },
-                "children": [
-                  "Saving money gives you freedom and peace of mind. It's not about being cheap — it's about being prepared for opportunities and emergencies."
-                ]
-              },
-              {
-                "type": "div",
-                "props": {
-                  "className": "grid md:grid-cols-3 gap-4"
+                type: "div",
+                props: {
+                  className: "bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-violet-500/10 p-6 pb-4"
                 },
-                "children": [
+                children: [
                   {
-                    "type": "div",
-                    "props": { "className": "bg-blue-50 p-4 rounded-lg" },
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold text-blue-700" }, "children": ["🚨 Emergencies"] },
-                      { "type": "p", "props": { "className": "text-sm" }, "children": ["Unexpected expenses won't stress you out"] }
-                    ]
-                  },
-                  {
-                    "type": "div",
-                    "props": { "className": "bg-green-50 p-4 rounded-lg" },
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold text-green-700" }, "children": ["🎯 Goals"] },
-                      { "type": "p", "props": { "className": "text-sm" }, "children": ["Holiday, laptop, car deposit"] }
-                    ]
-                  },
-                  {
-                    "type": "div",
-                    "props": { "className": "bg-purple-50 p-4 rounded-lg" },
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold text-purple-700" }, "children": ["🌟 Opportunities"] },
-                      { "type": "p", "props": { "className": "text-sm" }, "children": ["Job course, starting a business"] }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-
-      {
-        "type": "Card",
-        "props" : {"className": "mt-5 mb-5"},
-        "children": [
-          {
-            "type": "CardHeader",
-            "children": [
-              {
-                "type": "h3",
-                "props": {"className": "flex flex-row text-2xl font-semibold leading-none tracking-tight"},
-                "children": [
-                  { "type": "Target", "props": { "className": "h-7 w-7 mr-2 text-black", "style": {"align-self": "anchor-center"} } },
-                  "Pay Yourself First (The Golden Rule)"
-                ]
-              }
-            ]
-          },
-
-          {
-            "type": "CardContent",
-            "children": [
-              {
-                "type": "div",
-                "props": { "className": "bg-primary/10 p-6 rounded-lg mb-4" },
-                "children": [
-                  { "type": "h3", "props": { "className": "text-xl font-bold mb-2" }, "children": ["The Secret: Save BEFORE You Spend"] },
-                  { "type": "p", "props": { "className": "text-lg" }, "children": [
-                    "As soon as money arrives, move your savings amount into a separate account. Treat it like a bill you must pay."
-                  ]}
-                ]
-              },
-
-              {
-                "type": "div",
-                "children": [
-                  { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["How it works:"] },
-                  {
-                    "type": "ol",
-                    "props": { "className": "space-y-2 list-decimal list-inside" },
-                    "children": [
-                      {"type": "li", "children" : ["Get paid £500"],},
-                      {"type": "li", "children" : ["Immediately save £50 (10%)"],},
-                      {"type": "li", "children" : ["Live on the remaining £450"],},
-                      {"type": "li", "children" : ["Get paid £500"],},
-                      
+                    type: "CardHeader",
+                    props: { className: "p-0" },
+                    children: [
+                      {
+                        type: "h3",
+                        props: {
+                          className: "flex flex-row items-center text-2xl font-bold leading-none tracking-tight text-white md:text-3xl"
+                        },
+                        children: [
+                          {
+                            type: "TrendingUp",
+                            props: {
+                              className: "mr-2 h-7 w-7 text-green-400",
+                              style: { alignSelf: "center" }
+                            }
+                          },
+                          "Why Save Money?"
+                        ]
+                      }
                     ]
                   }
                 ]
               },
-
               {
-                "type": "div",
-                "props": { "className": "mt-4 p-4 bg-primary/10 rounded-lg" },
-                "children": [
-                  { "type": "p", "props": { "className": "font-semibold mb-1" }, "children": ["💡 Pro Tip:"] },
-                  { "type": "p", "children": ["Set up an automatic transfer on payday so saving happens without effort."] }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-
-      {
-        "type": "Card",
-        "children": [
-          {
-            "type": "CardHeader",
-            "children": [
-              {
-                "type": "h3",
-                "props": {"className": "flex flex-row text-2xl font-semibold leading-none tracking-tight"},
-                "children": [
-                  { "type": "Shield", "props": { "className": "h-7 w-7 mr-2 text-black anchor-center", "style": {"align-self": "anchor-center"} } },
-                  "Emergency Fund: Your Financial Safety Net"
-                ]
-              }
-            ],
-          },
-
-          {
-            "type": "CardContent",
-            "children": [
-              {
-                "type": "p",
-                "children": [
-                  "An emergency fund is money saved specifically for unexpected expenses. It's not for holidays or shopping — it's for genuine emergencies."
-                ]
-              },
-
-              {
-                "type": "div",
-                "props": { "className": "bg-red-50 border-l-4 border-red-400 p-4 my-4" },
-                "children": [
-                  { "type": "h4", "props": { "className": "font-semibold text-red-700 mb-2" }, "children": ["What counts as an emergency?"] },
+                type: "CardContent",
+                props: { className: "p-6 pt-4" },
+                children: [
                   {
-                    "type": "ul",
-                    "props": { 
-                      "className": "text-md pl-4",
-                      "style": {"list-style": "disc"},
+                    type: "p",
+                    props: { className: "mb-5 text-lg text-[#d7d7db]" },
+                    children: [
+                      "Saving money gives you freedom and peace of mind. It's not about being cheap — it's about being prepared for opportunities and emergencies."
+                    ]
+                  },
+                  {
+                    type: "div",
+                    props: {
+                      className: "grid gap-4 md:grid-cols-3"
                     },
-                    "children": [
-                      { "type": "li", "children": ["Car breakdown"] },
-                      { "type": "li", "children": ["Laptop failure during exams"] },
-                      { "type": "li", "children": ["Unexpected medical costs"] },
-                      { "type": "li", "children": ["Reduced work hours"] },
-                      { "type": "li", "children": ["Urgent family travel"] },
-                    ]
-                  }
-                ]
-              },
-
-              {
-                "type": "div",
-                "props": { "className": "grid md:grid-cols-2 gap-4" },
-                "children": [
-                  {
-                    "type": "div",
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["How much to save:"] },
+                    children: [
                       {
-                        "type": "div",
-                        "props": { "className": "space-y-2" },
-                        "children": [
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] border border-blue-500/30 bg-blue-500/10 p-4 shadow-[0_0_25px_rgba(59,130,246,0.10)]"
+                        },
+                        children: [
                           {
-                            "type": "div",
-                            "props": { "className": "flex justify-between p-2 bg-green-50 rounded" },
-                            "children": [
-                              {
-                                "type": "p", 
-                                "children": ["Students / Part-time:"]
-                              }, 
-                              {
-                                "type": "p", 
-                                "props": {"className": "font-bold"}, 
-                                "children": ["£500–£1000"]
-                              },
-                            ]
+                            type: "h4",
+                            props: { className: "font-semibold text-blue-400" },
+                            children: ["🚨 Emergencies"]
                           },
                           {
-                            "type": "div",
-                            "props": { "className": "flex justify-between p-2 bg-green-50 rounded" },
-                            "children": [
-                              {
-                                "type": "p", 
-                                "children": ["Full-time workers:"]
-                              }, 
-                              {
-                                "type": "p", 
-                                "props": {"className": "font-bold"}, 
-                                "children": ["3–6 months of expenses"]
-                              },
-                            ]
-                          },
+                            type: "p",
+                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            children: ["Unexpected expenses won't stress you out"]
+                          }
                         ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "div",
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold mb-2" }, "children": ["Where to keep it:"] },
+                      },
                       {
-                        "type": "ul",
-                        "props": { "className": "space-y-1 text-sm" },
-                        "children": [
-                          { "type": "li", "children": ["✅ High-interest savings account"] },
-                          { "type": "li", "children": ["✅ Easy access account"] },
-                          { "type": "li", "children": ["❌ Not invested (too risky)"] },
-                          { "type": "li", "children": ["❌ Not your main spending account"] },
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] border border-green-500/30 bg-green-500/10 p-4 shadow-[0_0_25px_rgba(34,197,94,0.10)]"
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-green-400" },
+                            children: ["🎯 Goals"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            children: ["Holiday, laptop, car deposit"]
+                          }
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] border border-violet-500/30 bg-violet-500/10 p-4 shadow-[0_0_25px_rgba(139,92,246,0.10)]"
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-violet-400" },
+                            children: ["🌟 Opportunities"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "mt-2 text-sm text-[#d7d7db]" },
+                            children: ["Job course, starting a business"]
+                          }
                         ]
                       }
                     ]
@@ -817,318 +698,597 @@ const coreMoneySkillsModules = [
                 ]
               }
             ]
-          }
-        ]
-      },
-
-      {
-        "type": "Card",
-        "props": {"className": "mt-5"},
-        "children": [
-          {
-            "type": "CardHeader",
-            "children": [
-              { "type": "CardTitle", "children": ["Setting Savings Goals (SMART Method)"] }
-            ],
           },
+  
+          /* ------------------------------------------------
+              CARD 2 — Pay Yourself First
+          ------------------------------------------------ */
           {
-            "type": "CardContent",
-            "children": [
+            type: "Card",
+            props: {
+              className:
+                "my-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
               {
-                "type": "p",
-                "children": ["Vague goals like \"save more money\" don't work. Use the SMART method for goals you'll actually achieve."]
-              },
-
-              {
-                "type": "div",
-                "props": { "className": "bg-gradient-to-r from-blue-50 to-purple-50 p-6 rounded-lg my-4" },
-                "children": [
-                  { "type": "h4", "props": { "className": "font-bold text-lg mb-3" }, "children": ["SMART Savings Goals:"] },
+                type: "div",
+                props: {
+                  className: "bg-gradient-to-r from-green-500/15 via-green-500/10 to-white/[0.02] p-6 pb-4"
+                },
+                children: [
                   {
-                    "type": "div",
-                    "props": { "className": "grid gap-3 text-md" },
-                    "children": [
-                      { 
-                        "type": "p", 
-                        "children": [
-                          {"type": "span", "props": {"className": "text-blue-500 font-bold"}, "children": ["S"]},
-                          {"type": "span", "children": ["pecific: \"Save for a holiday to Spain\""]},
-                        ] 
-                      },
-                      { 
-                        "type": "p", 
-                        "children": [
-                          {"type": "span", "props": {"className": "text-green-500 font-bold"}, "children": ["M"]},
-                          {"type": "span", "children": ["easurable: \"Need £800 total\""]},
-                        ] 
-                      },
-                      { 
-                        "type": "p", 
-                        "children": [
-                          {"type": "span", "props": {"className": "text-orange-500 font-bold"}, "children": ["A"]},
-                          {"type": "span", "children": ["chievable: \"Save £100/month\""]},
-                        ] 
-                      },
-                      { 
-                        "type": "p", 
-                        "children": [
-                          {"type": "span", "props": {"className": "text-red-500 font-bold"}, "children": ["R"]},
-                          {"type": "span", "children": ["elevant: \"Helps my wellbeing\""]},
-                        ] 
-                      },
-                      { 
-                        "type": "p", 
-                        "children": [
-                          {"type": "span", "props": {"className": "text-purple-500 font-bold"}, "children": ["T"]},
-                          {"type": "span", "children": ["ime-bound: \"By next August\""]},
-                        ] 
-                      },
-                    ]
-                  }
-                ]
-              },
-
-              {
-                "type": "div",
-                "props": { "className": "grid md:grid-cols-3 gap-4" },
-                "children": [
-                  { 
-                    "type": "div", 
-                    "props": { "className": "text-center text-sm p-4 bg-green-50 rounded-lg" }, 
-                    "children": [
+                    type: "CardHeader",
+                    props: { className: "p-0" },
+                    children: [
                       {
-                        "type": "p",
-                        "props": {"className": "text-md text-center font-bold text-green-700"},
-                        "children": ["Short-term (1–12 months)"] 
-                      },
-                      {
-                        "type": "p",
-                        "props": {"className": "text-center text-black"},
-                        "children": ["Holiday, laptop, course"] 
-                      },
-                    ] 
-                  },
-                  { 
-                    "type": "div", 
-                    "props": { "className": "text-center  text-sm p-4 bg-blue-50 rounded-lg" }, 
-                    "children": [
-                      {
-                        "type": "p",
-                        "props": {"className": "text-md text-center font-bold text-blue-700"},
-                        "children": ["Medium-term (1–5 years)"] 
-                      },
-                      {
-                        "type": "p",
-                        "props": {"className": "text-center text-black"},
-                        "children": ["Car, house deposit"] 
-                      },
-                    ] 
-                  },
-                  { 
-                    "type": "div", 
-                    "props": { "className": "text-center text-sm p-4 bg-purple-50 rounded-lg" }, 
-                    "children": [
-                      {
-                        "type": "p",
-                        "props": {"className": "text-md text-center font-bold text-purple-700"},
-                        "children": ["Long-term (5+ years)"] 
-                      },
-                      {
-                        "type": "p",
-                        "props": {"className": "text-center text-black"},
-                        "children": ["Retirement, investment property"] 
-                      },
-                    ] 
-                  },
-                ]
-              }
-            ]
-          }
-        ]
-      },
-
-      {
-        "type": "Card",
-        "props": {"className": "mt-5"},
-        "children": [
-          {
-            "type": "CardHeader",
-            "children": [
-              { "type": "CardTitle", "children": ["💡 Practical Saving Tips for Students"] }
-            ]
-          },
-          {
-            "type": "CardContent",
-            "children": [
-              {
-                "type": "div",
-                "props": { "className": "grid md:grid-cols-2 gap-6" },
-                "children": [
-                  {
-                    "type": "div",
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold mb-3" }, "children": ["Easy Wins:"] },
-                      {
-                        "type": "ul",
-                        "props": { "className": "space-y-2 text-sm pl-4", "style": {"list-style": "disc"} },
-                        "children": [
-                          { "type": "li", "children": ["52-week saving challenge"] },
-                          { "type": "li", "children": ["Save all £5 notes you receive"] },
-                          { "type": "li", "children": ["Use student discounts"] },
-                          { "type": "li", "children": ["Cook at home more often"] },
-                          { "type": "li", "children": ["Buy supermarket own brands"] },
-                        ]
-                      }
-                    ]
-                  },
-                  {
-                    "type": "div",
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold mb-3" }, "children": ["Apps to Help:"] },
-                      {
-                        "type": "ul",
-                        "props": { "className": "space-y-2 text-sm pl-4", "style": {"list-style": "disc"} },
-                        "children": [
-                          { 
-                            "type": "li", 
-                            "children": [
-                              {
-                                "type": "span",
-                                "props": {"className": "font-bold"},
-                                "children": ["Monzo/Starling"]
-                              },
-                              {
-                                "type": "span",
-                                "props": {"className": ""},
-                                "children": [" – round-ups"]
-                              },
-
-                            ] 
-                          },
-                          { 
-                            "type": "li", 
-                            "children": [
-                              {
-                                "type": "span",
-                                "props": {"className": "font-bold"},
-                                "children": ["Plum"]
-                              },
-                              {
-                                "type": "span",
-                                "props": {"className": ""},
-                                "children": [" - automatic savings"]
-                              },
-
-                            ] 
-                          },
-                          { 
-                            "type": "li", 
-                            "children": [
-                              {
-                                "type": "span",
-                                "props": {"className": "font-bold"},
-                                "children": ["Chip"]
-                              },
-                              {
-                                "type": "span",
-                                "props": {"className": ""},
-                                "children": [" - AI saving app"]
-                              },
-
-                            ] 
-                          },
-                          { 
-                            "type": "li", 
-                            "children": [
-                              {
-                                "type": "span",
-                                "props": {"className": "font-bold"},
-                                "children": ["YNAB"]
-                              },
-                              {
-                                "type": "span",
-                                "props": {"className": ""},
-                                "children": [" – budgeting app"]
-                              },
-
-                            ] 
-                          },
-                          { 
-                            "type": "li", 
-                            "children": [
-                              {
-                                "type": "span",
-                                "props": {"className": "font-bold"},
-                                "children": ["Honey"]
-                              },
-                              {
-                                "type": "span",
-                                "props": {"className": ""},
-                                "children": [" – discount codes"]
-                              },
-                            ] 
-                          },
-                        ]
-                      }
-                    ]
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
-      
-
-      {
-        "type": "Card",
-        "props": {"className": "mt-5"},
-        "children": [
-          {
-            "type": "CardHeader",
-            "children": [
-              { "type": "CardTitle", "children": ["Ready to Start Saving?"] }
-            ]
-          },
-          {
-            "type": "CardContent",
-            "children": [
-              {
-                "type": "div",
-                "props": { "className": "" },
-                "children": [
-                  {
-                    "type": "div",
-                    "children": [
-                      {
-                        "type": "div",
-                        "props": {"className": "bg-primary/10 rounded-xl p-4 "},
-                        "children": [
-                          { "type": "h4", "props": { "className": "font-semibold mb-3" }, "children": ["Your Action Plan:"] },
+                        type: "h3",
+                        props: {
+                          className: "flex flex-row items-center text-2xl font-bold leading-none tracking-tight text-white md:text-3xl"
+                        },
+                        children: [
                           {
-                            "type": "ol",
-                            "props": { "className": "space-y-2 text-sm pl-4", "style": {"list-style": "numbered"}},
-                            "children": [
-                              { "type": "li", "children": ["Set up a separate savings account"] },
-                              { "type": "li", "children": ["Decide on your emergency fund target (start with £500)"] },
-                              { "type": "li", "children": ["Set up automatic transfer for payday"] },
-                              { "type": "li", "children": ["Choose one SMART savings goal"] },
-                              { "type": "li", "children": ["Track your progress monthly"] },
+                            type: "Target",
+                            props: {
+                              className: "mr-2 h-7 w-7 text-green-400",
+                              style: { alignSelf: "center" }
+                            }
+                          },
+                          "Pay Yourself First (The Golden Rule)"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              },
+  
+              {
+                type: "CardContent",
+                props: { className: "p-6 pt-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: {
+                      className: "mb-5 rounded-[1rem] border border-green-500/30 bg-green-500/10 p-6 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                    },
+                    children: [
+                      {
+                        type: "h3",
+                        props: { className: "mb-2 text-xl font-bold text-white" },
+                        children: ["The Secret: Save BEFORE You Spend"]
+                      },
+                      {
+                        type: "p",
+                        props: { className: "text-lg text-[#d7d7db]" },
+                        children: [
+                          "As soon as money arrives, move your savings amount into a separate account. Treat it like a bill you must pay."
+                        ]
+                      }
+                    ]
+                  },
+  
+                  {
+                    type: "div",
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "mb-3 font-semibold text-white" },
+                        children: ["How it works:"]
+                      },
+                      {
+                        type: "ol",
+                        props: {
+                          className: "space-y-3 pl-4 text-[#e5e5e7]",
+                          style: { listStyleType: "decimal" }
+                        },
+                        children: [
+                          { type: "li", children: ["Get paid £500"] },
+                          { type: "li", children: ["Immediately save £50 (10%)"] },
+                          { type: "li", children: ["Live on the remaining £450"] },
+                          { type: "li", children: ["Repeat this each payday"] }
+                        ]
+                      }
+                    ]
+                  },
+  
+                  {
+                    type: "div",
+                    props: {
+                      className: "mt-5 rounded-[1.25rem] border border-green-500/30 bg-green-500/10 p-4"
+                    },
+                    children: [
+                      {
+                        type: "p",
+                        props: { className: "mb-1 font-semibold text-green-400" },
+                        children: ["💡 Pro Tip:"]
+                      },
+                      {
+                        type: "p",
+                        props: { className: "text-[#e5e5e7]" },
+                        children: ["Set up an automatic transfer on payday so saving happens without effort."]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+  
+          /* ------------------------------------------------
+              CARD 3 — Emergency Fund
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            props: {
+              className:
+                "rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  {
+                    type: "h3",
+                    props: {
+                      className: "flex flex-row items-center text-2xl font-bold leading-none tracking-tight text-white md:text-3xl"
+                    },
+                    children: [
+                      {
+                        type: "Shield",
+                        props: {
+                          className: "mr-2 h-7 w-7 text-red-400",
+                          style: { alignSelf: "center" }
+                        }
+                      },
+                      "Emergency Fund: Your Financial Safety Net"
+                    ]
+                  }
+                ]
+              },
+  
+              {
+                type: "CardContent",
+                children: [
+                  {
+                    type: "p",
+                    props: { className: "text-[#d7d7db]" },
+                    children: [
+                      "An emergency fund is money saved specifically for unexpected expenses. It's not for holidays or shopping — it's for genuine emergencies."
+                    ]
+                  },
+  
+                  {
+                    type: "div",
+                    props: {
+                      className: "my-5 rounded-[1.25rem] border border-red-500/30 bg-red-500/10 p-5 shadow-[0_0_25px_rgba(239,68,68,0.10)]"
+                    },
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "mb-3 font-semibold text-red-400" },
+                        children: ["What counts as an emergency?"]
+                      },
+                      {
+                        type: "ul",
+                        props: {
+                          className: "pl-4 text-md text-[#e5e5e7] space-y-1",
+                          style: { listStyleType: "disc" }
+                        },
+                        children: [
+                          { type: "li", children: ["Car breakdown"] },
+                          { type: "li", children: ["Laptop failure during exams"] },
+                          { type: "li", children: ["Unexpected medical costs"] },
+                          { type: "li", children: ["Reduced work hours"] },
+                          { type: "li", children: ["Urgent family travel"] }
+                        ]
+                      }
+                    ]
+                  },
+  
+                  {
+                    type: "div",
+                    props: { className: "grid gap-4 md:grid-cols-2" },
+                    children: [
+                      {
+                        type: "div",
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "mb-3 font-semibold text-white" },
+                            children: ["How much to save:"]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "space-y-3" },
+                            children: [
+                              {
+                                type: "div",
+                                props: {
+                                  className: "flex justify-between rounded-xl border border-green-500/30 bg-green-500/10 p-3 text-[#e5e5e7]"
+                                },
+                                children: [
+                                  { type: "p", children: ["Students / Part-time:"] },
+                                  { type: "p", props: { className: "font-bold text-green-400" }, children: ["£500–£1000"] }
+                                ]
+                              },
+                              {
+                                type: "div",
+                                props: {
+                                  className: "flex justify-between rounded-xl border border-green-500/30 bg-green-500/10 p-3 text-[#e5e5e7]"
+                                },
+                                children: [
+                                  { type: "p", children: ["Full-time workers:"] },
+                                  { type: "p", props: { className: "font-bold text-green-400" }, children: ["3–6 months of expenses"] }
+                                ]
+                              }
                             ]
                           }
-                        ],
+                        ]
                       },
-                    ],
+                      {
+                        type: "div",
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "mb-3 font-semibold text-white" },
+                            children: ["Where to keep it:"]
+                          },
+                          {
+                            type: "ul",
+                            props: {
+                              className: "space-y-2 text-sm text-[#e5e5e7]"
+                            },
+                            children: [
+                              { type: "li", children: ["✅ High-interest savings account"] },
+                              { type: "li", children: ["✅ Easy access account"] },
+                              { type: "li", children: ["❌ Not invested (too risky)"] },
+                              { type: "li", children: ["❌ Not your main spending account"] }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+  
+          /* ------------------------------------------------
+              CARD 4 — SMART Goals
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            props: {
+              className:
+                "mt-5 overflow-hidden rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["Setting Savings Goals (SMART Method)"]
+                  }
+                ]
+              },
+              {
+                type: "CardContent",
+                children: [
+                  {
+                    type: "p",
+                    props: { className: "text-[#d7d7db]" },
+                    children: ["Vague goals like \"save more money\" don't work. Use the SMART method for goals you'll actually achieve."]
+                  },
+  
+                  {
+                    type: "div",
+                    props: {
+                      className: "my-5 rounded-[1rem] border border-violet-500/20 bg-gradient-to-r from-blue-500/10 to-violet-500/10 p-6"
+                    },
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "mb-4 text-lg font-bold text-white" },
+                        children: ["SMART Savings Goals:"]
+                      },
+                      {
+                        type: "div",
+                        props: { className: "grid gap-3 text-md text-[#e5e5e7]" },
+                        children: [
+                          {
+                            type: "p",
+                            children: [
+                              { type: "span", props: { className: "font-bold text-blue-400" }, children: ["S"] },
+                              { type: "span", children: ["pecific: \"Save for a holiday to Spain\""] }
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "span", props: { className: "font-bold text-green-400" }, children: ["M"] },
+                              { type: "span", children: ["easurable: \"Need £800 total\""] }
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "span", props: { className: "font-bold text-orange-400" }, children: ["A"] },
+                              { type: "span", children: ["chievable: \"Save £100/month\""] }
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "span", props: { className: "font-bold text-red-400" }, children: ["R"] },
+                              { type: "span", children: ["elevant: \"Helps my wellbeing\""] }
+                            ]
+                          },
+                          {
+                            type: "p",
+                            children: [
+                              { type: "span", props: { className: "font-bold text-violet-400" }, children: ["T"] },
+                              { type: "span", children: ["ime-bound: \"By next August\""] }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+  
+                  {
+                    type: "div",
+                    props: { className: "grid gap-4 md:grid-cols-3" },
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] bg-green-500/10 border border-green-500/30 p-4 text-center"
+                        },
+                        children: [
+                          {
+                            type: "p",
+                            props: { className: "text-md text-center font-bold text-green-400" },
+                            children: ["Short-term (1–12 months)"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "mt-2 text-center text-[#d7d7db]" },
+                            children: ["Holiday, laptop, course"]
+                          }
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] bg-blue-500/10 border border-blue-500/30 p-4 text-center"
+                        },
+                        children: [
+                          {
+                            type: "p",
+                            props: { className: "text-md text-center font-bold text-blue-400" },
+                            children: ["Medium-term (1–5 years)"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "mt-2 text-center text-[#d7d7db]" },
+                            children: ["Car, house deposit"]
+                          }
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1.25rem] bg-violet-500/10 border border-violet-500/30 p-4 text-center"
+                        },
+                        children: [
+                          {
+                            type: "p",
+                            props: { className: "text-md text-center font-bold text-violet-400" },
+                            children: ["Long-term (5+ years)"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "mt-2 text-center text-[#d7d7db]" },
+                            children: ["Retirement, investment property"]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+  
+          /* ------------------------------------------------
+              CARD 5 — Practical Tips
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            props: {
+              className:
+                "mt-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["💡 Practical Saving Tips for Students"]
+                  }
+                ]
+              },
+              {
+                type: "CardContent",
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "grid gap-6 md:grid-cols-2" },
+                    children: [
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1rem] border border-green-500/20 bg-green-500/10 p-5"
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "mb-3 font-semibold text-green-400" },
+                            children: ["Easy Wins:"]
+                          },
+                          {
+                            type: "ul",
+                            props: {
+                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
+                            },
+                            children: [
+                              { type: "li", children: ["52-week saving challenge"] },
+                              { type: "li", children: ["Save all £5 notes you receive"] },
+                              { type: "li", children: ["Use student discounts"] },
+                              { type: "li", children: ["Cook at home more often"] },
+                              { type: "li", children: ["Buy supermarket own brands"] }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: {
+                          className: "rounded-[1rem] border border-blue-500/20 bg-blue-500/10 p-5"
+                        },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "mb-3 font-semibold text-blue-400" },
+                            children: ["Apps to Help:"]
+                          },
+                          {
+                            type: "ul",
+                            props: {
+                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
+                            },
+                            children: [
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "span", props: { className: "font-bold text-white" }, children: ["Monzo/Starling"] },
+                                  { type: "span", children: [" – round-ups"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "span", props: { className: "font-bold text-white" }, children: ["Plum"] },
+                                  { type: "span", children: [" – automatic savings"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "span", props: { className: "font-bold text-white" }, children: ["Chip"] },
+                                  { type: "span", children: [" – AI saving app"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "span", props: { className: "font-bold text-white" }, children: ["YNAB"] },
+                                  { type: "span", children: [" – budgeting app"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                children: [
+                                  { type: "span", props: { className: "font-bold text-white" }, children: ["Honey"] },
+                                  { type: "span", children: [" – discount codes"] }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+  
+          /* ------------------------------------------------
+              CARD 6 — Action Plan
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            props: {
+              className:
+                "mt-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
+            children: [
+              {
+                type: "div",
+                props: {
+                  className: "bg-gradient-to-r from-green-500/15 via-green-500/10 to-emerald-500/10 p-6 pb-4"
+                },
+                children: [
+                  {
+                    type: "CardHeader",
+                    props: { className: "p-0" },
+                    children: [
+                      {
+                        type: "CardTitle",
+                        props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                        children: ["Ready to Start Saving?"]
+                      }
+                    ]
+                  }
+                ]
+              },
+              {
+                type: "CardContent",
+                props: { className: "p-6 pt-4" },
+                children: [
+                  {
+                    type: "div",
+                    props: {
+                      className: "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                    },
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "mb-3 font-semibold text-green-400" },
+                        children: ["Your Action Plan:"]
+                      },
+                      {
+                        type: "ol",
+                        props: {
+                          className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                          style: { listStyleType: "decimal" }
+                        },
+                        children: [
+                          { type: "li", children: ["Set up a separate savings account"] },
+                          { type: "li", children: ["Decide on your emergency fund target (start with £500)"] },
+                          { type: "li", children: ["Set up automatic transfer for payday"] },
+                          { type: "li", children: ["Choose one SMART savings goal"] },
+                          { type: "li", children: ["Track your progress monthly"] }
+                        ]
+                      }
+                    ]
                   }
                 ]
               }
             ]
           }
+  
         ]
-      },
-
+      }
     ],
-
+  
     quiz: {
       passingScore: 1,
       questions: [
@@ -1145,7 +1305,7 @@ const coreMoneySkillsModules = [
         }
       ]
     },
-
+  
     relatedLessons: [
       {
         moduleId: "budgeting-basics",
@@ -1158,7 +1318,7 @@ const coreMoneySkillsModules = [
         relationship: "next-step"
       }
     ],
-
+  
     points: 100,
     difficultyLevel: "beginner",
     timeEstimate: 3,
@@ -1235,7 +1395,7 @@ const coreMoneySkillsModules = [
                         type: "div",
                         props: {
                           className:
-                            "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-6 shadow-[0_0_30px_rgba(59,130,246,0.10)]"
+                            "rounded-[1rem] border border-blue-500/30 bg-blue-500/10 p-6 shadow-[0_0_30px_rgba(59,130,246,0.10)]"
                         },
                         children: [
                           {
@@ -1270,7 +1430,7 @@ const coreMoneySkillsModules = [
                         type: "div",
                         props: {
                           className:
-                            "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-6 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                            "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-6 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
                         },
                         children: [
                           {
@@ -1346,7 +1506,7 @@ const coreMoneySkillsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-6"
+                      className: "rounded-[1rem] border border-white/10 bg-white/[0.03] p-6"
                     },
                     children: [
                       {
@@ -1416,6 +1576,7 @@ const coreMoneySkillsModules = [
                                 children: [
                                   { type: "li", children: ["Year 2: £1,050 + 5% = £1,102.50"] },
                                   { type: "li", children: ["Year 3: £1,102.50 + 5% = £1,157.63"] },
+                                  { type: "li", children: ["Year 4: £1,157.63 + 5% = £1,215.51"] },
                                   { type: "li", children: ["Your interest earns interest!"] }
                                 ]
                               }
@@ -1485,7 +1646,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "div",
                         props: {
-                          className: "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-5"
+                          className: "rounded-[1rem] border border-blue-500/30 bg-blue-500/10 p-5"
                         },
                         children: [
                           {
@@ -1512,7 +1673,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "div",
                         props: {
-                          className: "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5"
+                          className: "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-5"
                         },
                         children: [
                           {
@@ -1539,7 +1700,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "div",
                         props: {
-                          className: "rounded-[1.5rem] border border-violet-500/30 bg-violet-500/10 p-5"
+                          className: "rounded-[1rem] border border-violet-500/30 bg-violet-500/10 p-5"
                         },
                         children: [
                           {
@@ -1622,7 +1783,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "div",
                             props: {
-                              className: "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-5"
+                              className: "rounded-[1rem] border border-blue-500/30 bg-blue-500/10 p-5"
                             },
                             children: [
                               {
@@ -1650,7 +1811,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "div",
                             props: {
-                              className: "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5"
+                              className: "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-5"
                             },
                             children: [
                               {
@@ -1681,7 +1842,7 @@ const coreMoneySkillsModules = [
                         type: "div",
                         props: {
                           className:
-                            "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_25px_rgba(34,197,94,0.08)]"
+                            "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_25px_rgba(34,197,94,0.08)]"
                         },
                         children: [
                           {

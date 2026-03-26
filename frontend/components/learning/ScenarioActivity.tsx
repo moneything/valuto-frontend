@@ -114,19 +114,19 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
   const getChoiceButtonClass = (choiceId: string) => {
     if (!showResult) {
       return selectedChoices[currentScenarioIndex] === choiceId
-        ? 'border-valuto-green-600 bg-valuto-green-50 text-valuto-green-900'
-        : 'border-gray-200 hover:border-valuto-green-300 hover:bg-valuto-green-50';
+        ? 'border-valuto-green-500 bg-valuto-green-500/10 text-white'
+        : 'border-white/10 bg-white/[0.03] text-[#e5e5e7] hover:border-valuto-green-400/50 hover:bg-white/[0.06]';
     }
 
     const isCorrect = choiceId === currentScenario.correctChoice;
     const wasSelected = choiceId === selectedChoices[currentScenarioIndex];
 
     if (isCorrect) {
-      return 'border-green-500 bg-green-50 text-green-900';
+      return 'border-green-500 bg-green-500/10 text-white';
     } else if (wasSelected && !isCorrect) {
-      return 'border-red-500 bg-red-50 text-red-900';
+      return 'border-red-500 bg-red-500/10 text-white';
     } else {
-      return 'border-gray-200 bg-gray-50 text-gray-500';
+      return 'border-white/10 bg-white/[0.03] text-[#9a9a9d]';
     }
   };
 
@@ -148,9 +148,9 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
     if (!consequences || Object.keys(consequences).length === 0) return null;
 
     return (
-      <div className="mt-4 p-3 bg-gray-50 rounded-lg">
-        <h4 className="font-semibold text-gray-900 mb-2">Consequences:</h4>
-        <ul className="text-sm text-gray-700 space-y-1">
+      <div className="mt-4 rounded-lg bg-white/[0.04] p-3">
+        <h4 className="mb-2 font-semibold text-white">Consequences:</h4>
+        <ul className="space-y-1 text-sm text-[#d7d7db]">
           {Object.entries(consequences).map(([key, value]) => (
             <li key={key}>
               <span className="font-medium capitalize">{key.replace('_', ' ')}:</span> {String(value)}
@@ -164,7 +164,7 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
   return (
     <div className="space-y-6">
       {/* Progress Bar */}
-      <div className="bg-gray-200 rounded-full h-2">
+      <div className="h-2 rounded-full bg-white/10">
         <div 
           className="bg-valuto-green-600 h-2 rounded-full transition-all duration-300"
           style={{ width: `${((currentScenarioIndex + 1) / scenarios.length) * 100}%` }}
@@ -172,18 +172,18 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
       </div>
 
       {/* Scenario Counter */}
-      <div className="text-center text-sm text-gray-600">
+      <div className="text-center text-sm text-[#9a9a9d]">
         Scenario {currentScenarioIndex + 1} of {scenarios.length}
       </div>
 
       {/* Scenario Content */}
       <Card className="p-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">
+        <h3 className="mb-4 text-xl font-bold text-white">
           {currentScenario.title}
         </h3>
         
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
-          <p className="text-gray-800 leading-relaxed">
+        <div className="mb-6 rounded-lg border border-blue-400/30 bg-blue-500/10 p-4">
+          <p className="leading-relaxed text-[#e5e5e7]">
             {currentScenario.description}
           </p>
         </div>
@@ -206,7 +206,7 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
                   {showResult && choice.id === selectedChoices[currentScenarioIndex] && 
                    renderConsequences(choice.consequences)}
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-[#9a9a9d]">
                   +{choice.points} pts
                 </div>
               </div>
@@ -228,8 +228,8 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
             {/* Result Feedback */}
             <div className={`p-4 rounded-lg ${
               results[results.length - 1]?.isOptimal 
-                ? 'bg-green-50 border border-green-200' 
-                : 'bg-red-50 border border-red-200'
+                ? 'border border-green-400/30 bg-green-500/10' 
+                : 'border border-red-400/30 bg-red-500/10'
             }`}>
               <div className="flex items-center gap-2 mb-2">
                 <span className={`text-2xl ${
@@ -238,12 +238,12 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
                   {results[results.length - 1]?.isOptimal ? '✅' : '❌'}
                 </span>
                 <span className={`font-semibold ${
-                  results[results.length - 1]?.isOptimal ? 'text-green-900' : 'text-red-900'
+                  results[results.length - 1]?.isOptimal ? 'text-green-300' : 'text-red-300'
                 }`}>
                   {results[results.length - 1]?.isOptimal ? 'Great choice!' : 'Not the best option'}
                 </span>
               </div>
-              <p className="text-sm text-gray-700 mb-2">
+              <p className="mb-2 text-sm text-[#d7d7db]">
                 {currentScenario.explanation}
               </p>
               <p className="text-sm font-medium">
@@ -259,7 +259,7 @@ export default function ScenarioActivity({ scenarios, onComplete, onProgress }: 
       </Card>
 
       {/* Timer */}
-      <div className="text-center text-sm text-gray-500">
+      <div className="text-center text-sm text-[#9a9a9d]">
         Time spent: {Math.floor(timeSpent / 60)}:{(timeSpent % 60).toString().padStart(2, '0')}
       </div>
     </div>

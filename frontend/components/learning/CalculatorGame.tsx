@@ -101,36 +101,36 @@ export default function CalculatorGame({
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-lg text-gray-700">{description}</p>
+        <h3 className="mb-2 text-2xl font-bold text-white">{title}</h3>
+        <p className="text-lg text-[#d7d7db]">{description}</p>
       </div>
 
       {/* Calculator */}
-      <div className="bg-gradient-to-r from-purple-50 to-pink-50 border border-purple-200 rounded-xl p-8">
+      <div className="rounded-xl border border-violet-400/20 bg-gradient-to-r from-violet-500/10 to-pink-500/10 p-8">
         <div className="max-w-md mx-auto space-y-6">
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-semibold text-[#d7d7db]">
                 Amount (£)
               </label>
               <input
                 type="number"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-lg"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-lg text-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500"
                 placeholder="Enter amount"
                 disabled={isCompleted}
               />
             </div>
             <div>
-              <label className="block text-sm font-semibold text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-semibold text-[#d7d7db]">
                 Rate (%)
               </label>
               <input
                 type="number"
                 value={rate}
                 onChange={(e) => setRate(e.target.value)}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-purple-500 text-lg"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-lg text-white focus:border-purple-500 focus:ring-2 focus:ring-purple-500"
                 placeholder="Enter rate"
                 disabled={isCompleted}
               />
@@ -151,13 +151,13 @@ export default function CalculatorGame({
             <motion.div
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              className="bg-white border-2 border-purple-300 rounded-lg p-6 text-center"
+              className="rounded-lg border-2 border-purple-400/40 bg-white/[0.05] p-6 text-center"
             >
-              <h4 className="text-lg font-semibold text-gray-900 mb-2">Result:</h4>
+              <h4 className="mb-2 text-lg font-semibold text-white">Result:</h4>
               <div className="text-3xl font-bold text-purple-600">
                 £{result.toFixed(2)}
               </div>
-              <p className="text-sm text-gray-600 mt-2">
+              <p className="mt-2 text-sm text-[#d7d7db]">
                 {parseFloat(rate)}% of £{amount} = £{result.toFixed(2)}
               </p>
             </motion.div>
@@ -178,8 +178,8 @@ export default function CalculatorGame({
 
       {/* Examples */}
       {examples.length > 0 && (
-        <div className="bg-gray-50 rounded-xl p-6">
-          <h4 className="text-lg font-semibold text-gray-900 mb-4 text-center">
+        <div className="rounded-xl bg-white/[0.04] p-6">
+          <h4 className="mb-4 text-center text-lg font-semibold text-white">
             Try These Examples:
           </h4>
           <div className="space-y-3">
@@ -192,16 +192,16 @@ export default function CalculatorGame({
                 disabled={isCompleted}
                 className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                   currentExample === index
-                    ? 'border-purple-500 bg-purple-50'
-                    : 'border-gray-200 bg-white hover:border-purple-300 hover:bg-purple-50'
+                    ? 'border-purple-500 bg-purple-500/10'
+                    : 'border-white/10 bg-white/[0.04] hover:border-purple-400/50 hover:bg-white/[0.08]'
                 } ${isCompleted ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
               >
                 <div className="flex justify-between items-center">
                   <div>
-                    <div className="font-semibold text-gray-900">
+                    <div className="font-semibold text-white">
                       £{example.amount} at {example.rate}% = £{example.result}
                     </div>
-                    <div className="text-sm text-gray-600">{example.description}</div>
+                    <div className="text-sm text-[#9a9a9d]">{example.description}</div>
                   </div>
                   <div className="text-2xl">🧮</div>
                 </div>
@@ -214,7 +214,7 @@ export default function CalculatorGame({
       {/* Progress */}
       <div className="text-center">
         {attempts > 0 && (
-          <p className="text-sm text-gray-600 mb-2">
+          <p className="mb-2 text-sm text-[#9a9a9d]">
             Attempts: {attempts}
           </p>
         )}
@@ -246,14 +246,14 @@ export default function CalculatorGame({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className="text-center p-6 rounded-xl bg-green-50 border border-green-200"
+            className="rounded-xl border border-green-400/30 bg-green-500/10 p-6 text-center"
           >
             <div className="text-4xl mb-4">🎉</div>
-            <h4 className="text-2xl font-bold text-gray-900 mb-2">Excellent!</h4>
-            <p className="text-lg text-gray-700 mb-2">
+            <h4 className="mb-2 text-2xl font-bold text-white">Excellent!</h4>
+            <p className="mb-2 text-lg text-[#e5e5e7]">
               You calculated the percentage correctly!
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#9a9a9d]">
               You're getting the hang of financial calculations!
             </p>
           </motion.div>

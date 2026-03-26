@@ -145,26 +145,26 @@ export default function MatchingGame({ terms, definitions, onComplete, title, de
       if (matchColor) {
         return `${matchColor.bg} ${matchColor.border} ${matchColor.text}`;
       }
-      return 'bg-green-100 border-green-500 text-green-800';
+      return 'bg-green-500/10 border-green-500 text-green-200';
     } else if (isSelected) {
-      return 'bg-blue-100 border-blue-500 text-blue-800';
+      return 'bg-blue-500/10 border-blue-500 text-blue-200';
     } else {
-      return 'bg-white border-gray-200 hover:border-indigo-400 hover:bg-indigo-50';
+      return 'bg-white/[0.03] border-white/10 text-[#e5e5e7] hover:border-indigo-400/60 hover:bg-white/[0.06]';
     }
   };
 
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-lg text-gray-700">{description}</p>
-        <p className="text-sm text-gray-600 mt-2">💡 Click a term, then click its matching definition. Each correct match gets a unique color!</p>
+        <h3 className="mb-2 text-2xl font-bold text-white">{title}</h3>
+        <p className="text-lg text-[#d7d7db]">{description}</p>
+        <p className="mt-2 text-sm text-[#9a9a9d]">💡 Click a term, then click its matching definition. Each correct match gets a unique color!</p>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Terms */}
         <div>
-          <h4 className="text-lg font-bold text-gray-900 mb-4 text-center">Terms</h4>
+          <h4 className="mb-4 text-center text-lg font-bold text-white">Terms</h4>
           <div className="space-y-3">
             {terms.map((term) => (
               <motion.div
@@ -185,7 +185,7 @@ export default function MatchingGame({ terms, definitions, onComplete, title, de
 
         {/* Definitions */}
         <div>
-          <h4 className="text-lg font-bold text-gray-900 mb-4 text-center">Definitions</h4>
+          <h4 className="mb-4 text-center text-lg font-bold text-white">Definitions</h4>
           <div className="space-y-3">
             {shuffledDefinitions.map((definition) => (
               <motion.div
@@ -207,17 +207,17 @@ export default function MatchingGame({ terms, definitions, onComplete, title, de
 
       {/* Progress */}
       <div className="text-center">
-        <div className="bg-gray-200 rounded-full h-3 mb-4">
+        <div className="mb-4 h-3 rounded-full bg-white/10">
           <div 
             className="bg-gradient-to-r from-green-500 to-blue-600 h-3 rounded-full transition-all duration-500"
             style={{ width: `${(Object.keys(matches).length / terms.length) * 100}%` }}
           />
         </div>
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-[#9a9a9d]">
           {Object.keys(matches).length} of {terms.length} matches completed
         </p>
         {attempts > 0 && (
-          <p className="text-sm text-orange-600 mt-1">
+          <p className="mt-1 text-sm text-orange-300">
             Attempts: {attempts}
           </p>
         )}
@@ -258,22 +258,22 @@ export default function MatchingGame({ terms, definitions, onComplete, title, de
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`text-center p-6 rounded-xl ${
-              score >= 80 ? 'bg-green-50 border border-green-200' : 
-              score >= 60 ? 'bg-yellow-50 border border-yellow-200' : 
-              'bg-red-50 border border-red-200'
+            className={`rounded-xl p-6 text-center ${
+              score >= 80 ? 'border border-green-400/30 bg-green-500/10' : 
+              score >= 60 ? 'border border-yellow-400/30 bg-yellow-500/10' : 
+              'border border-red-400/30 bg-red-500/10'
             }`}
           >
             <div className="text-4xl mb-4">
               {score >= 80 ? '🎉' : score >= 60 ? '👍' : '💪'}
             </div>
-            <h4 className="text-2xl font-bold text-gray-900 mb-2">
+            <h4 className="mb-2 text-2xl font-bold text-white">
               {score >= 80 ? 'Perfect Match!' : score >= 60 ? 'Great Job!' : 'Keep Learning!'}
             </h4>
-            <p className="text-lg text-gray-700 mb-2">
+            <p className="mb-2 text-lg text-[#e5e5e7]">
               You matched {score}% of the terms correctly!
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#9a9a9d]">
               {score >= 80 ? 'You really know your financial terms!' : 
                score >= 60 ? 'You\'re getting the hang of it!' : 
                'Practice makes perfect - try again!'}

@@ -2,14 +2,15 @@
 
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTrivia } from '@/lib/hooks/useTrivia';
 import GameSidebar from '@/components/GameSidebar';
 
-export default function PlayTriviaPage({ params }: { params: { code: string } }) {
+export default function PlayTriviaPage({ params }: { params: Promise<{ code: string }> }) {
   const router = useRouter();
   const { socket, isConnected } = useTrivia();
+  const resolvedRouteParams = use(params);
   const [resolvedParams, setResolvedParams] = useState<{ code: string } | null>(null);
   const [gameState, setGameState] = useState<'loading' | 'joining' | 'waiting' | 'playing' | 'ended' | 'error'>('loading');
   const [sessionData, setSessionData] = useState<any>(null);
@@ -25,10 +26,10 @@ export default function PlayTriviaPage({ params }: { params: { code: string } })
 
   // standalone effect to populate resolvedParams
   useEffect(() => {
-    if (params?.code) {
-      setResolvedParams({ code: params.code.toUpperCase() });
+    if (resolvedRouteParams?.code) {
+      setResolvedParams({ code: resolvedRouteParams.code.toUpperCase() });
     }
-  }, [params?.code]);
+  }, [resolvedRouteParams]);
 
   // Join session when socket connects
   useEffect(() => {

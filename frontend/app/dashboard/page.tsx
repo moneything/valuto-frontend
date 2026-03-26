@@ -785,23 +785,6 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        {/* Quick Tips Section */}
-        <div className="mt-16 max-w-4xl mx-auto">
-          <div className="bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 rounded-2xl p-8 text-white shadow-xl">
-            <div className="text-center">
-              <div className="text-5xl mb-4">💡</div>
-              <h3 className="text-2xl font-bold mb-4">
-                {isTeacher ? 'Teaching Tip of the Day' : 'Financial Tip of the Day'}
-              </h3>
-              <p className="text-valuto-green-50 text-lg leading-relaxed">
-                {isTeacher 
-                  ? 'Make learning interactive! Students retain 75% more information when they actively participate in games and discussions.'
-                  : 'Start investing early! Even small amounts can grow significantly over time thanks to compound interest.'
-                }
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   );

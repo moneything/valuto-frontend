@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/moneySocietySeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Money & Society — Learning Modules
@@ -28,7 +27,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(moneySocietyModules);
-applyDarkThemeToModules(moneySocietyModules);
 
 // =====================================================
 // Seed Function

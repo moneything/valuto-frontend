@@ -257,7 +257,7 @@ export default function LearningModulesPage() {
                       ? "bg-green-500/10 border-green-500/30"
                       : isInProgress
                         ? "bg-yellow-500/10 border-yellow-400/80 shadow-[0_0_28px_rgba(250,204,21,0.18)]"
-                        : `bg-white/[0.03] border-white/10 ${categoryBorderEffect.shadow}`
+                        : "bg-white/[0.03] border-white/10"
                   }
                   ${isLocked ? "opacity-80" : "hover:bg-white/[0.05]"}
                 `;

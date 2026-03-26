@@ -32,25 +32,25 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
       <div className="space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
               Bond Price ($)
             </label>
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+              className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+            <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
               Annual Payment ($)
             </label>
             <input
               type="number"
               value={payment}
               onChange={(e) => setPayment(Number(e.target.value))}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+              className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
             />
           </div>
         </div>
@@ -60,19 +60,19 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
         </Button>
 
         {yieldValue > 0 && (
-          <div className="bg-valuto-green-50 border border-valuto-green-200 rounded-lg p-4">
-            <h4 className="font-semibold text-valuto-green-900 mb-2">Result:</h4>
+          <div className="rounded-lg border border-valuto-green-400/30 bg-valuto-green-500/10 p-4">
+            <h4 className="mb-2 font-semibold text-green-300">Result:</h4>
             <p className="text-2xl font-bold text-valuto-green-700">
               {yieldValue.toFixed(2)}%
             </p>
-            <p className="text-sm text-valuto-green-600 mt-2">
+            <p className="mt-2 text-sm text-green-200">
               This means you earn {yieldValue.toFixed(2)}% per year on your investment!
             </p>
           </div>
         )}
 
-        <div className="bg-gray-50 rounded-lg p-4">
-          <h4 className="font-semibold text-gray-900 mb-3">Try these examples:</h4>
+        <div className="rounded-lg bg-white/[0.04] p-4">
+          <h4 className="mb-3 font-semibold text-white">Try these examples:</h4>
           <div className="space-y-2">
             {activity.data.examples.map((example: any, index: number) => (
               <button
@@ -82,7 +82,7 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
                   setPayment(example.payment);
                   setYieldValue(example.yield);
                 }}
-                className="w-full text-left p-3 bg-white border border-gray-200 rounded-lg hover:border-valuto-green-300 hover:bg-valuto-green-50 transition-colors"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] p-3 text-left text-[#e5e5e7] transition-colors hover:border-valuto-green-300 hover:bg-white/[0.08]"
               >
                 <span className="font-medium">${example.price} bond, ${example.payment}/year = {example.yield}% yield</span>
               </button>
@@ -103,47 +103,47 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
 
       return (
         <div className="space-y-6">
-          <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <h4 className="font-semibold text-blue-900 mb-2">{activity.data.companyName}</h4>
-            <p className="text-sm text-blue-700">
+          <div className="rounded-lg border border-blue-400/30 bg-blue-500/10 p-4">
+            <h4 className="mb-2 font-semibold text-blue-300">{activity.data.companyName}</h4>
+            <p className="text-sm text-blue-200">
               Total shares outstanding: {activity.data.totalShares.toLocaleString()}
             </p>
-            <p className="text-sm text-blue-700">
+            <p className="text-sm text-blue-200">
               Current price per share: ${price}
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
                 Number of shares to buy
               </label>
               <input
                 type="number"
                 value={shares}
                 onChange={(e) => setShares(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
                 min="1"
                 max={activity.data.totalShares}
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
                 Price per share ($)
               </label>
               <input
                 type="number"
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-valuto-green-500 focus:border-valuto-green-500"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
                 min="0.01"
                 step="0.01"
               />
             </div>
           </div>
 
-          <div className="bg-valuto-green-50 border border-valuto-green-200 rounded-lg p-6">
-            <h4 className="font-semibold text-valuto-green-900 mb-4">Your Investment Summary:</h4>
+          <div className="rounded-lg border border-valuto-green-400/30 bg-valuto-green-500/10 p-6">
+            <h4 className="mb-4 font-semibold text-green-300">Your Investment Summary:</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-valuto-green-700">{ownership.toFixed(4)}%</p>
@@ -172,7 +172,7 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
         <div className="space-y-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
                 Number of Buyers: {buyers}
               </label>
               <input
@@ -181,11 +181,11 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
                 max={activity.data.maxBuyers}
                 value={buyers}
                 onChange={(e) => setBuyers(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-white/10 accent-valuto-green-500"
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">
+              <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
                 Number of Sellers: {sellers}
               </label>
               <input
@@ -194,13 +194,13 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
                 max={activity.data.maxSellers}
                 value={sellers}
                 onChange={(e) => setSellers(Number(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-white/10 accent-valuto-green-500"
               />
             </div>
           </div>
 
-          <div className="bg-valuto-green-50 border border-valuto-green-200 rounded-lg p-6">
-            <h4 className="font-semibold text-valuto-green-900 mb-4">Market Impact:</h4>
+          <div className="rounded-lg border border-valuto-green-400/30 bg-valuto-green-500/10 p-6">
+            <h4 className="mb-4 font-semibold text-green-300">Market Impact:</h4>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div className="text-center">
                 <p className="text-2xl font-bold text-valuto-green-700">${newPrice.toFixed(2)}</p>
@@ -210,14 +210,14 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
                 <p className={`text-2xl font-bold ${priceChange >= 0 ? 'text-green-600' : 'text-red-600'}`}>
                   {priceChange >= 0 ? '+' : ''}{priceChange.toFixed(2)}
                 </p>
-                <p className="text-sm text-gray-600">Price Change</p>
+                <p className="text-sm text-[#9a9a9d]">Price Change</p>
               </div>
               <div className="text-center">
                 <p className="text-2xl font-bold text-valuto-green-700">{buyers - sellers}</p>
                 <p className="text-sm text-valuto-green-600">Net Demand</p>
               </div>
             </div>
-            <p className="text-sm text-gray-600 mt-4 text-center">
+            <p className="mt-4 text-center text-sm text-[#d7d7db]">
               {buyers > sellers 
                 ? "More buyers than sellers = Price goes UP! 📈" 
                 : buyers < sellers 
@@ -240,7 +240,7 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
       default:
         return (
           <div className="text-center py-8">
-            <p className="text-gray-500">Interactive activity coming soon!</p>
+            <p className="text-[#9a9a9d]">Interactive activity coming soon!</p>
           </div>
         );
     }
@@ -249,10 +249,10 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
   return (
     <Card className="mb-6">
       <div className="mb-6">
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{activity.title}</h3>
-        <p className="text-gray-600 mb-4">{activity.description}</p>
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
-          <p className="text-sm text-blue-800">
+        <h3 className="mb-2 text-xl font-bold text-white">{activity.title}</h3>
+        <p className="mb-4 text-[#d7d7db]">{activity.description}</p>
+        <div className="rounded-lg border border-blue-400/30 bg-blue-500/10 p-4">
+          <p className="text-sm text-blue-200">
             <strong>Instructions:</strong> {activity.instructions}
           </p>
         </div>

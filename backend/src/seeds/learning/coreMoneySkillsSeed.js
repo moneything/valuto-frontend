@@ -713,7 +713,7 @@ const coreMoneySkillsModules = [
               {
                 type: "div",
                 props: {
-                  className: "bg-gradient-to-r from-green-500/15 via-green-500/10 to-white/[0.02] p-6 pb-4"
+                  className: "bg-gradient-to-r from-blue-500/15 via-white/[0.02] to-green-500/15 p-6 pb-4"
                 },
                 children: [
                   {
@@ -729,7 +729,7 @@ const coreMoneySkillsModules = [
                           {
                             type: "Target",
                             props: {
-                              className: "mr-2 h-7 w-7 text-green-400",
+                              className: "mr-2 h-7 w-7 text-blue-400",
                               style: { alignSelf: "center" }
                             }
                           },
@@ -748,7 +748,7 @@ const coreMoneySkillsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "mb-5 rounded-[1rem] border border-green-500/30 bg-green-500/10 p-6 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                      className: "mb-5 rounded-[1rem] border border-blue-500/30 bg-blue-500/10 p-6 shadow-[0_0_30px_rgba(59,130,246,0.10)]"
                     },
                     children: [
                       {
@@ -793,12 +793,12 @@ const coreMoneySkillsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "mt-5 rounded-[1.25rem] border border-green-500/30 bg-green-500/10 p-4"
+                      className: "mt-5 rounded-[1.25rem] border border-blue-500/30 bg-blue-500/10 p-4"
                     },
                     children: [
                       {
                         type: "p",
-                        props: { className: "mb-1 font-semibold text-green-400" },
+                        props: { className: "mb-1 font-semibold text-blue-400" },
                         children: ["💡 Pro Tip:"]
                       },
                       {
@@ -1227,13 +1227,13 @@ const coreMoneySkillsModules = [
             type: "Card",
             props: {
               className:
-                "mt-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+                "mt-5 overflow-hidden rounded-[2rem] border border-orange-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
             },
             children: [
               {
                 type: "div",
                 props: {
-                  className: "bg-gradient-to-r from-green-500/15 via-green-500/10 to-emerald-500/10 p-6 pb-4"
+                  className: "bg-gradient-to-r from-orange-500 via-white/[0.02] to-violet-500/10 p-6 pb-4"
                 },
                 children: [
                   {
@@ -1256,12 +1256,12 @@ const coreMoneySkillsModules = [
                   {
                     type: "div",
                     props: {
-                      className: "rounded-[1rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                      className: "rounded-[1rem] border border-violet-500/30 bg-violet-500/10 p-5 shadow-[0_0_25px_rgba(139,92,246,0.10)]"
                     },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "mb-3 font-semibold text-green-400" },
+                        props: { className: "mb-3 font-semibold text-violet-400" },
                         children: ["Your Action Plan:"]
                       },
                       {

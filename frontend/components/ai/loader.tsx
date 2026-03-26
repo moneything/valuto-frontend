@@ -11,7 +11,7 @@ export function Loader({ className, text = "Valuto AI is thinking...", ...props 
   return (
     <div
       className={cn(
-        "bg-white/70 backdrop-blur-sm border border-white/50 rounded-2xl px-5 py-3 shadow-lg",
+        "rounded-2xl border border-white/10 bg-[#232324]/95 px-5 py-3 shadow-lg backdrop-blur-sm",
         className
       )}
       {...props}
@@ -28,9 +28,8 @@ export function Loader({ className, text = "Valuto AI is thinking...", ...props 
             style={{ animationDelay: "0.2s" }} 
           />
         </div>
-        <span className="text-sm text-gray-600 font-medium">{text}</span>
+        <span className="text-sm font-medium text-[#9a9a9d]">{text}</span>
       </div>
     </div>
   );
 }
-

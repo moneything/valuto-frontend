@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function LessonPageLayout({
   backHref = "/dashboard/learning-modules",
@@ -20,13 +20,15 @@ export default function LessonPageLayout({
   badges?: React.ReactNode;
   children: React.ReactNode;
 }) {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] text-white">
       <div className="max-w-4xl mx-auto px-4 py-6">
 
         {/* Back button at the top */}
         <button
-          onClick={() => window.history.back()}
+          onClick={() => router.push(backHref)}
           className="mb-4 flex items-center gap-2 rounded-xl border border-primary/40 bg-primary/15 p-2 font-extrabold text-primary transition-colors hover:bg-primary/20"
         >
           ← {backLabel}

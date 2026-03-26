@@ -11,7 +11,7 @@ import {
   RoundResult,
   InvestmentResult,
 } from "./logic/gameLogic";
-import { FiShield, FiTrendingUp } from "react-icons/fi";
+import { FiTrendingUp } from "react-icons/fi";
 
 export default function InvestmentPage() {
   const [started, setStarted] = useState(false);
@@ -91,17 +91,19 @@ export default function InvestmentPage() {
   // 🟢 Start screen
   if (!started)
     return (
-      <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-b from-gray-50 to-green-50">
-        <h1 className="text-4xl font-bold mb-4 text-gray-900">Investment Simulation</h1>
-        <p className="text-gray-600 max-w-lg text-center mb-6">
+      <div className="flex min-h-screen flex-col items-center justify-center bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] px-6">
+        <div className="w-full max-w-2xl rounded-[2rem] border border-white/10 bg-[#232324]/95 p-10 text-center text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
+        <h1 className="mb-4 text-4xl font-bold text-white">Investment Simulation</h1>
+        <p className="mb-6 max-w-lg text-center text-[#9a9a9d] mx-auto">
           Learn investing by simulating market changes over time. Allocate funds, manage risk, and track performance.
         </p>
         <button
           onClick={() => setStarted(true)}
-          className="px-6 py-3 bg-green-600 text-white font-semibold rounded-md hover:bg-green-700 transition"
+          className="rounded-md border border-green-500/20 bg-green-600 px-6 py-3 font-semibold text-white transition hover:bg-green-700"
         >
           Start Game
         </button>
+        </div>
       </div>
     );
 
@@ -120,33 +122,33 @@ export default function InvestmentPage() {
 
   // 💼 Main investment dashboard
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-green-50 px-6 py-10">
+    <div className="min-h-screen bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] px-6 py-10 text-white">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+          <h1 className="flex items-center gap-3 text-3xl font-bold text-white">
              <FiTrendingUp className="w-6 h-6" /> Investment Round {round}
           </h1>
-          <p className="text-gray-600">Choose your investments wisely!</p>
+          <p className="text-[#9a9a9d]">Choose your investments wisely!</p>
         </div>
 
         {/* Balance Summary */}
-        <div className="bg-white shadow-sm rounded-xl p-6 flex flex-wrap justify-between items-center mb-10 border border-green-100">
+        <div className="mb-10 flex flex-wrap items-center justify-between rounded-xl border border-green-500/20 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
           <div className="flex flex-col">
-            <span className="text-gray-500 text-sm">Total Balance</span>
-            <span className="text-lg font-semibold text-green-700">
+            <span className="text-sm text-[#9a9a9d]">Total Balance</span>
+            <span className="text-lg font-semibold text-green-300">
               £{balance.toFixed(2)}
             </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-gray-500 text-sm">Invested</span>
-            <span className="text-lg font-semibold text-green-700">
+            <span className="text-sm text-[#9a9a9d]">Invested</span>
+            <span className="text-lg font-semibold text-green-300">
               £{totalInvested.toFixed(2)}
             </span>
           </div>
           <div className="flex flex-col">
-            <span className="text-gray-500 text-sm">Available</span>
-            <span className="text-lg font-semibold text-green-700">
+            <span className="text-sm text-[#9a9a9d]">Available</span>
+            <span className="text-lg font-semibold text-green-300">
               £{availableBalance.toFixed(2)}
             </span>
           </div>
@@ -155,8 +157,8 @@ export default function InvestmentPage() {
             disabled={totalInvested === 0}
             className={`mt-4 sm:mt-0 px-6 py-3 rounded-lg font-semibold flex items-center gap-2 transition ${
               totalInvested === 0
-                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
-                : "bg-green-600 text-white hover:bg-green-700"
+                ? "cursor-not-allowed border border-white/10 bg-white/5 text-[#6f6f73]"
+                : "border border-green-500/20 bg-green-600 text-white hover:bg-green-700"
             }`}
           >
             Advance 6 Months →

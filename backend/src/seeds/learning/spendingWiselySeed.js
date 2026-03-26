@@ -1,5 +1,6 @@
 // backend/src/seeds/learning/spendingWiselySeed.js
 const LearningModule = require("../../models/LearningModule");
+const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Spending Wisely — Learning Modules
@@ -2527,6 +2528,7 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(spendingWiselyModules);
+applyDarkThemeToModules(spendingWiselyModules);
 
 // =====================================================
 // Seed Function

@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/borrowingDebtSeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Borrowing & Debt — Learning Modules
@@ -2284,7 +2283,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(borrowingDebtModules);
-applyDarkThemeToModules(borrowingDebtModules);
 
 // =====================================================
 // Seed Function

@@ -87,21 +87,21 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
   const categoryStyle = (category: string) => {
     switch (category) {
       case 'Bills':
-        return { border: 'border-l-emerald-500 border-r-emerald-500 border-t-emerald-500 border-b-emerald-500', accent: 'text-emerald-600', pill: 'bg-emerald-100 text-emerald-700' };
+        return { border: 'border-emerald-500/30', accent: 'text-emerald-300', pill: 'border border-emerald-500/20 bg-emerald-500/10 text-emerald-300' };
       case 'Benefits':
-        return { border: 'border-l-pink-500 border-r-pink-500 border-t-pink-500 border-b-pink-500', accent: 'text-pink-600', pill: 'bg-pink-100 text-pink-700' };
+        return { border: 'border-pink-500/30', accent: 'text-pink-300', pill: 'border border-pink-500/20 bg-pink-500/10 text-pink-300' };
       case 'Jobs':
-        return { border: 'border-l-amber-500 border-r-amber-500 border-t-amber-500 border-b-amber-500', accent: 'text-amber-600', pill: 'bg-amber-100 text-amber-700' };
+        return { border: 'border-amber-500/30', accent: 'text-amber-300', pill: 'border border-amber-500/20 bg-amber-500/10 text-amber-300' };
       case 'Savings':
-        return { border: 'border-l-teal-500 border-r-teal-500 border-t-teal-500 border-b-teal-500', accent: 'text-teal-600', pill: 'bg-teal-100 text-teal-700' };
+        return { border: 'border-teal-500/30', accent: 'text-teal-300', pill: 'border border-teal-500/20 bg-teal-500/10 text-teal-300' };
       case 'Investing':
-        return { border: 'border-l-blue-500 border-r-blue-500 border-t-blue-500 border-b-blue-500', accent: 'text-blue-600', pill: 'bg-blue-100 text-blue-700' };
+        return { border: 'border-blue-500/30', accent: 'text-blue-300', pill: 'border border-blue-500/20 bg-blue-500/10 text-blue-300' };
       case 'Property':
-        return { border: 'border-l-purple-500 border-r-purple-500 border-t-purple-500 border-b-purple-500', accent: 'text-purple-600', pill: 'bg-purple-100 text-purple-700' };
+        return { border: 'border-purple-500/30', accent: 'text-purple-300', pill: 'border border-purple-500/20 bg-purple-500/10 text-purple-300' };
       case 'Scams':
-        return { border: 'border-l-red-500 border-r-red-500 border-t-red-500 border-b-red-500', accent: 'text-red-600', pill: 'bg-red-100 text-red-700' };
+        return { border: 'border-red-500/30', accent: 'text-red-300', pill: 'border border-red-500/20 bg-red-500/10 text-red-300' };
       default:
-        return { border: 'border-l-gray-400 border-r-gray-400 border-t-gray-400 border-b-gray-400', accent: 'text-gray-700', pill: 'bg-gray-100 text-gray-700' };
+        return { border: 'border-white/10', accent: 'text-[#d7d7db]', pill: 'border border-white/10 bg-white/[0.05] text-[#d7d7db]' };
     }
   };
 
@@ -117,28 +117,28 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
         className="group"
       >
         <Card className={cn(
-          "p-5 hover:shadow-lg transition-all duration-200 cursor-pointer border rounded-2xl",
+          "h-full cursor-pointer rounded-2xl border bg-white/[0.03] p-5 transition-all duration-200 hover:bg-white/[0.05]",
           style.border,
-          "h-full flex flex-col"
+          "flex flex-col"
         )}>
           <div className="flex items-center justify-between mb-3">
             <span className={cn("px-3 py-1 rounded-full text-sm font-semibold", style.pill)}>
               {item.category || 'All'}
             </span>
-            <span className="text-sm text-gray-500 flex-shrink-0">
+            <span className="text-sm text-[#9a9a9d] flex-shrink-0">
               {formatTime(item.time)}
             </span>
           </div>
 
-          <h4 className="font-semibold text-gray-900 text-lg mb-3 leading-snug">
+          <h4 className="mb-3 text-lg font-semibold leading-snug text-white">
             {item.title}
           </h4>
 
-          <p className="text-sm text-gray-700 mb-4 leading-relaxed">
+          <p className="mb-4 text-sm leading-relaxed text-[#d7d7db]">
             {item.summary}
           </p>
 
-          <div className="mt-auto flex items-center justify-between pt-3 border-t border-gray-100">
+          <div className="mt-auto flex items-center justify-between border-t border-white/10 pt-3">
             <a
               href={item.link}
               target="_blank"
@@ -152,7 +152,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm px-4 py-2 rounded-lg bg-gray-50 text-gray-800 hover:bg-gray-100 border border-gray-200"
+              className="rounded-lg border border-white/10 bg-white/[0.05] px-4 py-2 text-sm text-[#e5e5e7] hover:bg-white/[0.08]"
               onClick={(e) => e.stopPropagation()}
             >
               Read more
@@ -171,16 +171,16 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
       transition={{ delay: index * 0.1 }}
       className="group"
     >
-      <Card className="p-4 hover:shadow-md transition-all duration-200 cursor-pointer border-l-4 border-l-green-500">
+      <Card className="cursor-pointer border-l-4 border-l-green-500/80 bg-white/[0.03] p-4 transition-all duration-200 hover:bg-white/[0.05]">
         <div className="flex justify-between items-start mb-2">
-          <h4 className="font-semibold text-gray-900 group-hover:text-green-600 transition-colors line-clamp-2">
+          <h4 className="line-clamp-2 font-semibold text-white transition-colors group-hover:text-green-300">
             {item.title}
           </h4>
-          <span className="text-sm text-gray-500 ml-2 flex-shrink-0">
+          <span className="ml-2 flex-shrink-0 text-sm text-[#9a9a9d]">
             {formatEventDate(item.date)}
           </span>
         </div>
-        <div className="flex items-center gap-4 text-sm text-gray-600 mb-3">
+        <div className="mb-3 flex items-center gap-4 text-sm text-[#9a9a9d]">
           <span className="flex items-center gap-1">
             📍 {item.location}
           </span>
@@ -189,14 +189,14 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           </span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-sm text-green-600 font-medium">
+          <span className="text-sm font-medium text-green-300">
             {item.source}
           </span>
           <a
             href={item.link}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-sm text-green-600 hover:text-green-800 font-medium"
+            className="text-sm font-medium text-green-300 hover:text-green-200"
             onClick={(e) => e.stopPropagation()}
           >
             View event →
@@ -211,7 +211,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
       <Card className={cn("p-6", className)}>
         <div className="text-center">
           <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-valuto-green-600 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading latest news and events...</p>
+          <p className="text-[#9a9a9d]">Loading latest news and events...</p>
         </div>
       </Card>
     );
@@ -222,8 +222,8 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
       <Card className={cn("p-6", className)}>
         <div className="text-center">
           <div className="text-4xl mb-4">📰</div>
-          <h3 className="text-lg font-semibold text-gray-900 mb-2">Unable to Load News & Events</h3>
-          <p className="text-gray-600 mb-4">{error}</p>
+          <h3 className="mb-2 text-lg font-semibold text-white">Unable to Load News & Events</h3>
+          <p className="mb-4 text-[#9a9a9d]">{error}</p>
           <Button onClick={loadData} variant="outline">
             Try Again
           </Button>
@@ -239,8 +239,8 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
         <div className="flex items-center gap-3">
           <div className="text-3xl">📰</div>
           <div>
-            <h2 className="text-2xl font-bold text-gray-900">News & Events</h2>
-            <p className="text-sm text-gray-600">
+            <h2 className="text-2xl font-bold text-white">News & Events</h2>
+            <p className="text-sm text-[#9a9a9d]">
               Latest financial news & UK networking events
             </p>
           </div>
@@ -260,10 +260,10 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
         <button
           onClick={() => setActiveTab('news')}
           className={cn(
-            "px-4 py-2 rounded-lg font-medium text-sm transition-colors",
+            "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
             activeTab === 'news'
-              ? "bg-blue-100 text-blue-700 border border-blue-200"
-              : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              ? "border border-blue-500/20 bg-blue-500/10 text-blue-300"
+              : "border border-white/10 text-[#9a9a9d] hover:bg-white/[0.05] hover:text-white"
           )}
         >
           📈 Financial News ({news.length})
@@ -271,10 +271,10 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
         <button
           onClick={() => setActiveTab('events')}
           className={cn(
-            "px-4 py-2 rounded-lg font-medium text-sm transition-colors",
+            "rounded-lg px-4 py-2 text-sm font-medium transition-colors",
             activeTab === 'events'
-              ? "bg-green-100 text-green-700 border border-green-200"
-              : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+              ? "border border-green-500/20 bg-green-500/10 text-green-300"
+              : "border border-white/10 text-[#9a9a9d] hover:bg-white/[0.05] hover:text-white"
           )}
         >
           🎯 Networking Events ({events.length})
@@ -304,10 +304,10 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
                       key={category}
                       onClick={() => setActiveCategory(category)}
                       className={cn(
-                        "px-3 py-1.5 rounded-full border text-sm transition-colors",
+                        "rounded-full border px-3 py-1.5 text-sm transition-colors",
                         isActive
-                          ? "bg-blue-600 text-white border-blue-600"
-                          : "text-gray-600 border-gray-200 hover:bg-gray-100"
+                          ? "border-blue-500/20 bg-blue-500/10 text-blue-300"
+                          : "border-white/10 text-[#9a9a9d] hover:bg-white/[0.05] hover:text-white"
                       )}
                     >
                       {category} ({count})
@@ -318,7 +318,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
               {news.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-4">📰</div>
-                  <p className="text-gray-600">No financial news available at the moment.</p>
+                  <p className="text-[#9a9a9d]">No financial news available at the moment.</p>
                 </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
@@ -351,7 +351,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
               {events.length === 0 ? (
                 <div className="text-center py-8">
                   <div className="text-4xl mb-4">🎯</div>
-                  <p className="text-gray-600">No networking events available at the moment.</p>
+                  <p className="text-[#9a9a9d]">No networking events available at the moment.</p>
                 </div>
               ) : (
                 events.map((item, index) => renderEventItem(item, index))
@@ -363,8 +363,8 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
 
       {/* Footer */}
       {lastUpdated && (
-        <div className="mt-6 pt-4 border-t border-gray-200">
-          <p className="text-sm text-gray-500 text-center">
+        <div className="mt-6 border-t border-white/10 pt-4">
+          <p className="text-center text-sm text-[#9a9a9d]">
             Last updated: {lastUpdated.toLocaleTimeString()}
           </p>
         </div>

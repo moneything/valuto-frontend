@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/entrepreneurshipSeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Entrepreneurship — Learning Modules
@@ -3080,7 +3079,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(entrepreneurshipModules);
-applyDarkThemeToModules(entrepreneurshipModules);
 
 // =====================================================
 // Seed Function

@@ -1,6 +1,5 @@
 // backend/src/seeds/learning/coreMoneySkillsSeed.js
 const LearningModule = require("../../models/LearningModule");
-const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Core Money Skills — Learning Modules
@@ -2209,7 +2208,6 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(coreMoneySkillsModules);
-applyDarkThemeToModules(coreMoneySkillsModules);
 
 
 // =====================================================

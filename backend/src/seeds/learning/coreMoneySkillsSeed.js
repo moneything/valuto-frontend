@@ -140,8 +140,17 @@ const coreMoneySkillsModules = [
                         children: [
                           {
                             type: "h3",
-                            props: { className: "text-lg font-semibold text-green-400" },
-                            children: ["✅ NEEDS (Must Have)"] // todo: update so it uses icon instead of emoji uses span 
+                            props: { className: "flex items-center gap-2 text-lg font-semibold text-green-400" },
+                            children: [
+                              {
+                                type: "span",
+                                props: { className: "inline-flex items-center gap-2" },
+                                children: [
+                                  { type: "GiShieldReflect", props: { className: "h-5 w-5 shrink-0" }, children: [] },
+                                  { type: "span", children: ["NEEDS (Must Have)"] }
+                                ]
+                              }
+                            ]
                           },
                           {
                             type: "ul",

@@ -10,7 +10,6 @@ import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award, ChevronRi
 import * as LucideIcons from "lucide-react";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
-import NewsAndEvents from "@/components/NewsAndEvents";
 import { leaderboardApi, triviaApi, userApi } from "@/lib/api";
 import { useLearningCategories, useLearningModules } from "@/lib/hooks/useLearningModules";
 import {
@@ -248,15 +247,6 @@ export default function DashboardPage() {
       href: '/dashboard/profile'
     }
   ];
-
-  // Add News & Events as a special card that renders inline
-  const newsAndEventsCard = {
-    title: 'News & Events',
-    description: 'Latest financial news & UK networking events',
-    icon: <span className="text-2xl">📰</span>,
-    href: null, // Special card - no href
-    isSpecial: true
-  };
 
   const cards = isTeacher ? teacherCards : studentCards;
   const progression = userStats?.progression;
@@ -793,11 +783,6 @@ export default function DashboardPage() {
               badge={card.badge || undefined}
             />
           ))}
-        </div>
-
-        {/* News & Events Section */}
-        <div id="news-events" className="mt-16">
-          <NewsAndEvents />
         </div>
 
         {/* Quick Tips Section */}

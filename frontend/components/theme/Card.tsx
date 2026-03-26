@@ -24,9 +24,9 @@ export default function Card({
   };
 
   const baseClasses = `
-    bg-white/90 backdrop-blur-sm rounded-2xl shadow-lg border border-valuto-green-100
-    ${hover ? 'hover:shadow-2xl hover:-translate-y-1 transition-all duration-300' : ''}
-    ${gradient ? 'bg-gradient-to-br from-valuto-green-50 to-white' : ''}
+    rounded-2xl border border-white/10 bg-[#232324]/95 text-white backdrop-blur-sm shadow-[0_20px_50px_rgba(0,0,0,0.28)]
+    ${hover ? 'hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(0,0,0,0.38)] transition-all duration-300' : ''}
+    ${gradient ? 'bg-gradient-to-br from-[#232324] via-[#1d1d1f] to-[#16211b]' : ''}
     ${paddingClasses[padding]}
     ${className}
   `;

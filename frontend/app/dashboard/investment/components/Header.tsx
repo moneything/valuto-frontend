@@ -23,18 +23,18 @@ export default function Header({
           className="rounded-md object-contain"
         />
         <div>
-          <h3 className="font-semibold text-lg text-gray-900">
+          <h3 className="text-lg font-semibold text-white">
             {company.name}
           </h3>
-          <p className="text-gray-500 text-sm">{company.sector}</p>
+          <p className="text-sm text-[#9a9a9d]">{company.sector}</p>
         </div>
       </div>
 
       <button
         onClick={onOpenNews}
-        className="p-2 rounded-md hover:bg-green-500 transition"
+        className="rounded-md p-2 transition hover:bg-white/10"
       >
-        <Newspaper className="w-7 h-11 text-gray-600 hover:text-white" />
+        <Newspaper className="h-11 w-7 text-[#9a9a9d] hover:text-white" />
       </button>
     </div>
   );

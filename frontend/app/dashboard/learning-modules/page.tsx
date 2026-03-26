@@ -219,11 +219,18 @@ export default function LearningModulesPage() {
         return (
           <section
             key={category.id}
-            className="mb-12 rounded-2xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)]"
+            className={`relative mb-12 overflow-hidden rounded-2xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)] ${categoryBorderEffect.shadow}`}
           >
+            <div
+              className={`pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent ${categoryBorderEffect.gradient} animate-[average-score-border-spin_2.8s_linear_infinite]`}
+            />
+            <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+            <div
+              className={`pointer-events-none absolute inset-0 rounded-2xl ring-1 ${categoryBorderEffect.ring}`}
+            />
 
             {/* Category Header */}
-            <div className="flex items-center gap-4 mb-6">
+            <div className="relative z-10 mb-6 flex items-center gap-4">
               <div className={`w-16 h-16 rounded-xl flex items-center justify-center ${category.color}`}>
                 <IconComponent className="w-8 h-8 text-white" />
               </div>
@@ -235,7 +242,7 @@ export default function LearningModulesPage() {
             </div>
 
             {/* Module Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="relative z-10 grid grid-cols-1 gap-6 md:grid-cols-2">
               {sortedModules.map((module: any) => {
                 const status = getModuleStatus(module.topic);
                 const isCompleted = status === "completed";
@@ -244,7 +251,7 @@ export default function LearningModulesPage() {
                 const isLocked = !hasSubscription && !isFreeModule;
 
                 const cardClassName = `
-                  relative overflow-hidden rounded-2xl border p-6 transition shadow-[0_16px_40px_rgba(0,0,0,0.2)]
+                  relative overflow-hidden rounded-2xl border p-6 transition
                   ${
                     isCompleted
                       ? "bg-green-500/10 border-green-500/30"
@@ -257,17 +264,6 @@ export default function LearningModulesPage() {
 
                 return (
                   <div key={module.topic} className={cardClassName}>
-                    {!isCompleted && !isInProgress && (
-                      <>
-                        <div
-                          className={`pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent ${categoryBorderEffect.gradient} animate-[average-score-border-spin_2.6s_linear_infinite]`}
-                        />
-                        <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
-                        <div
-                          className={`pointer-events-none absolute inset-0 rounded-2xl ring-1 ${categoryBorderEffect.ring}`}
-                        />
-                      </>
-                    )}
                     {isInProgress && (
                       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
                     )}

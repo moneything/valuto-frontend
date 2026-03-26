@@ -4,11 +4,11 @@ import { FiShield, FiAlertTriangle, FiTrendingUp } from "react-icons/fi";
 export function getRiskColor(level: RiskLevel) {
   switch (level) {
     case "low":
-      return "bg-green-100 text-green-700 border-green-300";
+      return "border-green-500/20 bg-green-500/10 text-green-300";
     case "medium":
-      return "bg-yellow-100 text-yellow-700 border-yellow-300";
+      return "border-yellow-500/20 bg-yellow-500/10 text-yellow-300";
     case "high":
-      return "bg-red-100 text-red-700 border-red-300";
+      return "border-red-500/20 bg-red-500/10 text-red-300";
     default:
       return "";
   }

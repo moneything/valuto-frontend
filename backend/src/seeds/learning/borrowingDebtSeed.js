@@ -1914,7 +1914,7 @@ const borrowingDebtModules = [
           {
             type: "div",
             props: {
-              className: "bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-green-500/20 p-6 pb-4"
+              className: "bg-gradient-to-r from-blue-500/15 via-emerald-500/10 to-blue-500/20 p-6 pb-4"
             },
             children: [
               {
@@ -1925,7 +1925,7 @@ const borrowingDebtModules = [
                     type: "CardTitle",
                     props: { className: "text-3xl flex items-center gap-3 font-bold tracking-tight text-white" },
                     children: [
-                      { type: "TrendingDown", props: { className: "h-8 w-8 text-green-400" } },
+                      { type: "TrendingDown", props: { className: "h-8 w-8 text-blue-400" } },
                       "How to Get Out of Debt"
                     ]
                   },

@@ -20,17 +20,17 @@ export default function DashboardCard({
 }: DashboardCardProps) {
   return (
     <Link href={href}>
-      <div className="group relative bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 overflow-hidden h-full flex flex-col">
+      <div className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#232324]/95 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:-translate-y-2 hover:shadow-[0_28px_70px_rgba(0,0,0,0.38)]">
         {/* Animated border */}
         <div className="absolute inset-0 rounded-2xl animate-border-glow opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-        <div className="absolute inset-[2px] bg-white rounded-2xl"></div>
+        <div className="absolute inset-[1px] rounded-2xl bg-[#232324]"></div>
         
         {/* Background gradient on hover */}
         <div className={`absolute inset-0 bg-gradient-to-br ${color} opacity-0 group-hover:opacity-5 transition-opacity`}></div>
         
         {/* Badge */}
         {badge && (
-          <div className="absolute top-4 right-4 bg-valuto-green-100 text-valuto-green-700 text-sm font-semibold px-3 py-1 rounded-full z-10">
+          <div className="absolute top-4 right-4 z-10 rounded-full bg-primary/15 px-3 py-1 text-sm font-semibold text-primary">
             {badge}
           </div>
         )}
@@ -39,11 +39,11 @@ export default function DashboardCard({
         <div className="relative z-10 flex flex-col h-full">
           {/* Icon - Centered */}
           <div className="flex justify-center mb-6">
-            <div className="flex items-center justify-center w-20 h-20 rounded-xl bg-gradient-to-br from-valuto-green-50 to-valuto-green-100 group-hover:scale-110 transition-transform">
+            <div className="flex h-20 w-20 items-center justify-center rounded-xl bg-gradient-to-br from-white/[0.05] to-primary/10 transition-transform group-hover:scale-110">
               {typeof icon === 'string' ? (
                 <span className="text-4xl">{icon}</span>
               ) : (
-                <div className="text-valuto-green-600">
+                <div className="text-primary">
                   {icon}
                 </div>
               )}
@@ -51,17 +51,17 @@ export default function DashboardCard({
           </div>
           
           {/* Title - Centered */}
-          <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-valuto-green-600 transition-colors text-center leading-tight">
+          <h3 className="mb-3 text-center text-xl font-bold leading-tight text-white transition-colors group-hover:text-primary">
             {title}
           </h3>
           
           {/* Description - Centered */}
-          <p className="text-gray-600 text-sm leading-relaxed text-center mb-6 flex-grow">
+          <p className="mb-6 flex-grow text-center text-sm leading-relaxed text-[#9a9a9d]">
             {description}
           </p>
           
           {/* Arrow icon - Centered */}
-          <div className="flex items-center justify-center text-valuto-green-600 font-semibold text-sm mt-auto">
+          <div className="mt-auto flex items-center justify-center text-sm font-semibold text-primary">
             <span className="group-hover:translate-x-1 transition-transform">
               Get Started
             </span>
@@ -74,4 +74,3 @@ export default function DashboardCard({
     </Link>
   );
 }
-

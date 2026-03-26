@@ -3,6 +3,7 @@
 
 import React from "react";
 import * as LucideIcons from "lucide-react";
+import * as FeatherIcons from "react-icons/fi";
 
 // Import only the components you actually have
 import {
@@ -54,10 +55,12 @@ const UI_COMPONENTS: Record<string, React.ComponentType<any> | string> = {
 
 // Merge Lucide icons (Store, Laptop, Users, Clock, etc.)
 const ICONS: Record<string, React.ComponentType<any>> = LucideIcons as any;
+const REACT_ICONS: Record<string, React.ComponentType<any>> = FeatherIcons as any;
 
 const COMPONENTS: Record<string, React.ComponentType<any> | string> = {
   ...UI_COMPONENTS,
   ...ICONS,
+  ...REACT_ICONS,
 };
 
 function toCamelCaseStyleKey(key: string) {

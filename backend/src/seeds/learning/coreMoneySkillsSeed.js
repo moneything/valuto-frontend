@@ -22,64 +22,75 @@ const coreMoneySkillsModules = [
     categoryId: "core-money-skills",
     topic: "budgeting-basics",
     createdBy: "system",
-
+  
     visual: {
       icon: "Wallet",
-      iconColor: "bg-blue-500",
+      iconColor: "bg-green-500",
       readTime: 3,
       badge: "Core Money Skills"
     },
-
+  
     difficultyLevel: "beginner",
     timeEstimate: 8,
     points: 150,
     order: 1,
-
+  
     uiTree: [
       {
-        "type": "div",
-        "props": { "className": "grid gap-6" },
-        "children": [
-
+        type: "div",
+        props: { className: "grid gap-6 text-white" },
+        children: [
+  
           /* ------------------------------------------------
               CARD 1 — What is a Budget?
           ------------------------------------------------ */
           {
-            "type": "Card",
-            "children": [
+            type: "Card",
+            props: {
+              className: "bg-[#232324] border border-white/10 text-white shadow-none"
+            },
+            children: [
               {
-                "type": "CardHeader",
-                "children": [
+                type: "CardHeader",
+                props: { className: "text-white" },
+                children: [
                   {
-                    "type": "CardTitle",
-                    "props": { "className": "flex items-center gap-2" },
-                    "children": [
-                      { "type": "TrendingUp", "props": { "className": "h-7 w-7" }},
+                    type: "CardTitle",
+                    props: { className: "flex items-center gap-2 text-white" },
+                    children: [
+                      { type: "TrendingUp", props: { className: "h-7 w-7 text-green-400" } },
                       "What is a Budget?"
                     ]
                   }
                 ]
               },
-
+  
               {
-                "type": "CardContent",
-                "props": { "className": "space-y-4" },
-                "children": [
+                type: "CardContent",
+                props: { className: "space-y-4 text-[#d7d7db]" },
+                children: [
                   {
-                    "type": "p",
-                    "props": { "className": "text-lg" },
-                    "children": [
+                    type: "p",
+                    props: { className: "text-lg text-[#d7d7db]" },
+                    children: [
                       "A budget is simply a plan for your money. It helps you understand where your money comes from and where it goes so you can make smarter decisions."
                     ]
                   },
                   {
-                    "type": "div",
-                    "props": { "className": "bg-primary/10 p-4 rounded-lg" },
-                    "children": [
-                      { "type": "p", "props": { "className": "font-semibold" }, "children": ["Think of it like this:"] },
+                    type: "div",
+                    props: {
+                      className: "bg-green-500/10 border border-green-500/30 p-4 rounded-lg"
+                    },
+                    children: [
                       {
-                        "type": "p",
-                        "children": [
+                        type: "p",
+                        props: { className: "font-semibold text-white" },
+                        children: ["Think of it like this:"]
+                      },
+                      {
+                        type: "p",
+                        props: { className: "text-[#d7d7db]" },
+                        children: [
                           "If your money was water, a budget would be different buckets for rent, food, fun, and savings!"
                         ]
                       }
@@ -89,293 +100,419 @@ const coreMoneySkillsModules = [
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 2 — Needs vs Wants
           ------------------------------------------------ */
           {
-            "type": "Card",
-            "children": [
-              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["Needs vs Wants: The Foundation"] }] },
-
+            type: "Card",
+            props: {
+              className: "bg-[#232324] border border-white/10 text-white shadow-none"
+            },
+            children: [
               {
-                "type": "CardContent",
-                "children": [
+                type: "CardHeader",
+                props: { className: "text-white" },
+                children: [
                   {
-                    "type": "div",
-                    "props": { "className": "grid md:grid-cols-2 gap-6" },
-                    "children": [
-
+                    type: "CardTitle",
+                    props: { className: "text-white" },
+                    children: ["Needs vs Wants: The Foundation"]
+                  }
+                ]
+              },
+  
+              {
+                type: "CardContent",
+                props: { className: "text-[#d7d7db]" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "grid md:grid-cols-2 gap-6" },
+                    children: [
+  
                       /* NEEDS */
                       {
-                        "type": "div",
-                        "props": { "className": "space-y-3" },
-                        "children": [
-                          { "type": "h3", "props": { "className": "text-lg font-semibold text-green-600" }, "children": ["✅ NEEDS (Must Have)"] },
+                        type: "div",
+                        props: {
+                          className: "space-y-3 rounded-lg border border-green-500/30 bg-green-500/10 p-4"
+                        },
+                        children: [
                           {
-                            "type": "ul",
-                            "props": { "className": "space-y-2 P-4" },
-                            "children": [
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleCheckBig", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Rent/Housing"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleCheckBig", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Food & Groceries"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleCheckBig", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Transport to work/uni"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleCheckBig", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Phone bill"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleCheckBig", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Essential clothing"]},
-                              ],},
+                            type: "h3",
+                            props: { className: "text-lg font-semibold text-green-400" },
+                            children: ["✅ NEEDS (Must Have)"]
+                          },
+                          {
+                            type: "ul",
+                            props: { className: "space-y-2" },
+                            children: [
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "text-green-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Rent/Housing"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "text-green-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Food & Groceries"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "text-green-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Transport to work/uni"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "text-green-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Phone bill"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleCheckBig", props: { className: "text-green-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Essential clothing"] }
+                                ]
+                              }
                             ]
                           }
                         ]
                       },
-
+  
                       /* WANTS */
                       {
-                        "type": "div",
-                        "props": { "className": "space-y-3" },
-                        "children": [
-                          { "type": "h3", "props": { "className": "text-lg font-semibold text-orange-600" }, "children": ["⚠️ WANTS (Nice to Have)"] },
-                                                    {
-                            "type": "ul",
-                            "props": { "className": "space-y-2 P-4" },
-                            "children": [
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleAlert", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Netflix/Spotify"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleAlert", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Eating out & takeaways"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleAlert", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Designer clothes"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleAlert", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Gaming/entertainment"]},
-                              ],},
-                              {"type": "li", "props": {"className": "flex flex-row"}, "children" : [
-                                {"type": "CircleAlert", "props": {"className": "text-green-500 mr-2 h-5 w-5 self-center"}, "children":[]},
-                                {"type": "span", "children":["Holidays"]},
-                              ],},
-                            ]
+                        type: "div",
+                        props: {
+                          className: "space-y-3 rounded-lg border border-orange-500/30 bg-orange-500/10 p-4"
+                        },
+                        children: [
+                          {
+                            type: "h3",
+                            props: { className: "text-lg font-semibold text-orange-400" },
+                            children: ["⚠️ WANTS (Nice to Have)"]
                           },
+                          {
+                            type: "ul",
+                            props: { className: "space-y-2" },
+                            children: [
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "text-orange-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Netflix/Spotify"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "text-orange-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Eating out & takeaways"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "text-orange-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Designer clothes"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "text-orange-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Gaming/entertainment"] }
+                                ]
+                              },
+                              {
+                                type: "li",
+                                props: { className: "flex flex-row text-[#d7d7db]" },
+                                children: [
+                                  { type: "CircleAlert", props: { className: "text-orange-400 mr-2 h-5 w-5 self-center shrink-0" }, children: [] },
+                                  { type: "span", children: ["Holidays"] }
+                                ]
+                              }
+                            ]
+                          }
                         ]
                       }
-
+  
                     ]
                   }
                 ]
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 3 — 50/30/20 Rule
           ------------------------------------------------ */
           {
-            "type": "Card",
-            "children": [
+            type: "Card",
+            props: {
+              className: "bg-[#232324] border border-white/10 text-white shadow-none"
+            },
+            children: [
               {
-                "type": "CardHeader",
-                "children": [
-                  { "type": "CardTitle", "children": ["The 50/30/20 Rule (Perfect for Students!)"] },
-                  { "type": "CardDescription", "children": ["The simplest way to budget your money"] }
+                type: "CardHeader",
+                props: { className: "text-white" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-white" },
+                    children: ["The 50/30/20 Rule (Perfect for Students!)"]
+                  },
+                  {
+                    type: "CardDescription",
+                    props: { className: "text-[#9a9a9d]" },
+                    children: ["The simplest way to budget your money"]
+                  }
                 ]
               },
-
+  
               {
-                "type": "CardContent",
-                "children": [
-
-                  /* Three blocks (Needs/Wants/Savings) */
+                type: "CardContent",
+                props: { className: "text-[#d7d7db]" },
+                children: [
+  
                   {
-                    "type": "div",
-                    "props": { "className": "grid md:grid-cols-3 gap-4" },
-                    "children": [
+                    type: "div",
+                    props: { className: "grid md:grid-cols-3 gap-4" },
+                    children: [
                       {
-                        "type": "div",
-                        "props": { "className": "bg-green-50 p-4 rounded-lg border border-green-200" },
-                        "children": [
-                          { "type": "h3", "props": { "className": "text-xl font-bold text-green-700" }, "children": ["50%"] },
-                          { "type": "h4", "props": { "className": "font-semibold text-green-600" }, "children": ["NEEDS"] },
-                          { "type": "p", "props": { "className": "text-sm" }, "children": ["Rent, food, transport, phone"] }
+                        type: "div",
+                        props: {
+                          className: "bg-green-500/10 border border-green-500/30 p-4 rounded-lg"
+                        },
+                        children: [
+                          { type: "h3", props: { className: "text-xl font-bold text-green-400" }, children: ["50%"] },
+                          { type: "h4", props: { className: "font-semibold text-green-300" }, children: ["NEEDS"] },
+                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Rent, food, transport, phone"] }
                         ]
                       },
                       {
-                        "type": "div",
-                        "props": { "className": "bg-blue-50 p-4 rounded-lg border border-blue-200" },
-                        "children": [
-                          { "type": "h3", "props": { "className": "text-xl font-bold text-blue-700" }, "children": ["30%"] },
-                          { "type": "h4", "props": { "className": "font-semibold text-blue-600" }, "children": ["WANTS"] },
-                          { "type": "p", "props": { "className": "text-sm" }, "children": ["Fun, eating out, entertainment"] }
+                        type: "div",
+                        props: {
+                          className: "bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg"
+                        },
+                        children: [
+                          { type: "h3", props: { className: "text-xl font-bold text-blue-400" }, children: ["30%"] },
+                          { type: "h4", props: { className: "font-semibold text-blue-300" }, children: ["WANTS"] },
+                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Fun, eating out, entertainment"] }
                         ]
                       },
                       {
-                        "type": "div",
-                        "props": { "className": "bg-purple-50 p-4 rounded-lg border border-purple-200" },
-                        "children": [
-                          { "type": "h3", "props": { "className": "text-xl font-bold text-purple-700" }, "children": ["20%"] },
-                          { "type": "h4", "props": { "className": "font-semibold text-purple-600" }, "children": ["SAVINGS"] },
-                          { "type": "p", "props": { "className": "text-sm" }, "children": ["Emergency fund, future goals"] }
+                        type: "div",
+                        props: {
+                          className: "bg-violet-500/10 border border-violet-500/30 p-4 rounded-lg"
+                        },
+                        children: [
+                          { type: "h3", props: { className: "text-xl font-bold text-violet-400" }, children: ["20%"] },
+                          { type: "h4", props: { className: "font-semibold text-violet-300" }, children: ["SAVINGS"] },
+                          { type: "p", props: { className: "text-sm text-[#d7d7db]" }, children: ["Emergency fund, future goals"] }
                         ]
                       }
                     ]
                   },
-
-                  /* Example breakdown */
+  
                   {
-                    "type": "div",
-                    "props": { "className": "mt-6 p-4 bg-primary/10 rounded-lg" },
-                    "children": [
-                      { "type": "h4", "props": { "className": "font-semibold mb-2", }, "children": ["Example with £1000/month income:"] },
+                    type: "div",
+                    props: {
+                      className: "mt-6 p-4 bg-white/[0.04] border border-white/10 rounded-lg"
+                    },
+                    children: [
                       {
-                        "type": "ul",
-                        "props": { "className": "space-y-1 text-sm pl-4" , "style": {"list-style": "disc"} },
-                        "children": [
-                          {"type": "li", "children" : ["£500 for needs (rent, food, transport)"]},
-                          {"type": "li", "children" : ["£300 for wants (fun, eating out)"]},
-                          {"type": "li", "children" : ["£200 for savings"]},
+                        type: "h4",
+                        props: { className: "font-semibold mb-2 text-white" },
+                        children: ["Example with £1000/month income:"]
+                      },
+                      {
+                        type: "ul",
+                        props: { className: "space-y-1 text-sm pl-4 text-[#d7d7db]", style: { listStyleType: "disc" } },
+                        children: [
+                          { type: "li", children: ["£500 for needs (rent, food, transport)"] },
+                          { type: "li", children: ["£300 for wants (fun, eating out)"] },
+                          { type: "li", children: ["£200 for savings"] }
                         ]
                       }
                     ]
                   }
-
+  
                 ]
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 4 — How to Start Budgeting
           ------------------------------------------------ */
           {
-            "type": "Card",
-            "children": [
-              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["How to Start Budgeting (3 Easy Steps)"] }] },
-
+            type: "Card",
+            props: {
+              className: "bg-[#232324] border border-white/10 text-white shadow-none"
+            },
+            children: [
               {
-                "type": "CardContent",
-                "children": [
+                type: "CardHeader",
+                props: { className: "text-white" },
+                children: [
                   {
-                    "type": "div",
-                    "props": { "className": "space-y-4" },
-                    "children": [
-
-                      /* Step 1 */
+                    type: "CardTitle",
+                    props: { className: "text-white" },
+                    children: ["How to Start Budgeting (3 Easy Steps)"]
+                  }
+                ]
+              },
+  
+              {
+                type: "CardContent",
+                props: { className: "text-[#d7d7db]" },
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "space-y-4" },
+                    children: [
+  
                       {
-                        "type": "div",
-                        "props": { "className": "flex gap-4" },
-                        "children": [
+                        type: "div",
+                        props: {
+                          className: "flex gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4"
+                        },
+                        children: [
                           {
-                            "type": "div",
-                            "props": { "className": "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold" },
-                            "children": ["1"]
+                            type: "div",
+                            props: {
+                              className: "bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0"
+                            },
+                            children: ["1"]
                           },
                           {
-                            "type": "div",
-                            "children": [
-                              { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Track Your Income"] },
-                              { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Add up all money coming in: part-time job, student loan, family support"] }
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold text-white" }, children: ["Track Your Income"] },
+                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Add up all money coming in: part-time job, student loan, family support"] }
                             ]
                           }
                         ]
                       },
-
-                      /* Step 2 */
+  
                       {
-                        "type": "div",
-                        "props": { "className": "flex gap-4" },
-                        "children": [
+                        type: "div",
+                        props: {
+                          className: "flex gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4"
+                        },
+                        children: [
                           {
-                            "type": "div",
-                            "props": { "className": "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold" },
-                            "children": ["2"]
+                            type: "div",
+                            props: {
+                              className: "bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0"
+                            },
+                            children: ["2"]
                           },
                           {
-                            "type": "div",
-                            "children": [
-                              { "type": "h4", "props": { "className": "font-semibold" }, "children": ["List Your Expenses"] },
-                              { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Write down everything you spend money on for a week"] }
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold text-white" }, children: ["List Your Expenses"] },
+                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Write down everything you spend money on for a week"] }
                             ]
                           }
                         ]
                       },
-
-                      /* Step 3 */
+  
                       {
-                        "type": "div",
-                        "props": { "className": "flex gap-4" },
-                        "children": [
+                        type: "div",
+                        props: {
+                          className: "flex gap-4 rounded-lg border border-white/10 bg-white/[0.03] p-4"
+                        },
+                        children: [
                           {
-                            "type": "div",
-                            "props": { "className": "bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center font-bold" },
-                            "children": ["3"]
+                            type: "div",
+                            props: {
+                              className: "bg-green-500 text-white rounded-full w-8 h-8 flex items-center justify-center font-bold shrink-0"
+                            },
+                            children: ["3"]
                           },
                           {
-                            "type": "div",
-                            "children": [
-                              { "type": "h4", "props": { "className": "font-semibold" }, "children": ["Apply the 50/30/20 Rule"] },
-                              { "type": "p", "props": { "className": "text-sm text-muted-foreground" }, "children": ["Split your income and adjust your spending to fit"] }
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold text-white" }, children: ["Apply the 50/30/20 Rule"] },
+                              { type: "p", props: { className: "text-sm text-[#9a9a9d]" }, children: ["Split your income and adjust your spending to fit"] }
                             ]
                           }
                         ]
                       }
-
+  
                     ]
                   }
                 ]
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 5 — Quick Tips
           ------------------------------------------------ */
           {
-            "type": "Card",
-            "children": [
-              { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["💡 Quick Budgeting Tips"] }] },
-
+            type: "Card",
+            props: {
+              className: "bg-[#232324] border border-white/10 text-white shadow-none"
+            },
+            children: [
               {
-                "type": "CardContent",
-                "children": [
+                type: "CardHeader",
+                props: { className: "text-white" },
+                children: [
                   {
-                    "type": "ul",
-                    "props": { "className": "space-y-2 pl-4", "style": {"list-style": "disc"}, },
-                    "children": [
-                      {"type": "li", "children" : ["Use Monzo or Starling Bank to auto-track spending"]},
-                      {"type": "li", "children" : ["Review your budget monthly"]},
-                      {"type": "li", "children" : ["If you overspend, reduce another category"]},
-                      {"type": "li", "children" : ["Start small — even budgeting £100 helps"]},
-                      {"type": "li", "children" : ["Budgeting gives you more freedom, not less"]},
+                    type: "CardTitle",
+                    props: { className: "text-white" },
+                    children: ["💡 Quick Budgeting Tips"]
+                  }
+                ]
+              },
+  
+              {
+                type: "CardContent",
+                props: { className: "text-[#d7d7db]" },
+                children: [
+                  {
+                    type: "ul",
+                    props: {
+                      className: "space-y-2 pl-4 text-[#d7d7db]",
+                      style: { listStyleType: "disc" }
+                    },
+                    children: [
+                      { type: "li", children: ["Use Monzo or Starling Bank to auto-track spending"] },
+                      { type: "li", children: ["Review your budget monthly"] },
+                      { type: "li", children: ["If you overspend, reduce another category"] },
+                      { type: "li", children: ["Start small — even budgeting £100 helps"] },
+                      { type: "li", children: ["Budgeting gives you more freedom, not less"] }
                     ]
                   }
                 ]
               }
             ]
           }
-
+  
         ]
       }
     ],
-
-    /* ------------------------------------------------
-        QUIZ
-    ------------------------------------------------ */
+  
     quiz: {
       passingScore: 1,
       questions: [
@@ -392,10 +529,7 @@ const coreMoneySkillsModules = [
         }
       ]
     },
-
-    /* ------------------------------------------------
-        RELATED LESSONS
-    ------------------------------------------------ */
+  
     relatedLessons: [
       {
         moduleId: "saving-strategies",

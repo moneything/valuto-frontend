@@ -43,8 +43,8 @@ export default function RootLayout({
         },
       }}
     >
-      <html lang="en">
-        <body className={spaceGrotesk.variable}>
+      <html lang="en" suppressHydrationWarning>
+        <body className={spaceGrotesk.variable} suppressHydrationWarning>
           <UserProvider>
             <ConsoleGuard />
             {children}

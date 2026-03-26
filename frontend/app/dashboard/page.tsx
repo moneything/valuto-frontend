@@ -6,11 +6,12 @@ import { useEffect, useState, useCallback, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import { useUser as useClerkUser, useAuth } from "@clerk/nextjs";
 import { motion } from "framer-motion";
-import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award, ChevronRight } from "lucide-react";
+import { Zap, Trophy, Flame, Users, Plus as PlusLucide, Target, Award, ChevronRight, Clock, Star } from "lucide-react";
+import * as LucideIcons from "lucide-react";
 import { useUser } from "@/lib/userContext"; 
 import DashboardCard from "@/components/DashboardCard";
 import NewsAndEvents from "@/components/NewsAndEvents";
-import { triviaApi, userApi } from "@/lib/api";
+import { leaderboardApi, triviaApi, userApi } from "@/lib/api";
 import { useLearningCategories, useLearningModules } from "@/lib/hooks/useLearningModules";
 import {
   GameControllerIcon,
@@ -41,6 +42,7 @@ export default function DashboardPage() {
     gamesToday: 0,
     questions: 0,
   });
+  const [leaderboardEntries, setLeaderboardEntries] = useState<any[]>([]);
   const arenaParticles = useMemo(
     () =>
       Array.from({ length: 20 }, () => ({
@@ -61,9 +63,10 @@ export default function DashboardPage() {
 
       if (!token) return;
 
-      const [response, platformResponse] = await Promise.all([
+      const [response, platformResponse, leaderboardResponse] = await Promise.all([
         userApi.getStats(token),
         triviaApi.getPlatformStats(),
+        leaderboardApi.getTop(8),
       ]);
 
       if (response.success && response.data) {
@@ -82,6 +85,10 @@ export default function DashboardPage() {
           gamesToday: platformResponse.data.gamesToday ?? 0,
           questions: platformResponse.data.questions ?? 0,
         });
+      }
+
+      if (leaderboardResponse.success && Array.isArray(leaderboardResponse.data)) {
+        setLeaderboardEntries(leaderboardResponse.data);
       }
 
     } catch (error) {
@@ -253,6 +260,9 @@ export default function DashboardPage() {
 
   const cards = isTeacher ? teacherCards : studentCards;
   const progression = userStats?.progression;
+  const today = new Date();
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const currentDay = today.getDay();
 
   const progressionCards = [
     {
@@ -300,23 +310,15 @@ export default function DashboardPage() {
   ];
 
   const battleColorMap: Record<string, string> = {
-    "core-money-skills": "border-primary/40 hover:border-primary shadow-[0_0_30px_hsl(152_100%_45%_/_0.22)]",
-    "earning-income": "border-emerald-500/40 hover:border-emerald-400 shadow-[0_0_30px_rgba(34,197,94,0.18)]",
-    "spending-wisely": "border-amber-500/40 hover:border-amber-400 shadow-[0_0_30px_rgba(245,158,11,0.18)]",
-    "investing-assets": "border-yellow-500/40 hover:border-yellow-400 shadow-[0_0_30px_rgba(234,179,8,0.18)]",
-    entrepreneurship: "border-green-500/40 hover:border-green-400 shadow-[0_0_30px_rgba(34,197,94,0.18)]",
-    "borrowing-debt": "border-blue-500/40 hover:border-blue-400 shadow-[0_0_30px_rgba(59,130,246,0.18)]",
-    "money-society": "border-red-500/40 hover:border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.18)]",
-  };
-
-  const battleEmojiMap: Record<string, string> = {
-    "core-money-skills": "💰",
-    "earning-income": "📈",
-    "spending-wisely": "🛍️",
-    "investing-assets": "📉",
-    entrepreneurship: "💼",
-    "borrowing-debt": "🏦",
-    "money-society": "🌍",
+    "core-money-skills": "border-sky-500/40 hover:border-sky-400 shadow-[0_0_30px_rgba(14,165,233,0.2)]",
+    "earning-income": "border-emerald-500/40 hover:border-emerald-400 shadow-[0_0_30px_rgba(16,185,129,0.2)]",
+    "spending-wisely": "border-orange-500/40 hover:border-orange-400 shadow-[0_0_30px_rgba(249,115,22,0.2)]",
+    "investing-assets": "border-violet-500/40 hover:border-violet-400 shadow-[0_0_30px_rgba(139,92,246,0.2)]",
+    "property-purchases": "border-indigo-500/40 hover:border-indigo-400 shadow-[0_0_30px_rgba(99,102,241,0.2)]",
+    entrepreneurship: "border-red-500/40 hover:border-red-400 shadow-[0_0_30px_rgba(239,68,68,0.2)]",
+    "borrowing-debt": "border-yellow-500/40 hover:border-yellow-400 shadow-[0_0_30px_rgba(234,179,8,0.2)]",
+    "future-planning": "border-teal-500/40 hover:border-teal-400 shadow-[0_0_30px_rgba(20,184,166,0.2)]",
+    "money-society": "border-pink-500/40 hover:border-pink-400 shadow-[0_0_30px_rgba(236,72,153,0.2)]",
   };
 
   const battleCategories = useMemo(() => {
@@ -328,9 +330,61 @@ export default function DashboardPage() {
         questionCount:
           modules?.filter((module: any) => module.categoryId === category.id).length || 0,
       }))
-      .filter((category: any) => category.questionCount > 0)
-      .slice(0, 5);
+      .filter((category: any) => category.questionCount > 0);
   }, [categories, modules]);
+
+  const streakDays = useMemo(() => {
+    const streakCount = Math.max(0, Number(progression?.streak ?? 0));
+    const days = Array(7).fill(false);
+
+    for (let offset = 0; offset < Math.min(streakCount, 7); offset += 1) {
+      const index = (currentDay - offset + 7) % 7;
+      days[index] = true;
+    }
+
+    return days;
+  }, [currentDay, progression?.streak]);
+
+  const dailyChallengeStats = {
+    dayStreak: Number(progression?.streak ?? 0),
+    bestStreak: Number(userStats?.longestStreak ?? 0),
+    accuracy: Math.round(Number(progression?.accuracy ?? 0)),
+  };
+  const leaderboardAvatars = ["🏆", "👑", "📈", "💪", "🚀", "🏦", "🏗️", "📋"];
+  const leaderboardData = leaderboardEntries.map((entry, index) => ({
+    rank: Number(entry.rank ?? index + 1),
+    name: entry.name || "Anonymous",
+    avatar: leaderboardAvatars[index] || "⭐",
+    score: Number(entry.totalPoints ?? 0),
+    streak: Number(entry.currentStreak ?? 0),
+  }));
+  const podiumEntries = leaderboardData.length >= 3
+    ? [
+        { entry: leaderboardData[1], style: "second" },
+        { entry: leaderboardData[0], style: "first" },
+        { entry: leaderboardData[2], style: "third" },
+      ]
+    : leaderboardData.map((entry, index) => ({
+        entry,
+        style: index === 0 ? "first" : index === 1 ? "second" : "third",
+      }));
+  const podiumStyles: Record<string, { gradient: string; shadow: string; height: string }> = {
+    second: {
+      gradient: "from-zinc-500 via-zinc-400 to-zinc-600",
+      shadow: "shadow-[0_0_45px_rgba(255,255,255,0.15)]",
+      height: "h-36",
+    },
+    first: {
+      gradient: "from-yellow-300 via-yellow-400 to-yellow-600",
+      shadow: "shadow-[0_0_55px_rgba(250,204,21,0.35)]",
+      height: "h-48",
+    },
+    third: {
+      gradient: "from-orange-500 via-orange-600 to-amber-800",
+      shadow: "shadow-[0_0_45px_rgba(249,115,22,0.28)]",
+      height: "h-32",
+    },
+  };
 
   const handleStartQuiz = () => {
     router.push("/dashboard/trivia");
@@ -350,6 +404,10 @@ export default function DashboardPage() {
 
   const handleSelectBattleCategory = (categoryId: string) => {
     router.push(`/dashboard/learning-modules?category=${categoryId}`);
+  };
+
+  const handleStartDailyChallenge = () => {
+    router.push("/dashboard/challenges");
   };
 
   return (
@@ -523,33 +581,200 @@ export default function DashboardPage() {
               </p>
             </motion.div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
               {battleCategories.map((cat: any, i: number) => (
-                <motion.button
-                  key={cat.id}
-                  className={`group flex min-h-[220px] flex-col items-start gap-3 rounded-[2rem] border bg-[#242425]/95 p-8 text-left transition-all duration-300 ${
-                    battleColorMap[cat.id] || battleColorMap["core-money-skills"]
-                  }`}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.05 }}
-                  whileHover={{ scale: 1.03, y: -4 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleSelectBattleCategory(cat.id)}
-                >
-                  <span className="text-5xl leading-none">{battleEmojiMap[cat.id] || "🎯"}</span>
+                (() => {
+                  const IconComponent =
+                    (LucideIcons as any)[cat.icon] || LucideIcons.HelpCircle;
+
+                  return (
+                    <motion.button
+                      key={cat.id}
+                      className={`group flex min-h-[220px] flex-col items-start gap-3 rounded-[1rem] border bg-[#242425]/95 p-8 text-left transition-all duration-300 ${
+                        battleColorMap[cat.id] || battleColorMap["core-money-skills"]
+                      }`}
+                      initial={{ opacity: 0, y: 20 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05 }}
+                      whileHover={{ scale: 1.03, y: -4 }}
+                      whileTap={{ scale: 0.98 }}
+                      onClick={() => handleSelectBattleCategory(cat.id)}
+                    >
+                      <div className={`flex h-14 w-14 items-center justify-center rounded-2xl ${cat.color || "bg-primary"}`}>
+                        <IconComponent className="h-7 w-7 text-white" />
+                      </div>
+                      <div>
+                        <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
+                          {cat.title}
+                        </h3>
+                        <p className="mt-2 text-lg text-[#9a9a9d]">{cat.description}</p>
+                      </div>
+                      <div className="mt-auto flex w-full items-center justify-between pt-6">
+                        <span className="text-base text-[#9a9a9d]">{cat.questionCount} questions</span>
+                        <ChevronRight className="h-6 w-6 text-[#9a9a9d] transition-transform group-hover:translate-x-1" />
+                      </div>
+                    </motion.button>
+                  );
+                })()
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12">
+          <div className="mx-auto max-w-lg">
+            <motion.div
+              className="overflow-hidden rounded-[2rem] border border-white/10 bg-[#232324] shadow-[0_24px_80px_rgba(0,0,0,0.35)]"
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+            >
+              <div className="relative bg-gradient-to-r from-yellow-500/20 via-red-500/10 to-blue-500/20 p-6 pb-4">
+                <div className="flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-yellow-500/20">
+                    <Flame className="h-6 w-6 text-yellow-400" />
+                  </div>
                   <div>
-                    <h3 className="font-display text-2xl font-bold text-white md:text-3xl">
-                      {cat.title}
-                    </h3>
-                    <p className="mt-2 text-lg text-[#9a9a9d]">{cat.description}</p>
+                    <h3 className="font-display text-xl font-bold text-white">Daily Challenge</h3>
+                    <p className="text-sm text-muted-foreground">5 questions • Build your streak</p>
                   </div>
-                  <div className="mt-auto flex w-full items-center justify-between pt-6">
-                    <span className="text-base text-[#9a9a9d]">{cat.questionCount} questions</span>
-                    <ChevronRight className="h-6 w-6 text-[#9a9a9d] transition-transform group-hover:translate-x-1" />
+                </div>
+              </div>
+
+              <div className="p-6 pt-4">
+                <div className="mb-6">
+                  <p className="mb-3 text-xs font-medium uppercase tracking-wider text-muted-foreground">
+                    This Week
+                  </p>
+                  <div className="flex justify-between gap-2">
+                    {dayNames.map((day, i) => (
+                      <div key={day} className="flex flex-col items-center gap-1.5">
+                        <span className="text-xs text-muted-foreground">{day}</span>
+                        <div
+                          className={`flex h-11 w-11 items-center justify-center rounded-full text-sm font-bold transition-all ${
+                            streakDays[i]
+                              ? "bg-yellow-500/20 text-yellow-400 shadow-[0_0_25px_rgba(250,204,21,0.28)]"
+                              : i === currentDay
+                                ? "border-2 border-dashed border-primary/50 text-primary"
+                                : "bg-white/[0.04] text-muted-foreground"
+                          }`}
+                        >
+                          {streakDays[i] ? <Star className="h-4 w-4" /> : i === currentDay ? "?" : ""}
+                        </div>
+                      </div>
+                    ))}
                   </div>
+                </div>
+
+                <div className="mb-6 flex items-center justify-between rounded-2xl bg-white/[0.03] p-4">
+                  <div className="text-center">
+                    <div className="font-display text-2xl font-bold text-yellow-400">
+                      {loadingStats ? "..." : dailyChallengeStats.dayStreak}
+                    </div>
+                    <div className="text-xs text-muted-foreground">Day Streak</div>
+                  </div>
+                  <div className="h-8 w-px bg-white/10" />
+                  <div className="text-center">
+                    <div className="font-display text-2xl font-bold text-primary">
+                      {loadingStats ? "..." : dailyChallengeStats.bestStreak}
+                    </div>
+                    <div className="text-xs text-muted-foreground">Best Streak</div>
+                  </div>
+                  <div className="h-8 w-px bg-white/10" />
+                  <div className="text-center">
+                    <div className="font-display text-2xl font-bold text-emerald-400">
+                      {loadingStats ? "..." : `${dailyChallengeStats.accuracy}%`}
+                    </div>
+                    <div className="text-xs text-muted-foreground">Accuracy</div>
+                  </div>
+                </div>
+
+                <motion.button
+                  className="flex w-full items-center justify-center gap-2 rounded-xl bg-yellow-400 py-4 font-display text-lg font-bold uppercase text-black shadow-[0_10px_30px_rgba(250,204,21,0.28)]"
+                  onClick={handleStartDailyChallenge}
+                  whileHover={{ scale: 1.03, boxShadow: "0 0 30px hsl(45 100% 55% / 0.4)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <Clock className="h-5 w-5" />
+                  Start Today&apos;s Challenge
+                  <ChevronRight className="h-5 w-5" />
                 </motion.button>
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        <section className="px-4 py-12">
+          <div className="mx-auto max-w-7xl rounded-[2rem] border border-white/10 bg-[#151516]/80 px-4 py-10 shadow-[0_24px_80px_rgba(0,0,0,0.32)] backdrop-blur-sm sm:px-8 lg:px-12">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-12 text-center"
+            >
+              <h2 className="mb-3 font-display text-3xl font-bold uppercase tracking-tight text-white md:text-4xl lg:text-6xl">
+                <Trophy className="mr-3 inline h-8 w-8 text-yellow-400 md:h-10 md:w-10" />
+                Leaderboard
+              </h2>
+              <p className="text-lg text-muted-foreground md:text-xl">This week&apos;s top players</p>
+            </motion.div>
+
+            {podiumEntries.length > 0 && (
+              <div className="mb-10 flex flex-wrap items-end justify-center gap-4 md:gap-6">
+                {podiumEntries.map(({ entry, style }, index) => (
+                  <motion.div
+                    key={entry.rank}
+                    className="flex min-w-[150px] flex-col items-center"
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: index * 0.12 }}
+                  >
+                    <span className="mb-3 text-4xl">{entry.avatar}</span>
+                    <span className="mb-2 text-center font-body text-sm font-semibold text-[#a4a4a8] sm:text-base">
+                      {entry.name}
+                    </span>
+                    <div
+                      className={`flex w-36 flex-col items-center justify-end rounded-t-[1.75rem] bg-gradient-to-b px-4 py-5 text-black ${podiumStyles[style].gradient} ${podiumStyles[style].shadow} ${podiumStyles[style].height}`}
+                    >
+                      <Trophy className="mb-2 h-7 w-7" />
+                      <span className="font-display text-3xl font-black">#{entry.rank}</span>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            )}
+
+            <div className="mx-auto flex max-w-5xl flex-col gap-4">
+              {leaderboardData.slice(3).map((entry, index) => (
+                <motion.div
+                  key={entry.rank}
+                  className="flex items-center gap-4 rounded-[1.75rem] border border-white/10 bg-[#242425]/95 px-4 py-5 shadow-[0_16px_40px_rgba(0,0,0,0.18)] sm:px-6"
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.05 }}
+                >
+                  <span className="flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl bg-white/[0.05] font-display text-2xl font-bold text-[#9a9a9d]">
+                    {entry.rank}
+                  </span>
+                  <span className="text-3xl">{entry.avatar}</span>
+                  <div className="min-w-0 flex-1">
+                    <div className="truncate font-display text-2xl font-bold text-white">
+                      {entry.name}
+                    </div>
+                    {entry.streak > 0 && (
+                      <div className="mt-1 flex items-center gap-1 text-sm text-yellow-400 sm:text-base">
+                        <Flame className="h-4 w-4" />
+                        {entry.streak} day streak
+                      </div>
+                    )}
+                  </div>
+                  <span className="font-display text-3xl font-black text-primary sm:text-4xl">
+                    {entry.score.toLocaleString()}
+                  </span>
+                </motion.div>
               ))}
             </div>
           </div>

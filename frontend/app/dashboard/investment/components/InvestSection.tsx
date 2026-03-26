@@ -19,8 +19,8 @@ export default function InvestSection({
   return (
     <div>
       <div className="flex items-center justify-between">
-        <p className="text-gray-700 font-medium">Invest:</p>
-        <p className={`font-semibold ${isMax ? "text-blue-600" : "text-green-600"}`}>
+        <p className="font-medium text-[#d7d7db]">Invest:</p>
+        <p className={`font-semibold ${isMax ? "text-blue-300" : "text-green-300"}`}>
           £{invested.toFixed(2)}
         </p>
       </div>
@@ -43,7 +43,7 @@ export default function InvestSection({
           }
         />
 
-        <p className="text-center text-gray-500 text-sm mt-1">
+        <p className="mt-1 text-center text-sm text-[#9a9a9d]">
           {invested > 0
             ? `≈ ${(invested / company.currentPrice).toFixed(2)} shares`
             : "Slide to invest"}

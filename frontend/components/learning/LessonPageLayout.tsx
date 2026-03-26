@@ -21,13 +21,13 @@ export default function LessonPageLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] text-white">
       <div className="max-w-4xl mx-auto px-4 py-6">
 
         {/* Back button at the top */}
         <button
           onClick={() => window.history.back()}
-          className="flex items-center gap-2 bg-green-700 text-white font-extrabold  border-2 border-green-700 p-2 rounded-xl mb-4"
+          className="mb-4 flex items-center gap-2 rounded-xl border border-primary/40 bg-primary/15 p-2 font-extrabold text-primary transition-colors hover:bg-primary/20"
         >
           ← {backLabel}
         </button>
@@ -39,10 +39,10 @@ export default function LessonPageLayout({
           </div>
 
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
+            <h1 className="text-3xl font-bold text-white">{title}</h1>
 
             {subtitle && (
-              <p className="text-gray-600 text-sm mt-1 max-w-xl">
+              <p className="mt-1 max-w-xl text-sm text-[#9a9a9d]">
                 {subtitle}
               </p>
             )}

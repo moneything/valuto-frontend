@@ -275,6 +275,15 @@ export const leaderboardApi = {
   },
 
   /**
+   * Get top performers for hero/dashboard leaderboard layouts
+   */
+  async getTop(limit = 8) {
+    return apiRequest(`/api/leaderboard/top?limit=${limit}`, {
+      method: 'GET',
+    });
+  },
+
+  /**
    * Get session leaderboard
    */
   async getSession(token: string, sessionId: string) {

@@ -25,9 +25,9 @@ export default function Button({
   
   const variantClasses = {
     primary: 'bg-valuto-green-600 hover:bg-valuto-green-700 text-white shadow-md hover:shadow-lg hover:-translate-y-0.5',
-    secondary: 'bg-gray-100 hover:bg-gray-200 text-gray-700 shadow-sm hover:shadow-md',
-    outline: 'border-2 border-valuto-green-600 text-valuto-green-600 hover:bg-valuto-green-50 hover:border-valuto-green-700',
-    ghost: 'text-valuto-green-600 hover:bg-valuto-green-50 hover:text-valuto-green-700'
+    secondary: 'border border-white/10 bg-white/5 text-white shadow-sm hover:bg-white/10 hover:shadow-md',
+    outline: 'border-2 border-primary/60 text-primary hover:bg-primary/10 hover:border-primary',
+    ghost: 'text-primary hover:bg-white/5 hover:text-primary'
   };
 
   const sizeClasses = {
@@ -57,4 +57,3 @@ export default function Button({
     </button>
   );
 }
-

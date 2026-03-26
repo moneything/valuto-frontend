@@ -16,7 +16,7 @@ export default function PageLayout({
   className = "" 
 }: PageLayoutProps) {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-valuto-green-50 via-white to-valuto-green-50">
+    <div className="min-h-screen bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] text-white">
       <div className={`w-full px-4 sm:px-6 lg:px-8 py-8 md:py-12 ${className}`}>
         {/* Page Header */}
         <div className="text-center mb-12">
@@ -26,11 +26,11 @@ export default function PageLayout({
                 {icon}
               </div>
             )}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white">
               {title}
             </h1>
           </div>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+          <p className="mx-auto max-w-3xl text-xl leading-relaxed text-[#9a9a9d]">
             {subtitle}
           </p>
         </div>
@@ -43,4 +43,3 @@ export default function PageLayout({
     </div>
   );
 }
-

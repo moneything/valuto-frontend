@@ -68,10 +68,10 @@ export default function TriviaHubPage() {
     >
       {/* Student: Join Game Section */}
       {isStudent && (
-        <Card className="mb-12 bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 text-white border-0">
+        <Card className="mb-12 border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] via-[#1a3a2d] to-[#12261d] text-white shadow-[0_0_30px_rgba(34,197,94,0.16)]">
           <div className="text-center">
             <h2 className="text-3xl font-bold mb-4">Join a Game</h2>
-            <p className="mb-8 text-xl opacity-90">Enter the game code from your teacher to join</p>
+            <p className="mb-8 text-xl text-white/80">Enter the game code from your teacher to join</p>
             <form
               onSubmit={handleJoinGame}
               className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
@@ -81,10 +81,10 @@ export default function TriviaHubPage() {
                 value={joinCode}
                 onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
                 placeholder="Enter game code (e.g., ABC123)"
-                className="flex-1 px-6 py-4 h-14 rounded-xl text-gray-900 font-semibold text-center text-xl tracking-wider uppercase focus:outline-none focus:ring-4 focus:ring-white/30"
+                className="flex-1 h-14 rounded-xl border border-white/10 bg-black/30 px-6 py-4 text-center text-xl font-semibold uppercase tracking-wider text-white placeholder:text-white/35 focus:outline-none focus:ring-4 focus:ring-valuto-green-500/20"
                 maxLength={6}
               />
-              <Button type="submit" className="px-8 py-4 text-lg font-bold" variant="primary">
+              <Button type="submit" className="border border-white/10 px-8 py-4 text-lg font-bold shadow-[0_12px_30px_rgba(22,163,74,0.28)]" variant="primary">
                 Join Game
               </Button>
             </form>
@@ -98,7 +98,7 @@ export default function TriviaHubPage() {
           <Link href="/dashboard/trivia/create">
             <Button
               size="lg"
-              className="bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 hover:from-valuto-green-700 hover:to-valuto-green-800 text-white px-8 py-4 text-lg font-bold"
+              className="border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] to-[#204332] px-8 py-4 text-lg font-bold text-white shadow-[0_12px_30px_rgba(22,163,74,0.24)] hover:from-[#1b3c2d] hover:to-[#28513d]"
             >
               ✨ Create New Game
             </Button>
@@ -142,8 +142,8 @@ export default function TriviaHubPage() {
 function Section({ title, sessions, loading, error, isTeacher, getToken, router, isArchived = false }: any) {
   if (error) {
     return (
-      <div className="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-6">
-        <p className="text-sm text-yellow-700">{error}</p>
+      <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-500/10 p-4">
+        <p className="text-sm text-yellow-300">{error}</p>
       </div>
     );
   }
@@ -152,7 +152,7 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
     return (
       <div className="text-center py-12">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-valuto-green-600 mx-auto mb-4"></div>
-        <p className="text-gray-600">Loading games...</p>
+        <p className="text-[#9a9a9d]">Loading games...</p>
       </div>
     );
   }
@@ -161,17 +161,17 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
     return (
       <Card className="text-center py-16">
         <div className="text-6xl mb-4">🎮</div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">
+        <h3 className="mb-2 text-2xl font-bold text-white">
           {isTeacher ? 'No Games Yet' : 'No Active Games'}
         </h3>
-        <p className="text-gray-600 mb-6">
+        <p className="mb-6 text-[#9a9a9d]">
           {isTeacher
             ? 'Create your first trivia game to get started!'
             : 'Ask your teacher to create a game, or use the join code to enter an active game.'}
         </p>
         {isTeacher && !isArchived && (
           <Link href="/dashboard/trivia/create">
-            <Button className="bg-valuto-green-600 hover:bg-valuto-green-700 text-white">
+            <Button className="border border-valuto-green-500/20 bg-valuto-green-600 text-white hover:bg-valuto-green-700">
               Create Your First Game
             </Button>
           </Link>
@@ -182,23 +182,23 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
 
   return (
     <div>
-      <h2 className="text-3xl font-bold text-gray-900 mb-8 text-center">{title}</h2>
+      <h2 className="mb-8 text-center text-3xl font-bold text-white">{title}</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {sessions.map((session: any) => (
-          <Card key={session.sessionId} className="h-full flex flex-col">
+          <Card key={session.sessionId} className="flex h-full flex-col border border-white/10 bg-white/[0.03]">
             {/* Header */}
             <div className="mb-4">
               <div className="flex justify-between items-start mb-2">
-                <h3 className="text-xl font-bold text-gray-900 flex-1">{session.title}</h3>
+                <h3 className="flex-1 text-xl font-bold text-white">{session.title}</h3>
                 <span
                   className={`px-3 py-1 rounded-full text-sm font-semibold ${
                     session.status === 'active'
-                      ? 'bg-green-100 text-green-700'
+                      ? 'border border-green-500/20 bg-green-500/10 text-green-300'
                       : session.status === 'waiting'
-                      ? 'bg-yellow-100 text-yellow-700'
+                      ? 'border border-yellow-500/20 bg-yellow-500/10 text-yellow-300'
                       : session.status === 'archived'
-                      ? 'bg-gray-200 text-gray-600'
-                      : 'bg-gray-100 text-gray-700'
+                      ? 'border border-white/10 bg-white/5 text-[#9a9a9d]'
+                      : 'border border-blue-500/20 bg-blue-500/10 text-blue-300'
                   }`}
                 >
                   {session.status === 'active'
@@ -210,12 +210,12 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
                     : '✅ Ended'}
                 </span>
               </div>
-              <p className="text-sm text-gray-600">Created by {session.hostName}</p>
+              <p className="text-sm text-[#9a9a9d]">Created by {session.hostName}</p>
             </div>
 
             {/* Game Code */}
-            <div className="bg-valuto-green-50 rounded-lg p-4 mb-4">
-              <p className="text-sm text-gray-600 mb-1">Game Code</p>
+            <div className="mb-4 rounded-lg border border-valuto-green-500/20 bg-valuto-green-500/10 p-4">
+              <p className="mb-1 text-sm text-[#9a9a9d]">Game Code</p>
               <p className="text-3xl font-mono font-bold text-valuto-green-600 tracking-wider">
                 {session.joinCode}
               </p>
@@ -223,13 +223,13 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
 
             {/* Stats */}
             <div className="flex gap-4 text-center mb-6 flex-1">
-              <div className="flex-1 bg-gray-50 rounded-lg p-3">
-                <p className="text-2xl font-bold text-gray-900">{session.playerCount || 0}</p>
-                <p className="text-sm text-gray-600">Players</p>
+              <div className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-2xl font-bold text-white">{session.playerCount || 0}</p>
+                <p className="text-sm text-[#9a9a9d]">Players</p>
               </div>
-              <div className="flex-1 bg-gray-50 rounded-lg p-3">
-                <p className="text-2xl font-bold text-gray-900">{session.questionCount || 0}</p>
-                <p className="text-sm text-gray-600">Questions</p>
+              <div className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] p-3">
+                <p className="text-2xl font-bold text-white">{session.questionCount || 0}</p>
+                <p className="text-sm text-[#9a9a9d]">Questions</p>
               </div>
             </div>
 
@@ -270,7 +270,7 @@ function TeacherButtons({ session, getToken, router }: any) {
       {session.status === 'active' && (
         <Button
           onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
-          className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+          className="flex-1 border border-green-500/20 bg-green-600 text-white hover:bg-green-700"
         >
           Manage
         </Button>
@@ -280,7 +280,7 @@ function TeacherButtons({ session, getToken, router }: any) {
         <div className="flex gap-2 w-full">
           <Button
             onClick={() => router.push(`/dashboard/trivia/session/${session.sessionId}/results`)}
-            className="flex-1 bg-gray-200 hover:bg-gray-300 text-gray-800"
+            className="flex-1 border border-white/10 bg-white/5 text-white hover:bg-white/10"
           >
             View Results
           </Button>
@@ -310,7 +310,7 @@ function TeacherButtons({ session, getToken, router }: any) {
       {session.status === 'archived' && (
         <Button
           onClick={() => router.push(`/dashboard/trivia/session/${session.sessionId}/results`)}
-          className="flex-1 bg-gray-300 text-gray-700 hover:bg-gray-400"
+          className="flex-1 border border-white/10 bg-white/5 text-[#9a9a9d] hover:bg-white/10"
         >
           View Results (Archived)
         </Button>
@@ -330,8 +330,8 @@ function StudentButtons({ session, router }: any) {
       disabled={isEndedOrArchived}
       className={`w-full ${
         isEndedOrArchived
-          ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-          : 'bg-valuto-green-600 hover:bg-valuto-green-700 text-white'
+          ? 'cursor-not-allowed border border-white/10 bg-white/5 text-[#6f6f73]'
+          : 'border border-valuto-green-500/20 bg-valuto-green-600 text-white hover:bg-valuto-green-700'
       }`}
     >
       {isEndedOrArchived ? 'Game Ended' : 'Join Game'}

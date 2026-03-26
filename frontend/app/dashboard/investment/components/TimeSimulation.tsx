@@ -38,23 +38,23 @@ export default function TimeSimulation({ duration = 4000, onComplete }: Props) {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
-      <div className="bg-white rounded-2xl shadow-lg p-10 text-center max-w-md w-full border border-gray-100">
+      <div className="w-full max-w-md rounded-2xl border border-white/10 bg-[#232324]/95 p-10 text-center text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
         <div className="text-5xl mb-3">⏰</div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-1">Time is passing...</h2>
-        <p className="text-gray-500 mb-6">Your investments are working hard!</p>
+        <h2 className="mb-1 text-2xl font-bold text-white">Time is passing...</h2>
+        <p className="mb-6 text-[#9a9a9d]">Your investments are working hard!</p>
 
-        <p className="text-3xl font-extrabold text-green-600 mb-4">
+        <p className="mb-4 text-3xl font-extrabold text-green-300">
           Month {month} / 6
         </p>
 
-        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden mb-6">
+        <div className="mb-6 h-3 w-full overflow-hidden rounded-full bg-white/10">
           <div
-            className="h-3 bg-green-500 rounded-full transition-all duration-300 ease-out"
+            className="h-3 rounded-full bg-green-500 transition-all duration-300 ease-out"
             style={{ width: `${progressPercent}%` }}
           />
         </div>
 
-        <ul className="text-gray-500 text-sm space-y-1">
+        <ul className="space-y-1 text-sm text-[#9a9a9d]">
           <li>📊 Markets are moving...</li>
           <li>📰 News is breaking...</li>
           <li>💰 Your portfolio is changing...</li>

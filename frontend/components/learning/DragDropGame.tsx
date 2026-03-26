@@ -107,13 +107,13 @@ export default function DragDropGame({ items, onComplete, title, description }: 
   return (
     <div className="space-y-6">
       <div className="text-center">
-        <h3 className="text-2xl font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-lg text-gray-700">{description}</p>
+        <h3 className="mb-2 text-2xl font-bold text-white">{title}</h3>
+        <p className="text-lg text-[#d7d7db]">{description}</p>
       </div>
 
       {/* Items to drag */}
-      <div className="bg-gray-50 rounded-xl p-6">
-        <h4 className="text-lg font-semibold text-gray-900 mb-4 text-center">Drag these items to the right categories:</h4>
+      <div className="rounded-xl bg-white/[0.04] p-6">
+        <h4 className="mb-4 text-center text-lg font-semibold text-white">Drag these items to the right categories:</h4>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
           {remainingItems.map((item) => (
             <motion.div
@@ -123,12 +123,12 @@ export default function DragDropGame({ items, onComplete, title, description }: 
               onClick={() => handleItemClick(item)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className={`bg-white border-2 border-dashed border-gray-300 rounded-lg p-4 text-center cursor-pointer hover:border-indigo-400 hover:bg-indigo-50 transition-all ${
+              className={`rounded-lg border-2 border-dashed border-white/15 bg-white/[0.04] p-4 text-center cursor-pointer transition-all hover:border-indigo-400/60 hover:bg-white/[0.08] ${
                 draggedItem?.id === item.id ? 'opacity-50' : ''
               }`}
             >
               <div className="text-3xl mb-2">{item.emoji}</div>
-              <div className="font-semibold text-gray-800 text-sm">{item.name}</div>
+              <div className="text-sm font-semibold text-white">{item.name}</div>
             </motion.div>
           ))}
         </div>
@@ -159,10 +159,10 @@ export default function DragDropGame({ items, onComplete, title, description }: 
                     initial={{ opacity: 0, scale: 0.8 }}
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.8 }}
-                    className="bg-white border border-gray-200 rounded-lg p-3 flex items-center gap-2"
+                    className="flex items-center gap-2 rounded-lg border border-white/10 bg-white/[0.05] p-3"
                   >
                     <span className="text-xl">{item.emoji}</span>
-                    <span className="text-sm font-medium text-gray-800">{item.name}</span>
+                    <span className="text-sm font-medium text-white">{item.name}</span>
                     <button
                       onClick={(e) => {
                         e.stopPropagation();
@@ -210,22 +210,22 @@ export default function DragDropGame({ items, onComplete, title, description }: 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            className={`text-center p-6 rounded-xl ${
-              score >= 80 ? 'bg-green-50 border border-green-200' : 
-              score >= 60 ? 'bg-yellow-50 border border-yellow-200' : 
-              'bg-red-50 border border-red-200'
+            className={`rounded-xl p-6 text-center ${
+              score >= 80 ? 'border border-green-400/30 bg-green-500/10' : 
+              score >= 60 ? 'border border-yellow-400/30 bg-yellow-500/10' : 
+              'border border-red-400/30 bg-red-500/10'
             }`}
           >
             <div className="text-4xl mb-4">
               {score >= 80 ? '🎉' : score >= 60 ? '👍' : '💪'}
             </div>
-            <h4 className="text-2xl font-bold text-gray-900 mb-2">
+            <h4 className="mb-2 text-2xl font-bold text-white">
               {score >= 80 ? 'Excellent!' : score >= 60 ? 'Good Job!' : 'Keep Learning!'}
             </h4>
-            <p className="text-lg text-gray-700 mb-2">
+            <p className="mb-2 text-lg text-[#e5e5e7]">
               You scored {score}% on this activity!
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#9a9a9d]">
               {score >= 80 ? 'You really understand budgeting categories!' : 
                score >= 60 ? 'You\'re getting the hang of it!' : 
                'Practice makes perfect - try again!'}

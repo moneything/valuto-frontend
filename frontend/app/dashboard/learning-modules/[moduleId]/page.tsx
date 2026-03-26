@@ -179,7 +179,7 @@ export default function LearningModulePage({
         icon={<BookOpenIcon className="w-16 h-16 text-gray-400" />}
       >
         <div className="text-center py-8 space-y-4">
-          <p className="text-gray-600">{error || "Module not found"}</p>
+          <p className="text-[#9a9a9d]">{error || "Module not found"}</p>
           <Button onClick={() => router.push("/dashboard/learning-modules")}>
             Back to Modules
           </Button>
@@ -204,19 +204,19 @@ export default function LearningModulePage({
     if (!module.relatedLessons?.length) return null;
 
     return (
-      <UICard className="mt-8 p-5">
-        <h1 className="text-3xl font-bold text-gray-900 mb-3">
+      <UICard className="mt-8 border-white/10 bg-[#232324]/95 p-5 text-white shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
+        <h1 className="mb-3 text-3xl font-bold text-white">
           What's Next?
         </h1>
-        <p>Now that you understand budgeting basics, explore these related topics:</p>
+        <p className="text-[#d7d7db]">Now that you understand budgeting basics, explore these related topics:</p>
         <div className="flex flex-wrap gap-2 mt-3">
           {module.relatedLessons.map((lesson: any) => (
             <Link
               key={lesson.moduleId}
               href={`/dashboard/learning-modules/${lesson.moduleId}`}
-              className="inline-flex items-center gap-2 px-3 py-1.5 rounded-sm bg-gray-50 border border-gray-200 text-sm text-gray-800 hover:bg-green-200 hover:opacity-75 transition"
+              className="inline-flex items-center gap-2 rounded-sm border border-white/10 bg-white/[0.04] px-3 py-1.5 text-sm text-[#e5e5e7] transition hover:bg-white/[0.08]"
             >
-              <span className="text-sm uppercase tracking-wide text-gray-500">
+              <span className="text-sm uppercase tracking-wide text-[#9a9a9d]">
                 {lesson.relationship?.replace("-", " ")}
               </span>
               <span className="font-medium">{lesson.title}</span>
@@ -239,24 +239,24 @@ export default function LearningModulePage({
       badges={
         <>
           {module.visual?.readTime && (
-            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm flex items-center gap-1">
+            <span className="flex items-center gap-1 rounded-full bg-white/[0.06] px-3 py-1 text-sm text-[#e5e5e7]">
               <ClockIcon className="w-4 h-4" />
               {module.visual.readTime} min read
             </span>
           )}
 
           {module.visual?.badge && (
-            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm">
+            <span className="rounded-full bg-white/[0.06] px-3 py-1 text-sm text-[#e5e5e7]">
               {module.visual.badge}
             </span>
           )}
 
           {module.difficultyLevel && (
-            <span className="px-3 py-1 rounded-full bg-gray-100 text-sm capitalize">
+            <span className="rounded-full bg-white/[0.06] px-3 py-1 text-sm capitalize text-[#e5e5e7]">
               {module.difficultyLevel}
             </span>
           )}
-          <span className="px-3 py-1 rounded-full bg-gray-100 text-sm flex items-center gap-1">
+          <span className="flex items-center gap-1 rounded-full bg-white/[0.06] px-3 py-1 text-sm text-[#e5e5e7]">
             <ClockIcon className="w-4 h-4" />
             {Math.floor(pageElapsed / 60)}:{(pageElapsed % 60).toString().padStart(2, "0")} elapsed
           </span>
@@ -294,12 +294,12 @@ export default function LearningModulePage({
 
           {/* Quiz CTA */}
           {module.quiz && (
-            <UICard className="mt-8 p-4">
-              <h1 className="text-3xl">Test Your Knowledge</h1>
-              <p className="text-gray-500">Quick question to check your understanding</p>
+            <UICard className="mt-8 border-white/10 bg-[#232324]/95 p-4 text-white shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
+              <h1 className="text-3xl text-white">Test Your Knowledge</h1>
+              <p className="text-[#9a9a9d]">Quick question to check your understanding</p>
               <Button
                 onClick={() => setStep("quiz")}
-                className="bg-valuto-green-600 text-white min-w-[-webkit-fill-available] rounded-[0.4em] mt-6"
+                className="mt-6 min-w-[-webkit-fill-available] rounded-[0.4em] bg-valuto-green-600 text-white"
               >
                 Take Mini Quiz
               </Button>
@@ -314,10 +314,10 @@ export default function LearningModulePage({
       {step === "quiz" && (
         <Card className="p-6 md:p-8 space-y-4">
           <div className="flex items-center justify-between mb-2">
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2 className="text-2xl font-bold text-white">
               Quiz: {module.title}
             </h2>
-            <span className="text-sm text-gray-500">
+            <span className="text-sm text-[#9a9a9d]">
               Passing score: {module.quiz?.passingScore} correct
             </span>
           </div>
@@ -332,22 +332,22 @@ export default function LearningModulePage({
       {step === "complete" && (
         <>
           <Card className="p-6 md:p-8 space-y-6 text-center">
-            <h2 className="text-3xl font-bold text-gray-900">
+            <h2 className="text-3xl font-bold text-white">
               Great work! 🎉
             </h2>
-            <p className="text-gray-600">
+            <p className="text-[#d7d7db]">
               You&apos;ve completed <strong>{module.title}</strong>.
             </p>
 
             {quizResult?.pointsEarned > 0 && (
-              <div className="p-6 bg-yellow-50 border border-yellow-200 rounded-2xl max-w-md mx-auto">
+              <div className="mx-auto max-w-md rounded-2xl border border-yellow-400/30 bg-yellow-500/10 p-6">
                 <div className="text-5xl mb-3">🏆</div>
-                <h3 className="text-2xl font-bold text-gray-900 mb-1">
+                <h3 className="mb-1 text-2xl font-bold text-white">
                   +{quizResult.pointsEarned} points!
                 </h3>
-                <p className="text-gray-700">
+                <p className="text-[#e5e5e7]">
                   Total points:{" "}
-                  <span className="text-orange-600 font-bold">
+                  <span className="font-bold text-orange-300">
                     {quizResult.totalPoints}
                   </span>
                 </p>

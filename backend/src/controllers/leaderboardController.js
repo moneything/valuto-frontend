@@ -214,32 +214,51 @@ const getLeaderboardWithContext = asyncHandler(async (req, res) => {
  * @access  Public
  */
 const getLeaderboardStats = asyncHandler(async (req, res) => {
-  const stats = await User.aggregate([
-    { $match: { role: 'student', isActive: true } },
-    {
-      $group: {
-        _id: null,
-        totalStudents: { $sum: 1 },
-        totalPoints: { $sum: '$totalPoints' },
-        avgPoints: { $avg: '$totalPoints' },
-        totalGamesPlayed: { $sum: '$gamesPlayed' },
-        avgGamesPlayed: { $avg: '$gamesPlayed' },
-        totalLessonsCompleted: { $sum: '$lessonsCompleted' },
+  const [totals, studentStats] = await Promise.all([
+    User.aggregate([
+      { $match: { isActive: true } },
+      {
+        $group: {
+          _id: null,
+          totalUsers: { $sum: 1 },
+          totalStudents: {
+            $sum: { $cond: [{ $eq: ['$role', 'student'] }, 1, 0] },
+          },
+          totalTeachers: {
+            $sum: { $cond: [{ $eq: ['$role', 'teacher'] }, 1, 0] },
+          },
+        },
       },
-    },
+    ]),
+    User.aggregate([
+      { $match: { role: 'student', isActive: true } },
+      {
+        $group: {
+          _id: null,
+          totalPoints: { $sum: '$totalPoints' },
+          avgPoints: { $avg: '$totalPoints' },
+          totalGamesPlayed: { $sum: '$gamesPlayed' },
+          avgGamesPlayed: { $avg: '$gamesPlayed' },
+          totalLessonsCompleted: { $sum: '$lessonsCompleted' },
+        },
+      },
+    ]),
   ]);
 
-  const result = stats.length > 0 ? stats[0] : null;
+  const totalResult = totals[0] || null;
+  const studentResult = studentStats[0] || null;
 
   res.status(200).json({
     success: true,
-    data: result || {
-      totalStudents: 0,
-      totalPoints: 0,
-      avgPoints: 0,
-      totalGamesPlayed: 0,
-      avgGamesPlayed: 0,
-      totalLessonsCompleted: 0,
+    data: {
+      totalUsers: totalResult?.totalUsers || 0,
+      totalStudents: totalResult?.totalStudents || 0,
+      totalTeachers: totalResult?.totalTeachers || 0,
+      totalPoints: studentResult?.totalPoints || 0,
+      avgPoints: studentResult?.avgPoints || 0,
+      totalGamesPlayed: studentResult?.totalGamesPlayed || 0,
+      avgGamesPlayed: studentResult?.avgGamesPlayed || 0,
+      totalLessonsCompleted: studentResult?.totalLessonsCompleted || 0,
     },
   });
 });

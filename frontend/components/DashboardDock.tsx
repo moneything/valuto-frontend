@@ -56,7 +56,7 @@ const dockItems = [
   {
     title: 'News & Events',
     icon: NewspaperIcon,
-    href: '/dashboard#news-events',
+    href: '/news',
     color: 'text-purple-600 dark:text-purple-400',
     bgColor: 'bg-purple-100 hover:bg-purple-200',
   },
@@ -137,4 +137,3 @@ export default function DashboardDock() {
     </div>
   );
 }
-

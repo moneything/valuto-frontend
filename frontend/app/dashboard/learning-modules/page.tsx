@@ -21,7 +21,7 @@ import {
 } from "@/lib/hooks/useLearningModules";
 
 import * as LucideIcons from "lucide-react";
-import { ClockIcon, HelpCircle, Lock } from "lucide-react";
+import { ClockIcon, HelpCircle, Lock, Play } from "lucide-react";
 
 const categoryBorderEffects: Record<
   string,
@@ -81,6 +81,18 @@ const categoryBorderEffects: Record<
     gradient:
       "bg-[conic-gradient(from_0deg,rgba(236,72,153,0.1),rgba(249,168,212,0.86),rgba(236,72,153,0.1),rgba(236,72,153,0.1))]",
   },
+};
+
+const categoryButtonStyles: Record<string, string> = {
+  "bg-blue-500": "bg-sky-500/15 text-sky-300 border border-sky-400/40 hover:bg-sky-500/20",
+  "bg-green-500": "bg-emerald-500/15 text-emerald-300 border border-emerald-400/40 hover:bg-emerald-500/20",
+  "bg-orange-500": "bg-orange-500/15 text-orange-300 border border-orange-400/40 hover:bg-orange-500/20",
+  "bg-purple-500": "bg-violet-500/15 text-violet-300 border border-violet-400/40 hover:bg-violet-500/20",
+  "bg-indigo-500": "bg-indigo-500/15 text-indigo-300 border border-indigo-400/40 hover:bg-indigo-500/20",
+  "bg-red-500": "bg-red-500/15 text-red-300 border border-red-400/40 hover:bg-red-500/20",
+  "bg-yellow-500": "bg-yellow-500/15 text-yellow-300 border border-yellow-400/40 hover:bg-yellow-500/20",
+  "bg-teal-500": "bg-teal-500/15 text-teal-300 border border-teal-400/40 hover:bg-teal-500/20",
+  "bg-pink-500": "bg-pink-500/15 text-pink-300 border border-pink-400/40 hover:bg-pink-500/20",
 };
 
 export default function LearningModulesPage() {
@@ -192,6 +204,7 @@ export default function LearningModulesPage() {
             <StatItem
               label="In Progress 🚀"
               value={stats.inProgressModules}
+              tooltip="Module cards with the yellow border are currently in progress. This means you started them but have not completed all required quiz questions yet."
             />
             <StatItem label="Average Score ⭐" value={Math.round(stats.averageQuizScore)} />
             <StatItem label="Minutes Spent ⏱️" value={Math.round((stats.totalTimeSpent || 0) / 60)} />
@@ -211,6 +224,8 @@ export default function LearningModulesPage() {
         const freeModuleTopic = getFirstModuleTopicInCategory(sortedModules);
         const categoryBorderEffect =
           categoryBorderEffects[category.color] || categoryBorderEffects["bg-blue-500"];
+        const categoryButtonStyle =
+          categoryButtonStyles[category.color] || categoryButtonStyles["bg-blue-500"];
 
         // Try to get icon: Example "Wallet" → LucideIcons.Wallet
         const IconComponent =
@@ -301,27 +316,25 @@ export default function LearningModulesPage() {
 
                     <p className="relative z-10 text-sm text-[#9a9a9d]">{module.description}</p>
 
-                    {isLocked ? (
-                      <Button
-                        className="relative z-10 mt-4"
-                        variant="primary"
-                        onClick={() => router.push("/subscribe")}
-                      >
-                        Subscribe to Unlock
-                      </Button>
-                    ) : (
-                      <Button
-                        className="relative z-10 mt-4"
-                        variant="outline"
+                    <div className="relative z-10 mt-4 flex justify-end">
+                      {isLocked ? (
+                        <Button
+                          className="mt-0"
+                          variant="primary"
+                          onClick={() => router.push("/subscribe")}
                         >
+                          Subscribe to Unlock
+                        </Button>
+                      ) : (
                         <Link
                           href={`/dashboard/learning-modules/${module.topic}`}
-                          className="inline-block text-sm font-semibold"
+                          className={`inline-flex items-center gap-2 rounded-xl px-4 py-2 text-sm font-semibold transition-colors ${categoryButtonStyle}`}
                         >
-                          Open Module
+                          <Play className="h-4 w-4 fill-current" />
+                          Play
                         </Link>
-                      </Button>
-                    )}
+                      )}
+                    </div>
                   </div>
                 );
               })}
@@ -477,9 +490,9 @@ function StatItem({ label, value, tooltip }: StatItemProps) {
   if (!tooltip) return cardContent;
 
   return (
-    <div className="relative group">
+    <div className="relative z-20 group hover:z-50 focus-within:z-50">
       {cardContent}
-      <div className="pointer-events-none absolute left-0 top-full translate-y-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition duration-200 w-full">
+      <div className="pointer-events-none absolute left-0 top-full z-50 w-full translate-y-3 opacity-0 transition duration-200 group-hover:opacity-100 group-focus-within:opacity-100">
         <div className="w-full rounded-2xl border border-white/10 bg-[#1b1b1d] px-3 py-3 text-center text-xs text-[#e5e5e7] shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm">
           {tooltip}
           <div className="absolute left-1/2 -top-1.5 h-3 w-3 -translate-x-1/2 rotate-45 border border-white/10 border-b-0 border-r-0 bg-[#1b1b1d]" />

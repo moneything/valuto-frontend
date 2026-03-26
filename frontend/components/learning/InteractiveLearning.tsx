@@ -72,9 +72,9 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
     >
       <div className="text-center">
         <div className="text-6xl mb-4">{step.emoji}</div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
-        <div className="bg-gradient-to-r from-blue-50 to-purple-50 border border-blue-200 rounded-xl p-6">
-          <p className="text-lg text-gray-800 leading-relaxed">{step.content}</p>
+        <h3 className="mb-4 text-2xl font-bold text-white">{step.title}</h3>
+        <div className="rounded-xl border border-blue-400/20 bg-gradient-to-r from-blue-500/10 to-violet-500/10 p-6">
+          <p className="text-lg leading-relaxed text-[#e5e5e7]">{step.content}</p>
         </div>
       </div>
       
@@ -142,8 +142,8 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
         {!interactiveData && (
           <div className="text-center">
             <div className="text-6xl mb-4">{step.emoji}</div>
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
-            <p className="text-lg text-gray-700 mb-6">{step.content}</p>
+            <h3 className="mb-4 text-2xl font-bold text-white">{step.title}</h3>
+            <p className="mb-6 text-lg text-[#d7d7db]">{step.content}</p>
             <Button
               onClick={() => handleStepComplete(step.points)}
               className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-semibold text-lg"
@@ -166,15 +166,15 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
     >
       <div className="text-center">
         <div className="text-6xl mb-4">{step.emoji}</div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
+        <h3 className="mb-4 text-2xl font-bold text-white">{step.title}</h3>
       </div>
 
-      <div className="bg-gradient-to-r from-orange-50 to-red-50 border border-orange-200 rounded-xl p-6">
-        <div className="bg-white rounded-lg p-6 shadow-lg">
-          <h4 className="text-xl font-bold text-gray-900 mb-4">Real Example:</h4>
-          <p className="text-lg text-gray-800 leading-relaxed mb-4">{step.content}</p>
-          <div className="bg-gray-50 rounded-lg p-4">
-            <p className="text-sm text-gray-600 italic">💡 Pro tip: This is how it works in real life!</p>
+      <div className="rounded-xl border border-orange-400/20 bg-gradient-to-r from-orange-500/10 to-red-500/10 p-6">
+        <div className="rounded-lg bg-white/[0.04] p-6">
+          <h4 className="mb-4 text-xl font-bold text-white">Real Example:</h4>
+          <p className="mb-4 text-lg leading-relaxed text-[#e5e5e7]">{step.content}</p>
+          <div className="rounded-lg bg-white/[0.04] p-4">
+            <p className="text-sm italic text-[#9a9a9d]">💡 Pro tip: This is how it works in real life!</p>
           </div>
         </div>
       </div>
@@ -200,14 +200,14 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
     >
       <div className="text-center">
         <div className="text-6xl mb-4">{step.emoji}</div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-4">{step.title}</h3>
-        <p className="text-lg text-gray-800 mb-6">{step.content}</p>
+        <h3 className="mb-4 text-2xl font-bold text-white">{step.title}</h3>
+        <p className="mb-6 text-lg text-[#d7d7db]">{step.content}</p>
       </div>
 
-      <div className="bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-xl p-6">
+      <div className="rounded-xl border border-indigo-400/20 bg-gradient-to-r from-indigo-500/10 to-violet-500/10 p-6">
         <div className="text-center">
           <div className="text-4xl mb-4">🎮</div>
-          <p className="text-lg text-gray-800 mb-6">Quick game to test your understanding!</p>
+          <p className="mb-6 text-lg text-[#e5e5e7]">Quick game to test your understanding!</p>
           <div className="grid grid-cols-2 gap-4 max-w-md mx-auto">
             {step.interactiveData?.options?.map((option: any, index: number) => (
               <motion.button
@@ -217,12 +217,12 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
                 onClick={() => handleAnswer(step.id, option)}
                 className={`p-4 rounded-lg border-2 transition-all ${
                   userAnswers[step.id]?.id === option.id
-                    ? 'border-green-500 bg-green-100'
-                    : 'border-gray-200 hover:border-indigo-400 hover:bg-indigo-50'
+                    ? 'border-green-500 bg-green-500/10'
+                    : 'border-white/10 bg-white/[0.03] hover:border-indigo-400/50 hover:bg-white/[0.06]'
                 }`}
               >
                 <div className="text-2xl mb-2">{option.emoji}</div>
-                <div className="font-semibold text-gray-800">{option.text}</div>
+                <div className="font-semibold text-white">{option.text}</div>
               </motion.button>
             ))}
           </div>
@@ -273,11 +273,11 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
         >
           🎉
         </motion.div>
-        <h2 className="text-4xl font-bold text-gray-900 mb-4">Amazing Work!</h2>
-        <p className="text-xl text-gray-600 mb-6">
+        <h2 className="mb-4 text-4xl font-bold text-white">Amazing Work!</h2>
+        <p className="mb-6 text-xl text-[#d7d7db]">
           You've earned <span className="font-bold text-valuto-green-600">{totalPoints}</span> points!
         </p>
-        <p className="text-lg text-gray-500">Ready for the quiz? Let's test your knowledge! 🧠</p>
+        <p className="text-lg text-[#9a9a9d]">Ready for the quiz? Let's test your knowledge! 🧠</p>
       </motion.div>
     );
   }
@@ -285,7 +285,7 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
   return (
     <div className="space-y-8">
       {/* Progress Bar */}
-      <div className="bg-gray-200 rounded-full h-3">
+      <div className="h-3 rounded-full bg-white/10">
         <motion.div 
           className="bg-gradient-to-r from-blue-500 to-purple-600 h-3 rounded-full"
           initial={{ width: 0 }}
@@ -310,7 +310,7 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
 
       {/* Points Display */}
       <div className="text-center">
-        <div className="inline-flex items-center gap-2 bg-yellow-100 text-yellow-800 px-4 py-2 rounded-full font-semibold">
+        <div className="inline-flex items-center gap-2 rounded-full bg-yellow-500/10 px-4 py-2 font-semibold text-yellow-300 border border-yellow-400/30">
           <span>⭐</span>
           <span>Total Points: {totalPoints}</span>
         </div>

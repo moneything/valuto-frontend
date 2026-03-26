@@ -110,17 +110,17 @@ export default function CreateTriviaPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
           Create Trivia Game ✨
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-[#9a9a9d]">
           Build an engaging Kahoot-style game for your students
         </p>
       </div>
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6">
+        <div className="mb-6 rounded-2xl border border-red-500/30 bg-red-500/10 p-4 text-red-200">
           <div className="flex">
             <div className="flex-shrink-0">
               <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
@@ -128,7 +128,7 @@ export default function CreateTriviaPage() {
               </svg>
             </div>
             <div className="ml-3">
-              <p className="text-sm text-red-700">{error}</p>
+              <p className="text-sm text-red-200">{error}</p>
             </div>
           </div>
         </div>
@@ -136,9 +136,9 @@ export default function CreateTriviaPage() {
 
       <form onSubmit={handleSubmit} className="space-y-8">
         {/* Game Title */}
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
+        <div className="rounded-2xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
           <div className="space-y-2">
-            <Label htmlFor="gameTitle" className="text-sm font-semibold text-gray-700">
+            <Label htmlFor="gameTitle" className="text-sm font-semibold text-[#d7d7db]">
               Game Title *
             </Label>
             <Input
@@ -147,7 +147,7 @@ export default function CreateTriviaPage() {
               required
               value={gameTitle}
               onChange={(e) => setGameTitle(e.target.value)}
-              className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+              className="h-12 rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder:text-[#7f7f84] focus-visible:ring-primary/40 focus-visible:ring-offset-0"
               placeholder="e.g., Introduction to Investing"
             />
           </div>
@@ -155,9 +155,9 @@ export default function CreateTriviaPage() {
 
         {/* Questions */}
         {questions.map((q, qIndex) => (
-          <div key={qIndex} className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
+          <div key={qIndex} className="rounded-2xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
             <div className="flex justify-between items-center mb-4">
-              <h3 className="text-lg font-bold text-gray-900">
+              <h3 className="text-lg font-bold text-white">
                 Question {qIndex + 1}
               </h3>
               {questions.length > 1 && (
@@ -173,7 +173,7 @@ export default function CreateTriviaPage() {
 
             {/* Question Text */}
             <div className="mb-4 space-y-2">
-              <Label htmlFor={`question-${qIndex}`} className="text-sm font-semibold text-gray-700">
+              <Label htmlFor={`question-${qIndex}`} className="text-sm font-semibold text-[#d7d7db]">
                 Question *
               </Label>
               <textarea
@@ -181,7 +181,7 @@ export default function CreateTriviaPage() {
                 required
                 value={q.question}
                 onChange={(e) => updateQuestion(qIndex, 'question', e.target.value)}
-                className="w-full px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600 focus:outline-none"
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-4 py-3 text-white placeholder:text-[#7f7f84] focus:border-primary focus:outline-none"
                 rows={3}
                 placeholder="Enter your question..."
               />
@@ -189,7 +189,7 @@ export default function CreateTriviaPage() {
 
             {/* Answer Options */}
             <div className="mb-4 space-y-2">
-              <Label className="text-sm font-semibold text-gray-700">
+              <Label className="text-sm font-semibold text-[#d7d7db]">
                 Answer Options *
               </Label>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
@@ -200,10 +200,10 @@ export default function CreateTriviaPage() {
                       required
                       value={option}
                       onChange={(e) => updateOption(qIndex, oIndex, e.target.value)}
-                      className={`w-full pl-10 pr-4 py-3 h-12 border-2 rounded-lg ${
+                      className={`h-12 w-full rounded-lg pl-10 pr-4 py-3 text-white placeholder:text-[#7f7f84] ${
                         q.correctAnswer === oIndex
-                          ? 'border-green-500 bg-green-50'
-                          : 'border-gray-200 focus:border-valuto-green-600'
+                          ? 'border border-green-500/70 bg-green-500/10'
+                          : 'border border-white/10 bg-white/[0.04] focus-visible:ring-primary/40 focus-visible:ring-offset-0'
                       }`}
                       placeholder={`Option ${oIndex + 1}`}
                     />
@@ -212,8 +212,8 @@ export default function CreateTriviaPage() {
                       onClick={() => updateQuestion(qIndex, 'correctAnswer', oIndex)}
                       className={`absolute left-3 top-1/2 -translate-y-1/2 ${
                         q.correctAnswer === oIndex
-                          ? 'text-green-600'
-                          : 'text-gray-400'
+                          ? 'text-green-400'
+                          : 'text-[#7f7f84]'
                       }`}
                       title="Mark as correct answer"
                     >
@@ -222,14 +222,14 @@ export default function CreateTriviaPage() {
                   </div>
                 ))}
               </div>
-              <p className="text-sm text-gray-500 mt-2">
+              <p className="mt-2 text-sm text-[#9a9a9d]">
                 Click the circle to mark the correct answer
               </p>
             </div>
 
             {/* Time Limit */}
             <div className="space-y-2">
-              <Label className="text-sm font-semibold text-gray-700">
+              <Label className="text-sm font-semibold text-[#d7d7db]">
                 Time Limit: {q.timeLimit} seconds
               </Label>
               <input
@@ -239,7 +239,7 @@ export default function CreateTriviaPage() {
                 step="5"
                 value={q.timeLimit}
                 onChange={(e) => updateQuestion(qIndex, 'timeLimit', parseInt(e.target.value))}
-                className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+                className="h-2 w-full cursor-pointer appearance-none rounded-lg bg-white/10 accent-emerald-400"
               />
             </div>
           </div>
@@ -249,7 +249,7 @@ export default function CreateTriviaPage() {
         <button
           type="button"
           onClick={addQuestion}
-          className="w-full border-2 border-dashed border-gray-300 rounded-xl py-6 text-gray-600 hover:border-valuto-green-600 hover:text-valuto-green-600 transition-colors font-semibold"
+          className="w-full rounded-xl border-2 border-dashed border-white/15 py-6 font-semibold text-[#c6c6cb] transition-colors hover:border-primary hover:text-primary"
         >
           + Add Another Question
         </button>
@@ -259,7 +259,7 @@ export default function CreateTriviaPage() {
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-8 py-4 border-2 border-gray-300 text-gray-700 rounded-lg font-semibold hover:bg-gray-50 transition-colors"
+            className="rounded-lg border border-white/10 bg-white/[0.04] px-8 py-4 font-semibold text-white transition-colors hover:bg-white/[0.08]"
           >
             Cancel
           </button>
@@ -268,7 +268,7 @@ export default function CreateTriviaPage() {
             disabled={submitting}
             className={`flex-1 px-8 py-4 rounded-lg font-bold text-lg transition-all ${
               submitting
-                ? 'bg-gray-400 cursor-not-allowed'
+                ? 'cursor-not-allowed bg-white/15'
                 : 'bg-gradient-to-r from-valuto-green-600 to-valuto-green-700 hover:shadow-xl'
             } text-white`}
           >
@@ -289,5 +289,4 @@ export default function CreateTriviaPage() {
     </div>
   );
 }
-
 

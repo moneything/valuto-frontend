@@ -16,14 +16,14 @@ export default function StatsCard({
   color = 'green'
 }: StatsCardProps) {
   const colorClasses = {
-    green: 'text-valuto-green-600',
-    blue: 'text-blue-600',
-    purple: 'text-purple-600',
-    orange: 'text-orange-600'
+    green: 'text-primary',
+    blue: 'text-blue-400',
+    purple: 'text-violet-400',
+    orange: 'text-orange-400'
   };
 
   return (
-    <div className={`bg-white/90 backdrop-blur-sm rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 border border-valuto-green-100 ${className}`}>
+    <div className={`rounded-2xl border border-white/10 bg-[#232324]/95 p-8 shadow-[0_20px_50px_rgba(0,0,0,0.28)] transition-all duration-300 hover:shadow-[0_28px_70px_rgba(0,0,0,0.38)] ${className}`}>
       <div className="text-center">
         {icon && (
           <div className="text-4xl mb-4 flex justify-center">
@@ -33,11 +33,10 @@ export default function StatsCard({
         <div className={`text-5xl font-numbers ${colorClasses[color]} mb-2`}>
           {value}
         </div>
-        <p className="text-sm text-gray-500 font-medium">
+        <p className="text-sm font-medium text-[#9a9a9d]">
           {label}
         </p>
       </div>
     </div>
   );
 }
-

@@ -67,16 +67,16 @@ export default function ChallengesPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
           Daily Challenges 🎯
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-[#9a9a9d]">
           Complete challenges to earn bonus points
         </p>
         <div className="mt-3">
           <button
             onClick={fetchChallenges}
-            className="inline-flex items-center px-4 py-2 rounded-lg border border-gray-200 text-sm font-semibold text-gray-700 hover:bg-gray-100"
+            className="inline-flex items-center rounded-lg border border-white/10 bg-white/[0.04] px-4 py-2 text-sm font-semibold text-[#d7d7db] hover:bg-white/[0.08]"
           >
             Refresh
           </button>
@@ -84,21 +84,21 @@ export default function ChallengesPage() {
       </div>
 
       {error && (
-        <div className="bg-red-50 border-l-4 border-red-400 p-4 mb-6 text-sm text-red-700">
+        <div className="mb-6 border-l-4 border-red-400 bg-red-500/10 p-4 text-sm text-red-300">
           {error}
         </div>
       )}
 
       {loading ? (
         <div className="space-y-3 animate-pulse">
-          <div className="h-16 bg-gray-100 rounded-lg"></div>
-          <div className="h-16 bg-gray-100 rounded-lg"></div>
-          <div className="h-16 bg-gray-100 rounded-lg"></div>
+          <div className="h-16 rounded-lg bg-white/[0.05]"></div>
+          <div className="h-16 rounded-lg bg-white/[0.05]"></div>
+          <div className="h-16 rounded-lg bg-white/[0.05]"></div>
         </div>
       ) : challenges.length === 0 ? (
-        <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-12 text-center">
+        <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
           <div className="text-5xl mb-4">🧑‍🏫</div>
-          <p className="text-gray-600">
+          <p className="text-[#9a9a9d]">
             {isTeacher
               ? "Teacher daily challenges are coming soon."
               : "No challenges available right now. Check back soon!"}
@@ -109,29 +109,29 @@ export default function ChallengesPage() {
           {challenges.map((challenge) => (
             <div
               key={challenge._id}
-              className={`bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 ${
+              className={`rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)] ${
                 challenge.completed ? "opacity-60" : ""
               }`}
             >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
-                  <h3 className="text-xl font-bold text-gray-900 mb-1">{challenge.challengeName}</h3>
-                  <p className="text-gray-600">{challenge.challengeDescription || 'No description provided.'}</p>
+                  <h3 className="mb-1 text-xl font-bold text-white">{challenge.challengeName}</h3>
+                  <p className="text-[#d7d7db]">{challenge.challengeDescription || 'No description provided.'}</p>
                   {challenge.targetProgress && (
-                    <p className="text-sm text-gray-500 mt-1">
+                    <p className="mt-1 text-sm text-[#9a9a9d]">
                       Progress: {challenge.currentProgress || 0}/{challenge.targetProgress}
                     </p>
                   )}
                 </div>
                 <div className="text-right">
-                  <div className="text-2xl font-bold text-valuto-green-600">
+                  <div className="text-2xl font-bold text-valuto-green-300">
                     +{challenge.pointsEarned ?? 0}
                   </div>
-                  <p className="text-sm text-gray-500">points</p>
+                  <p className="text-sm text-[#9a9a9d]">points</p>
                 </div>
               </div>
               {challenge.completed && (
-                <div className="mt-4 text-green-600 font-semibold flex items-center gap-2">
+                <div className="mt-4 flex items-center gap-2 font-semibold text-green-300">
                   <span>✓</span>
                   <span>Completed!</span>
                 </div>

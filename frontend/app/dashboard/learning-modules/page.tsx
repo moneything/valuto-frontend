@@ -23,6 +23,66 @@ import {
 import * as LucideIcons from "lucide-react";
 import { ClockIcon, HelpCircle, Lock } from "lucide-react";
 
+const categoryBorderEffects: Record<
+  string,
+  { ring: string; shadow: string; gradient: string }
+> = {
+  "bg-blue-500": {
+    ring: "ring-sky-300/60",
+    shadow: "shadow-[0_0_28px_rgba(56,189,248,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(56,189,248,0.1),rgba(125,211,252,0.82),rgba(56,189,248,0.1),rgba(56,189,248,0.1))]",
+  },
+  "bg-green-500": {
+    ring: "ring-emerald-300/60",
+    shadow: "shadow-[0_0_28px_rgba(16,185,129,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(16,185,129,0.1),rgba(52,211,153,0.86),rgba(16,185,129,0.1),rgba(16,185,129,0.1))]",
+  },
+  "bg-orange-500": {
+    ring: "ring-orange-300/60",
+    shadow: "shadow-[0_0_28px_rgba(249,115,22,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(249,115,22,0.1),rgba(253,186,116,0.86),rgba(249,115,22,0.1),rgba(249,115,22,0.1))]",
+  },
+  "bg-purple-500": {
+    ring: "ring-violet-300/60",
+    shadow: "shadow-[0_0_28px_rgba(168,85,247,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(168,85,247,0.1),rgba(196,181,253,0.86),rgba(168,85,247,0.1),rgba(168,85,247,0.1))]",
+  },
+  "bg-indigo-500": {
+    ring: "ring-indigo-300/60",
+    shadow: "shadow-[0_0_28px_rgba(99,102,241,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(99,102,241,0.1),rgba(165,180,252,0.86),rgba(99,102,241,0.1),rgba(99,102,241,0.1))]",
+  },
+  "bg-red-500": {
+    ring: "ring-red-300/60",
+    shadow: "shadow-[0_0_28px_rgba(239,68,68,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(239,68,68,0.1),rgba(252,165,165,0.86),rgba(239,68,68,0.1),rgba(239,68,68,0.1))]",
+  },
+  "bg-yellow-500": {
+    ring: "ring-yellow-300/60",
+    shadow: "shadow-[0_0_28px_rgba(234,179,8,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(234,179,8,0.1),rgba(253,224,71,0.88),rgba(234,179,8,0.1),rgba(234,179,8,0.1))]",
+  },
+  "bg-teal-500": {
+    ring: "ring-teal-300/60",
+    shadow: "shadow-[0_0_28px_rgba(20,184,166,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(20,184,166,0.1),rgba(94,234,212,0.86),rgba(20,184,166,0.1),rgba(20,184,166,0.1))]",
+  },
+  "bg-pink-500": {
+    ring: "ring-pink-300/60",
+    shadow: "shadow-[0_0_28px_rgba(236,72,153,0.16)]",
+    gradient:
+      "bg-[conic-gradient(from_0deg,rgba(236,72,153,0.1),rgba(249,168,212,0.86),rgba(236,72,153,0.1),rgba(236,72,153,0.1))]",
+  },
+};
+
 export default function LearningModulesPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -149,6 +209,8 @@ export default function LearningModulesPage() {
 
         const sortedModules = [...modules].sort(sortLearningModulesForAccess);
         const freeModuleTopic = getFirstModuleTopicInCategory(sortedModules);
+        const categoryBorderEffect =
+          categoryBorderEffects[category.color] || categoryBorderEffects["bg-blue-500"];
 
         // Try to get icon: Example "Wallet" → LucideIcons.Wallet
         const IconComponent =
@@ -188,17 +250,28 @@ export default function LearningModulesPage() {
                       ? "bg-green-500/10 border-green-500/30"
                       : isInProgress
                         ? "bg-yellow-500/10 border-yellow-400/80 shadow-[0_0_28px_rgba(250,204,21,0.18)]"
-                        : "bg-white/[0.03] border-white/10"
+                        : `bg-white/[0.03] border-white/10 ${categoryBorderEffect.shadow}`
                   }
                   ${isLocked ? "opacity-80" : "hover:bg-white/[0.05]"}
                 `;
 
                 return (
                   <div key={module.topic} className={cardClassName}>
+                    {!isCompleted && !isInProgress && (
+                      <>
+                        <div
+                          className={`pointer-events-none absolute -inset-[1px] rounded-2xl border border-transparent ${categoryBorderEffect.gradient} animate-[average-score-border-spin_2.6s_linear_infinite]`}
+                        />
+                        <div className="pointer-events-none absolute inset-[1px] rounded-2xl bg-[#232324]" />
+                        <div
+                          className={`pointer-events-none absolute inset-0 rounded-2xl ring-1 ${categoryBorderEffect.ring}`}
+                        />
+                      </>
+                    )}
                     {isInProgress && (
                       <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
                     )}
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="relative z-10 flex items-center justify-between mb-2">
                       <ModuleTitle
                         moduleTitle={module.title}
                         className={
@@ -230,11 +303,11 @@ export default function LearningModulesPage() {
                       </div>
                     </div>
 
-                    <p className="text-sm text-[#9a9a9d]">{module.description}</p>
+                    <p className="relative z-10 text-sm text-[#9a9a9d]">{module.description}</p>
 
                     {isLocked ? (
                       <Button
-                        className="mt-4"
+                        className="relative z-10 mt-4"
                         variant="primary"
                         onClick={() => router.push("/subscribe")}
                       >
@@ -242,7 +315,7 @@ export default function LearningModulesPage() {
                       </Button>
                     ) : (
                       <Button
-                        className=" mt-4"
+                        className="relative z-10 mt-4"
                         variant="outline"
                         >
                         <Link

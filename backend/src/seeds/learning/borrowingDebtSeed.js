@@ -1893,22 +1893,64 @@ const borrowingDebtModules = [
     description: "Strategies for becoming debt-free and staying that way",
     categoryId: "borrowing-debt",
     topic: "get-out-debt",
-
+  
     visual: {
       icon: "TrendingDown",
       iconColor: "bg-green-600",
       readTime: 6
     },
-
+  
     uiTree: [
       /* ============================================================
-      * HERO CARD — EXACT GREEN GRADIENT
+      * HERO CARD
       * ============================================================ */
       {
         type: "Card",
         props: {
           className:
-            "bg-gradient-to-r from-green-600 to-green-500 text-white mb-5"
+            "mb-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
+        children: [
+          {
+            type: "div",
+            props: {
+              className: "bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-green-500/20 p-6 pb-4"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                props: { className: "p-0" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-3xl flex items-center gap-3 font-bold tracking-tight text-white" },
+                    children: [
+                      { type: "TrendingDown", props: { className: "h-8 w-8 text-green-400" } },
+                      "How to Get Out of Debt"
+                    ]
+                  },
+                  {
+                    type: "CardDescription",
+                    props: { className: "text-[#d7d7db] text-lg" },
+                    children: [
+                      "Strategies for becoming debt-free and staying that way"
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+  
+      /* ============================================================
+      * STEP 1: FACE THE REALITY
+      * ============================================================ */
+      {
+        type: "Card",
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
         },
         children: [
           {
@@ -1916,95 +1958,70 @@ const borrowingDebtModules = [
             children: [
               {
                 type: "CardTitle",
-                props: { className: "text-3xl flex items-center gap-3" },
-                children: [
-                  { type: "TrendingDown", props: { className: "h-8 w-8 text-white" } },
-                  "How to Get Out of Debt"
-                ]
-              },
-              {
-                type: "CardDescription",
-                props: { className: "text-white/90 text-lg" },
-                children: [
-                  "Strategies for becoming debt-free and staying that way"
-                ]
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["Step 1: Face the Reality"]
               }
             ]
-          }
-        ]
-      },
-
-      /* ============================================================
-      * STEP 1: FACE THE REALITY
-      * ============================================================ */
-      {
-        type: "Card",
-        props: { className: "mb-5" },
-        children: [
-          {
-            type: "CardHeader",
-            children: [{ type: "CardTitle", children: ["Step 1: Face the Reality"] }]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "The first step is often the hardest — admitting you have a debt problem and taking stock of the situation."
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-primary/5 rounded-lg" },
+                props: { className: "p-5 bg-blue-500/10 rounded-[1.5rem] border border-blue-500/25" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-primary mb-3" },
+                    props: { className: "font-semibold text-blue-400 mb-3" },
                     children: ["Create Your Debt List"]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "grid grid-cols-2 gap-4 text-md" },
+                    props: { className: "grid grid-cols-1 gap-4 text-md md:grid-cols-2" },
                     children: [
                       {
                         type: "div",
                         children: [
-                          { type: "strong", children: ["For each debt, write down:"] },
+                          { type: "strong", props: { className: "text-white" }, children: ["For each debt, write down:"] },
                           {
                             type: "ul",
-                            props: { className: "mt-2 space-y-1 list-disc pl-4" },
+                            props: { className: "mt-3 space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                             children: [
-                              {type: "li", children: ["Creditor name",]},
-                              {type: "li", children: ["Total balance owed",]},
-                              {type: "li", children: ["Interest rate (APR)",]},
-                              {type: "li", children: ["Minimum monthly payment",]},
-                              {type: "li", children: ["Due date"]},
+                              { type: "li", children: ["Creditor name"] },
+                              { type: "li", children: ["Total balance owed"] },
+                              { type: "li", children: ["Interest rate (APR)"] },
+                              { type: "li", children: ["Minimum monthly payment"] },
+                              { type: "li", children: ["Due date"] }
                             ]
                           }
                         ]
                       },
-
+  
                       {
                         type: "div",
                         children: [
-                          { type: "strong", children: ["Example format:"] },
+                          { type: "strong", props: { className: "text-white" }, children: ["Example format:"] },
                           {
                             type: "div",
                             props: {
-                              className:
-                                "mt-2 text-md bg-white p-2 rounded border"
+                              className: "mt-3 text-md bg-white/[0.04] border border-white/10 p-3 rounded-xl text-[#e5e5e7]"
                             },
                             children: [
-                              {type: "p", children:["Credit Card A: £2,500",]},
-                              {type: "p", children:["Rate: 24% APR",]},
-                              {type: "p", children:["Min payment: £75",]},
-                              {type: "p", children:["Due: 15th each month"]},
+                              { type: "p", children: ["Credit Card A: £2,500"] },
+                              { type: "p", children: ["Rate: 24% APR"] },
+                              { type: "p", children: ["Min payment: £75"] },
+                              { type: "p", children: ["Due: 15th each month"] }
                             ]
                           }
                         ]
@@ -2017,50 +2034,66 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * STEP 2: STOP ADDING TO THE DEBT
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Step 2: Stop Adding to the Debt"] }] },
-
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["Step 2: Stop Adding to the Debt"]
+              }
+            ]
+          },
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "div",
-                props: { className: "p-4 bg-yellow-50 rounded-lg" },
+                props: { className: "p-5 bg-yellow-500/10 rounded-[1.5rem] border border-yellow-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-yellow-600 mb-2" },
+                    props: { className: "font-semibold text-yellow-400 mb-3" },
                     children: ["Cut Off the Credit Flow"]
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-md space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "li", children: ["Remove credit cards from your wallet",]},
-                      {type: "li", children: ["Delete saved payment methods from online stores",]},
-                      {type: "li", children: ["Switch to cash or debit cards only",]},
-                      {type: "li", children: ["Avoid Buy Now, Pay Later services"]},
+                      { type: "li", children: ["Remove credit cards from your wallet"] },
+                      { type: "li", children: ["Delete saved payment methods from online stores"] },
+                      { type: "li", children: ["Switch to cash or debit cards only"] },
+                      { type: "li", children: ["Avoid Buy Now, Pay Later services"] }
                     ]
                   }
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: { className: "p-5 border border-white/10 bg-white/[0.03] rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Emergency Fund Dilemma"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold mb-3 text-white" },
+                    children: ["Emergency Fund Dilemma"]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: [
                       "While paying off debt, keep a small emergency fund (£500–£1,000). This prevents you from going deeper into debt when unexpected expenses arise."
                     ]
@@ -2071,31 +2104,34 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * STEP 3: CHOOSE YOUR REPAYMENT STRATEGY
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "Calculator", props: { className: "h-6 w-6" } },
+                  { type: "Calculator", props: { className: "h-6 w-6 text-blue-400" } },
                   "Step 3: Choose Your Repayment Strategy"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "div",
@@ -2103,73 +2139,76 @@ const borrowingDebtModules = [
                 children: [
                   {
                     type: "div",
-                    props: { className: "p-4 bg-green-50 rounded-lg" },
+                    props: { className: "p-5 bg-green-500/10 rounded-[1.5rem] border border-green-500/30" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold text-green-600 mb-2" },
+                        props: { className: "font-semibold text-green-400 mb-3" },
                         children: ["🏔️ Avalanche Method"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-md list-disc pl-4 space-y-1" },
+                        props: { className: "text-md list-disc pl-4 space-y-2 text-[#e5e5e7]" },
                         children: [
-                          {type: "li", children: ["Pay highest-interest debt first",]},
-                          {type: "li", children: ["Saves the most money long-term",]},
-                          {type: "li", children: ["May feel slow at first",]},
-                          {type: "li", children: ["Best for disciplined people"]},
+                          { type: "li", children: ["Pay highest-interest debt first"] },
+                          { type: "li", children: ["Saves the most money long-term"] },
+                          { type: "li", children: ["May feel slow at first"] },
+                          { type: "li", children: ["Best for disciplined people"] }
                         ]
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 bg-green-50 rounded-lg" },
+                    props: { className: "p-5 bg-green-500/10 rounded-[1.5rem] border border-green-500/30" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold text-green-600 mb-2" },
+                        props: { className: "font-semibold text-green-400 mb-3" },
                         children: ["⛄ Snowball Method"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-md list-disc pl-4 space-y-1" },
+                        props: { className: "text-md list-disc pl-4 space-y-2 text-[#e5e5e7]" },
                         children: [
-                          {type: "li", children: ["Pay smallest balance first",]},
-                          {type: "li", children: ["Quick wins boost motivation",]},
-                          {type: "li", children: ["Costs slightly more in interest",]},
-                          {type: "li", children: ["Great for psychological momentum"]},
+                          { type: "li", children: ["Pay smallest balance first"] },
+                          { type: "li", children: ["Quick wins boost motivation"] },
+                          { type: "li", children: ["Costs slightly more in interest"] },
+                          { type: "li", children: ["Great for psychological momentum"] }
                         ]
                       }
                     ]
                   }
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: { className: "p-5 border border-blue-500/25 bg-blue-500/10 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Example Comparison"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold mb-3 text-blue-400" },
+                    children: ["Example Comparison"]
+                  },
                   {
                     type: "div",
-                    props: { className: "text-md space-y-1" },
+                    props: { className: "text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "strong", children: ["Your debts:"]},
+                      { type: "strong", children: ["Your debts:"] },
                       {
-                        type: "div",
-                        props: { className: "text-md space-y-1 list-disc pl-4" },
+                        type: "ul",
+                        props: { className: "space-y-1 pl-4", style: { listStyleType: "disc" } },
                         children: [
-                          {type: "li", children: ["Card A: £500 at 18% (Snowball target)",]},
-                          {type: "li", children: ["Card B: £2,000 at 24% (Avalanche target)",]},
-                          {type: "li", children: ["Loan: £3,000 at 8%",]},
-                          
+                          { type: "li", children: ["Card A: £500 at 18% (Snowball target)"] },
+                          { type: "li", children: ["Card B: £2,000 at 24% (Avalanche target)"] },
+                          { type: "li", children: ["Loan: £3,000 at 8%"] }
                         ]
                       },
                       {
                         type: "span",
-                        props: { className: "text-muted-foreground block mt-1" },
+                        props: { className: "text-[#9a9a9d] block mt-2" },
                         children: ["Both methods: pay minimums on all, extra money to your chosen target"]
                       }
                     ]
@@ -2180,22 +2219,31 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * STEP 4: FIND EXTRA MONEY
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
-            children: [{ type: "CardTitle", children: ["Step 4: Find Extra Money to Pay"] }]
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["Step 4: Find Extra Money to Pay"]
+              }
+            ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "div",
@@ -2203,35 +2251,45 @@ const borrowingDebtModules = [
                 children: [
                   {
                     type: "div",
+                    props: { className: "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5" },
                     children: [
-                      { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["💰 Increase Income"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold text-green-400 mb-3" },
+                        children: ["💰 Increase Income"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-md list-disc pl-4 space-y-2" },
+                        props: { className: "text-md list-disc pl-4 space-y-2 text-[#e5e5e7]" },
                         children: [
-                          {type: "li", children: ["Pick up extra shifts",]},
-                          {type: "li", children: ["Freelance work",]},
-                          {type: "li", children: ["Sell items you don’t need",]},
-                          {type: "li", children: ["Part-time side job",]},
-                          {type: "li", children: ["Cashback and savings apps"]},
+                          { type: "li", children: ["Pick up extra shifts"] },
+                          { type: "li", children: ["Freelance work"] },
+                          { type: "li", children: ["Sell items you don’t need"] },
+                          { type: "li", children: ["Part-time side job"] },
+                          { type: "li", children: ["Cashback and savings apps"] }
                         ]
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
+                    props: { className: "rounded-[1.5rem] border border-yellow-500/30 bg-yellow-500/10 p-5" },
                     children: [
-                      { type: "h4", props: { className: "font-semibold text-yellow-600" }, children: ["✂️ Cut Expenses"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold text-yellow-400 mb-3" },
+                        children: ["✂️ Cut Expenses"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-md list-disc pl-4 space-y-2" },
+                        props: { className: "text-md list-disc pl-4 space-y-2 text-[#e5e5e7]" },
                         children: [
-                          {type: "li", children: ["Cancel unused subscriptions",]},
-                          {type: "li", children: ["Cook more meals at home",]},
-                          {type: "li", children: ["Find cheaper insurance/phone deals",]},
-                          {type: "li", children: ["Use public transport",]},
-                          {type: "li", children: ["Shop at discount stores"]},
+                          { type: "li", children: ["Cancel unused subscriptions"] },
+                          { type: "li", children: ["Cook more meals at home"] },
+                          { type: "li", children: ["Find cheaper insurance/phone deals"] },
+                          { type: "li", children: ["Use public transport"] },
+                          { type: "li", children: ["Shop at discount stores"] }
                         ]
                       }
                     ]
@@ -2242,87 +2300,96 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * STEP 5: CONSOLIDATION
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Step 5: Consider Debt Consolidation"] }] },
-
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["Step 5: Consider Debt Consolidation"]
+              }
+            ]
+          },
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "Consolidation can simplify payments and potentially reduce interest rates."
                 ]
               },
-
-              /* Balance Transfer */
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-primary/5 rounded-lg" },
+                props: { className: "p-5 bg-blue-500/10 rounded-[1.5rem] border border-blue-500/25" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-primary mb-2" },
+                    props: { className: "font-semibold text-blue-400 mb-3" },
                     children: ["Balance Transfer Credit Card"]
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-md space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "li", children: ["0% interest for 18–24 months",]},
-                      {type: "li", children: ["3–5% transfer fee",]},
-                      {type: "li", children: ["Must pay off before rate increases",]},
-                      {type: "li", children: ["Best for credit card debt"]},
+                      { type: "li", children: ["0% interest for 18–24 months"] },
+                      { type: "li", children: ["3–5% transfer fee"] },
+                      { type: "li", children: ["Must pay off before rate increases"] },
+                      { type: "li", children: ["Best for credit card debt"] }
                     ]
                   }
                 ]
               },
-
-              /* Personal Loan */
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-primary/5 rounded-lg" },
+                props: { className: "p-5 bg-violet-500/10 rounded-[1.5rem] border border-violet-500/25" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-primary mb-2" },
+                    props: { className: "font-semibold text-violet-400 mb-3" },
                     children: ["Personal Loan"]
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-md space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "li", children: ["Fixed rate and payment",]},
-                      {type: "li", children: ["Usually lower than credit cards",]},
-                      {type: "li", children: ["Clear end date",]},
-                      {type: "li", children: ["Good for multiple high-interest debts"]},
+                      { type: "li", children: ["Fixed rate and payment"] },
+                      { type: "li", children: ["Usually lower than credit cards"] },
+                      { type: "li", children: ["Clear end date"] },
+                      { type: "li", children: ["Good for multiple high-interest debts"] }
                     ]
                   }
                 ]
               },
-
-              /* Warning */
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-yellow-50 rounded-lg" },
+                props: { className: "p-5 bg-yellow-500/10 rounded-[1.5rem] border border-yellow-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-yellow-600 mb-2" },
+                    props: { className: "font-semibold text-yellow-400 mb-3" },
                     children: ["⚠️ Consolidation Warning"]
                   },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: [
                       "Consolidation only works if you avoid creating new debt afterwards. Many people consolidate but then run up their cards again."
                     ]
@@ -2333,73 +2400,76 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * WHEN YOU’RE REALLY STRUGGLING
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "AlertTriangle", props: { className: "h-6 w-6 text-yellow-600" } },
+                  { type: "AlertTriangle", props: { className: "h-6 w-6 text-yellow-400" } },
                   "When You're Really Struggling"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "div",
-                props: { className: "p-4 bg-primary/5 rounded-lg" },
+                props: { className: "p-5 bg-blue-500/10 rounded-[1.5rem] border border-blue-500/25" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-primary mb-2" },
+                    props: { className: "font-semibold text-blue-400 mb-3" },
                     children: ["Contact Your Creditors"]
                   },
-
+  
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-md space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "li", children: ["Temporary reduced payments",]},
-                      {type: "li", children: ["Payment holidays",]},
-                      {type: "li", children: ["Lower interest rates",]},
-                      {type: "li", children: ["Longer repayment plans"]},
+                      { type: "li", children: ["Temporary reduced payments"] },
+                      { type: "li", children: ["Payment holidays"] },
+                      { type: "li", children: ["Lower interest rates"] },
+                      { type: "li", children: ["Longer repayment plans"] }
                     ]
                   }
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 rounded-lg" },
+                props: { className: "p-5 bg-green-500/10 rounded-[1.5rem] border border-green-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-600 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-3" },
                     children: ["Free Debt Advice"]
                   },
-
+  
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-md space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-2 text-[#e5e5e7]" },
                     children: [
-                      {type: "li", children: ["Citizens Advice Bureau",]},
-                      {type: "li", children: ["StepChange Debt Charity",]},
-                      {type: "li", children: ["National Debtline",]},
-                      {type: "li", children: ["Christians Against Poverty"]},
+                      { type: "li", children: ["Citizens Advice Bureau"] },
+                      { type: "li", children: ["StepChange Debt Charity"] },
+                      { type: "li", children: ["National Debtline"] },
+                      { type: "li", children: ["Christians Against Poverty"] }
                     ]
                   }
                 ]
@@ -2408,80 +2478,101 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * STAYING DEBT-FREE
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Staying Debt-Free"] }] },
-
+          {
+            type: "div",
+            props: {
+              className: "bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-green-500/20 p-6 pb-4"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                props: { className: "p-0" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["Staying Debt-Free"]
+                  }
+                ]
+              }
+            ]
+          },
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-4 p-6 pt-4" },
             children: [
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 rounded-lg" },
+                props: { className: "p-4 bg-green-500/10 rounded-[1.25rem] border border-green-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-600 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-2" },
                     children: ["1. Build an emergency fund"]
                   },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: ["Save 3–6 months of expenses to avoid future debt."]
                   }
                 ]
               },
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 rounded-lg" },
+                props: { className: "p-4 bg-green-500/10 rounded-[1.25rem] border border-green-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-600 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-2" },
                     children: ["2. Use credit responsibly"]
                   },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: ["If using credit cards, pay the balance in full monthly."]
                   }
                 ]
               },
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 rounded-lg" },
+                props: { className: "p-4 bg-green-500/10 rounded-[1.25rem] border border-green-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-600 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-2" },
                     children: ["3. Live below your means"]
                   },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: ["Spend less than you earn and save the difference."]
                   }
                 ]
               },
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 rounded-lg" },
+                props: { className: "p-4 bg-green-500/10 rounded-[1.25rem] border border-green-500/30" },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-600 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-2" },
                     children: ["4. Plan for large purchases"]
                   },
                   {
                     type: "p",
-                    props: { className: "text-md" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: ["Save up for big expenses rather than financing them."]
                   }
                 ]
@@ -2491,9 +2582,9 @@ const borrowingDebtModules = [
         ]
       }
     ],
-
+  
     /* ============================================================
-    * QUIZ — matches your structure
+    * QUIZ
     * ============================================================ */
     quiz: {
       passingScore: 3,
@@ -2550,9 +2641,9 @@ const borrowingDebtModules = [
         }
       ]
     },
-
+  
     /* ============================================================
-    * RELATED LESSONS — consistent with your system
+    * RELATED LESSONS
     * ============================================================ */
     relatedLessons: [
       {
@@ -2566,7 +2657,7 @@ const borrowingDebtModules = [
         relationship: "related"
       }
     ],
-
+  
     points: 120,
     difficultyLevel: "beginner",
     timeEstimate: 6,

@@ -27,10 +27,9 @@ export function Suggestions({
           key={index}
           onClick={() => onSelect(suggestion)}
           className={cn(
-            "px-4 py-2 bg-white/70 backdrop-blur-sm",
-            "border border-valuto-green-200/50 rounded-full",
-            "text-sm font-medium text-gray-700",
-            "hover:bg-valuto-green-50 hover:border-valuto-green-300",
+            "rounded-full border border-white/10 bg-[#232324]/95 px-4 py-2 backdrop-blur-sm",
+            "text-sm font-medium text-[#d7d7db]",
+            "hover:bg-white/[0.06] hover:border-valuto-green-500/20 hover:text-white",
             "transition-all duration-200 hover:shadow-md",
             "green-card-hover"
           )}
@@ -41,4 +40,3 @@ export function Suggestions({
     </div>
   );
 }
-

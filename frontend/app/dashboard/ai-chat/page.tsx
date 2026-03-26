@@ -111,24 +111,24 @@ export default function AIChatPage() {
   };
 
   return (
-    <div className="min-h-screen animate-gradient relative overflow-hidden flex flex-col">
+    <div className="relative flex min-h-screen flex-col overflow-hidden animate-gradient text-white">
       {/* Decorative elements - matching landing page */}
-      <div className="absolute top-0 right-0 -translate-y-12 translate-x-12 w-72 h-72 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob"></div>
-      <div className="absolute top-1/3 left-0 translate-y-12 -translate-x-12 w-96 h-96 bg-valuto-green-300 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 right-1/4 translate-y-12 w-80 h-80 bg-valuto-green-200 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-blob animation-delay-4000"></div>
+      <div className="absolute right-0 top-0 h-72 w-72 -translate-y-12 translate-x-12 rounded-full bg-valuto-green-400/10 blur-3xl animate-blob"></div>
+      <div className="absolute left-0 top-1/3 h-96 w-96 -translate-x-12 translate-y-12 rounded-full bg-emerald-300/10 blur-3xl animate-blob animation-delay-2000"></div>
+      <div className="absolute bottom-0 right-1/4 h-80 w-80 translate-y-12 rounded-full bg-cyan-300/5 blur-3xl animate-blob animation-delay-4000"></div>
 
       {/* Header */}
-      <div className="relative z-10 bg-white/80 backdrop-blur-xl border-b border-valuto-green-200/30 shadow-sm flex-shrink-0">
+      <div className="relative z-10 flex-shrink-0 border-b border-white/10 bg-[#1b1b1d]/90 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
         <div className="max-w-4xl mx-auto px-6 py-3">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 rounded-2xl flex items-center justify-center shadow-lg green-glow">
+            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 shadow-lg green-glow">
               <LightBulbIcon className="w-5 h-5 text-white" />
             </div>
             <div>
               <h1 className="text-xl font-bold green-text-gradient">
                 Valuto AI
               </h1>
-              <p className="text-sm text-valuto-green-600 font-medium">Your friendly financial assistant</p>
+              <p className="text-sm font-medium text-valuto-green-300">Your friendly financial assistant</p>
             </div>
           </div>
         </div>
@@ -150,7 +150,7 @@ export default function AIChatPage() {
                     
                     {/* Timestamp */}
                     <p className={`text-sm mt-2 ${
-                      message.role === 'user' ? 'text-green-100' : 'text-gray-500'
+                      message.role === 'user' ? 'text-green-100/90' : 'text-[#9a9a9d]'
                     }`}>
                       {message.timestamp.toLocaleTimeString([], { 
                         hour: '2-digit', 

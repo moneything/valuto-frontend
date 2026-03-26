@@ -106,8 +106,8 @@ export default function LearningModulesPage() {
       subtitle="Master essential financial skills with our student-friendly guides."
     >
       {selectedCategoryId && (
-        <div className="mb-8 flex items-center justify-between rounded-2xl border border-valuto-green-200 bg-white/80 p-4">
-          <p className="text-sm text-gray-700">
+        <div className="mb-8 flex items-center justify-between rounded-2xl border border-white/10 bg-[#232324]/95 p-4 shadow-[0_20px_50px_rgba(0,0,0,0.28)]">
+          <p className="text-sm text-[#d7d7db]">
             Filtering modules for the selected category.
           </p>
           <Button variant="outline" onClick={() => router.push("/dashboard/learning-modules")}>
@@ -120,7 +120,7 @@ export default function LearningModulesPage() {
       {stats && (
         <div className="mb-12 border-0">
           <div className="text-center mb-6">
-            <h2 className="text-3xl font-bold mb-2">Your Learning Stats</h2>
+            <h2 className="mb-2 text-3xl font-bold text-white">Your Learning Stats</h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -155,7 +155,10 @@ export default function LearningModulesPage() {
           (LucideIcons as any)[category.icon] || HelpCircle;
 
         return (
-          <section key={category.id} className="mb-12 p-6 border rounded-2xl bg-white">
+          <section
+            key={category.id}
+            className="mb-12 rounded-2xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_50px_rgba(0,0,0,0.28)]"
+          >
 
             {/* Category Header */}
             <div className="flex items-center gap-4 mb-6">
@@ -164,8 +167,8 @@ export default function LearningModulesPage() {
               </div>
 
               <div>
-                <h2 className="text-3xl font-bold">{category.title}</h2>
-                <p className="text-gray-600 text-lg">{category.description}</p>
+                <h2 className="text-3xl font-bold text-white">{category.title}</h2>
+                <p className="text-lg text-[#9a9a9d]">{category.description}</p>
               </div>
             </div>
 
@@ -179,52 +182,58 @@ export default function LearningModulesPage() {
                 const isLocked = !hasSubscription && !isFreeModule;
 
                 const cardClassName = `
-                  p-6 border rounded-2xl transition
+                  relative overflow-hidden rounded-2xl border p-6 transition shadow-[0_16px_40px_rgba(0,0,0,0.2)]
                   ${
                     isCompleted
-                      ? "bg-green-50 border-green-200"
+                      ? "bg-green-500/10 border-green-500/30"
                       : isInProgress
-                        ? "bg-yellow-50 border-yellow-200"
-                        : "bg-white border-gray-200"
+                        ? "bg-yellow-500/10 border-yellow-400/80 shadow-[0_0_28px_rgba(250,204,21,0.18)]"
+                        : "bg-white/[0.03] border-white/10"
                   }
-                  ${isLocked ? "opacity-80" : "hover:bg-gray-50"}
+                  ${isLocked ? "opacity-80" : "hover:bg-white/[0.05]"}
                 `;
 
                 return (
                   <div key={module.topic} className={cardClassName}>
+                    {isInProgress && (
+                      <>
+                        <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-yellow-300/60" />
+                        <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-[linear-gradient(90deg,transparent,rgba(250,204,21,0.42),transparent)] animate-[module-card-shimmer_2.4s_linear_infinite]" />
+                      </>
+                    )}
                     <div className="flex items-center justify-between mb-2">
                       <ModuleTitle
                         moduleTitle={module.title}
                         className={
                           isCompleted
-                            ? "text-green-700"
+                            ? "text-green-300"
                             : isInProgress
-                              ? "text-yellow-800"
-                              : "text-gray-900"
+                              ? "text-yellow-300"
+                              : "text-white"
                         }
                       />
 
                       <div className="flex items-center gap-2">
                         {isLocked && (
-                          <span className="bg-red-100 text-red-700 text-xs px-2 py-1 rounded-full inline-flex items-center gap-1">
+                          <span className="inline-flex items-center gap-1 rounded-full bg-red-500/15 px-2 py-1 text-xs text-red-300">
                             <Lock className="w-3 h-3" />
                             Subscriber only
                           </span>
                         )}
                         {isFreeModule && !hasSubscription && (
-                          <span className="bg-green-100 text-green-700 text-xs px-2 py-1 rounded-full">
+                          <span className="rounded-full bg-green-500/15 px-2 py-1 text-xs text-green-300">
                             Free
                           </span>
                         )}
 
-                        <span className="bg-gray-100 text-gray-700 text-sm px-3 py-1 rounded-full flex items-center gap-1">
+                        <span className="flex items-center gap-1 rounded-full bg-white/[0.06] px-3 py-1 text-sm text-[#d7d7db]">
                           <ClockIcon className="w-4 h-4" />
                           {module?.visual?.readTime} min
                         </span>
                       </div>
                     </div>
 
-                    <p className="text-gray-600 text-sm">{module.description}</p>
+                    <p className="text-sm text-[#9a9a9d]">{module.description}</p>
 
                     {isLocked ? (
                       <Button
@@ -259,6 +268,15 @@ export default function LearningModulesPage() {
           display: inline-block;
           will-change: transform;
           animation: module-title-marquee-scroll 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes module-card-shimmer {
+          0% {
+            transform: translateX(-10%);
+          }
+          100% {
+            transform: translateX(420%);
+          }
         }
 
         @keyframes module-title-marquee-scroll {
@@ -338,10 +356,23 @@ type StatItemProps = {
 };
 
 function StatItem({ label, value, tooltip }: StatItemProps) {
+  const isCompletedModulesCard = label === "Modules Completed 🎯";
   const cardContent = (
-    <Card className="text-center">
-      <div className="text-4xl font-bold mb-2 text-valuto-green-500 ">{value}</div>
-      <div className="text-sm opacity-90 font-bold">{label}</div>
+    <Card
+      className={`relative overflow-hidden text-center ${
+        isCompletedModulesCard
+          ? "border-emerald-400/80 shadow-[0_0_28px_rgba(16,185,129,0.2)]"
+          : ""
+      }`}
+    >
+      {isCompletedModulesCard && (
+        <>
+          <div className="pointer-events-none absolute inset-0 rounded-2xl ring-1 ring-emerald-300/60" />
+          <div className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-[linear-gradient(90deg,transparent,rgba(52,211,153,0.4),transparent)] animate-[module-card-shimmer_2.4s_linear_infinite]" />
+        </>
+      )}
+      <div className="mb-2 text-4xl font-bold text-primary">{value}</div>
+      <div className="text-sm font-bold text-[#d7d7db]">{label}</div>
     </Card>
   );
 
@@ -351,9 +382,9 @@ function StatItem({ label, value, tooltip }: StatItemProps) {
     <div className="relative group">
       {cardContent}
       <div className="pointer-events-none absolute left-0 top-full translate-y-3 opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition duration-200 w-full">
-        <div className="bg-white text-black text-xs rounded-2xl py-3 px-3 whitespace-normal shadow-lg backdrop-blur-sm border border-valuto-green-200 w-full text-center">
+        <div className="w-full rounded-2xl border border-white/10 bg-[#1b1b1d] px-3 py-3 text-center text-xs text-[#e5e5e7] shadow-[0_16px_40px_rgba(0,0,0,0.35)] backdrop-blur-sm">
           {tooltip}
-          <div className="absolute left-1/2 -translate-x-1/2 -top-1.5 w-3 h-3 bg-white rotate-45 border border-valuto-green-200 border-b-0 border-r-0" />
+          <div className="absolute left-1/2 -top-1.5 h-3 w-3 -translate-x-1/2 rotate-45 border border-white/10 border-b-0 border-r-0 bg-[#1b1b1d]" />
         </div>
       </div>
     </div>

@@ -60,6 +60,16 @@ const COMPONENTS: Record<string, React.ComponentType<any> | string> = {
   ...ICONS,
 };
 
+function toCamelCaseStyleKey(key: string) {
+  return key.replace(/-([a-z])/g, (_, letter: string) => letter.toUpperCase());
+}
+
+function normalizeStyleObject(style: Record<string, any>) {
+  return Object.fromEntries(
+    Object.entries(style).map(([key, value]) => [toCamelCaseStyleKey(key), value])
+  );
+}
+
 // --------------------
 // Recursive Renderer
 // --------------------
@@ -81,6 +91,9 @@ function renderNode(
 
   // Auto-add onClick handler for components with actions
   let finalProps = { ...restProps };
+  if (restProps.style && typeof restProps.style === "object" && !Array.isArray(restProps.style)) {
+    finalProps.style = normalizeStyleObject(restProps.style);
+  }
   if (action && handleAction) {
     finalProps.onClick = () => handleAction(action);
   }

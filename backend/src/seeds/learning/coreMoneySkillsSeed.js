@@ -347,7 +347,6 @@ const coreMoneySkillsModules = [
           ------------------------------------------------ */
           {
             "type": "Card",
-            "props": { "className": "bg-gradient-to-r from-primary/10 to-secondary/10" },
             "children": [
               { "type": "CardHeader", "children": [{ "type": "CardTitle", "children": ["💡 Quick Budgeting Tips"] }] },
 

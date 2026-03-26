@@ -26,25 +26,25 @@ export default function ResultsScreen({ result, onContinue }: Props) {
     };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-green-50 py-10 px-6">
+    <div className="min-h-screen bg-[linear-gradient(160deg,hsl(0_0%_7%),hsl(0_0%_9%),hsl(152_20%_8%))] px-6 py-10 text-white">
       <div className="max-w-4xl mx-auto space-y-8">
         {/* 🔹 Round Summary Banner */}
         <div
           className={`rounded-2xl p-8 shadow-sm border text-center transition ${
             isProfit
-              ? "bg-green-50 border-green-200"
-              : "bg-red-50 border-red-200"
+              ? "border-green-500/20 bg-green-500/10"
+              : "border-red-500/20 bg-red-500/10"
           }`}
         >
           <div className="text-4xl mb-2">📊</div>
-          <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          <h2 className="mb-2 text-2xl font-bold text-white">
             Round {round} Complete!
           </h2>
 
-          <div className="flex justify-center items-center gap-8 text-gray-700 mb-4">
+          <div className="mb-4 flex items-center justify-center gap-8 text-[#d7d7db]">
             <div>
               <p className="text-sm">Starting Balance</p>
-              <p className="font-semibold text-lg text-gray-800">
+              <p className="text-lg font-semibold text-white">
                 £{startingBalance.toFixed(2)}
               </p>
             </div>
@@ -53,7 +53,7 @@ export default function ResultsScreen({ result, onContinue }: Props) {
               <p className="text-sm">Ending Balance</p>
               <p
                 className={`font-semibold text-lg ${
-                  isProfit ? "text-green-600" : "text-red-600"
+                  isProfit ? "text-green-300" : "text-red-300"
                 }`}
               >
                 £{endingBalance.toFixed(2)}
@@ -72,7 +72,7 @@ export default function ResultsScreen({ result, onContinue }: Props) {
 
         {/* 💹 Investments List */}
         <div>
-          <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-4">
+          <h3 className="mb-4 flex items-center gap-2 text-xl font-bold text-white">
             🏆 Your Investments
           </h3>
 
@@ -89,7 +89,7 @@ export default function ResultsScreen({ result, onContinue }: Props) {
               return (
                 <div
                   key={inv.companyId}
-                  className="flex justify-between items-center bg-white rounded-xl shadow-sm border border-gray-100 p-5"
+                  className="flex items-center justify-between rounded-xl border border-white/10 bg-[#232324]/95 p-5 shadow-[0_20px_50px_rgba(0,0,0,0.28)]"
                 >
                   <div className="flex items-start gap-3">
                     <Image
@@ -100,10 +100,10 @@ export default function ResultsScreen({ result, onContinue }: Props) {
                       className="rounded-md object-contain"
                     />
                     <div>
-                      <p className="font-semibold text-lg text-gray-900">
+                      <p className="text-lg font-semibold text-white">
                         {inv.companyName}
                       </p>
-                      <p className="text-gray-500 text-sm">
+                      <p className="text-sm text-[#9a9a9d]">
                         {inv.priceChange > 20
                           ? `Major positive news boosted ${inv.companyName}'s stock price significantly.`
                           : inv.priceChange > 0
@@ -116,23 +116,23 @@ export default function ResultsScreen({ result, onContinue }: Props) {
                   </div>
 
                   <div className="text-right">
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#9a9a9d]">
                       Invested:{" "}
-                      <span className="font-medium text-gray-800">
+                      <span className="font-medium text-white">
                         £{inv.invested.toFixed(2)}
                       </span>
                     </p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#9a9a9d]">
                       Final Value:{" "}
-                      <span className="font-medium text-gray-800">
+                      <span className="font-medium text-white">
                         £{inv.finalValue.toFixed(2)}
                       </span>
                     </p>
                     <span
                       className={`inline-block mt-2 px-3 py-1 text-sm font-semibold rounded-full ${
                         positive
-                          ? "bg-green-100 text-green-700"
-                          : "bg-red-100 text-red-600"
+                          ? "border border-green-500/20 bg-green-500/10 text-green-300"
+                          : "border border-red-500/20 bg-red-500/10 text-red-300"
                       }`}
                     >
                       {positive ? `+${changePercent}%` : `${changePercent}%`}
@@ -146,19 +146,19 @@ export default function ResultsScreen({ result, onContinue }: Props) {
 
         {/* 💡 Insights */}
         <div>
-          <h3 className="text-xl font-bold text-gray-800 flex items-center gap-2 mb-3">
+          <h3 className="mb-3 flex items-center gap-2 text-xl font-bold text-white">
             💡 What You Learned
           </h3>
 
-          <div className="bg-green-50 border border-green-100 rounded-xl p-5 space-y-2">
+          <div className="space-y-2 rounded-xl border border-green-500/20 bg-green-500/10 p-5">
             {insights.length > 0 ? (
               insights.map((text, idx) => (
-                <p key={idx} className="text-gray-700 text-sm">
+                <p key={idx} className="text-sm text-[#d7d7db]">
                   {text}
                 </p>
               ))
             ) : (
-              <p className="text-gray-500 text-sm">
+              <p className="text-sm text-[#9a9a9d]">
                 No new insights this round — try diversifying next time!
               </p>
             )}

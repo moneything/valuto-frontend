@@ -1,7 +1,7 @@
 // app/dashboard/learning-modules/[moduleId]/page.tsx
 "use client";
 
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useState, useEffect, useRef, useCallback, use } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -30,10 +30,10 @@ type StepState = "intro" | "quiz" | "complete";
 export default function LearningModulePage({
   params,
 }: {
-  params: { moduleId: string };
+  params: Promise<{ moduleId: string }>;
 }) {
   const router = useRouter();
-  const moduleId = params.moduleId;
+  const { moduleId } = use(params);
   const { profile, loading: profileLoading } = useUser();
 
   const { module, loading, error } = useLearningModule(moduleId);

@@ -1,5 +1,6 @@
 // backend/src/seeds/learning/investingAssetsSeed.js
 const LearningModule = require("../../models/LearningModule");
+const { applyDarkThemeToModules } = require("./uiThemeNormalizer");
 
 /**
  * Investing & Assets — Learning Modules
@@ -2223,6 +2224,7 @@ function applyPassingScore(modules) {
   });
 }
 applyPassingScore(investingAssetsModules);
+applyDarkThemeToModules(investingAssetsModules);
 
 // =====================================================
 // Seed Function

@@ -44,7 +44,7 @@ export function PromptInput({
   }, [value]);
 
   return (
-    <div className="bg-white/60 backdrop-blur-xl border border-valuto-green-200/50 rounded-2xl p-3 shadow-xl flex-shrink-0 green-card-hover">
+    <div className="flex-shrink-0 rounded-2xl border border-white/10 bg-[#1b1b1d]/95 p-3 shadow-[0_20px_50px_rgba(0,0,0,0.28)] backdrop-blur-xl green-card-hover">
       <div className="flex items-end space-x-3">
         <div className="flex-1 relative">
           <textarea
@@ -57,10 +57,10 @@ export function PromptInput({
             disabled={isLoading}
             rows={1}
             className={cn(
-              "w-full px-4 py-3 bg-white/80 backdrop-blur-sm border border-valuto-green-200/50 rounded-xl",
-              "focus:ring-2 focus:ring-valuto-green-500/50 focus:border-valuto-green-500/50",
+              "w-full rounded-xl border border-white/10 bg-white/[0.04] px-4 py-3 backdrop-blur-sm",
+              "focus:border-valuto-green-500/50 focus:ring-2 focus:ring-valuto-green-500/50",
               "outline-none resize-none transition-all duration-200",
-              "placeholder-valuto-green-500 text-gray-900 font-medium text-sm",
+              "placeholder:text-[#6f6f73] text-white font-medium text-sm",
               "disabled:opacity-50 disabled:cursor-not-allowed",
               className
             )}
@@ -74,7 +74,7 @@ export function PromptInput({
           className={cn(
             "w-11 h-11 bg-gradient-to-br from-valuto-green-500 to-valuto-green-600",
             "hover:from-valuto-green-600 hover:to-valuto-green-700",
-            "disabled:from-gray-300 disabled:to-gray-400",
+            "disabled:from-[#3a3a3d] disabled:to-[#4a4a4d]",
             "text-white rounded-xl flex items-center justify-center",
             "shadow-lg hover:shadow-xl transition-all duration-200",
             "disabled:cursor-not-allowed green-glow"
@@ -86,4 +86,3 @@ export function PromptInput({
     </div>
   );
 }
-

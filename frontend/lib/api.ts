@@ -284,6 +284,15 @@ export const leaderboardApi = {
   },
 
   /**
+   * Get leaderboard aggregate stats including total active user counts
+   */
+  async getStats() {
+    return apiRequest('/api/leaderboard/stats', {
+      method: 'GET',
+    });
+  },
+
+  /**
    * Get session leaderboard
    */
   async getSession(token: string, sessionId: string) {

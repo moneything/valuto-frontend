@@ -135,7 +135,7 @@ const coreMoneySkillsModules = [
                       {
                         type: "div",
                         props: {
-                          className: "space-y-3 rounded-lg border border-green-500/30 bg-green-500/10 p-4"
+                          className: "space-y-3 rounded-lg border border-white p-4"
                         },
                         children: [
                           {
@@ -205,13 +205,22 @@ const coreMoneySkillsModules = [
                       {
                         type: "div",
                         props: {
-                          className: "space-y-3 rounded-lg border border-orange-500/30 bg-orange-500/10 p-4"
+                          className: "space-y-3 rounded-lg border border-white p-4"
                         },
                         children: [
                           {
                             type: "h3",
-                            props: { className: "text-lg font-semibold text-orange-400" },
-                            children: ["⚠️ WANTS (Nice to Have)"]
+                            props: { className: "flex items-center text-lg font-semibold text-orange-400" },
+                            children: [
+                              {
+                                type: "span",
+                                props: { className: "mr-2" },
+                                children: [
+                                  { type: "ShoppingBag", props: { className: "h-5 w-5" }, children: [] }
+                                ]
+                              },
+                              { type: "span", children: ["WANTS (Nice to Have)"] }
+                            ]
                           },
                           {
                             type: "ul",

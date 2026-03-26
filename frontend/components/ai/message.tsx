@@ -45,10 +45,10 @@ export function MessageBubble({
   return (
     <div
       className={cn(
-        "relative px-5 py-3 rounded-2xl shadow-lg backdrop-blur-sm",
+        "relative rounded-2xl px-5 py-3 shadow-lg backdrop-blur-sm",
         variant === "user"
           ? "bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 text-white green-glow"
-          : "bg-white/70 text-gray-900 border border-valuto-green-200/50 green-card-hover",
+          : "border border-white/10 bg-[#232324]/95 text-[#e5e5e7] green-card-hover",
         className
       )}
       {...props}
@@ -57,4 +57,3 @@ export function MessageBubble({
     </div>
   );
 }
-

@@ -33,13 +33,13 @@ const borrowingDebtModules = [
         type: "Card",
         props: {
           className:
-            "mb-5 overflow-hidden rounded-[2rem] border border-yellow-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            "mb-5 overflow-hidden rounded-[1rem] border border-blue-500  bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
         },
         children: [
           {
             type: "div",
             props: {
-              className: "bg-gradient-to-r from-green-500/15 via-yellow-500/10 to-red-500/10 p-6 pb-4"
+              className: "p-6 pb-4"
             },
             children: [
               {
@@ -48,7 +48,7 @@ const borrowingDebtModules = [
                 children: [
                   {
                     type: "CardTitle",
-                    props: { className: "text-3xl text-white font-bold tracking-tight" },
+                    props: { className: "text-3xl text-blue-500 font-bold tracking-tight" },
                     children: ["Good Debt vs Bad Debt"]
                   },
                   {
@@ -80,7 +80,7 @@ const borrowingDebtModules = [
                 type: "CardTitle",
                 props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "CheckCircle", props: { className: "h-6 w-6 text-green-400" } },
+                  { type: "CheckCircle", props: { className: "h-6 w-6 text-emerald-400" } },
                   "What is Good Debt?"
                 ]
               }
@@ -101,13 +101,13 @@ const borrowingDebtModules = [
   
               {
                 type: "ul",
-                props: { className: "space-y-3" },
+                props: { className: "space-y-3 pl-4" },
                 children: [
                   {
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-emerald-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -121,7 +121,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-emerald-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -135,7 +135,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-emerald-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -149,7 +149,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-emerald-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -165,17 +165,17 @@ const borrowingDebtModules = [
               {
                 type: "div",
                 props: {
-                  className: "mt-6 rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                  className: "mt-6 rounded-[1.5rem] border border-emerald-500/30 bg-emerald-500/10 p-5 shadow-[0_0_30px_rgba(16,185,129,0.12)]"
                 },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-400 mb-3" },
+                    props: { className: "font-semibold text-emerald-400 mb-3" },
                     children: ["Examples of Good Debt:"]
                   },
                   {
                     type: "ul",
-                    props: { className: "space-y-2 text-sm pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
+                    props: { className: "space-y-2 text-md pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                     children: [
                       {
                         type: "li",
@@ -231,7 +231,7 @@ const borrowingDebtModules = [
                 type: "CardTitle",
                 props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "XCircle", props: { className: "h-6 w-6 text-red-400" } },
+                  { type: "XCircle", props: { className: "h-6 w-6 text-orange-400" } },
                   "What is Bad Debt?"
                 ]
               }
@@ -252,13 +252,13 @@ const borrowingDebtModules = [
   
               {
                 type: "ul",
-                props: { className: "space-y-3" },
+                props: { className: "space-y-3 pl-4" },
                 children: [
                   {
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-orange-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -272,7 +272,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-orange-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -286,7 +286,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-orange-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -300,7 +300,7 @@ const borrowingDebtModules = [
                     type: "li",
                     props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-orange-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -316,17 +316,17 @@ const borrowingDebtModules = [
               {
                 type: "div",
                 props: {
-                  className: "mt-6 rounded-[1.5rem] border border-red-500/30 bg-red-500/10 p-5 shadow-[0_0_30px_rgba(239,68,68,0.10)]"
+                  className: "mt-6 rounded-[1.5rem] border border-orange-500/30 bg-orange-500/10 p-5 shadow-[0_0_30px_rgba(249,115,22,0.12)]"
                 },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-red-400 mb-3" },
+                    props: { className: "font-semibold text-orange-400 mb-3" },
                     children: ["Examples of Bad Debt:"]
                   },
                   {
                     type: "ul",
-                    props: { className: "space-y-2 text-sm pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
+                    props: { className: "space-y-2 text-md pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                     children: [
                       {
                         type: "li",
@@ -423,12 +423,12 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#9a9a9d] mb-2" },
+                        props: { className: "text-md text-[#9a9a9d] mb-2" },
                         children: ["Could be good if:"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
+                        props: { className: "text-md space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                         children: [
                           { type: "li", children: ["Needed for work/income"] },
                           { type: "li", children: ["Reliable, fuel-efficient vehicle"] },
@@ -449,12 +449,12 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#9a9a9d] mb-2" },
+                        props: { className: "text-md text-[#9a9a9d] mb-2" },
                         children: ["Could be good if:"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
+                        props: { className: "text-md space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                         children: [
                           { type: "li", children: ["Used for home improvements"] },
                           { type: "li", children: ["Consolidating high-interest debt"] },
@@ -519,7 +519,7 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#e5e5e7]" },
+                        props: { className: "text-md text-[#e5e5e7]" },
                         children: [
                           "Focus on high-interest debt like credit cards before investing."
                         ]
@@ -538,7 +538,7 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#e5e5e7]" },
+                        props: { className: "text-md text-[#e5e5e7]" },
                         children: [
                           "Even good debt should fit your budget and financial goals."
                         ]
@@ -557,7 +557,7 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-[#e5e5e7]" },
+                        props: { className: "text-md text-[#e5e5e7]" },
                         children: [
                           "Avoid taking on bad debt for unexpected expenses."
                         ]
@@ -655,76 +655,105 @@ const borrowingDebtModules = [
     description: "Everything you need to know about your student loan",
     categoryId: "borrowing-debt",
     topic: "student-loans",
-
+  
     visual: {
       icon: "GraduationCap",
       iconColor: "bg-green-600",
       readTime: 4
     },
-
+  
     uiTree: [
       /* ============================================================
       * HERO SECTION
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "bg-green-600 text-white mb-5" },
+        props: {
+          className:
+            "mb-5 overflow-hidden rounded-[2rem] border border-green-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
+        children: [
+          {
+            type: "div",
+            props: {
+              className: "bg-gradient-to-r from-green-500/15 via-emerald-500/10 to-green-500/20 p-6 pb-4"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                props: { className: "p-0" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-3xl flex items-center gap-3 text-white font-bold tracking-tight" },
+                    children: [
+                      { type: "GraduationCap", props: { className: "h-9 w-9 text-green-400" } },
+                      "Student Loans Explained"
+                    ]
+                  },
+                  {
+                    type: "CardDescription",
+                    props: { className: "text-[#d7d7db] text-lg" },
+                    children: ["Everything you need to know about your student loan"]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+  
+      /* ============================================================
+      * WHAT IS A STUDENT LOAN?
+      * ============================================================ */
+      {
+        type: "Card",
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "text-3xl flex items-center gap-3" },
-                children: [
-                  {type: "GraduationCap", props: {className: "h-9 w-9 text-white"}},
-                  "Student Loans Explained"
-                ]
-              },
-              {
-                type: "CardDescription",
-                props: { className: "text-white text-semibold text-lg" },
-                children: ["Everything you need to know about your student loan"]
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["What is a Student Loan?"]
               }
             ]
-          }
-        ]
-      },
-
-      /* ============================================================
-      * WHAT IS A STUDENT LOAN?
-      * ============================================================ */
-      {
-        type: "Card",
-        props: { className: "mb-5" },
-        children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["What is a Student Loan?"] }] },
-
+          },
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "A student loan helps you pay for university tuition fees and living costs. Unlike other loans, student loans have special terms that make them more manageable."
                 ]
               },
-
-              /* Tuition & Maintenance Loan Boxes */
+  
               {
                 type: "div",
-                props: { className: "grid md:grid-cols-2 gap-4" },
+                props: { className: "grid gap-4 md:grid-cols-2" },
                 children: [
                   {
                     type: "div",
-                    props: { className: "p-4 bg-green-50 rounded-lg border border-green-200" },
+                    props: {
+                      className: "p-5 bg-green-500/10 rounded-[1.5rem] border border-green-500/30 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                    },
                     children: [
-                      { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["Tuition Fee Loan"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold text-green-400 mb-3" },
+                        children: ["Tuition Fee Loan"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-md space-y-2 text-[#e5e5e7]" },
                         children: [
                           { type: "li", children: ["• Pays your university directly"] },
                           { type: "li", children: ["• Up to £9,250 per year in England"] },
@@ -734,15 +763,21 @@ const borrowingDebtModules = [
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 bg-green-50 rounded-lg border border-green-200" },
+                    props: {
+                      className: "p-5 bg-green-500/10 rounded-[1.5rem] border border-green-500/30 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
+                    },
                     children: [
-                      { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["Maintenance Loan"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold text-green-400 mb-3" },
+                        children: ["Maintenance Loan"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-md space-y-2 text-[#e5e5e7]" },
                         children: [
                           { type: "li", children: ["• Helps with living costs"] },
                           { type: "li", children: ["• Amount depends on family income"] },
@@ -758,57 +793,96 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * HOW MUCH CAN YOU BORROW?
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
-              { type: "CardTitle", props: { className: "flex items-center gap-2" }, children: [
-                {type: "Calculator", props: {className: "h-6 w-6 "}},
-                "How Much Can You Borrow?"
-              ] }
+              {
+                type: "CardTitle",
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: [
+                  { type: "Calculator", props: { className: "h-6 w-6 text-blue-400" } },
+                  "How Much Can You Borrow?"
+                ]
+              }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
-              /* Loan Amount Box */
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: {
+                  className: "p-5 border border-blue-500/25 bg-blue-500/10 rounded-[1.5rem]"
+                },
                 children: [
-                  { type: "h4", props: { className: "font-bold mb-2" }, children: ["Maintenance Loan Amounts (2024/25)"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-bold mb-4 text-white" },
+                    children: ["Maintenance Loan Amounts (2024/25)"]
+                  },
                   {
                     type: "div",
-                    props: { className: "grid grid-cols-3 gap-4 text-sm" },
+                    props: { className: "grid grid-cols-1 gap-4 text-md md:grid-cols-3" },
                     children: [
-                      { type: "div", children: [{ type: "span", props: { className: "font-bold" }, children: ["Living at home:"] }, { type: "p" }, "Up to £8,610"] },
-                      { type: "div", children: [{ type: "span", props: { className: "font-bold" }, children: ["Away from home:"] }, { type: "p" }, "Up to £10,227"] },
-                      { type: "div", children: [{ type: "span", props: { className: "font-bold" }, children: ["London students:"] }, { type: "p" }, "Up to £13,348"] }
+                      {
+                        type: "div",
+                        props: { className: "rounded-xl border border-white/10 bg-white/[0.03] p-4 text-[#e5e5e7]" },
+                        children: [
+                          { type: "span", props: { className: "font-bold text-blue-400" }, children: ["Living at home:"] },
+                          { type: "p" },
+                          "Up to £8,610"
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: { className: "rounded-xl border border-white/10 bg-white/[0.03] p-4 text-[#e5e5e7]" },
+                        children: [
+                          { type: "span", props: { className: "font-bold text-blue-400" }, children: ["Away from home:"] },
+                          { type: "p" },
+                          "Up to £10,227"
+                        ]
+                      },
+                      {
+                        type: "div",
+                        props: { className: "rounded-xl border border-white/10 bg-white/[0.03] p-4 text-[#e5e5e7]" },
+                        children: [
+                          { type: "span", props: { className: "font-bold text-blue-400" }, children: ["London students:"] },
+                          { type: "p" },
+                          "Up to £13,348"
+                        ]
+                      }
                     ]
                   }
                 ]
               },
-
-              /* Important Note (yellow box) */
+  
               {
                 type: "div",
                 props: {
-                  className: "p-4 bg-yellow-50 rounded-lg border border-yellow-200"
+                  className: "p-5 bg-yellow-500/10 rounded-[1.5rem] border border-yellow-500/30 shadow-[0_0_25px_rgba(234,179,8,0.10)]"
                 },
                 children: [
-                  { type: "h4", props: { className: "font-semibold text-yellow-700 mb-2" }, children: ["Important Note"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold text-yellow-400 mb-2" },
+                    children: ["Important Note"]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: [
                       "The maintenance loan amount depends on your family's household income. Higher family income = lower loan amount. But everyone gets at least the minimum amount (around £3,790)."
                     ]
@@ -819,34 +893,49 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * REPAYMENT SECTION
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["When Do You Pay It Back?"] }] },
-
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["When Do You Pay It Back?"]
+              }
+            ]
+          },
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
-              /* Repayment Threshold — green box */
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 border border-green-200 rounded-lg" },
+                props: { className: "p-5 bg-green-500/10 border border-green-500/30 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["Repayment Threshold"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold text-green-400 mb-2" },
+                    children: ["Repayment Threshold"]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm mb-2" },
+                    props: { className: "text-md mb-2 text-[#e5e5e7]" },
                     children: ["You only start repaying when you earn over £27,295 per year (£2,274 per month)."]
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: [
                       { type: "strong", children: ["Example:"] },
                       " If you earn £30,000 per year, you'll pay 9% of the amount above £27,295. That's 9% of £2,705 = £243 per year (£20 per month)."
@@ -854,21 +943,23 @@ const borrowingDebtModules = [
                   }
                 ]
               },
-
-              /* How it's collected + self-employed */
+  
               {
                 type: "div",
-                props: { className: "grid md:grid-cols-2 gap-4" },
+                props: { className: "grid gap-4 md:grid-cols-2" },
                 children: [
-                  /* How it's collected */
                   {
                     type: "div",
-                    props: { className: "p-4 border rounded-lg" },
+                    props: { className: "p-5 border border-blue-500/25 bg-blue-500/10 rounded-[1.5rem]" },
                     children: [
-                      { type: "h4", props: { className: "font-semibold mb-2" }, children: ["How It's Collected"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold mb-3 text-blue-400" },
+                        children: ["How It's Collected"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-md space-y-2 text-[#e5e5e7]" },
                         children: [
                           { type: "li", children: ["• Automatically through PAYE"] },
                           { type: "li", children: ["• Taken from your salary like tax"] },
@@ -877,16 +968,19 @@ const borrowingDebtModules = [
                       }
                     ]
                   },
-
-                  /* Self-employed */
+  
                   {
                     type: "div",
-                    props: { className: "p-4 border rounded-lg" },
+                    props: { className: "p-5 border border-violet-500/25 bg-violet-500/10 rounded-[1.5rem]" },
                     children: [
-                      { type: "h4", props: { className: "font-semibold mb-2" }, children: ["If You're Self-Employed"] },
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold mb-3 text-violet-400" },
+                        children: ["If You're Self-Employed"]
+                      },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1" },
+                        props: { className: "text-md space-y-2 text-[#e5e5e7]" },
                         children: [
                           { type: "li", children: ["• Pay through Self Assessment"] },
                           { type: "li", children: ["• Based on your annual profit"] },
@@ -901,70 +995,86 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * INTEREST & WRITE-OFF
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  {type: "AlertTriangle", props: {className: "h-7 w-7 text-yellow-700"}},
+                  { type: "AlertTriangle", props: { className: "h-7 w-7 text-yellow-400" } },
                   "Interest and Write-Off"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
-              /* Interest (yellow) */
               {
                 type: "div",
-                props: { className: "p-4 bg-yellow-50 border border-yellow-200 rounded-lg" },
+                props: { className: "p-5 bg-yellow-500/10 border border-yellow-500/30 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold text-yellow-700 mb-2" }, children: [
-                    "Interest Rates"
-                  ] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold text-yellow-400 mb-2" },
+                    children: ["Interest Rates"]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm mb-2" },
+                    props: { className: "text-md mb-2 text-[#e5e5e7]" },
                     children: [
                       "Interest is charged at the Retail Price Index (RPI) rate. This is usually around 1–7% depending on inflation."
                     ]
                   },
                   {
-                    type: "p",
-                    props: { className: "text-sm" },
+                    type: "div",
+                    props: { className: "text-md text-[#e5e5e7] space-y-2" },
                     children: [
-                      { type: "span", props: { className: "font-semibold" }, children: ["While studying:"] },
-                      " RPI + 3%",
-                      { type: "p" },
-                      { type: "span", props: { className: "font-semibold" }, children: ["After graduation:"] },
-                      " RPI to RPI + 3% (based on income)"
+                      {
+                        type: "p",
+                        children: [
+                          { type: "span", props: { className: "font-semibold text-yellow-400" }, children: ["While studying:"] },
+                          " RPI + 3%"
+                        ]
+                      },
+                      {
+                        type: "p",
+                        children: [
+                          { type: "span", props: { className: "font-semibold text-yellow-400" }, children: ["After graduation:"] },
+                          " RPI to RPI + 3% (based on income)"
+                        ]
+                      }
                     ]
                   }
                 ]
               },
-
-              /* Write-Off (green) */
+  
               {
                 type: "div",
-                props: { className: "p-4 bg-green-50 border border-green-200 rounded-lg" },
+                props: { className: "p-5 bg-green-500/10 border border-green-500/30 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["30-Year Write-Off"] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold text-green-400 mb-2" },
+                    children: ["30-Year Write-Off"]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md text-[#e5e5e7]" },
                     children: [
                       "Any remaining debt is completely written off 30 years after you first became eligible to repay. This means many people won't pay back the full amount."
                     ]
@@ -975,56 +1085,80 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * MYTHS DEBUNKED
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
-          { type: "CardHeader", children: [{ type: "CardTitle", children: ["Common Myths Debunked"] }] },
-
+          {
+            type: "CardHeader",
+            children: [
+              {
+                type: "CardTitle",
+                props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                children: ["Common Myths Debunked"]
+              }
+            ]
+          },
+  
           {
             type: "CardContent",
             props: { className: "space-y-4" },
             children: [
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: { className: "p-5 border border-red-500/20 bg-red-500/10 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["❌ \"It affects your credit score\""] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold mb-2 text-red-400" },
+                    children: ["❌ \"It affects your credit score\""]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm text-muted-foreground" },
+                    props: { className: "text-md text-[#d7d7db]" },
                     children: ["Student loans don't appear on your credit file and don't affect your credit score."]
                   }
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: { className: "p-5 border border-orange-500/20 bg-orange-500/10 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["❌ \"You must pay it all back\""] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold mb-2 text-orange-400" },
+                    children: ["❌ \"You must pay it all back\""]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm text-muted-foreground" },
+                    props: { className: "text-md text-[#d7d7db]" },
                     children: [
                       "Most people won't repay the full amount due to the 30-year write-off."
                     ]
                   }
                 ]
               },
-
+  
               {
                 type: "div",
-                props: { className: "p-4 border rounded-lg" },
+                props: { className: "p-5 border border-blue-500/20 bg-blue-500/10 rounded-[1.5rem]" },
                 children: [
-                  { type: "h4", props: { className: "font-semibold mb-2" }, children: ["❌ \"It's like normal debt\""] },
+                  {
+                    type: "h4",
+                    props: { className: "font-semibold mb-2 text-blue-400" },
+                    children: ["❌ \"It's like normal debt\""]
+                  },
                   {
                     type: "p",
-                    props: { className: "text-sm text-muted-foreground" },
+                    props: { className: "text-md text-[#d7d7db]" },
                     children: [
                       "It's more like a graduate tax – you only pay when you can afford it."
                     ]
@@ -1034,12 +1168,11 @@ const borrowingDebtModules = [
             ]
           }
         ]
-      },
-
+      }
     ],
-
+  
     /* ============================================================
-    * QUIZ (converted exactly from your React structure)
+    * QUIZ
     * ============================================================ */
     quiz: {
       passingScore: 0,
@@ -1116,7 +1249,7 @@ const borrowingDebtModules = [
         }
       ]
     },
-
+  
     relatedLessons: [
       {
         moduleId: "credit-cards-interest",
@@ -1215,7 +1348,7 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold text-green-700 mb-2" }, children: ["Grace Period Explained"] },
                   {
                     type: "ul",
-                    props: { className: "text-sm space-y-1 list-disc pl-4" },
+                    props: { className: "text-md space-y-1 list-disc pl-4" },
                     children: [
                       { type: "li", children: ["Most cards give you 21–25 days from your statement date"] },
                       { type: "li", children: ["Pay the full balance = no interest charges"] },
@@ -1234,7 +1367,7 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Example Timeline:"] },
                   {
                     type: "div",
-                    props: { className: "text-sm space-y-1" },
+                    props: { className: "text-md space-y-1" },
                     children: [
                       { type: "p", children: [{ type: "strong", children: ["March 1"] }, ": You buy something for £100"] },
                       { type: "p", children: [{ type: "strong", children: ["March 31"] }, ": Statement generated"] },
@@ -1288,7 +1421,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-red-700 mb-2" }, children: ["What Triggers Interest"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-sm space-y-1" },
+                        props: { className: "list-disc pl-4 text-md space-y-1" },
                         children: [
                           { type: "li", children: ["Paying less than the full balance"] },
                           { type: "li", children: ["Missing the payment due date"] },
@@ -1307,7 +1440,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-yellow-700 mb-2" }, children: ["Loss of Grace Period"] },
                       {
                         type: "ul",
-                        props: { className: "list-disc pl-4 text-sm space-y-1" },
+                        props: { className: "list-disc pl-4 text-md space-y-1" },
                         children: [
                           { type: "li", children: ["Once you carry a balance, new purchases earn interest immediately"] },
                           { type: "li", children: ["Grace period returns only after paying full balance"] },
@@ -1354,10 +1487,10 @@ const borrowingDebtModules = [
                 props: { className: "p-4 bg-primary/5 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold text-primary mb-2" }, children: ["APR vs Daily Rate"] },
-                  { type: "p", props: { className: "text-sm mb-2" }, children: ["Credit cards show APR, but interest is calculated daily."] },
+                  { type: "p", props: { className: "text-md mb-2" }, children: ["Credit cards show APR, but interest is calculated daily."] },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: ["Example: 24% APR = 24% ÷ 365 = 0.066% per day"]
                   }
                 ]
@@ -1371,7 +1504,7 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Real Example Calculation"] },
                   {
                     type: "div",
-                    props: { className: "text-sm space-y-1" },
+                    props: { className: "text-md space-y-1" },
                     children: [
                       { type: "p", children: [{ type: "strong", children: ["Balance"] }, ": £1,000"] },
                       { type: "p", children: [{ type: "strong", children: ["APR"] }, ": 24%"] },
@@ -1391,7 +1524,7 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold text-red-700 mb-2" }, children: ["The Minimum Payment Trap"] },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: [
                       "Paying only the minimum means most of your payment goes to interest, not reducing the debt. ",
                       "A £1,000 balance could take 15+ years to pay off!"
@@ -1429,7 +1562,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["✅ DO"] },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-2" },
+                        props: { className: "text-md space-y-2" },
                         children: [
                           {
                           type: "li",
@@ -1472,7 +1605,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-red-600" }, children: ["❌ DON'T"] },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-2" },
+                        props: { className: "text-md space-y-2" },
                         children: [
                           {
                           type: "li",
@@ -1531,7 +1664,7 @@ const borrowingDebtModules = [
                 props: { className: "p-4 bg-primary/5 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold text-primary mb-2" }, children: ["1. Stop using the card"] },
-                  { type: "p", props: { className: "text-sm" }, children: ["Avoid adding to the debt while paying it off."] }
+                  { type: "p", props: { className: "text-md" }, children: ["Avoid adding to the debt while paying it off."] }
                 ]
               },
               {
@@ -1539,7 +1672,7 @@ const borrowingDebtModules = [
                 props: { className: "p-4 bg-primary/5 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold text-primary mb-2" }, children: ["2. Pay more than the minimum"] },
-                  { type: "p", props: { className: "text-sm" }, children: ["Even an extra £20/month cuts years off repayment time."] }
+                  { type: "p", props: { className: "text-md" }, children: ["Even an extra £20/month cuts years off repayment time."] }
                 ]
               },
               {
@@ -1547,7 +1680,7 @@ const borrowingDebtModules = [
                 props: { className: "p-4 bg-primary/5 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold text-primary mb-2" }, children: ["3. Consider a 0% balance transfer"] },
-                  { type: "p", props: { className: "text-sm" }, children: ["Some cards offer 0% for 18–24 months."] }
+                  { type: "p", props: { className: "text-md" }, children: ["Some cards offer 0% for 18–24 months."] }
                 ]
               },
               {
@@ -1555,7 +1688,7 @@ const borrowingDebtModules = [
                 props: { className: "p-4 bg-primary/5 rounded-lg" },
                 children: [
                   { type: "h4", props: { className: "font-semibold text-primary mb-2" }, children: ["4. Create a debt payment plan"] },
-                  { type: "p", props: { className: "text-sm" }, children: ["Use avalanche or snowball method."] }
+                  { type: "p", props: { className: "text-md" }, children: ["Use avalanche or snowball method."] }
                 ]
               }
             ]
@@ -1706,7 +1839,7 @@ const borrowingDebtModules = [
 
                   {
                     type: "div",
-                    props: { className: "grid grid-cols-2 gap-4 text-sm" },
+                    props: { className: "grid grid-cols-2 gap-4 text-md" },
                     children: [
                       {
                         type: "div",
@@ -1734,7 +1867,7 @@ const borrowingDebtModules = [
                             type: "div",
                             props: {
                               className:
-                                "mt-2 text-sm bg-white p-2 rounded border"
+                                "mt-2 text-md bg-white p-2 rounded border"
                             },
                             children: [
                               {type: "p", children:["Credit Card A: £2,500",]},
@@ -1778,7 +1911,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-1" },
                     children: [
                       {type: "li", children: ["Remove credit cards from your wallet",]},
                       {type: "li", children: ["Delete saved payment methods from online stores",]},
@@ -1796,7 +1929,7 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Emergency Fund Dilemma"] },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: [
                       "While paying off debt, keep a small emergency fund (£500–£1,000). This prevents you from going deeper into debt when unexpected expenses arise."
                     ]
@@ -1848,7 +1981,7 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm list-disc pl-4 space-y-1" },
+                        props: { className: "text-md list-disc pl-4 space-y-1" },
                         children: [
                           {type: "li", children: ["Pay highest-interest debt first",]},
                           {type: "li", children: ["Saves the most money long-term",]},
@@ -1870,7 +2003,7 @@ const borrowingDebtModules = [
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm list-disc pl-4 space-y-1" },
+                        props: { className: "text-md list-disc pl-4 space-y-1" },
                         children: [
                           {type: "li", children: ["Pay smallest balance first",]},
                           {type: "li", children: ["Quick wins boost motivation",]},
@@ -1890,12 +2023,12 @@ const borrowingDebtModules = [
                   { type: "h4", props: { className: "font-semibold mb-2" }, children: ["Example Comparison"] },
                   {
                     type: "div",
-                    props: { className: "text-sm space-y-1" },
+                    props: { className: "text-md space-y-1" },
                     children: [
                       {type: "strong", children: ["Your debts:"]},
                       {
                         type: "div",
-                        props: { className: "text-sm space-y-1 list-disc pl-4" },
+                        props: { className: "text-md space-y-1 list-disc pl-4" },
                         children: [
                           {type: "li", children: ["Card A: £500 at 18% (Snowball target)",]},
                           {type: "li", children: ["Card B: £2,000 at 24% (Avalanche target)",]},
@@ -1943,7 +2076,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-green-600" }, children: ["💰 Increase Income"] },
                       {
                         type: "ul",
-                        props: { className: "text-sm list-disc pl-4 space-y-2" },
+                        props: { className: "text-md list-disc pl-4 space-y-2" },
                         children: [
                           {type: "li", children: ["Pick up extra shifts",]},
                           {type: "li", children: ["Freelance work",]},
@@ -1961,7 +2094,7 @@ const borrowingDebtModules = [
                       { type: "h4", props: { className: "font-semibold text-yellow-600" }, children: ["✂️ Cut Expenses"] },
                       {
                         type: "ul",
-                        props: { className: "text-sm list-disc pl-4 space-y-2" },
+                        props: { className: "text-md list-disc pl-4 space-y-2" },
                         children: [
                           {type: "li", children: ["Cancel unused subscriptions",]},
                           {type: "li", children: ["Cook more meals at home",]},
@@ -2012,7 +2145,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-1" },
                     children: [
                       {type: "li", children: ["0% interest for 18–24 months",]},
                       {type: "li", children: ["3–5% transfer fee",]},
@@ -2035,7 +2168,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-1" },
                     children: [
                       {type: "li", children: ["Fixed rate and payment",]},
                       {type: "li", children: ["Usually lower than credit cards",]},
@@ -2058,7 +2191,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: [
                       "Consolidation only works if you avoid creating new debt afterwards. Many people consolidate but then run up their cards again."
                     ]
@@ -2107,7 +2240,7 @@ const borrowingDebtModules = [
 
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-1" },
                     children: [
                       {type: "li", children: ["Temporary reduced payments",]},
                       {type: "li", children: ["Payment holidays",]},
@@ -2130,7 +2263,7 @@ const borrowingDebtModules = [
 
                   {
                     type: "ul",
-                    props: { className: "list-disc pl-4 text-sm space-y-1" },
+                    props: { className: "list-disc pl-4 text-md space-y-1" },
                     children: [
                       {type: "li", children: ["Citizens Advice Bureau",]},
                       {type: "li", children: ["StepChange Debt Charity",]},
@@ -2169,7 +2302,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: ["Save 3–6 months of expenses to avoid future debt."]
                   }
                 ]
@@ -2185,7 +2318,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: ["If using credit cards, pay the balance in full monthly."]
                   }
                 ]
@@ -2201,7 +2334,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: ["Spend less than you earn and save the difference."]
                   }
                 ]
@@ -2217,7 +2350,7 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "p",
-                    props: { className: "text-sm" },
+                    props: { className: "text-md" },
                     children: ["Save up for big expenses rather than financing them."]
                   }
                 ]
@@ -2313,7 +2446,7 @@ const borrowingDebtModules = [
 ];
 
 
-// Ensure passingScore matches number of quiz questions
+// Ensure passingScore matches number  of quiz questions
 function applyPassingScore(modules) {
   modules.forEach((mod) => {
     if (mod.quiz && Array.isArray(mod.quiz.questions)) {

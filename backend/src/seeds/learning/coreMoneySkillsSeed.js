@@ -1174,70 +1174,86 @@ const coreMoneySkillsModules = [
     categoryId: "core-money-skills",
     topic: "banking-101",
     createdBy: "system",
-
+  
     visual: {
       icon: "Building2",
       iconColor: "bg-blue-500",
       readTime: 2,
       badge: "Core Money Skills"
     },
-
+  
     difficultyLevel: "beginner",
     timeEstimate: 7,
     points: 120,
     order: 2,
-
+  
     /* --------------------------
         UI TREE
     -------------------------- */
     uiTree: [
       {
         type: "div",
-        props: { className: "grid gap-6" },
+        props: { className: "grid gap-6 text-white" },
         children: [
-
+  
           /* ------------------------------------------------
               CARD 1 — Types of Bank Accounts
           ------------------------------------------------ */
           {
             type: "Card",
+            props: {
+              className:
+                "rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
             children: [
               {
                 type: "CardHeader",
                 children: [
-                  { type: "CardTitle", children: ["Types of Bank Accounts"] },
-                  { type: "CardDescription", children: ["Understanding your options"] }
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["Types of Bank Accounts"]
+                  },
+                  {
+                    type: "CardDescription",
+                    props: { className: "text-base text-[#9a9a9d]" },
+                    children: ["Understanding your options"]
+                  }
                 ]
               },
-
+  
               {
                 type: "CardContent",
                 children: [
                   {
                     type: "div",
-                    props: { className: "grid md:grid-cols-2 gap-6" },
+                    props: { className: "grid gap-6 md:grid-cols-2" },
                     children: [
-
+  
                       /* CURRENT ACCOUNT */
                       {
                         type: "div",
                         props: {
-                          className: "bg-blue-50 p-6 rounded-lg border border-blue-200"
+                          className:
+                            "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-6 shadow-[0_0_30px_rgba(59,130,246,0.10)]"
                         },
                         children: [
                           {
                             type: "h3",
-                            props: { className: "text-xl font-bold text-blue-700 mb-3" },
+                            props: { className: "mb-3 text-xl font-bold text-blue-400" },
                             children: ["💳 Current Account"]
                           },
                           {
                             type: "p",
-                            props: { className: "text-blue-600 mb-3" },
+                            props: { className: "mb-4 text-[#d7d7db]" },
                             children: ["Your everyday spending account"]
                           },
                           {
                             type: "ul",
-                            props: { className: "space-y-2 text-sm pl-4", style: { "list-style": "disc" } },
+                            props: {
+                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
+                            },
                             children: [
                               { type: "li", children: ["Debit card for spending"] },
                               { type: "li", children: ["Direct debits for bills"] },
@@ -1248,27 +1264,31 @@ const coreMoneySkillsModules = [
                           }
                         ]
                       },
-
+  
                       /* SAVINGS ACCOUNT */
                       {
                         type: "div",
                         props: {
-                          className: "bg-green-50 p-6 rounded-lg border border-green-200"
+                          className:
+                            "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-6 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
                         },
                         children: [
                           {
                             type: "h3",
-                            props: { className: "text-xl font-bold text-green-700 mb-3" },
+                            props: { className: "mb-3 text-xl font-bold text-green-400" },
                             children: ["🏦 Savings Account"]
                           },
                           {
                             type: "p",
-                            props: { className: "text-green-600 mb-3" },
+                            props: { className: "mb-4 text-[#d7d7db]" },
                             children: ["Where you grow your money"]
                           },
                           {
                             type: "ul",
-                            props: { className: "space-y-2 text-sm pl-4", style: { "list-style": "disc" } },
+                            props: {
+                              className: "space-y-2 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
+                            },
                             children: [
                               { type: "li", children: ["Earns interest on your balance"] },
                               { type: "li", children: ["Limited withdrawals per month"] },
@@ -1285,69 +1305,85 @@ const coreMoneySkillsModules = [
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 2 — How Interest Works
           ------------------------------------------------ */
           {
             type: "Card",
+            props: {
+              className:
+                "overflow-hidden rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
             children: [
               {
-                type: "CardHeader",
+                type: "div",
+                props: {
+                  className: "bg-gradient-to-r from-green-500/15 via-blue-500/10 to-blue-500/15 p-6 pb-4"
+                },
                 children: [
                   {
-                    type: "CardTitle",
-                    props: { className: "flex items-center gap-2" },
+                    type: "CardHeader",
+                    props: { className: "p-0" },
                     children: [
-                      { type: "Percent", props: { className: "h-5 w-5" } },
-                      "How Interest Works"
+                      {
+                        type: "CardTitle",
+                        props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                        children: [
+                          { type: "Percent", props: { className: "h-6 w-6 text-blue-400" } },
+                          "How Interest Works"
+                        ]
+                      }
                     ]
                   }
                 ]
               },
-
+  
               {
                 type: "CardContent",
-                props: { className: "space-y-4" },
+                props: { className: "space-y-4 p-6 pt-4" },
                 children: [
-
                   {
                     type: "div",
-                    props: { className: "bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg" },
+                    props: {
+                      className: "rounded-[1.5rem] border border-white/10 bg-white/[0.03] p-6"
+                    },
                     children: [
                       {
                         type: "h3",
-                        props: { className: "text-xl font-bold mb-3" },
+                        props: { className: "mb-3 text-xl font-bold text-white" },
                         children: ["Interest = Free Money!"]
                       },
                       {
                         type: "p",
-                        props: { className: "mb-4" },
+                        props: { className: "mb-5 text-[#d7d7db]" },
                         children: [
                           "When you save money in a bank, they pay you interest as a \"thank you\" for letting them use your money."
                         ]
                       },
-
-                      /* SIMPLE & COMPOUND INTEREST BLOCKS */
+  
                       {
                         type: "div",
-                        props: { className: "grid md:grid-cols-2 gap-4" },
+                        props: { className: "grid gap-4 md:grid-cols-2" },
                         children: [
-
+  
                           /* SIMPLE */
                           {
                             type: "div",
+                            props: {
+                              className: "rounded-[1.25rem] border border-green-500/30 bg-green-500/10 p-5"
+                            },
                             children: [
                               {
                                 type: "h4",
-                                props: { className: "font-semibold text-green-600 mb-2" },
+                                props: { className: "mb-2 font-semibold text-green-400" },
                                 children: ["Simple Example:"]
                               },
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 text-sm pl-4",
-                                  style: { "list-style": "disc" }
+                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  style: { listStyleType: "disc" }
                                 },
                                 children: [
                                   { type: "li", children: ["You save: £1,000"] },
@@ -1358,21 +1394,24 @@ const coreMoneySkillsModules = [
                               }
                             ]
                           },
-
+  
                           /* COMPOUND */
                           {
                             type: "div",
+                            props: {
+                              className: "rounded-[1.25rem] border border-blue-500/30 bg-blue-500/10 p-5"
+                            },
                             children: [
                               {
                                 type: "h4",
-                                props: { className: "font-semibold text-blue-600 mb-2" },
+                                props: { className: "mb-2 font-semibold text-blue-400" },
                                 children: ["Compound Interest:"]
                               },
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 text-sm pl-4",
-                                  style: { "list-style": "disc" }
+                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  style: { listStyleType: "disc" }
                                 },
                                 children: [
                                   { type: "li", children: ["Year 2: £1,050 + 5% = £1,102.50"] },
@@ -1386,19 +1425,22 @@ const coreMoneySkillsModules = [
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 bg-green-50 rounded-lg" },
+                    props: {
+                      className:
+                        "rounded-[1.25rem] border border-green-500/30 bg-green-500/10 p-4 shadow-[0_0_25px_rgba(34,197,94,0.08)]"
+                    },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold mb-2" },
+                        props: { className: "mb-2 font-semibold text-green-400" },
                         children: ["💡 Pro Tip:"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm" },
+                        props: { className: "text-sm text-[#e5e5e7]" },
                         children: [
                           "Look for accounts with the highest AER (Annual Equivalent Rate) - that's the real interest rate you'll get!"
                         ]
@@ -1409,20 +1451,28 @@ const coreMoneySkillsModules = [
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 3 — Best Student Bank Accounts
           ------------------------------------------------ */
           {
             type: "Card",
+            props: {
+              className:
+                "rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
             children: [
               {
                 type: "CardHeader",
                 children: [
-                  { type: "CardTitle", children: ["Best Student Bank Accounts (2024)"] }
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["Best Student Bank Accounts (2024)"]
+                  }
                 ]
               },
-
+  
               {
                 type: "CardContent",
                 children: [
@@ -1430,22 +1480,24 @@ const coreMoneySkillsModules = [
                     type: "div",
                     props: { className: "grid gap-4" },
                     children: [
-
+  
                       /* SANTANDER */
                       {
                         type: "div",
-                        props: { className: "p-4 border rounded-lg" },
+                        props: {
+                          className: "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-5"
+                        },
                         children: [
                           {
                             type: "h4",
-                            props: { className: "font-semibold text-blue-600" },
+                            props: { className: "font-semibold text-blue-400" },
                             children: ["🏦 Santander Student Account"]
                           },
                           {
                             type: "ul",
                             props: {
-                              className: "text-sm mt-2 space-y-1 pl-4",
-                              style: { "list-style": "disc" }
+                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
                             },
                             children: [
                               { type: "li", children: ["FREE 4-year 16-25 Railcard (worth £120)"] },
@@ -1455,22 +1507,24 @@ const coreMoneySkillsModules = [
                           }
                         ]
                       },
-
+  
                       /* HSBC */
                       {
                         type: "div",
-                        props: { className: "p-4 border rounded-lg" },
+                        props: {
+                          className: "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5"
+                        },
                         children: [
                           {
                             type: "h4",
-                            props: { className: "font-semibold text-green-600" },
+                            props: { className: "font-semibold text-green-400" },
                             children: ["🏦 HSBC Student Account"]
                           },
                           {
                             type: "ul",
                             props: {
-                              className: "text-sm mt-2 space-y-1 pl-4",
-                              style: { "list-style": "disc" }
+                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
                             },
                             children: [
                               { type: "li", children: ["0% overdraft up to £3,000"] },
@@ -1480,22 +1534,24 @@ const coreMoneySkillsModules = [
                           }
                         ]
                       },
-
+  
                       /* NATWEST */
                       {
                         type: "div",
-                        props: { className: "p-4 border rounded-lg" },
+                        props: {
+                          className: "rounded-[1.5rem] border border-violet-500/30 bg-violet-500/10 p-5"
+                        },
                         children: [
                           {
                             type: "h4",
-                            props: { className: "font-semibold text-purple-600" },
+                            props: { className: "font-semibold text-violet-400" },
                             children: ["🏦 NatWest Student Account"]
                           },
                           {
                             type: "ul",
                             props: {
-                              className: "text-sm mt-2 space-y-1 pl-4",
-                              style: { "list-style": "disc" }
+                              className: "mt-3 space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
                             },
                             children: [
                               { type: "li", children: ["0% overdraft up to £2,000"] },
@@ -1511,53 +1567,74 @@ const coreMoneySkillsModules = [
               }
             ]
           },
-
+  
           /* ------------------------------------------------
               CARD 4 — Opening Your First Bank Account
           ------------------------------------------------ */
           {
             type: "Card",
+            props: {
+              className:
+                "overflow-hidden rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+            },
             children: [
               {
-                type: "CardHeader",
+                type: "div",
+                props: {
+                  className: "bg-gradient-to-r from-blue-500/15 via-white/[0.02] to-green-500/15 p-6 pb-4"
+                },
                 children: [
-                  { type: "CardTitle", children: ["Opening Your First Bank Account"] }
+                  {
+                    type: "CardHeader",
+                    props: { className: "p-0" },
+                    children: [
+                      {
+                        type: "CardTitle",
+                        props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                        children: ["Opening Your First Bank Account"]
+                      }
+                    ]
+                  }
                 ]
               },
-
+  
               {
                 type: "CardContent",
+                props: { className: "p-6 pt-4" },
                 children: [
                   {
                     type: "div",
-                    props: { className: "space-y-4" },
+                    props: { className: "space-y-5" },
                     children: [
-
+  
                       {
                         type: "h4",
-                        props: { className: "font-semibold" },
+                        props: { className: "text-lg font-semibold text-white" },
                         children: ["What You'll Need:"]
                       },
-
+  
                       {
                         type: "div",
-                        props: { className: "grid md:grid-cols-2 gap-4" },
+                        props: { className: "grid gap-4 md:grid-cols-2" },
                         children: [
-
+  
                           /* DOCUMENTS REQUIRED */
                           {
                             type: "div",
+                            props: {
+                              className: "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-5"
+                            },
                             children: [
                               {
                                 type: "h5",
-                                props: { className: "font-medium text-blue-600 mb-2" },
+                                props: { className: "mb-3 font-medium text-blue-400" },
                                 children: ["📋 Documents Required:"]
                               },
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 text-sm pl-4",
-                                  style: { "list-style": "disc" }
+                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  style: { listStyleType: "disc" }
                                 },
                                 children: [
                                   { type: "li", children: ["Photo ID (passport/driving license)"] },
@@ -1568,21 +1645,24 @@ const coreMoneySkillsModules = [
                               }
                             ]
                           },
-
+  
                           /* WHAT TO EXPECT */
                           {
                             type: "div",
+                            props: {
+                              className: "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5"
+                            },
                             children: [
                               {
                                 type: "h5",
-                                props: { className: "font-medium text-green-600 mb-2" },
+                                props: { className: "mb-3 font-medium text-green-400" },
                                 children: ["📝 What to Expect:"]
                               },
                               {
                                 type: "ul",
                                 props: {
-                                  className: "space-y-1 text-sm pl-4",
-                                  style: { "list-style": "disc" }
+                                  className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                                  style: { listStyleType: "disc" }
                                 },
                                 children: [
                                   { type: "li", children: ["30-60 minute appointment"] },
@@ -1595,22 +1675,25 @@ const coreMoneySkillsModules = [
                           }
                         ]
                       },
-
+  
                       /* TOP TIPS */
                       {
                         type: "div",
-                        props: { className: "bg-primary/10 p-4 rounded-lg" },
+                        props: {
+                          className:
+                            "rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_25px_rgba(34,197,94,0.08)]"
+                        },
                         children: [
                           {
                             type: "h4",
-                            props: { className: "font-semibold mb-2" },
+                            props: { className: "mb-3 font-semibold text-green-400" },
                             children: ["💡 Top Tips:"]
                           },
                           {
                             type: "ul",
                             props: {
-                              className: "space-y-1 text-sm pl-4",
-                              style: { "list-style": "disc" }
+                              className: "space-y-1 pl-4 text-sm text-[#e5e5e7]",
+                              style: { listStyleType: "disc" }
                             },
                             children: [
                               { type: "li", children: ["Shop around - different banks offer different perks"] },
@@ -1627,11 +1710,11 @@ const coreMoneySkillsModules = [
               }
             ]
           }
-
+  
         ]
       }
     ],
-
+  
     /* --------------------------
         QUIZ
     -------------------------- */
@@ -1652,7 +1735,7 @@ const coreMoneySkillsModules = [
         }
       ]
     },
-
+  
     /* --------------------------
         RELATED LESSONS
     -------------------------- */
@@ -1672,680 +1755,680 @@ const coreMoneySkillsModules = [
 
 
   // Understanding Credit Scores
-{
-  title: "Understanding Credit Scores",
-  description: "What they are and why they matter",
-  categoryId: "core-money-skills",
-  topic: "credit-scores",
-  createdBy: "system",
+  {
+    title: "Understanding Credit Scores",
+    description: "What they are and why they matter",
+    categoryId: "core-money-skills",
+    topic: "credit-scores",
+    createdBy: "system",
 
-  visual: {
-    icon: "CreditCard",
-    iconColor: "bg-blue-500",
-    readTime: 2,
-    badge: "Core Money Skills"
-  },
+    visual: {
+      icon: "CreditCard",
+      iconColor: "bg-blue-500",
+      readTime: 2,
+      badge: "Core Money Skills"
+    },
 
-  difficultyLevel: "beginner",
-  timeEstimate: 7,
-  points: 130,
-  order: 3,
+    difficultyLevel: "beginner",
+    timeEstimate: 7,
+    points: 130,
+    order: 3,
 
-  /* --------------------------
-      UI TREE
-  -------------------------- */
-  uiTree: [
-    {
-      type: "div",
-      props: { className: "grid gap-6" },
-      children: [
-
-        /* ------------------------------------------------
-            CARD 1 — What is a Credit Score?
-        ------------------------------------------------ */
-        {
-          type: "Card",
-          children: [
-            {
-              type: "CardHeader",
-              children: [
-                {
-                  type: "CardTitle",
-                  children: ["What is a Credit Score?"]
-                }
-              ]
-            },
-
-            {
-              type: "CardContent",
-              props: { className: "space-y-4" },
-              children: [
-                {
-                  type: "p",
-                  props: { className: "text-lg" },
-                  children: [
-                    "A credit score is like a financial report card that tells lenders how trustworthy you are with money. It's a number between 300-850 that affects your ability to borrow money."
-                  ]
-                },
-
-                {
-                  type: "div",
-                  props: {
-                    className:
-                      "bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 p-6 rounded-lg"
-                  },
-                  children: [
-                    {
-                      type: "h3",
-                      props: { className: "font-bold text-lg mb-4" },
-                      children: ["Credit Score Ranges:"]
-                    },
-
-                    {
-                      type: "div",
-                      props: { className: "grid grid-cols-5 gap-2 text-center text-sm" },
-                      children: [
-                        {
-                          type: "div",
-                          props: { className: "bg-red-100 p-3 rounded" },
-                          children: [
-                            {
-                              type: "div",
-                              props: { className: "font-bold text-red-700" },
-                              children: ["Poor"]
-                            },
-                            "300-579"
-                          ]
-                        },
-                        {
-                          type: "div",
-                          props: { className: "bg-orange-100 p-3 rounded" },
-                          children: [
-                            {
-                              type: "div",
-                              props: { className: "font-bold text-orange-700" },
-                              children: ["Fair"]
-                            },
-                            "580-669"
-                          ]
-                        },
-                        {
-                          type: "div",
-                          props: { className: "bg-yellow-100 p-3 rounded" },
-                          children: [
-                            {
-                              type: "div",
-                              props: { className: "font-bold text-yellow-700" },
-                              children: ["Good"]
-                            },
-                            "670-739"
-                          ]
-                        },
-                        {
-                          type: "div",
-                          props: { className: "bg-blue-100 p-3 rounded" },
-                          children: [
-                            {
-                              type: "div",
-                              props: { className: "font-bold text-blue-700" },
-                              children: ["Very Good"]
-                            },
-                            "740-799"
-                          ]
-                        },
-                        {
-                          type: "div",
-                          props: { className: "bg-green-100 p-3 rounded" },
-                          children: [
-                            {
-                              type: "div",
-                              props: { className: "font-bold text-green-700" },
-                              children: ["Excellent"]
-                            },
-                            "800-850"
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        /* ------------------------------------------------
-            CARD 2 — Why Credit Scores Matter
-        ------------------------------------------------ */
-        {
-          type: "Card",
-          children: [
-            {
-              type: "CardHeader",
-              children: [
-                {
-                  type: "CardTitle",
-                  props: { className: "flex items-center gap-2" },
-                  children: [
-                    { type: "TrendingUp", props: { className: "h-5 w-5" } },
-                    "Why Your Credit Score Matters"
-                  ]
-                }
-              ]
-            },
-
-            {
-              type: "CardContent",
-              children: [
-                {
-                  type: "div",
-                  props: { className: "grid md:grid-cols-2 gap-6" },
-                  children: [
-
-                    /* GOOD CREDIT */
-                    {
-                      type: "div",
-                      children: [
-                        {
-                          type: "h4",
-                          props: {
-                            className: "font-semibold text-green-600 mb-3"
-                          },
-                          children: ["✅ Good Credit Score Gets You:"]
-                        },
-                        {
-                          type: "ul",
-                          props: {
-                            className: "space-y-2 text-sm pl-4",
-                            style: { "list-style": "disc" }
-                          },
-                          children: [
-                            { type: "li", children: ["Lower interest rates on loans"] },
-                            { type: "li", children: ["Better credit card offers"] },
-                            { type: "li", children: ["Easier mortgage approval"] },
-                            { type: "li", children: ["Better mobile phone contracts"] },
-                            { type: "li", children: ["Easier car finance"] },
-                            { type: "li", children: ["Some rental agreements"] }
-                          ]
-                        }
-                      ]
-                    },
-
-                    /* BAD CREDIT */
-                    {
-                      type: "div",
-                      children: [
-                        {
-                          type: "h4",
-                          props: {
-                            className: "font-semibold text-red-600 mb-3"
-                          },
-                          children: ["❌ Poor Credit Score Means:"]
-                        },
-                        {
-                          type: "ul",
-                          props: {
-                            className: "space-y-2 text-sm pl-4",
-                            style: { "list-style": "disc" }
-                          },
-                          children: [
-                            { type: "li", children: ["Higher interest rates"] },
-                            { type: "li", children: ["Loan applications rejected"] },
-                            { type: "li", children: ["Larger deposits required"] },
-                            { type: "li", children: ["Limited credit card options"] },
-                            { type: "li", children: ["Difficulty renting properties"] },
-                            { type: "li", children: ["More expensive insurance"] }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                },
-
-                {
-                  type: "div",
-                  props: { className: "mt-6 p-4 bg-primary/10 rounded-lg" },
-                  children: [
-                    {
-                      type: "h4",
-                      props: { className: "font-semibold mb-2" },
-                      children: ["💰 Real Impact Example:"]
-                    },
-                    {
-                      type: "p",
-                      props: { className: "text-sm" },
-                      children: [
-                        "On a £200,000 mortgage: Excellent credit (1.5% rate) vs Poor credit (4.5% rate) = £3,000+ difference per year in payments!"
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        /* ------------------------------------------------
-            CARD 3 — How Credit Scores Are Calculated
-        ------------------------------------------------ */
-        {
-          type: "Card",
-          children: [
-            {
-              type: "CardHeader",
-              children: [
-                { type: "CardTitle", children: ["How Credit Scores Are Calculated"] }
-              ]
-            },
-
-            {
-              type: "CardContent",
-              props: { className: "space-y-4" },
-              children: [
-
-                {
-                  type: "div",
-                  props: { className: "grid gap-4" },
-                  children: [
-
-                    /* PAYMENT HISTORY */
-                    {
-                      type: "div",
-                      props: {
-                        className: "flex items-center gap-4 p-4 border rounded-lg"
-                      },
-                      children: [
-                        {
-                          type: "div",
-                          props: {
-                            className:
-                              "w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-700"
-                          },
-                          children: ["35%"]
-                        },
-                        {
-                          type: "div",
-                          children: [
-                            { type: "h4", props: { className: "font-semibold" }, children: ["Payment History"] },
-                            {
-                              type: "p",
-                              props: { className: "text-sm text-muted-foreground" },
-                              children: ["Do you pay bills on time?"]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-
-                    /* UTILIZATION */
-                    {
-                      type: "div",
-                      props: {
-                        className: "flex items-center gap-4 p-4 border rounded-lg"
-                      },
-                      children: [
-                        {
-                          type: "div",
-                          props: {
-                            className:
-                              "w-16 h-16 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700"
-                          },
-                          children: ["30%"]
-                        },
-                        {
-                          type: "div",
-                          children: [
-                            { type: "h4", props: { className: "font-semibold" }, children: ["Credit Utilization"] },
-                            {
-                              type: "p",
-                              props: { className: "text-sm text-muted-foreground" },
-                              children: ["How much of your available credit do you use?"]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-
-                    /* HISTORY LENGTH */
-                    {
-                      type: "div",
-                      props: {
-                        className: "flex items-center gap-4 p-4 border rounded-lg"
-                      },
-                      children: [
-                        {
-                          type: "div",
-                          props: {
-                            className:
-                              "w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-700"
-                          },
-                          children: ["15%"]
-                        },
-                        {
-                          type: "div",
-                          children: [
-                            { type: "h4", props: { className: "font-semibold" }, children: ["Length of Credit History"] },
-                            {
-                              type: "p",
-                              props: { className: "text-sm text-muted-foreground" },
-                              children: ["How long have you had credit accounts?"]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-
-                    /* CREDIT MIX */
-                    {
-                      type: "div",
-                      props: {
-                        className: "flex items-center gap-4 p-4 border rounded-lg"
-                      },
-                      children: [
-                        {
-                          type: "div",
-                          props: {
-                            className:
-                              "w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center font-bold text-orange-700"
-                          },
-                          children: ["10%"]
-                        },
-                        {
-                          type: "div",
-                          children: [
-                            { type: "h4", props: { className: "font-semibold" }, children: ["Credit Mix"] },
-                            {
-                              type: "p",
-                              props: { className: "text-sm text-muted-foreground" },
-                              children: ["Variety of credit types (cards, loans, etc.)"]
-                            }
-                          ]
-                        }
-                      ]
-                    },
-
-                    /* NEW CREDIT */
-                    {
-                      type: "div",
-                      props: {
-                        className: "flex items-center gap-4 p-4 border rounded-lg"
-                      },
-                      children: [
-                        {
-                          type: "div",
-                          props: {
-                            className:
-                              "w-16 h-16 bg-red-100 rounded-full flex items-center justify-center font-bold text-red-700"
-                          },
-                          children: ["10%"]
-                        },
-                        {
-                          type: "div",
-                          children: [
-                            { type: "h4", props: { className: "font-semibold" }, children: ["New Credit"] },
-                            {
-                              type: "p",
-                              props: { className: "text-sm text-muted-foreground" },
-                              children: ["Recent credit applications and new accounts"]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        /* ------------------------------------------------
-            CARD 4 — Building Credit as a Student
-        ------------------------------------------------ */
-        {
-          type: "Card",
-          children: [
-            {
-              type: "CardHeader",
-              children: [
-                { type: "CardTitle", children: ["Building Credit as a Student"] }
-              ]
-            },
-
-            {
-              type: "CardContent",
-              children: [
-                {
-                  type: "div",
-                  props: { className: "space-y-4" },
-                  children: [
-
-                    {
-                      type: "div",
-                      props: { className: "bg-yellow-50 border-l-4 border-yellow-400 p-4" },
-                      children: [
-                        {
-                          type: "h4",
-                          props: { className: "font-semibold text-yellow-700 mb-2" },
-                          children: ["⚠️ Starting From Zero"]
-                        },
-                        {
-                          type: "p",
-                          props: { className: "text-sm" },
-                          children: [
-                            "Most students have no credit history, which means \"no score\" rather than a bad score. This is normal!"
-                          ]
-                        }
-                      ]
-                    },
-
-                    {
-                      type: "div",
-                      props: { className: "grid md:grid-cols-2 gap-4" },
-                      children: [
-
-                        /* SMART WAYS */
-                        {
-                          type: "div",
-                          children: [
-                            {
-                              type: "h4",
-                              props: { className: "font-semibold text-green-600 mb-3" },
-                              children: ["✅ Smart Ways to Build Credit:"]
-                            },
-                            {
-                              type: "ul",
-                              props: {
-                                className: "space-y-2 text-sm pl-4",
-                                style: { "list-style": "disc" }
-                              },
-                              children: [
-                                { type: "li", children: ["Get a student credit card"] },
-                                { type: "li", children: ["Register to vote"] },
-                                { type: "li", children: ["Pay all bills on time"] },
-                                { type: "li", children: ["Keep credit utilization under 30%"] },
-                                { type: "li", children: ["Don't close old accounts"] },
-                                { type: "li", children: ["Check your score regularly (free)"] }
-                              ]
-                            }
-                          ]
-                        },
-
-                        /* CREDIT SCORE KILLERS */
-                        {
-                          type: "div",
-                          children: [
-                            {
-                              type: "h4",
-                              props: { className: "font-semibold text-red-600 mb-3" },
-                              children: ["❌ Credit Score Killers:"]
-                            },
-                            {
-                              type: "ul",
-                              props: {
-                                className: "space-y-2 text-sm pl-4",
-                                style: { "list-style": "disc" }
-                              },
-                              children: [
-                                { type: "li", children: ["Missing payments"] },
-                                { type: "li", children: ["Maxing out credit cards"] },
-                                { type: "li", children: ["Applying for lots of credit quickly"] },
-                                { type: "li", children: ["Only making minimum payments"] },
-                                { type: "li", children: ["Not checking for errors"] },
-                                { type: "li", children: ["Using payday loans"] }
-                              ]
-                            }
-                          ]
-                        }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-
-        /* ------------------------------------------------
-            CARD 5 — Free Credit Score Checks
-        ------------------------------------------------ */
-        {
-          type: "Card",
-          children: [
-            {
-              type: "CardHeader",
-              children: [
-                { type: "CardTitle", children: ["Check Your Credit Score (FREE!)"] }
-              ]
-            },
-
-            {
-              type: "CardContent",
-              children: [
-
-                {
-                  type: "div",
-                  props: { className: "grid md:grid-cols-3 gap-4" },
-                  children: [
-                    {
-                      type: "div",
-                      props: { className: "text-center p-4 bg-blue-50 rounded-lg" },
-                      children: [
-                        {
-                          type: "h4",
-                          props: { className: "font-semibold text-blue-700" },
-                          children: ["Experian"]
-                        },
-                        {
-                          type: "p",
-                          props: { className: "text-sm mt-1" },
-                          children: ["Most comprehensive, used by most lenders"]
-                        }
-                      ]
-                    },
-
-                    {
-                      type: "div",
-                      props: { className: "text-center p-4 bg-green-50 rounded-lg" },
-                      children: [
-                        {
-                          type: "h4",
-                          props: { className: "font-semibold text-green-700" },
-                          children: ["Equifax"]
-                        },
-                        {
-                          type: "p",
-                          props: { className: "text-sm mt-1" },
-                          children: ["Good for spotting errors, different scoring"]
-                        }
-                      ]
-                    },
-
-                    {
-                      type: "div",
-                      props: { className: "text-center p-4 bg-purple-50 rounded-lg" },
-                      children: [
-                        {
-                          type: "h4",
-                          props: { className: "font-semibold text-purple-700" },
-                          children: ["TransUnion"]
-                        },
-                        {
-                          type: "p",
-                          props: { className: "text-sm mt-1" },
-                          children: ["Growing in popularity, good insights"]
-                        }
-                      ]
-                    }
-                  ]
-                },
-
-                {
-                  type: "div",
-                  props: { className: "mt-4 p-4 bg-primary/10 rounded-lg" },
-                  children: [
-                    {
-                      type: "h4",
-                      props: { className: "font-semibold bg-primary/10 mb-2" },
-                      children: ["💡 Pro Tips:"]
-                    },
-
-                    {
-                      type: "ul",
-                      props: {
-                        className: "text-sm space-y-1 pl-4",
-                        style: { "list-style": "disc" }
-                      },
-                      children: [
-                        { type: "li", children: ["Check all three agencies (they can be different!)"] },
-                        { type: "li", children: ["Checking your own score doesn't hurt it"] },
-                        { type: "li", children: ["Look for errors and dispute them"] },
-                        { type: "li", children: ["Monitor changes monthly"] }
-                      ]
-                    }
-                  ]
-                }
-              ]
-            }
-          ]
-        }
-
-      ]
-    }
-  ],
-
-  /* --------------------------
-      QUIZ
-  -------------------------- */
-  quiz: {
-    passingScore: 1,
-    questions: [
+    /* --------------------------
+        UI TREE
+    -------------------------- */
+    uiTree: [
       {
-        question: "What is the range for credit scores in the UK?",
-        options: ["300-850", "0-1000", "1-10", "0-999"],
-        correctAnswer: 0,
-        explanation:
-          "The UK credit score range is typically between 300–850, where higher scores indicate better creditworthiness."
+        type: "div",
+        props: { className: "grid gap-6" },
+        children: [
+
+          /* ------------------------------------------------
+              CARD 1 — What is a Credit Score?
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  {
+                    type: "CardTitle",
+                    children: ["What is a Credit Score?"]
+                  }
+                ]
+              },
+
+              {
+                type: "CardContent",
+                props: { className: "space-y-4" },
+                children: [
+                  {
+                    type: "p",
+                    props: { className: "text-lg" },
+                    children: [
+                      "A credit score is like a financial report card that tells lenders how trustworthy you are with money. It's a number between 300-850 that affects your ability to borrow money."
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: {
+                      className:
+                        "bg-gradient-to-r from-red-50 via-yellow-50 to-green-50 p-6 rounded-lg"
+                    },
+                    children: [
+                      {
+                        type: "h3",
+                        props: { className: "font-bold text-lg mb-4" },
+                        children: ["Credit Score Ranges:"]
+                      },
+
+                      {
+                        type: "div",
+                        props: { className: "grid grid-cols-5 gap-2 text-center text-sm" },
+                        children: [
+                          {
+                            type: "div",
+                            props: { className: "bg-red-100 p-3 rounded" },
+                            children: [
+                              {
+                                type: "div",
+                                props: { className: "font-bold text-red-700" },
+                                children: ["Poor"]
+                              },
+                              "300-579"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "bg-orange-100 p-3 rounded" },
+                            children: [
+                              {
+                                type: "div",
+                                props: { className: "font-bold text-orange-700" },
+                                children: ["Fair"]
+                              },
+                              "580-669"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "bg-yellow-100 p-3 rounded" },
+                            children: [
+                              {
+                                type: "div",
+                                props: { className: "font-bold text-yellow-700" },
+                                children: ["Good"]
+                              },
+                              "670-739"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "bg-blue-100 p-3 rounded" },
+                            children: [
+                              {
+                                type: "div",
+                                props: { className: "font-bold text-blue-700" },
+                                children: ["Very Good"]
+                              },
+                              "740-799"
+                            ]
+                          },
+                          {
+                            type: "div",
+                            props: { className: "bg-green-100 p-3 rounded" },
+                            children: [
+                              {
+                                type: "div",
+                                props: { className: "font-bold text-green-700" },
+                                children: ["Excellent"]
+                              },
+                              "800-850"
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+          /* ------------------------------------------------
+              CARD 2 — Why Credit Scores Matter
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "flex items-center gap-2" },
+                    children: [
+                      { type: "TrendingUp", props: { className: "h-5 w-5" } },
+                      "Why Your Credit Score Matters"
+                    ]
+                  }
+                ]
+              },
+
+              {
+                type: "CardContent",
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "grid md:grid-cols-2 gap-6" },
+                    children: [
+
+                      /* GOOD CREDIT */
+                      {
+                        type: "div",
+                        children: [
+                          {
+                            type: "h4",
+                            props: {
+                              className: "font-semibold text-green-600 mb-3"
+                            },
+                            children: ["✅ Good Credit Score Gets You:"]
+                          },
+                          {
+                            type: "ul",
+                            props: {
+                              className: "space-y-2 text-sm pl-4",
+                              style: { "list-style": "disc" }
+                            },
+                            children: [
+                              { type: "li", children: ["Lower interest rates on loans"] },
+                              { type: "li", children: ["Better credit card offers"] },
+                              { type: "li", children: ["Easier mortgage approval"] },
+                              { type: "li", children: ["Better mobile phone contracts"] },
+                              { type: "li", children: ["Easier car finance"] },
+                              { type: "li", children: ["Some rental agreements"] }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* BAD CREDIT */
+                      {
+                        type: "div",
+                        children: [
+                          {
+                            type: "h4",
+                            props: {
+                              className: "font-semibold text-red-600 mb-3"
+                            },
+                            children: ["❌ Poor Credit Score Means:"]
+                          },
+                          {
+                            type: "ul",
+                            props: {
+                              className: "space-y-2 text-sm pl-4",
+                              style: { "list-style": "disc" }
+                            },
+                            children: [
+                              { type: "li", children: ["Higher interest rates"] },
+                              { type: "li", children: ["Loan applications rejected"] },
+                              { type: "li", children: ["Larger deposits required"] },
+                              { type: "li", children: ["Limited credit card options"] },
+                              { type: "li", children: ["Difficulty renting properties"] },
+                              { type: "li", children: ["More expensive insurance"] }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: { className: "mt-6 p-4 bg-primary/10 rounded-lg" },
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold mb-2" },
+                        children: ["💰 Real Impact Example:"]
+                      },
+                      {
+                        type: "p",
+                        props: { className: "text-sm" },
+                        children: [
+                          "On a £200,000 mortgage: Excellent credit (1.5% rate) vs Poor credit (4.5% rate) = £3,000+ difference per year in payments!"
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+          /* ------------------------------------------------
+              CARD 3 — How Credit Scores Are Calculated
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  { type: "CardTitle", children: ["How Credit Scores Are Calculated"] }
+                ]
+              },
+
+              {
+                type: "CardContent",
+                props: { className: "space-y-4" },
+                children: [
+
+                  {
+                    type: "div",
+                    props: { className: "grid gap-4" },
+                    children: [
+
+                      /* PAYMENT HISTORY */
+                      {
+                        type: "div",
+                        props: {
+                          className: "flex items-center gap-4 p-4 border rounded-lg"
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center font-bold text-blue-700"
+                            },
+                            children: ["35%"]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold" }, children: ["Payment History"] },
+                              {
+                                type: "p",
+                                props: { className: "text-sm text-muted-foreground" },
+                                children: ["Do you pay bills on time?"]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* UTILIZATION */
+                      {
+                        type: "div",
+                        props: {
+                          className: "flex items-center gap-4 p-4 border rounded-lg"
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "w-16 h-16 bg-green-100 rounded-full flex items-center justify-center font-bold text-green-700"
+                            },
+                            children: ["30%"]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold" }, children: ["Credit Utilization"] },
+                              {
+                                type: "p",
+                                props: { className: "text-sm text-muted-foreground" },
+                                children: ["How much of your available credit do you use?"]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* HISTORY LENGTH */
+                      {
+                        type: "div",
+                        props: {
+                          className: "flex items-center gap-4 p-4 border rounded-lg"
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "w-16 h-16 bg-purple-100 rounded-full flex items-center justify-center font-bold text-purple-700"
+                            },
+                            children: ["15%"]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold" }, children: ["Length of Credit History"] },
+                              {
+                                type: "p",
+                                props: { className: "text-sm text-muted-foreground" },
+                                children: ["How long have you had credit accounts?"]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* CREDIT MIX */
+                      {
+                        type: "div",
+                        props: {
+                          className: "flex items-center gap-4 p-4 border rounded-lg"
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center font-bold text-orange-700"
+                            },
+                            children: ["10%"]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold" }, children: ["Credit Mix"] },
+                              {
+                                type: "p",
+                                props: { className: "text-sm text-muted-foreground" },
+                                children: ["Variety of credit types (cards, loans, etc.)"]
+                              }
+                            ]
+                          }
+                        ]
+                      },
+
+                      /* NEW CREDIT */
+                      {
+                        type: "div",
+                        props: {
+                          className: "flex items-center gap-4 p-4 border rounded-lg"
+                        },
+                        children: [
+                          {
+                            type: "div",
+                            props: {
+                              className:
+                                "w-16 h-16 bg-red-100 rounded-full flex items-center justify-center font-bold text-red-700"
+                            },
+                            children: ["10%"]
+                          },
+                          {
+                            type: "div",
+                            children: [
+                              { type: "h4", props: { className: "font-semibold" }, children: ["New Credit"] },
+                              {
+                                type: "p",
+                                props: { className: "text-sm text-muted-foreground" },
+                                children: ["Recent credit applications and new accounts"]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+          /* ------------------------------------------------
+              CARD 4 — Building Credit as a Student
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  { type: "CardTitle", children: ["Building Credit as a Student"] }
+                ]
+              },
+
+              {
+                type: "CardContent",
+                children: [
+                  {
+                    type: "div",
+                    props: { className: "space-y-4" },
+                    children: [
+
+                      {
+                        type: "div",
+                        props: { className: "bg-yellow-50 border-l-4 border-yellow-400 p-4" },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-yellow-700 mb-2" },
+                            children: ["⚠️ Starting From Zero"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "text-sm" },
+                            children: [
+                              "Most students have no credit history, which means \"no score\" rather than a bad score. This is normal!"
+                            ]
+                          }
+                        ]
+                      },
+
+                      {
+                        type: "div",
+                        props: { className: "grid md:grid-cols-2 gap-4" },
+                        children: [
+
+                          /* SMART WAYS */
+                          {
+                            type: "div",
+                            children: [
+                              {
+                                type: "h4",
+                                props: { className: "font-semibold text-green-600 mb-3" },
+                                children: ["✅ Smart Ways to Build Credit:"]
+                              },
+                              {
+                                type: "ul",
+                                props: {
+                                  className: "space-y-2 text-sm pl-4",
+                                  style: { "list-style": "disc" }
+                                },
+                                children: [
+                                  { type: "li", children: ["Get a student credit card"] },
+                                  { type: "li", children: ["Register to vote"] },
+                                  { type: "li", children: ["Pay all bills on time"] },
+                                  { type: "li", children: ["Keep credit utilization under 30%"] },
+                                  { type: "li", children: ["Don't close old accounts"] },
+                                  { type: "li", children: ["Check your score regularly (free)"] }
+                                ]
+                              }
+                            ]
+                          },
+
+                          /* CREDIT SCORE KILLERS */
+                          {
+                            type: "div",
+                            children: [
+                              {
+                                type: "h4",
+                                props: { className: "font-semibold text-red-600 mb-3" },
+                                children: ["❌ Credit Score Killers:"]
+                              },
+                              {
+                                type: "ul",
+                                props: {
+                                  className: "space-y-2 text-sm pl-4",
+                                  style: { "list-style": "disc" }
+                                },
+                                children: [
+                                  { type: "li", children: ["Missing payments"] },
+                                  { type: "li", children: ["Maxing out credit cards"] },
+                                  { type: "li", children: ["Applying for lots of credit quickly"] },
+                                  { type: "li", children: ["Only making minimum payments"] },
+                                  { type: "li", children: ["Not checking for errors"] },
+                                  { type: "li", children: ["Using payday loans"] }
+                                ]
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          },
+
+          /* ------------------------------------------------
+              CARD 5 — Free Credit Score Checks
+          ------------------------------------------------ */
+          {
+            type: "Card",
+            children: [
+              {
+                type: "CardHeader",
+                children: [
+                  { type: "CardTitle", children: ["Check Your Credit Score (FREE!)"] }
+                ]
+              },
+
+              {
+                type: "CardContent",
+                children: [
+
+                  {
+                    type: "div",
+                    props: { className: "grid md:grid-cols-3 gap-4" },
+                    children: [
+                      {
+                        type: "div",
+                        props: { className: "text-center p-4 bg-blue-50 rounded-lg" },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-blue-700" },
+                            children: ["Experian"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "text-sm mt-1" },
+                            children: ["Most comprehensive, used by most lenders"]
+                          }
+                        ]
+                      },
+
+                      {
+                        type: "div",
+                        props: { className: "text-center p-4 bg-green-50 rounded-lg" },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-green-700" },
+                            children: ["Equifax"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "text-sm mt-1" },
+                            children: ["Good for spotting errors, different scoring"]
+                          }
+                        ]
+                      },
+
+                      {
+                        type: "div",
+                        props: { className: "text-center p-4 bg-purple-50 rounded-lg" },
+                        children: [
+                          {
+                            type: "h4",
+                            props: { className: "font-semibold text-purple-700" },
+                            children: ["TransUnion"]
+                          },
+                          {
+                            type: "p",
+                            props: { className: "text-sm mt-1" },
+                            children: ["Growing in popularity, good insights"]
+                          }
+                        ]
+                      }
+                    ]
+                  },
+
+                  {
+                    type: "div",
+                    props: { className: "mt-4 p-4 bg-primary/10 rounded-lg" },
+                    children: [
+                      {
+                        type: "h4",
+                        props: { className: "font-semibold bg-primary/10 mb-2" },
+                        children: ["💡 Pro Tips:"]
+                      },
+
+                      {
+                        type: "ul",
+                        props: {
+                          className: "text-sm space-y-1 pl-4",
+                          style: { "list-style": "disc" }
+                        },
+                        children: [
+                          { type: "li", children: ["Check all three agencies (they can be different!)"] },
+                          { type: "li", children: ["Checking your own score doesn't hurt it"] },
+                          { type: "li", children: ["Look for errors and dispute them"] },
+                          { type: "li", children: ["Monitor changes monthly"] }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+
+        ]
+      }
+    ],
+
+    /* --------------------------
+        QUIZ
+    -------------------------- */
+    quiz: {
+      passingScore: 1,
+      questions: [
+        {
+          question: "What is the range for credit scores in the UK?",
+          options: ["300-850", "0-1000", "1-10", "0-999"],
+          correctAnswer: 0,
+          explanation:
+            "The UK credit score range is typically between 300–850, where higher scores indicate better creditworthiness."
+        }
+      ]
+    },
+
+    /* --------------------------
+        RELATED LESSONS
+    -------------------------- */
+    relatedLessons: [
+      {
+        moduleId: "good-vs-bad-debt",
+        title: "Good vs Bad Debt",
+        relationship: "next-step"
+      },
+      {
+        moduleId: "credit-cards-safely",
+        title: "Using Credit Cards Safely",
+        relationship: "related"
       }
     ]
-  },
-
-  /* --------------------------
-      RELATED LESSONS
-  -------------------------- */
-  relatedLessons: [
-    {
-      moduleId: "good-vs-bad-debt",
-      title: "Good vs Bad Debt",
-      relationship: "next-step"
-    },
-    {
-      moduleId: "credit-cards-safely",
-      title: "Using Credit Cards Safely",
-      relationship: "related"
-    }
-  ]
-}
+  }
 
 
 ];

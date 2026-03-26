@@ -18,81 +18,96 @@ const borrowingDebtModules = [
     description: "Not all debt is created equal - learn the crucial difference",
     categoryId: "borrowing-debt",
     topic: "good-vs-bad-debt",
-
+  
     visual: {
       icon: "AlertTriangle",
       iconColor: "bg-yellow-500",
       readTime: 3
     },
-
+  
     uiTree: [
       /* ============================================================
       * HERO CARD
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "bg-gradient-to-r from-green-600 to-green-500 text-primary-foreground mb-5" },
+        props: {
+          className:
+            "mb-5 overflow-hidden rounded-[2rem] border border-yellow-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
-            type: "CardHeader",
+            type: "div",
+            props: {
+              className: "bg-gradient-to-r from-green-500/15 via-yellow-500/10 to-red-500/10 p-6 pb-4"
+            },
             children: [
               {
-                type: "CardTitle",
-                props: { className: "text-3xl text-white" },
-                children: ["Good Debt vs Bad Debt"]
-              },
-              {
-                type: "CardDescription",
-                props: { className: "text-white text-lg" },
-                children: ["Not all debt is created equal - learn the crucial difference"]
+                type: "CardHeader",
+                props: { className: "p-0" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-3xl text-white font-bold tracking-tight" },
+                    children: ["Good Debt vs Bad Debt"]
+                  },
+                  {
+                    type: "CardDescription",
+                    props: { className: "text-[#d7d7db] text-lg" },
+                    children: ["Not all debt is created equal - learn the crucial difference"]
+                  }
+                ]
               }
             ]
           }
         ]
       },
-
+  
       /* ============================================================
       * WHAT IS GOOD DEBT?
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "CheckCircle", props: { className: "h-6 w-6 text-green-600" } },
+                  { type: "CheckCircle", props: { className: "h-6 w-6 text-green-400" } },
                   "What is Good Debt?"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "Good debt helps you build wealth or improve your earning potential over time. It typically has:"
                 ]
               },
-
+  
               {
                 type: "ul",
-                props: { className: "space-y-2" },
+                props: { className: "space-y-3" },
                 children: [
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-600 mt-0.5" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -104,9 +119,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-600 mt-0.5" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -118,9 +133,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-600 mt-0.5" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -132,9 +147,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-600 mt-0.5" } },
+                      { type: "CheckCircle", props: { className: "h-5 w-5 text-green-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -146,21 +161,21 @@ const borrowingDebtModules = [
                   }
                 ]
               },
-
+  
               {
                 type: "div",
                 props: {
-                  className: "mt-6 p-4 bg-green-50 rounded-lg border border-green-200"
+                  className: "mt-6 rounded-[1.5rem] border border-green-500/30 bg-green-500/10 p-5 shadow-[0_0_30px_rgba(34,197,94,0.10)]"
                 },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-green-700 mb-2" },
+                    props: { className: "font-semibold text-green-400 mb-3" },
                     children: ["Examples of Good Debt:"]
                   },
                   {
                     type: "ul",
-                    props: { className: "space-y-1 text-sm list-disc pl-4" },
+                    props: { className: "space-y-2 text-sm pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                     children: [
                       {
                         type: "li",
@@ -198,49 +213,52 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * WHAT IS BAD DEBT?
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "XCircle", props: { className: "h-6 w-6 text-red-600" } },
+                  { type: "XCircle", props: { className: "h-6 w-6 text-red-400" } },
                   "What is Bad Debt?"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "Bad debt costs you money without building wealth. It typically has:"
                 ]
               },
-
+  
               {
                 type: "ul",
-                props: { className: "space-y-2" },
+                props: { className: "space-y-3" },
                 children: [
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-600 mt-0.5" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -252,9 +270,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-600 mt-0.5" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -266,9 +284,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-600 mt-0.5" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -280,9 +298,9 @@ const borrowingDebtModules = [
                   },
                   {
                     type: "li",
-                    props: { className: "flex items-start gap-2" },
+                    props: { className: "flex items-start gap-3 text-[#e5e5e7]" },
                     children: [
-                      { type: "XCircle", props: { className: "h-5 w-5 text-red-600 mt-0.5" } },
+                      { type: "XCircle", props: { className: "h-5 w-5 text-red-400 mt-0.5 shrink-0" } },
                       {
                         type: "span",
                         children: [
@@ -294,21 +312,21 @@ const borrowingDebtModules = [
                   }
                 ]
               },
-
+  
               {
                 type: "div",
                 props: {
-                  className: "mt-6 p-4 bg-red-50 rounded-lg border border-red-200"
+                  className: "mt-6 rounded-[1.5rem] border border-red-500/30 bg-red-500/10 p-5 shadow-[0_0_30px_rgba(239,68,68,0.10)]"
                 },
                 children: [
                   {
                     type: "h4",
-                    props: { className: "font-semibold text-red-700 mb-2" },
+                    props: { className: "font-semibold text-red-400 mb-3" },
                     children: ["Examples of Bad Debt:"]
                   },
                   {
                     type: "ul",
-                    props: { className: "space-y-1 text-sm list-disc pl-4" },
+                    props: { className: "space-y-2 text-sm pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                     children: [
                       {
                         type: "li",
@@ -353,61 +371,64 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * THE GRAY AREA
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 rounded-[2rem] border border-white/10 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
             type: "CardHeader",
             children: [
               {
                 type: "CardTitle",
-                props: { className: "flex items-center gap-2" },
+                props: { className: "flex items-center gap-2 text-2xl font-bold tracking-tight text-white md:text-3xl" },
                 children: [
-                  { type: "AlertTriangle", props: { className: "h-6 w-6 text-yellow-600" } },
+                  { type: "AlertTriangle", props: { className: "h-6 w-6 text-yellow-400" } },
                   "The Gray Area"
                 ]
               }
             ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-5" },
             children: [
               {
                 type: "p",
-                props: { className: "text-lg" },
+                props: { className: "text-lg text-[#d7d7db]" },
                 children: [
                   "Some debt falls between good and bad - it depends on your situation:"
                 ]
               },
-
+  
               {
                 type: "div",
                 props: { className: "grid md:grid-cols-2 gap-4" },
                 children: [
                   {
                     type: "div",
-                    props: { className: "p-4 border rounded-lg" },
+                    props: { className: "rounded-[1.5rem] border border-yellow-500/30 bg-yellow-500/10 p-5" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold mb-2" },
+                        props: { className: "font-semibold text-yellow-400 mb-2" },
                         children: ["Car Loans"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-muted-foreground mb-2" },
+                        props: { className: "text-sm text-[#9a9a9d] mb-2" },
                         children: ["Could be good if:"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1 list-disc pl-4" },
+                        props: { className: "text-sm space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                         children: [
                           { type: "li", children: ["Needed for work/income"] },
                           { type: "li", children: ["Reliable, fuel-efficient vehicle"] },
@@ -416,24 +437,24 @@ const borrowingDebtModules = [
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 border rounded-lg" },
+                    props: { className: "rounded-[1.5rem] border border-blue-500/30 bg-blue-500/10 p-5" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold mb-2" },
+                        props: { className: "font-semibold text-blue-400 mb-2" },
                         children: ["Home Equity Loans"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm text-muted-foreground mb-2" },
+                        props: { className: "text-sm text-[#9a9a9d] mb-2" },
                         children: ["Could be good if:"]
                       },
                       {
                         type: "ul",
-                        props: { className: "text-sm space-y-1 list-disc pl-4" },
+                        props: { className: "text-sm space-y-1 pl-4 text-[#e5e5e7]", style: { listStyleType: "disc" } },
                         children: [
                           { type: "li", children: ["Used for home improvements"] },
                           { type: "li", children: ["Consolidating high-interest debt"] },
@@ -448,22 +469,40 @@ const borrowingDebtModules = [
           }
         ]
       },
-
+  
       /* ============================================================
       * YOUR DEBT STRATEGY
       * ============================================================ */
       {
         type: "Card",
-        props: { className: "mb-5" },
+        props: {
+          className:
+            "mb-5 overflow-hidden rounded-[2rem] border border-yellow-500/20 bg-[#232324] text-white shadow-[0_20px_60px_rgba(0,0,0,0.28)]"
+        },
         children: [
           {
-            type: "CardHeader",
-            children: [{ type: "CardTitle", children: ["Your Debt Strategy"] }]
+            type: "div",
+            props: {
+              className: "bg-gradient-to-r from-yellow-500/12 via-white/[0.02] to-green-500/10 p-6 pb-4"
+            },
+            children: [
+              {
+                type: "CardHeader",
+                props: { className: "p-0" },
+                children: [
+                  {
+                    type: "CardTitle",
+                    props: { className: "text-2xl font-bold tracking-tight text-white md:text-3xl" },
+                    children: ["Your Debt Strategy"]
+                  }
+                ]
+              }
+            ]
           },
-
+  
           {
             type: "CardContent",
-            props: { className: "space-y-4" },
+            props: { className: "space-y-4 p-6 pt-4" },
             children: [
               {
                 type: "div",
@@ -471,54 +510,54 @@ const borrowingDebtModules = [
                 children: [
                   {
                     type: "div",
-                    props: { className: "p-4 bg-primary/5 rounded-lg" },
+                    props: { className: "p-4 rounded-[1.25rem] border border-red-500/25 bg-red-500/10" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold text-primary mb-2" },
+                        props: { className: "font-semibold text-red-400 mb-2" },
                         children: ["1. Pay off bad debt first"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm" },
+                        props: { className: "text-sm text-[#e5e5e7]" },
                         children: [
                           "Focus on high-interest debt like credit cards before investing."
                         ]
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 bg-primary/5 rounded-lg" },
+                    props: { className: "p-4 rounded-[1.25rem] border border-green-500/25 bg-green-500/10" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold text-primary mb-2" },
+                        props: { className: "font-semibold text-green-400 mb-2" },
                         children: ["2. Consider good debt carefully"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm" },
+                        props: { className: "text-sm text-[#e5e5e7]" },
                         children: [
                           "Even good debt should fit your budget and financial goals."
                         ]
                       }
                     ]
                   },
-
+  
                   {
                     type: "div",
-                    props: { className: "p-4 bg-primary/5 rounded-lg" },
+                    props: { className: "p-4 rounded-[1.25rem] border border-blue-500/25 bg-blue-500/10" },
                     children: [
                       {
                         type: "h4",
-                        props: { className: "font-semibold text-primary mb-2" },
+                        props: { className: "font-semibold text-blue-400 mb-2" },
                         children: ["3. Have an emergency fund"]
                       },
                       {
                         type: "p",
-                        props: { className: "text-sm" },
+                        props: { className: "text-sm text-[#e5e5e7]" },
                         children: [
                           "Avoid taking on bad debt for unexpected expenses."
                         ]
@@ -530,14 +569,14 @@ const borrowingDebtModules = [
             ]
           }
         ]
-      },
+      }
     ],
-
+  
     /* ============================================================
-    * QUIZ (from quiz[] in the React component)
+    * QUIZ
     * ============================================================ */
     quiz: {
-      passingScore: 0, 
+      passingScore: 0,
       questions: [
         {
           question: "Which of these is typically considered 'good debt'?",
@@ -591,7 +630,7 @@ const borrowingDebtModules = [
         }
       ]
     },
-
+  
     relatedLessons: [
       {
         moduleId: "student-loans",

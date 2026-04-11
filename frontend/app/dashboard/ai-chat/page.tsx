@@ -166,7 +166,7 @@ export default function ValutoAI() {
               <ArrowLeft className="h-5 w-5" />
             </motion.button>
           ) : null}
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 mt-11">
             <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10">
               <Sparkles className="h-4 w-4 text-emerald-300" />
             </div>

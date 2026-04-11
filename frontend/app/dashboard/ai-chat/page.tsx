@@ -1,214 +1,319 @@
 "use client";
 
-import { useState } from 'react';
-import { useAuth } from '@clerk/nextjs';
-import { LightBulbIcon } from '@/components/icons';
-import { Message, MessageContent, MessageBubble } from '@/components/ai/message';
-import { Response } from '@/components/ai/response';
-import { Conversation, ConversationContent } from '@/components/ai/conversation';
-import { PromptInput } from '@/components/ai/prompt-input';
-import { Loader } from '@/components/ai/loader';
-import { Suggestions } from '@/components/ai/suggestions';
+import { useState, useRef, useEffect, useCallback } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { useAuth } from "@clerk/nextjs";
+import {
+  Send,
+  ArrowLeft,
+  Sparkles,
+  Calculator,
+  TrendingUp,
+  FileText,
+  Newspaper,
+} from "lucide-react";
+import ParticleField from "@/components/ValutoAI/ParticleField";
+import AIOrb from "@/components/ValutoAI/AIOrb";
+import ChatMessage from "@/components/ValutoAI/ChatMessage";
+import TypingIndicator from "@/components/ValutoAI/TypingIndicator";
+import SuggestionChip from "@/components/ValutoAI/SuggestionChip";
 
-interface ChatMessage {
-  id: string;
-  text: string;
-  role: 'user' | 'assistant';
-  timestamp: Date;
-}
+type Message = { role: "user" | "assistant"; content: string };
 
-export default function AIChatPage() {
+const SUGGESTIONS = [
+  { icon: "💷", text: "Break down a UK payslip for me." },
+  { icon: "📊", text: "How much tax would I pay on £28,000?" },
+  { icon: "📈", text: "Explain compound interest simply." },
+  { icon: "💳", text: "Is Buy Now Pay Later a bad idea?" },
+  { icon: "🏦", text: "What's a good savings rate at 18?" },
+];
+
+const MODES = [
+  { icon: <Calculator className="h-4 w-4" />, label: "Tax Calc", prefix: "Calculate: " },
+  { icon: <TrendingUp className="h-4 w-4" />, label: "Investing", prefix: "Explain this investment scenario: " },
+  { icon: <FileText className="h-4 w-4" />, label: "Payslip", prefix: "Break down this payslip: " },
+  { icon: <Newspaper className="h-4 w-4" />, label: "News", prefix: "Explain this headline for young people: " },
+];
+
+export default function ValutoAI() {
   const { getToken } = useAuth();
-  const [messages, setMessages] = useState<ChatMessage[]>([
-    {
-      id: '1',
-      text: "Hi there! I'm **Valuto AI**, your friendly financial assistant! 💰✨\n\nI'm here to help you with any questions about:\n- 💵 Budgeting and money management\n- 📈 Investing and stocks\n- 💳 Debt and credit\n- 🏦 Saving and emergency funds\n- 🎯 Financial planning\n\nWhat would you like to know?",
-      role: 'assistant',
-      timestamp: new Date()
-    }
-  ]);
-  const [inputText, setInputText] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [showSuggestions, setShowSuggestions] = useState(true);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [isTyping, setIsTyping] = useState(false);
+  const [chatStarted, setChatStarted] = useState(false);
+  const [activeMode, setActiveMode] = useState<string | null>(null);
+  const chatEndRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const suggestions = [
-    "How do I start budgeting?",
-    "Tips for investing as a beginner",
-    "How to build an emergency fund?",
-    "What is compound interest?",
-  ];
+  const scrollToBottom = useCallback(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, []);
 
-  const handleSendMessage = async (text: string = inputText) => {
-    if (!text.trim() || isLoading) return;
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages, isTyping, scrollToBottom]);
 
-    const userMessage: ChatMessage = {
-      id: Date.now().toString(),
-      text: text,
-      role: 'user',
-      timestamp: new Date()
-    };
+  const handleSend = useCallback(
+    async (text?: string) => {
+      const msg = text || input.trim();
+      if (!msg || isTyping) return;
 
-    setMessages(prev => [...prev, userMessage]);
-    setInputText('');
-    setIsLoading(true);
-    setShowSuggestions(false);
+      const fullMsg = activeMode
+        ? `${MODES.find((mode) => mode.label === activeMode)?.prefix || ""}${msg}`
+        : msg;
 
-    try {
-      const token = await getToken({ template: 'default' });
-      if (!token) {
-        throw new Error('Please sign in to use Valuto AI.');
+      const nextHistory = [...messages, { role: "user" as const, content: msg }];
+
+      setChatStarted(true);
+      setInput("");
+      setActiveMode(null);
+      setMessages((previous) => [...previous, { role: "user", content: msg }]);
+      setIsTyping(true);
+
+      try {
+        const token = await getToken({ template: "default" });
+        if (!token) {
+          throw new Error("Please sign in to use Valuto AI.");
+        }
+
+        const apiBaseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
+        const history = nextHistory.slice(-10).map((message) => ({
+          role: message.role,
+          text: message.content,
+        }));
+
+        const response = await fetch(`${apiBaseUrl}/api/ai/chat`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            message: fullMsg,
+            history,
+          }),
+        });
+
+        const data = await response.json();
+        if (!response.ok || !data?.success) {
+          const errorMessage =
+            data?.message ||
+            (response.status === 429
+              ? "Daily limit reached. Try again tomorrow."
+              : "Something went wrong. Please try again.");
+          throw new Error(errorMessage);
+        }
+
+        const responseText = data.data?.message || "Sorry, I could not generate a response.";
+        setMessages((previous) => [...previous, { role: "assistant", content: responseText }]);
+      } catch (error: any) {
+        setMessages((previous) => [
+          ...previous,
+          {
+            role: "assistant",
+            content: error?.message || "Unable to reach Valuto AI right now.",
+          },
+        ]);
+      } finally {
+        setIsTyping(false);
       }
-      const apiBaseUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:5000';
-      const history = messages.slice(-10).map((message) => ({
-        role: message.role,
-        text: message.text,
-      }));
+    },
+    [activeMode, getToken, input, isTyping, messages]
+  );
 
-      const response = await fetch(`${apiBaseUrl}/api/ai/chat`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({
-          message: text,
-          history,
-        }),
-      });
-
-      const data = await response.json();
-      if (!response.ok || !data?.success) {
-        const errorMessage =
-          data?.message ||
-          (response.status === 429
-            ? 'Daily limit reached. Try again tomorrow.'
-            : 'Something went wrong. Please try again.');
-        throw new Error(errorMessage);
-      }
-
-      const aiMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        text: data.data?.message || 'Sorry, I could not generate a response.',
-        role: 'assistant',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, aiMessage]);
-    } catch (error: any) {
-      const aiMessage: ChatMessage = {
-        id: (Date.now() + 1).toString(),
-        text: error?.message || 'Unable to reach Valuto AI right now.',
-        role: 'assistant',
-        timestamp: new Date(),
-      };
-      setMessages(prev => [...prev, aiMessage]);
-    } finally {
-      setIsLoading(false);
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter" && !event.shiftKey) {
+      event.preventDefault();
+      handleSend();
     }
-  };
-
-  const handleSuggestionSelect = (suggestion: string) => {
-    handleSendMessage(suggestion);
   };
 
   return (
-    <div className="relative flex min-h-screen flex-col overflow-hidden animate-gradient text-white">
-      {/* Decorative elements - matching landing page */}
-      <div className="absolute right-0 top-0 h-72 w-72 -translate-y-12 translate-x-12 rounded-full bg-valuto-green-400/10 blur-3xl animate-blob"></div>
-      <div className="absolute left-0 top-1/3 h-96 w-96 -translate-x-12 translate-y-12 rounded-full bg-emerald-300/10 blur-3xl animate-blob animation-delay-2000"></div>
-      <div className="absolute bottom-0 right-1/4 h-80 w-80 translate-y-12 rounded-full bg-cyan-300/5 blur-3xl animate-blob animation-delay-4000"></div>
+    <div className="relative flex min-h-screen flex-col overflow-hidden bg-[#07110d] text-white">
+      <ParticleField />
 
-      {/* Header */}
-      <div className="relative z-10 flex-shrink-0 border-b border-white/10 bg-[#1b1b1d]/90 backdrop-blur-xl shadow-[0_12px_40px_rgba(0,0,0,0.28)]">
-        <div className="max-w-4xl mx-auto px-6 py-3">
-          <div className="flex items-center space-x-4">
-            <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-gradient-to-br from-valuto-green-500 to-valuto-green-600 shadow-lg green-glow">
-              <LightBulbIcon className="w-5 h-5 text-white" />
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 50% 30%, hsla(155,80%,45%,0.04) 0%, transparent 60%)",
+        }}
+      />
+      <div
+        className="fixed inset-0 pointer-events-none"
+        style={{
+          background: "radial-gradient(ellipse at 80% 80%, hsla(43,90%,55%,0.02) 0%, transparent 50%)",
+        }}
+      />
+
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="relative z-10 flex items-center justify-between border-b border-white/10 px-5 py-4"
+        style={{ background: "hsla(220,20%,7%,0.8)", backdropFilter: "blur(20px)" }}
+      >
+        <div className="flex items-center gap-3">
+          {chatStarted ? (
+            <motion.button
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              onClick={() => {
+                setChatStarted(false);
+                setMessages([]);
+                setActiveMode(null);
+              }}
+              className="rounded-lg p-1.5 text-[#8ea097] transition-colors hover:bg-white/5 hover:text-white"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </motion.button>
+          ) : null}
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg border border-emerald-500/30 bg-emerald-500/10">
+              <Sparkles className="h-4 w-4 text-emerald-300" />
             </div>
             <div>
-              <h1 className="text-xl font-bold green-text-gradient">
-                Valuto AI
-              </h1>
-              <p className="text-sm font-medium text-valuto-green-300">Your friendly financial assistant</p>
+              <h1 className="font-display text-sm font-semibold tracking-tight text-white">Valuto AI</h1>
+              <p className="text-[10px] font-medium text-emerald-300">Financial Intelligence</p>
             </div>
           </div>
         </div>
-      </div>
+        <div className="flex items-center gap-1.5">
+          <div className="h-2 w-2 animate-pulse rounded-full bg-emerald-400" />
+          <span className="text-[10px] text-[#8ea097]">Online</span>
+        </div>
+      </motion.header>
 
-      {/* Chat Container - Fixed height to fit viewport */}
-      <div className="flex-1 flex flex-col min-h-0">
-        <Conversation className="relative z-10 max-w-4xl mx-auto px-6 flex-1 flex flex-col min-h-0">
-          <ConversationContent className="flex-1 min-h-0">
-            {messages.map((message) => (
-              <Message key={message.id} from={message.role}>
-                <MessageContent className={message.role === 'user' ? 'ml-16' : 'mr-16'}>
-                  <MessageBubble variant={message.role === 'user' ? 'user' : 'assistant'}>
-                    {message.role === 'user' ? (
-                      <p className="text-sm leading-relaxed font-medium">{message.text}</p>
-                    ) : (
-                      <Response>{message.text}</Response>
-                    )}
-                    
-                    {/* Timestamp */}
-                    <p className={`text-sm mt-2 ${
-                      message.role === 'user' ? 'text-green-100/90' : 'text-[#9a9a9d]'
-                    }`}>
-                      {message.timestamp.toLocaleTimeString([], { 
-                        hour: '2-digit', 
-                        minute: '2-digit' 
-                      })}
-                    </p>
-                  </MessageBubble>
-                </MessageContent>
-              </Message>
-            ))}
-            
-            {/* Loading indicator */}
-            {isLoading && (
-              <Message from="assistant">
-                <MessageContent className="mr-16">
-                  <Loader />
-                </MessageContent>
-              </Message>
-            )}
-          </ConversationContent>
+      <div className="relative z-10 flex flex-1 flex-col overflow-hidden">
+        <AnimatePresence mode="wait">
+          {!chatStarted ? (
+            <motion.div
+              key="entry"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="flex flex-1 flex-col items-center justify-center gap-6 px-6 py-8"
+            >
+              <motion.div
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+              >
+                <AIOrb isActive={false} size="lg" />
+              </motion.div>
 
-          {/* Suggestions */}
-          {showSuggestions && messages.length === 1 && !isLoading && (
-            <Suggestions 
-              suggestions={suggestions} 
-              onSelect={handleSuggestionSelect}
-              className="mb-2 flex-shrink-0"
-            />
+              <div className="max-w-md space-y-2 text-center">
+                <h2 className="font-display text-2xl font-bold text-white md:text-3xl">
+                  Your Personal Financial Intelligence.
+                </h2>
+                <p className="text-sm text-[#8ea097]">
+                  Ask anything about money. UK-focused. No judgement.
+                </p>
+              </div>
+
+              <div className="flex max-w-md flex-wrap justify-center gap-2">
+                {MODES.map((mode) => (
+                  <motion.button
+                    key={mode.label}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => {
+                      setActiveMode(mode.label);
+                      inputRef.current?.focus();
+                    }}
+                    className={`flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs transition-all ${
+                      activeMode === mode.label
+                        ? "border-emerald-500/50 bg-emerald-500/10 text-emerald-300"
+                        : "border-white/10 bg-white/[0.04] text-[#8ea097] hover:border-emerald-500/30 hover:text-white"
+                    }`}
+                  >
+                    {mode.icon}
+                    {mode.label}
+                  </motion.button>
+                ))}
+              </div>
+
+              <div className="grid w-full max-w-md gap-2">
+                {SUGGESTIONS.map((suggestion, index) => (
+                  <SuggestionChip
+                    key={suggestion.text}
+                    text={suggestion.text}
+                    icon={suggestion.icon}
+                    delay={0.1 + index * 0.08}
+                    onClick={() => handleSend(suggestion.text)}
+                  />
+                ))}
+              </div>
+            </motion.div>
+          ) : (
+            <motion.div
+              key="chat"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="flex-1 overflow-y-auto px-4 py-4"
+            >
+              <div className="mb-6 flex justify-center">
+                <AIOrb isActive={isTyping} size="sm" />
+              </div>
+
+              {messages.map((message, index) => (
+                <ChatMessage key={`${message.role}-${index}`} role={message.role} content={message.content} />
+              ))}
+              {isTyping ? <TypingIndicator /> : null}
+              <div ref={chatEndRef} />
+            </motion.div>
           )}
+        </AnimatePresence>
 
-          {/* Input Area - Fixed at bottom */}
-          <div className="flex-shrink-0 mb-4">
-            <PromptInput
-              value={inputText}
-              onChange={setInputText}
-              onSend={handleSendMessage}
-              isLoading={isLoading}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3 }}
+          className="relative z-10 border-t border-white/10 p-4"
+          style={{ background: "hsla(220,20%,7%,0.9)", backdropFilter: "blur(20px)" }}
+        >
+          {activeMode ? (
+            <motion.div
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: "auto" }}
+              className="mb-2 flex items-center gap-2 px-1"
+            >
+              <span className="rounded-full border border-emerald-500/20 bg-emerald-500/10 px-2 py-0.5 text-[10px] font-medium text-emerald-300">
+                {activeMode} Mode
+              </span>
+              <button
+                onClick={() => setActiveMode(null)}
+                className="text-[10px] text-[#8ea097] transition-colors hover:text-white"
+              >
+                ✕ Clear
+              </button>
+            </motion.div>
+          ) : null}
+
+          <div className="flex items-center gap-3 rounded-xl border border-white/10 bg-[#101816]/90 px-4 py-2.5 transition-colors focus-within:border-emerald-500/40">
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(event) => setInput(event.target.value)}
+              onKeyDown={handleKeyDown}
+              placeholder={activeMode ? `Enter ${activeMode.toLowerCase()} query...` : "Ask Valuto AI anything..."}
+              className="flex-1 bg-transparent text-sm text-white outline-none placeholder:text-[#7f9188]"
             />
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => handleSend()}
+              disabled={!input.trim() || isTyping}
+              className="rounded-lg bg-emerald-500 p-2 text-[#04120c] transition-all hover:bg-emerald-400 hover:shadow-lg disabled:cursor-not-allowed disabled:opacity-30"
+              style={{ boxShadow: input.trim() ? "0 0 20px hsla(155,80%,45%,0.3)" : "none" }}
+            >
+              <Send className="h-4 w-4" />
+            </motion.button>
           </div>
-        </Conversation>
+          <p className="mt-2 text-center text-[9px] text-[#8ea097] opacity-50">
+            Valuto AI provides educational guidance, not financial advice.
+          </p>
+        </motion.div>
       </div>
-
-      {/* Custom Styles */}
-      <style jsx global>{`
-        @keyframes fadeIn {
-          from {
-            opacity: 0;
-            transform: translateY(8px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        .animate-fadeIn {
-          animation: fadeIn 0.2s ease-out;
-        }
-      `}</style>
     </div>
   );
 }

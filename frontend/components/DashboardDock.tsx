@@ -40,6 +40,13 @@ const dockItems = [
     bgColor: 'bg-blue-100 hover:bg-blue-200',
   },
   {
+    title: 'Build Your Life',
+    icon: TargetIcon,
+    href: '/dashboard/build-your-life',
+    color: 'text-cyan-600 dark:text-cyan-400',
+    bgColor: 'bg-cyan-100 hover:bg-cyan-200',
+  },
+  {
     title: 'Interactive Modules',
     icon: BookOpenIcon,
     href: '/dashboard/learning-modules',

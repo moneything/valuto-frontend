@@ -17,6 +17,7 @@ const dashboardNavLinks = [
   { label: "Dashboard", href: "/dashboard" },
   { label: "Trivia", href: "/dashboard/trivia" },
   { label: "Calculator", href: "/dashboard/calculator" },
+  { label: "Build Your Life", href: "/dashboard/build-your-life" },
   { label: "Modules", href: "/dashboard/learning-modules" },
   { label: "Investment", href: "/dashboard/investment" },
   { label: "AI Chat", href: "/dashboard/ai-chat" },

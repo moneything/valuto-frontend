@@ -152,7 +152,7 @@ export default function ProfilePage() {
               const displayName = profile?.title ? `${profile.title} ${lastName}` : profile?.name;
               return <h2 className="mb-1 text-xl font-bold text-white">{displayName}</h2>;
             })()}
-            <p className="mb-1 text-sm text-[#9a9a9d]">{profile?.email}</p>
+            <p className="mb-1 break-all text-sm text-[#9a9a9d]">{profile?.email}</p>
             <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
               isTeacher ? 'border border-blue-500/20 bg-blue-500/10 text-blue-300' : 'border border-green-500/20 bg-green-500/10 text-green-300'
             }`}>
@@ -277,7 +277,7 @@ export default function ProfilePage() {
 
               <div className="space-y-2">
                 <Label className="text-sm font-semibold text-[#d7d7db]">Email</Label>
-                <p className="text-[#9a9a9d]">{profile?.email}</p>
+                <p className="break-all text-[#9a9a9d]">{profile?.email}</p>
               </div>
 
               <div className="space-y-2">

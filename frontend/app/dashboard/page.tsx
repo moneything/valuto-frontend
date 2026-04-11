@@ -160,6 +160,13 @@ export default function DashboardPage() {
       href: '/dashboard/calculator'
     },
     {
+      title: 'Build Your Life',
+      description: 'Design your future lifestyle and see how career, city, savings, and housing choices shape it',
+      icon: <TargetIcon className="w-8 h-8" />,
+      href: '/dashboard/build-your-life',
+      badge: 'New'
+    },
+    {
       title: 'Investment Simulation',
       description: 'Practice investing in a risk-free environment with real market scenarios',
       icon: <TrendingUpIcon className="w-8 h-8" />,
@@ -210,7 +217,7 @@ export default function DashboardPage() {
       color: 'from-blue-600 to-blue-700'
     },
     {
-      title: 'My Games',
+      title: 'My Trivia Games',
       description: 'Manage and view all your created trivia games',
       icon: <GameControllerIcon className="w-8 h-8" />,
       href: '/dashboard/trivia'
@@ -232,6 +239,13 @@ export default function DashboardPage() {
       description: 'Demonstrate investment concepts with interactive tools',
       icon: <CalculatorIcon className="w-8 h-8" />,
       href: '/dashboard/calculator'
+    },
+    {
+      title: 'Build Your Life',
+      description: 'Use an interactive future-planning simulator to discuss real-life tradeoffs with students',
+      icon: <TargetIcon className="w-8 h-8" />,
+      href: '/dashboard/build-your-life',
+      badge: 'New'
     },
     {
       title: 'Investment Simulation',

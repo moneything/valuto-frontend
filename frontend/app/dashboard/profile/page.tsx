@@ -123,14 +123,17 @@ export default function ProfilePage() {
     }
   };
 
+  const inputClassName =
+    "h-10 w-full rounded-lg border-2 border-white/10 bg-white/[0.04] px-4 py-2 text-white focus:border-valuto-green-600";
+
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+        <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
           My Profile 👤
         </h1>
-        <p className="text-lg text-gray-600">
+        <p className="text-lg text-[#9a9a9d]">
           View your progress and manage your account settings
         </p>
       </div>
@@ -139,7 +142,7 @@ export default function ProfilePage() {
         {/* Left Column - Profile Info */}
         <div className="lg:col-span-1 space-y-6">
           {/* Avatar Card */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6 text-center">
+          <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 text-center shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
             <div className="w-24 h-24 mx-auto mb-4 rounded-full bg-gradient-to-br from-valuto-green-600 to-valuto-green-700 flex items-center justify-center text-4xl text-white font-bold">
               {profile?.name?.charAt(0).toUpperCase()}
             </div>
@@ -147,60 +150,60 @@ export default function ProfilePage() {
               const parts = (profile?.name || '').trim().split(/\s+/).filter(Boolean);
               const lastName = parts.length ? parts[parts.length - 1] : profile?.name || '';
               const displayName = profile?.title ? `${profile.title} ${lastName}` : profile?.name;
-              return <h2 className="text-xl font-bold text-gray-900 mb-1">{displayName}</h2>;
+              return <h2 className="mb-1 text-xl font-bold text-white">{displayName}</h2>;
             })()}
-            <p className="text-sm text-gray-600 mb-1">{profile?.email}</p>
+            <p className="mb-1 text-sm text-[#9a9a9d]">{profile?.email}</p>
             <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
-              isTeacher ? 'bg-blue-100 text-blue-700' : 'bg-green-100 text-green-700'
+              isTeacher ? 'border border-blue-500/20 bg-blue-500/10 text-blue-300' : 'border border-green-500/20 bg-green-500/10 text-green-300'
             }`}>
               {isTeacher ? '👨‍🏫 Teacher' : '🎓 Student'}
             </span>
           </div>
 
           {/* Quick Stats */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
-            <h3 className="font-bold text-gray-900 mb-4">Quick Stats</h3>
+          <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
+            <h3 className="mb-4 font-bold text-white">Quick Stats</h3>
             {loading ? (
               <div className="space-y-3 animate-pulse">
                 <div className="flex justify-between">
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                  <div className="h-4 w-24 rounded bg-white/[0.08]"></div>
+                  <div className="h-4 w-16 rounded bg-white/[0.08]"></div>
                 </div>
                 <div className="flex justify-between">
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                  <div className="h-4 w-24 rounded bg-white/[0.08]"></div>
+                  <div className="h-4 w-16 rounded bg-white/[0.08]"></div>
                 </div>
                 <div className="flex justify-between">
-                  <div className="h-4 bg-gray-200 rounded w-24"></div>
-                  <div className="h-4 bg-gray-200 rounded w-16"></div>
+                  <div className="h-4 w-24 rounded bg-white/[0.08]"></div>
+                  <div className="h-4 w-16 rounded bg-white/[0.08]"></div>
                 </div>
               </div>
             ) : (
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Total Points</span>
-                  <span className="font-bold text-valuto-green-600">{stats.totalPoints.toLocaleString()}</span>
+                  <span className="text-[#9a9a9d]">Total Points</span>
+                  <span className="font-bold text-valuto-green-300">{stats.totalPoints.toLocaleString()}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Games Played</span>
-                  <span className="font-bold text-gray-900">{stats.gamesPlayed}</span>
+                  <span className="text-[#9a9a9d]">Games Played</span>
+                  <span className="font-bold text-white">{stats.gamesPlayed}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Lessons Done</span>
-                  <span className="font-bold text-gray-900">{stats.lessonsCompleted}/20</span>
+                  <span className="text-[#9a9a9d]">Lessons Done</span>
+                  <span className="font-bold text-white">{stats.lessonsCompleted}/20</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Avg. Score</span>
-                  <span className="font-bold text-gray-900">{stats.averageScore}%</span>
+                  <span className="text-[#9a9a9d]">Avg. Score</span>
+                  <span className="font-bold text-white">{stats.averageScore}%</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-600">Current Streak</span>
-                  <span className="font-bold text-orange-600">{stats.streak} {stats.streak > 0 ? 'days 🔥' : 'days'}</span>
+                  <span className="text-[#9a9a9d]">Current Streak</span>
+                  <span className="font-bold text-orange-400">{stats.streak} {stats.streak > 0 ? 'days 🔥' : 'days'}</span>
                 </div>
                 {isStudent && stats.rank > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-gray-600">Class Rank</span>
-                    <span className="font-bold text-gray-900">#{stats.rank}</span>
+                    <span className="text-[#9a9a9d]">Class Rank</span>
+                    <span className="font-bold text-white">#{stats.rank}</span>
                   </div>
                 )}
               </div>
@@ -211,13 +214,13 @@ export default function ProfilePage() {
         {/* Right Column - Details & Achievements */}
         <div className="lg:col-span-2 space-y-6">
           {/* Personal Information */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
+          <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
             <div className="flex justify-between items-center mb-6">
-              <h3 className="text-xl font-bold text-gray-900">Personal Information</h3>
+              <h3 className="text-xl font-bold text-white">Personal Information</h3>
               {!isEditing ? (
                 <button
                   onClick={() => setIsEditing(true)}
-                  className="text-valuto-green-600 hover:text-valuto-green-700 font-semibold text-sm"
+                  className="text-sm font-semibold text-valuto-green-300 hover:text-valuto-green-200"
                 >
                   Edit
                 </button>
@@ -225,13 +228,13 @@ export default function ProfilePage() {
                 <div className="flex gap-2">
                   <button
                     onClick={() => setIsEditing(false)}
-                    className="text-gray-600 hover:text-gray-700 font-semibold text-sm"
+                    className="text-sm font-semibold text-[#9a9a9d] hover:text-white"
                   >
                     Cancel
                   </button>
                   <button
                     onClick={handleSave}
-                    className="text-valuto-green-600 hover:text-valuto-green-700 font-semibold text-sm"
+                    className="text-sm font-semibold text-valuto-green-300 hover:text-valuto-green-200"
                   >
                     Save
                   </button>
@@ -241,30 +244,30 @@ export default function ProfilePage() {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div className="space-y-2">
-                <Label className="text-sm font-semibold text-gray-700">Title</Label>
+                <Label className="text-sm font-semibold text-[#d7d7db]">Title</Label>
                 {isEditing ? (
                   <Input
                     type="text"
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                    className={inputClassName}
                   />
                 ) : (
-                  <p className="text-gray-900">{profile?.title || 'Not set'}</p>
+                  <p className="text-white">{profile?.title || 'Not set'}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-semibold text-gray-700">Name</Label>
+                <Label className="text-sm font-semibold text-[#d7d7db]">Name</Label>
                 {isEditing ? (
                   <Input
                     type="text"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                    className={inputClassName}
                   />
                 ) : (
-                  <p className="text-gray-900">
+                  <p className="text-white">
                     {(() => {
                       return profile?.name || 'Not set';
                     })()}
@@ -273,66 +276,66 @@ export default function ProfilePage() {
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-semibold text-gray-700">Email</Label>
-                <p className="text-gray-600">{profile?.email}</p>
+                <Label className="text-sm font-semibold text-[#d7d7db]">Email</Label>
+                <p className="text-[#9a9a9d]">{profile?.email}</p>
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-semibold text-gray-700">Age</Label>
+                <Label className="text-sm font-semibold text-[#d7d7db]">Age</Label>
                 {isEditing ? (
                   <Input
                     type="number"
                     value={formData.age}
                     onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                    className={inputClassName}
                   />
                 ) : (
-                  <p className="text-gray-900">{profile?.age || 'Not set'}</p>
+                  <p className="text-white">{profile?.age || 'Not set'}</p>
                 )}
               </div>
 
               <div className="space-y-2">
-                <Label className="text-sm font-semibold text-gray-700">School</Label>
+                <Label className="text-sm font-semibold text-[#d7d7db]">School</Label>
                 {isEditing ? (
                   <Input
                     type="text"
                     value={formData.school}
                     onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                    className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                    className={inputClassName}
                   />
                 ) : (
-                  <p className="text-gray-900">{profile?.school || 'Not set'}</p>
+                  <p className="text-white">{profile?.school || 'Not set'}</p>
                 )}
               </div>
 
               {isStudent && (
                 <div className="space-y-2">
-                  <Label className="text-sm font-semibold text-gray-700">Grade</Label>
+                  <Label className="text-sm font-semibold text-[#d7d7db]">Grade</Label>
                   {isEditing ? (
                     <Input
                       type="text"
                       value={formData.grade}
                       onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                      className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                      className={inputClassName}
                     />
                   ) : (
-                    <p className="text-gray-900">{profile?.grade || 'Not set'}</p>
+                    <p className="text-white">{profile?.grade || 'Not set'}</p>
                   )}
                 </div>
               )}
 
               {isTeacher && (
                 <div className="space-y-2">
-                  <Label className="text-sm font-semibold text-gray-700">Subject</Label>
+                  <Label className="text-sm font-semibold text-[#d7d7db]">Subject</Label>
                   {isEditing ? (
                     <Input
                       type="text"
                       value={formData.subject}
                       onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className="w-full px-4 py-2 h-10 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
+                      className={inputClassName}
                     />
                   ) : (
-                    <p className="text-gray-900">{profile?.subject || 'Not set'}</p>
+                    <p className="text-white">{profile?.subject || 'Not set'}</p>
                   )}
                 </div>
               )}
@@ -340,14 +343,14 @@ export default function ProfilePage() {
           </div>
 
           {/* Achievements */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">Achievements</h3>
+          <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
+            <h3 className="mb-6 text-xl font-bold text-white">Achievements</h3>
             {isTeacher ? (
-              <p className="text-sm text-gray-500">
+              <p className="text-sm text-[#9a9a9d]">
                 Teacher achievements are coming soon. Assign activities and track class progress from your dashboard.
               </p>
             ) : achievements.length === 0 ? (
-              <p className="text-sm text-gray-500">No achievements yet. Play games and complete modules to earn badges!</p>
+              <p className="text-sm text-[#9a9a9d]">No achievements yet. Play games and complete modules to earn badges!</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                 {achievements.map((achievement, index) => (
@@ -355,15 +358,15 @@ export default function ProfilePage() {
                     key={index}
                     className={`p-4 rounded-lg border-2 transition-all ${
                       achievement.unlocked
-                        ? 'border-valuto-green-200 bg-valuto-green-50'
-                        : 'border-gray-200 bg-gray-50 opacity-60'
+                        ? 'border-valuto-green-500/20 bg-valuto-green-500/10'
+                        : 'border-white/10 bg-white/[0.04] opacity-60'
                     }`}
                   >
                     <div className="text-3xl mb-2">{achievement.icon}</div>
-                    <h4 className="font-bold text-gray-900 text-sm mb-1">{achievement.title}</h4>
-                    <p className="text-sm text-gray-600">{achievement.description}</p>
+                    <h4 className="mb-1 text-sm font-bold text-white">{achievement.title}</h4>
+                    <p className="text-sm text-[#d7d7db]">{achievement.description}</p>
                     {achievement.unlocked && (
-                      <span className="inline-block mt-2 text-sm font-semibold text-valuto-green-600">
+                      <span className="inline-block mt-2 text-sm font-semibold text-valuto-green-300">
                         ✓ Unlocked
                       </span>
                     )}
@@ -374,35 +377,35 @@ export default function ProfilePage() {
           </div>
 
           {/* Activity Log */}
-          <div className="bg-white/90 backdrop-blur-sm rounded-xl shadow-lg p-6">
-            <h3 className="text-xl font-bold text-gray-900 mb-4">{isTeacher ? 'Class Activity' : 'Recent Activity'}</h3>
+          <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
+            <h3 className="mb-4 text-xl font-bold text-white">{isTeacher ? 'Class Activity' : 'Recent Activity'}</h3>
             {isTeacher ? (
-              <p className="text-sm text-gray-500">Class-level activity insights will appear here once available.</p>
+              <p className="text-sm text-[#9a9a9d]">Class-level activity insights will appear here once available.</p>
             ) : loading ? (
               <div className="space-y-3 animate-pulse">
-                <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
-                  <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                <div className="flex items-start gap-3 border-b border-white/10 pb-3">
+                  <div className="h-8 w-8 rounded bg-white/[0.08]"></div>
                   <div className="flex-1">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="mb-2 h-4 w-3/4 rounded bg-white/[0.08]"></div>
+                    <div className="h-3 w-1/2 rounded bg-white/[0.08]"></div>
                   </div>
                 </div>
-                <div className="flex items-start gap-3 pb-3 border-b border-gray-100">
-                  <div className="w-8 h-8 bg-gray-200 rounded"></div>
+                <div className="flex items-start gap-3 border-b border-white/10 pb-3">
+                  <div className="h-8 w-8 rounded bg-white/[0.08]"></div>
                   <div className="flex-1">
-                    <div className="h-4 bg-gray-200 rounded w-3/4 mb-2"></div>
-                    <div className="h-3 bg-gray-200 rounded w-1/2"></div>
+                    <div className="mb-2 h-4 w-3/4 rounded bg-white/[0.08]"></div>
+                    <div className="h-3 w-1/2 rounded bg-white/[0.08]"></div>
                   </div>
                 </div>
               </div>
             ) : recentActivity.length > 0 ? (
               <div className="space-y-3">
                 {recentActivity.map((activity, index) => (
-                  <div key={index} className={`flex items-start gap-3 ${index < recentActivity.length - 1 ? 'pb-3 border-b border-gray-100' : ''}`}>
+                  <div key={index} className={`flex items-start gap-3 ${index < recentActivity.length - 1 ? 'border-b border-white/10 pb-3' : ''}`}>
                     <span className="text-2xl">{activity.icon || '✨'}</span>
                     <div className="flex-1">
-                      <p className="text-sm font-semibold text-gray-900">{activity.title}</p>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm font-semibold text-white">{activity.title}</p>
+                      <p className="text-sm text-[#9a9a9d]">
                         {activity.timeAgo}{activity.points ? ` • +${activity.points} points` : ''}
                       </p>
                     </div>
@@ -411,8 +414,8 @@ export default function ProfilePage() {
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-gray-500 mb-2">No recent activity yet</p>
-                <p className="text-sm text-gray-400">Start playing games and learning to build your activity log!</p>
+                <p className="mb-2 text-[#9a9a9d]">No recent activity yet</p>
+                <p className="text-sm text-[#6f6f73]">Start playing games and learning to build your activity log!</p>
               </div>
             )}
           </div>

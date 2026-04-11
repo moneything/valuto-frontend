@@ -6,7 +6,6 @@ import { Settings2, TrendingUp, Zap } from "lucide-react";
 import ControlSlider from "@/components/calculator/ControlSlider";
 import EducationalPanel from "@/components/calculator/EducationalPanel";
 import InvestmentChart from "@/components/calculator/InvestmentChart";
-import MilestonePopup from "@/components/calculator/MilestonePopup";
 import ParticleBackground from "@/components/calculator/ParticleBackground";
 import ResultsPanel from "@/components/calculator/ResultsPanel";
 
@@ -218,8 +217,6 @@ export default function InvestmentCalculatorPage() {
           </p>
         </motion.footer>
       </div>
-
-      <MilestonePopup totalValue={results.totalValue} />
     </div>
   );
 }

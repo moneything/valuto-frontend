@@ -45,7 +45,7 @@ export default function AvatarCreator({ onComplete }: Props) {
     <div className="mx-auto w-full max-w-2xl">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 text-center">
         <h2 className="mb-2 font-display text-2xl font-bold text-white md:text-3xl">Design Your Avatar</h2>
-        <p className="text-sm text-[#8ea097]">Create the character who will live your financial life</p>
+        <p className="text-sm text-[#94a8a0]">Create the character who will live your financial life</p>
       </motion.div>
 
       <motion.div
@@ -55,11 +55,11 @@ export default function AvatarCreator({ onComplete }: Props) {
         className="mb-8 flex justify-center"
       >
         <div className="relative">
-          <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border border-white/10 bg-[rgba(10,16,14,0.82)] shadow-[0_0_35px_rgba(52,211,153,0.18)] backdrop-blur-xl">
+          <div className="flex h-40 w-40 items-center justify-center overflow-hidden rounded-full border border-white/8 bg-[rgba(27,31,39,0.92)] shadow-[0_0_28px_rgba(16,185,129,0.16)] backdrop-blur-xl">
             <AvatarPreview config={avatar} size={140} />
           </div>
           <motion.div
-            className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-emerald-300 text-sm text-[#04120c]"
+            className="absolute -bottom-1 -right-1 flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500 text-sm text-[#03110b]"
             animate={{ scale: [1, 1.1, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -75,8 +75,8 @@ export default function AvatarCreator({ onComplete }: Props) {
             onClick={() => setTab(item.id)}
             className={`rounded-lg px-4 py-2 font-display text-sm font-medium transition-all ${
               tab === item.id
-                ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c] shadow-[0_0_20px_rgba(52,211,153,0.25)]"
-                : "border border-white/10 bg-white/[0.04] text-[#a7b8b1] hover:text-white"
+                ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b] shadow-[0_0_18px_rgba(16,185,129,0.2)]"
+                : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0] hover:text-white"
             }`}
           >
             {item.icon} {item.label}
@@ -88,12 +88,12 @@ export default function AvatarCreator({ onComplete }: Props) {
         key={tab}
         initial={{ opacity: 0, x: 10 }}
         animate={{ opacity: 1, x: 0 }}
-        className="mb-8 rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.3)] backdrop-blur-xl"
+        className="mb-8 rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] p-6 shadow-[0_18px_60px_rgba(0,0,0,0.34)] backdrop-blur-xl"
       >
         {tab === "face" ? (
           <div className="space-y-5">
             <div>
-              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">
+              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">
                 Skin Tone
               </label>
               <div className="flex justify-center gap-3">
@@ -103,7 +103,7 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("skinTone", index)}
                     className={`h-10 w-10 rounded-full transition-all ${
                       avatar.skinTone === index
-                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#07110d]"
+                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#1B1F27]"
                         : "hover:scale-105"
                     }`}
                     style={{ backgroundColor: color }}
@@ -112,7 +112,7 @@ export default function AvatarCreator({ onComplete }: Props) {
               </div>
             </div>
             <div>
-              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">
+              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">
                 Face Shape
               </label>
               <div className="flex justify-center gap-3">
@@ -122,8 +122,8 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("faceShape", index)}
                     className={`rounded-lg px-4 py-2 text-sm font-display transition-all ${
                       avatar.faceShape === index
-                        ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
-                        : "border border-white/10 bg-white/[0.04] text-[#a7b8b1] hover:text-white"
+                        ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]"
+                        : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0] hover:text-white"
                     }`}
                   >
                     {shape}
@@ -137,7 +137,7 @@ export default function AvatarCreator({ onComplete }: Props) {
         {tab === "hair" ? (
           <div className="space-y-5">
             <div>
-              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">
+              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">
                 Hair Style
               </label>
               <div className="flex flex-wrap justify-center gap-2">
@@ -147,8 +147,8 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("hairStyle", index)}
                     className={`rounded-lg px-4 py-2 text-sm font-display transition-all ${
                       avatar.hairStyle === index
-                        ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
-                        : "border border-white/10 bg-white/[0.04] text-[#a7b8b1] hover:text-white"
+                        ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]"
+                        : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0] hover:text-white"
                     }`}
                   >
                     {style}
@@ -157,7 +157,7 @@ export default function AvatarCreator({ onComplete }: Props) {
               </div>
             </div>
             <div>
-              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">
+              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">
                 Hair Colour
               </label>
               <div className="flex justify-center gap-3">
@@ -167,7 +167,7 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("hairColor", index)}
                     className={`h-10 w-10 rounded-full transition-all ${
                       avatar.hairColor === index
-                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#07110d]"
+                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#1B1F27]"
                         : "hover:scale-105"
                     }`}
                     style={{ backgroundColor: color }}
@@ -181,7 +181,7 @@ export default function AvatarCreator({ onComplete }: Props) {
         {tab === "eyes" ? (
           <div className="space-y-5">
             <div>
-              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">
+              <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">
                 Eye Colour
               </label>
               <div className="flex justify-center gap-3">
@@ -191,7 +191,7 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("eyeColor", index)}
                     className={`h-10 w-10 rounded-full transition-all ${
                       avatar.eyeColor === index
-                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#07110d]"
+                        ? "scale-110 ring-2 ring-emerald-300 ring-offset-2 ring-offset-[#1B1F27]"
                         : "hover:scale-105"
                     }`}
                     style={{ backgroundColor: color }}
@@ -208,8 +208,8 @@ export default function AvatarCreator({ onComplete }: Props) {
                   onClick={() => update("glasses", false)}
                   className={`rounded-lg px-6 py-2 text-sm font-display transition-all ${
                     !avatar.glasses
-                      ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
-                      : "border border-white/10 bg-white/[0.04] text-[#a7b8b1]"
+                      ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]"
+                      : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0]"
                   }`}
                 >
                   No Glasses
@@ -218,8 +218,8 @@ export default function AvatarCreator({ onComplete }: Props) {
                   onClick={() => update("glasses", true)}
                   className={`rounded-lg px-6 py-2 text-sm font-display transition-all ${
                     avatar.glasses
-                      ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
-                      : "border border-white/10 bg-white/[0.04] text-[#a7b8b1]"
+                      ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]"
+                      : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0]"
                   }`}
                 >
                   Glasses
@@ -231,7 +231,7 @@ export default function AvatarCreator({ onComplete }: Props) {
 
         {tab === "outfit" ? (
           <div>
-            <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#8ea097]">Style</label>
+            <label className="mb-3 block text-xs font-display uppercase tracking-widest text-[#94a8a0]">Style</label>
             <div className="grid grid-cols-2 gap-3">
               {OUTFITS.map((outfit, index) => {
                 const outfitIcons = ["👕", "👔", "🧥", "🤵"];
@@ -241,8 +241,8 @@ export default function AvatarCreator({ onComplete }: Props) {
                     onClick={() => update("outfit", index)}
                     className={`rounded-lg p-4 text-center font-display transition-all ${
                       avatar.outfit === index
-                        ? "border border-emerald-300/50 bg-[rgba(12,25,20,0.92)] text-white shadow-[0_0_24px_rgba(52,211,153,0.2)]"
-                        : "border border-white/10 bg-white/[0.04] text-[#a7b8b1] hover:text-white"
+                        ? "border border-emerald-300/50 bg-[rgba(27,31,39,0.98)] text-white shadow-[0_0_24px_rgba(52,211,153,0.2)]"
+                        : "border border-white/8 bg-[#1B1F27] text-[#a6b7b0] hover:text-white"
                     }`}
                   >
                     <div className="mb-1 text-2xl">{outfitIcons[index]}</div>
@@ -260,7 +260,7 @@ export default function AvatarCreator({ onComplete }: Props) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={() => onComplete(avatar)}
-          className="rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-300 px-8 py-3 font-display text-lg font-bold text-[#04120c] shadow-[0_0_30px_rgba(52,211,153,0.35)]"
+          className="rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 px-8 py-3 font-display text-lg font-bold text-[#03110b] shadow-[0_0_26px_rgba(16,185,129,0.28)]"
         >
           Continue
         </motion.button>

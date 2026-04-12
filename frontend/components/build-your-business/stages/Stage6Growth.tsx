@@ -59,7 +59,12 @@ export default function Stage6Growth() {
               <h3 className="font-display text-sm font-semibold text-white">Growth Actions</h3>
               <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
                 <GameButton onClick={advanceDay}>Next Day</GameButton>
-                <GameButton onClick={advanceWeek}>Advance 1 Week</GameButton>
+                <button
+                  onClick={advanceWeek}
+                  className="inline-flex items-center justify-center rounded-xl bg-violet-500 px-4 py-3 font-display text-sm font-semibold text-white transition hover:bg-violet-400 focus:outline-none focus:ring-2 focus:ring-violet-300/60"
+                >
+                  Advance 1 Week
+                </button>
                 <GoldButton
                   onClick={() => {
                     advanceWeek();

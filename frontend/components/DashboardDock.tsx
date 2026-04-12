@@ -145,7 +145,7 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
 export default function DashboardDock() {
   return (
     <div className='fixed left-6 top-1/2 -translate-y-1/2 z-40 hidden lg:block'>
-      <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-[#1b1b1d]/95 p-4 backdrop-blur-lg shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
+      <div className="flex max-h-[80vh] flex-col gap-3 overflow-y-auto rounded-2xl border border-white/10 bg-[#1b1b1d]/95 p-4 backdrop-blur-lg shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
         {dockItems.map((item, idx) => (
           <DockItem key={idx} item={item} />
         ))}

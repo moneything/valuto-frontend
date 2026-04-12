@@ -144,7 +144,7 @@ export default function DashboardLayout({
 
       {/* Header */}
       <header className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md">
-        <nav className="mx-auto bg-hero/90 px-4 shadow-lg sm:px-6 lg:pl-32 lg:pr-8">
+        <nav className="mx-auto bg-hero/90 px-4 shadow-lg sm:px-6 lg:pl-8 lg:pr-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/dashboard" className="flex items-center">
               <Image src="/favicon.svg" alt="Valuto Logo" width={40} height={40} />

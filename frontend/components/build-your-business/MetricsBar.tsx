@@ -23,10 +23,16 @@ export default function MetricsBar() {
           <div className={`font-display text-sm font-bold sm:text-base ${stat.color}`}>{stat.value}</div>
         </Card>
       ))}
-      {state.week > 0 ? (
+      {state.week > 0 || state.day > 1 ? (
         <Card className="min-w-[78px] px-3 py-2 text-center">
           <span className="text-[10px] font-medium uppercase tracking-wider text-[#94a8a0]">Week</span>
           <div className="font-display text-sm font-bold text-white sm:text-base">{state.week}</div>
+        </Card>
+      ) : null}
+      {state.week > 0 || state.day > 1 ? (
+        <Card className="min-w-[78px] px-3 py-2 text-center">
+          <span className="text-[10px] font-medium uppercase tracking-wider text-[#94a8a0]">Day</span>
+          <div className="font-display text-sm font-bold text-white sm:text-base">{state.day}</div>
         </Card>
       ) : null}
     </motion.div>

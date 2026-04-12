@@ -31,7 +31,7 @@ export default function TraitSelector({ onComplete }: Props) {
     <div className="mx-auto w-full max-w-2xl">
       <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 text-center">
         <h2 className="mb-2 font-display text-2xl font-bold text-white md:text-3xl">Choose Your Traits</h2>
-        <p className="text-sm text-[#8ea097]">
+        <p className="text-sm text-[#94a8a0]">
           Select <span className="font-semibold text-emerald-300">2 personality traits</span> that define your financial personality
         </p>
       </motion.div>
@@ -51,27 +51,27 @@ export default function TraitSelector({ onComplete }: Props) {
               disabled={isDisabled}
               className={`flex w-full items-center gap-4 rounded-xl p-4 text-left transition-all duration-200 ${
                 isSelected
-                  ? "border border-emerald-300/50 bg-[rgba(12,25,20,0.92)] shadow-[0_0_24px_rgba(52,211,153,0.2)]"
+                  ? "border border-emerald-300/40 bg-[rgba(27,31,39,0.98)] shadow-[0_0_20px_rgba(16,185,129,0.18)]"
                   : isDisabled
-                    ? "cursor-not-allowed border border-white/5 bg-white/[0.02] opacity-40"
-                    : "border border-white/10 bg-[rgba(10,16,14,0.82)] hover:border-emerald-400/30"
+                    ? "cursor-not-allowed border border-white/5 bg-[#1B1F27] opacity-40"
+                    : "border border-white/10 bg-[rgba(27,31,39,0.94)] hover:border-emerald-400"
               }`}
             >
               <div
                 className={`flex h-12 w-12 items-center justify-center rounded-lg text-2xl ${
-                  isSelected ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]" : "bg-white/[0.05]"
+                  isSelected ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]" : "bg-[#1B1F27]"
                 }`}
               >
                 {trait.icon}
               </div>
               <div className="flex-1">
                 <div className="font-display font-semibold text-white">{trait.name}</div>
-                <div className="text-sm text-[#8ea097]">{trait.description}</div>
+                <div className="text-sm text-[#94a8a0]">{trait.description}</div>
                 <div className="mt-1 text-xs text-emerald-300">{trait.effect}</div>
               </div>
               <div
                 className={`flex h-6 w-6 items-center justify-center rounded-full border-2 transition-colors ${
-                  isSelected ? "border-emerald-300 bg-emerald-300 text-[#04120c]" : "border-[#71857b]"
+                  isSelected ? "border-emerald-300 bg-emerald-300 text-[#03110b]" : "border-[#65796f]"
                 }`}
               >
                 {isSelected ? <span className="text-xs">✓</span> : null}
@@ -89,8 +89,8 @@ export default function TraitSelector({ onComplete }: Props) {
           disabled={selected.length !== 2}
           className={`rounded-xl px-8 py-3 font-display text-lg font-bold transition-all ${
             selected.length === 2
-              ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c] shadow-[0_0_30px_rgba(52,211,153,0.35)]"
-              : "bg-white/[0.06] text-[#7f9189]"
+              ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b] shadow-[0_0_26px_rgba(16,185,129,0.28)]"
+              : "bg-[#1B1F27] text-[#7f9189]"
           }`}
         >
           {selected.length === 2 ? "Continue" : `Select ${2 - selected.length} more`}

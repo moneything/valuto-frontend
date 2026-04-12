@@ -12,7 +12,7 @@ import { Card, GameButton, GoldButton } from "@/components/build-your-business/u
 type Tab = "dashboard" | "grow" | "hire" | "achievements";
 
 export default function Stage6Growth() {
-  const { state, advanceWeek, toggleMarketing } = useGame();
+  const { state, advanceDay, advanceWeek, toggleMarketing } = useGame();
   const [tab, setTab] = useState<Tab>("dashboard");
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
@@ -28,7 +28,7 @@ export default function Stage6Growth() {
         <h2 className="font-display text-xl font-bold text-white sm:text-2xl">
           {state.businessName} <span className="text-emerald-300">HQ</span>
         </h2>
-        <p className="text-xs text-[#94a8a0]">Week {state.week} • {state.selectedIdea?.name}</p>
+        <p className="text-xs text-[#94a8a0]">Week {state.week} • Day {state.day} • {state.selectedIdea?.name}</p>
       </div>
 
       <div className="flex gap-1 rounded-xl bg-white/[0.04] p-1">
@@ -57,7 +57,8 @@ export default function Stage6Growth() {
           <motion.div key="grow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="space-y-4">
             <Card className="space-y-3">
               <h3 className="font-display text-sm font-semibold text-white">Growth Actions</h3>
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                <GameButton onClick={advanceDay}>Next Day</GameButton>
                 <GameButton onClick={advanceWeek}>Advance 1 Week</GameButton>
                 <GoldButton
                   onClick={() => {

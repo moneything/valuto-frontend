@@ -10,7 +10,7 @@ import {
   GameState,
   LaunchChannel,
 } from "@/components/build-your-business/types";
-import { BUSINESS_EVENTS, INITIAL_ACHIEVEMENTS } from "@/components/build-your-business/data";
+import { BUSINESS_EVENTS, INITIAL_ACHIEVEMENTS, MARKETING_CHANNELS } from "@/components/build-your-business/data";
 
 const initialMetrics: BusinessMetrics = {
   revenue: 0,
@@ -161,29 +161,45 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const { pricePoint, productionCost, activeMarketing, employees, metrics, selectedIdea } = previous;
       if (!selectedIdea) return previous;
 
-      const baseCustomers = (selectedIdea.marketDemand / 100) * 10;
-      const marketingBoost = activeMarketing.length * 8;
-      const employeeBoost = employees.reduce((sum, employee) => sum + employee.productivity / 50, 0);
-      const reputationBoost = (metrics.reputation - 50) / 10;
-      const newCustomers = Math.max(0, Math.round(baseCustomers + marketingBoost + employeeBoost + reputationBoost));
+      const baseDemand = (selectedIdea.marketDemand / 100) * 4.5;
+      const marketingBoost = activeMarketing.reduce((sum, channelId) => {
+        const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
+        if (!channel) return sum;
+        return sum + channel.conversionRate * 0.7;
+      }, 0);
+      const employeeBoost = employees.reduce((sum, employee) => sum + employee.productivity / 110, 0);
+      const reputationBoost = Math.max(-1.5, (metrics.reputation - 50) / 20);
+      const repeatCustomerDrag = Math.min(2.4, metrics.customers / 180);
+      const saturationMultiplier = Math.max(0.35, 1 - metrics.customers / 2200);
+      const rawCustomerGain = baseDemand + marketingBoost + employeeBoost + reputationBoost - repeatCustomerDrag;
+      const newCustomers = Math.max(0, Math.round(rawCustomerGain * saturationMultiplier));
 
-      const weeklyRevenue = newCustomers * pricePoint;
-      const marketingCosts = activeMarketing.length * 60;
+      const weeklyRevenue = Math.round(newCustomers * pricePoint);
+      const marketingCosts = activeMarketing.reduce((sum, channelId) => {
+        const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
+        return sum + (channel?.costPerWeek || 0);
+      }, 0);
       const employeeCosts = employees.reduce((sum, employee) => sum + employee.cost, 0);
       const productionCosts = newCustomers * productionCost;
       const weeklyCosts = marketingCosts + employeeCosts + productionCosts;
       const weeklyProfit = weeklyRevenue - weeklyCosts;
+      const reputationDelta = weeklyProfit > 150 ? 1 : weeklyProfit < 0 ? -1 : 0;
+      const stressDelta = weeklyProfit < 0 ? 4 : weeklyProfit < 120 ? 1 : -1;
+      const satisfactionDelta = weeklyProfit > 200 ? 1 : weeklyProfit < -50 ? -2 : 0;
 
       const nextMetrics: BusinessMetrics = {
         revenue: metrics.revenue + weeklyRevenue,
         profit: metrics.profit + weeklyProfit,
         expenses: metrics.expenses + weeklyCosts,
         customers: metrics.customers + newCustomers,
-        reputation: Math.min(100, Math.max(0, metrics.reputation + (weeklyProfit > 0 ? 1 : -1))),
-        stress: Math.min(100, Math.max(0, metrics.stress + (weeklyCosts > weeklyRevenue ? 3 : -1))),
-        satisfaction: Math.min(100, Math.max(0, metrics.satisfaction + (weeklyProfit > 0 ? 1 : -2))),
+        reputation: Math.min(100, Math.max(0, metrics.reputation + reputationDelta)),
+        stress: Math.min(100, Math.max(0, metrics.stress + stressDelta)),
+        satisfaction: Math.min(100, Math.max(0, metrics.satisfaction + satisfactionDelta)),
         cash: metrics.cash + weeklyProfit,
-        valuation: Math.max(0, (metrics.revenue + weeklyRevenue) * 3 + Math.max(0, metrics.reputation) * 100),
+        valuation: Math.max(
+          0,
+          Math.round((metrics.revenue + weeklyRevenue) * 1.35 + Math.max(0, metrics.profit + weeklyProfit) * 2 + Math.max(0, metrics.reputation) * 75),
+        ),
         weeklyRevenue,
         weeklyCosts,
       };

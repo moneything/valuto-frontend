@@ -53,7 +53,7 @@ export default function Stage1Idea() {
             </div>
           </Card>
 
-          <GameButton onClick={handleContinue}>Choose Your Business Idea</GameButton>
+          <GameButton onClick={handleContinue}>Choose Your Business Idea →</GameButton>
         </div>
       ) : null}
 
@@ -108,7 +108,7 @@ export default function Stage1Idea() {
           </div>
 
           <GameButton onClick={handleContinue} disabled={!selected}>
-            Select This Idea
+            Select This Idea →
           </GameButton>
         </div>
       ) : null}
@@ -144,7 +144,7 @@ export default function Stage1Idea() {
           </Card>
 
           <GameButton onClick={handleContinue} disabled={!name.trim()}>
-            Start Market Research
+            Start Market Research →
           </GameButton>
         </div>
       ) : null}

@@ -99,7 +99,7 @@ export default function Stage3Pricing() {
       </Card>
 
       <GameButton onClick={handleContinue} disabled={price <= cost}>
-        {price <= cost ? "Price must be higher than cost" : "Build Your Business"}
+        {price <= cost ? "Price must be higher than cost" : "Build Your Business →"}
       </GameButton>
     </motion.div>
   );

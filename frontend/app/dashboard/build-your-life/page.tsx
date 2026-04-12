@@ -72,19 +72,19 @@ export default function BuildYourLifePage() {
   };
 
   return (
-    <div className="relative min-h-screen overflow-hidden bg-[#07110d] text-white">
+    <div className="relative min-h-screen overflow-hidden bg-[#1B1F27] text-white">
       <ParticleBackground />
 
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 50% 24%, rgba(34,211,153,0.09), transparent 58%)",
+          background: "radial-gradient(ellipse at 50% 24%, rgba(16,185,129,0.12), transparent 58%)",
         }}
       />
       <div
         className="fixed inset-0 pointer-events-none"
         style={{
-          background: "radial-gradient(ellipse at 80% 82%, rgba(245,158,11,0.06), transparent 48%)",
+          background: "radial-gradient(ellipse at 80% 82%, rgba(245,158,11,0.05), transparent 48%)",
         }}
       />
 
@@ -112,7 +112,7 @@ export default function BuildYourLifePage() {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={skipYear}
-                className="rounded-xl border border-emerald-400/30 bg-gradient-to-r from-emerald-400 to-emerald-300 px-6 py-3 font-display font-semibold text-[#04120c] shadow-[0_0_28px_rgba(52,211,153,0.35)]"
+                className="rounded-xl border border-emerald-300/25 bg-gradient-to-r from-emerald-400 to-emerald-500 px-6 py-3 font-display font-semibold text-[#03110b] shadow-[0_0_24px_rgba(16,185,129,0.28)]"
               >
                 Next Year
               </motion.button>

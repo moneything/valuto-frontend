@@ -186,12 +186,12 @@ export function GameProvider({ children }: { children: ReactNode }) {
     const periodCosts = marketingCosts + employeeCosts + productionCosts;
     const periodProfit = periodRevenue - periodCosts;
     const reputationDelta = periodProfit > 180 * fractionOfWeek ? 1 : periodProfit < 0 ? -1 : 0;
-    const stressDelta = periodProfit < -120 * fractionOfWeek
-      ? 4 * daysToAdvance
-      : periodProfit < 0
-        ? 3 * daysToAdvance
-        : periodProfit < 90 * fractionOfWeek
-          ? 2 * daysToAdvance
+    const stressDelta = periodProfit < -180 * fractionOfWeek
+      ? 3 * daysToAdvance
+      : periodProfit < -40 * fractionOfWeek
+        ? 2 * daysToAdvance
+        : periodProfit < 60 * fractionOfWeek
+          ? daysToAdvance
           : -daysToAdvance;
     const satisfactionDelta = periodProfit > 200 * fractionOfWeek ? 1 : periodProfit < -50 * fractionOfWeek ? -1 : 0;
 

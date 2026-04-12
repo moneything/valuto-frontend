@@ -95,7 +95,7 @@ export default function AIAdvisor({ state }: Props) {
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen((previous) => !previous)}
-        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-emerald-300 text-2xl text-[#04120c] shadow-[0_0_28px_rgba(52,211,153,0.35)]"
+        className="fixed bottom-6 right-6 z-40 flex h-14 w-14 items-center justify-center rounded-full bg-gradient-to-r from-emerald-400 to-emerald-500 text-2xl text-[#03110b] shadow-[0_0_22px_rgba(16,185,129,0.24)]"
       >
         {isOpen ? "✕" : "🤖"}
       </motion.button>
@@ -106,9 +106,9 @@ export default function AIAdvisor({ state }: Props) {
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="fixed bottom-24 right-6 z-40 w-80 overflow-hidden rounded-2xl border border-white/10 bg-[rgba(10,16,14,0.92)] shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:w-96"
+            className="fixed bottom-24 right-6 z-40 w-80 overflow-hidden rounded-2xl border border-white/8 bg-[rgba(27,31,39,0.98)] shadow-[0_20px_80px_rgba(0,0,0,0.45)] backdrop-blur-xl md:w-96"
           >
-            <div className="bg-gradient-to-r from-emerald-400 to-emerald-300 px-4 py-3 text-[#04120c]">
+            <div className="bg-gradient-to-r from-emerald-400 to-emerald-500 px-4 py-3 text-[#03110b]">
               <div className="flex items-center gap-3">
                 <span className="text-xl">🤖</span>
                 <div>
@@ -121,13 +121,13 @@ export default function AIAdvisor({ state }: Props) {
             <div ref={scrollRef} className="h-64 space-y-3 overflow-y-auto p-4">
               {messages.length === 0 ? (
                 <div className="py-4 text-center">
-                  <p className="mb-4 text-sm text-[#8ea097]">Ask me anything about your financial life.</p>
+                  <p className="mb-4 text-sm text-[#94a8a0]">Ask me anything about your financial life.</p>
                   <div className="space-y-2">
                     {QUICK_QUESTIONS.map((question) => (
                       <button
                         key={question}
                         onClick={() => send(question)}
-                        className="block w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-left text-xs text-white transition-colors hover:border-emerald-400/40"
+                        className="block w-full rounded-lg border border-white/8 bg-[#1B1F27] px-3 py-2 text-left text-xs text-white transition-colors hover:border-emerald-400/30"
                       >
                         💬 {question}
                       </button>
@@ -141,8 +141,8 @@ export default function AIAdvisor({ state }: Props) {
                   <div
                     className={`max-w-[85%] rounded-xl px-3 py-2 text-sm ${
                       message.role === "user"
-                        ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
-                        : "border border-white/10 bg-white/[0.04] text-white"
+                        ? "bg-gradient-to-r from-emerald-400 to-emerald-500 text-[#03110b]"
+                        : "border border-white/8 bg-[#1B1F27] text-white"
                     }`}
                   >
                     {message.role === "assistant" ? (
@@ -158,7 +158,7 @@ export default function AIAdvisor({ state }: Props) {
 
               {isLoading ? (
                 <div className="flex justify-start">
-                  <div className="rounded-xl border border-white/10 bg-white/[0.04] px-4 py-2">
+                  <div className="rounded-xl border border-white/8 bg-[#1B1F27] px-4 py-2">
                     <motion.div
                       className="flex gap-1"
                       animate={{ opacity: [0.4, 1, 0.4] }}
@@ -173,7 +173,7 @@ export default function AIAdvisor({ state }: Props) {
               ) : null}
             </div>
 
-            <div className="border-t border-white/10 p-3">
+            <div className="border-t border-white/8 p-3">
               <form
                 onSubmit={(event) => {
                   event.preventDefault();
@@ -185,12 +185,12 @@ export default function AIAdvisor({ state }: Props) {
                   value={input}
                   onChange={(event) => setInput(event.target.value)}
                   placeholder="Ask Valuto AI..."
-                  className="flex-1 rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-sm text-white outline-none placeholder:text-[#7d9188] focus:border-emerald-400/40"
+                  className="flex-1 rounded-lg border border-white/8 bg-[#1B1F27] px-3 py-2 text-sm text-white outline-none placeholder:text-[#7d9188] focus:border-emerald-400/30"
                 />
                 <button
                   type="submit"
                   disabled={!input.trim() || isLoading}
-                  className="rounded-lg bg-gradient-to-r from-emerald-400 to-emerald-300 px-3 py-2 text-[#04120c] disabled:opacity-50"
+                  className="rounded-lg bg-gradient-to-r from-emerald-400 to-emerald-500 px-3 py-2 text-[#03110b] disabled:opacity-50"
                 >
                   ↑
                 </button>

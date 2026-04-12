@@ -167,6 +167,13 @@ export default function DashboardPage() {
       badge: 'New'
     },
     {
+      title: 'Build Your Business',
+      description: 'Create, launch, and grow your own startup through a stage-based business simulator',
+      icon: <TrendingUpIcon className="w-8 h-8" />,
+      href: '/dashboard/build-your-business',
+      badge: 'New'
+    },
+    {
       title: 'Investment Simulation',
       description: 'Practice investing in a risk-free environment with real market scenarios',
       icon: <TrendingUpIcon className="w-8 h-8" />,
@@ -245,6 +252,13 @@ export default function DashboardPage() {
       description: 'Use an interactive future-planning simulator to discuss real-life tradeoffs with students',
       icon: <TargetIcon className="w-8 h-8" />,
       href: '/dashboard/build-your-life',
+      badge: 'New'
+    },
+    {
+      title: 'Build Your Business',
+      description: 'Use a startup simulator to teach pricing, growth, cash flow, hiring, and competition',
+      icon: <TrendingUpIcon className="w-8 h-8" />,
+      href: '/dashboard/build-your-business',
       badge: 'New'
     },
     {

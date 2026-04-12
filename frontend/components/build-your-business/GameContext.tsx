@@ -182,18 +182,18 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
       return sum + (channel?.costPerWeek || 0);
     }, 0) * fractionOfWeek);
-    const marketingStressLoad = activeMarketing.length * 0.15 * daysToAdvance;
+    const marketingStressLoad = activeMarketing.length * 0.2 * daysToAdvance;
     const employeeCosts = Math.round(employees.reduce((sum, employee) => sum + employee.cost, 0) * fractionOfWeek);
     const productionCosts = newCustomers * productionCost;
     const periodCosts = marketingCosts + employeeCosts + productionCosts;
     const periodProfit = periodRevenue - periodCosts;
     const reputationDelta = periodProfit > 180 * fractionOfWeek ? 1 : periodProfit < 0 ? -1 : 0;
     const baseStressDelta = periodProfit < -220 * fractionOfWeek
-      ? 2 * daysToAdvance
+      ? 3 * daysToAdvance
       : periodProfit < -40 * fractionOfWeek
-        ? daysToAdvance
+        ? 2 * daysToAdvance
         : periodProfit < 60 * fractionOfWeek
-          ? 0
+          ? daysToAdvance
           : -daysToAdvance;
     const stressDelta = Math.round(baseStressDelta + marketingStressLoad - teamSupport * fractionOfWeek);
     const satisfactionDelta = periodProfit > 200 * fractionOfWeek ? 1 : periodProfit < -50 * fractionOfWeek ? -1 : 0;

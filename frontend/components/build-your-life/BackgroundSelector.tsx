@@ -53,7 +53,7 @@ export default function BackgroundSelector({ onComplete }: Props) {
                   ? "bg-gradient-to-r from-emerald-400 to-emerald-300 text-[#04120c]"
                   : ["career", "living", "finances"].indexOf(step) > index
                     ? "bg-emerald-300 text-[#04120c]"
-                    : "bg-white/[0.08] text-[#8ea097]"
+                    : "bg-[#1B1F27] text-[#94a8a0]"
               }`}
             >
               {index + 1}
@@ -61,7 +61,7 @@ export default function BackgroundSelector({ onComplete }: Props) {
             {index < 2 ? (
               <div
                 className={`h-0.5 w-8 ${
-                  ["career", "living", "finances"].indexOf(step) > index ? "bg-emerald-300" : "bg-white/10"
+                  ["career", "living", "finances"].indexOf(step) > index ? "bg-emerald-300" : "bg-white/8"
                 }`}
               />
             ) : null}
@@ -73,7 +73,7 @@ export default function BackgroundSelector({ onComplete }: Props) {
         <motion.div key="career" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-6 text-center">
             <h2 className="mb-2 font-display text-2xl font-bold text-white md:text-3xl">Choose Your Path</h2>
-            <p className="text-sm text-[#8ea097]">Your education and career choice shapes everything</p>
+            <p className="text-sm text-[#94a8a0]">Your education and career choice shapes everything</p>
           </div>
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             {CAREER_OPTIONS.map((option, index) => (
@@ -85,19 +85,19 @@ export default function BackgroundSelector({ onComplete }: Props) {
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleCareer(option.path)}
-                className="group rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] p-5 text-left transition-shadow duration-300 hover:shadow-[0_0_28px_rgba(52,211,153,0.18)]"
+                className="group rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] p-5 text-left transition-shadow duration-300 hover:shadow-[0_0_24px_rgba(16,185,129,0.16)]"
               >
                 <div className="mb-2 text-3xl">{option.icon}</div>
                 <h3 className="font-display text-lg font-semibold text-white transition-colors group-hover:text-emerald-300">
                   {option.title}
                 </h3>
-                <p className="mb-3 mt-1 text-sm text-[#8ea097]">{option.description}</p>
+                <p className="mb-3 mt-1 text-sm text-[#94a8a0]">{option.description}</p>
                 <div className="flex gap-4 text-xs">
                   <span className="font-medium text-emerald-300">GBP{option.salary.toLocaleString()}/yr</span>
                   <span className={option.debt > 0 ? "text-rose-300" : "text-emerald-300"}>
                     {option.debt > 0 ? `GBP${option.debt.toLocaleString()} debt` : "No debt"}
                   </span>
-                  <span className="text-[#8ea097]">{option.growth}</span>
+                  <span className="text-[#94a8a0]">{option.growth}</span>
                 </div>
               </motion.button>
             ))}
@@ -109,7 +109,7 @@ export default function BackgroundSelector({ onComplete }: Props) {
         <motion.div key="living" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-6 text-center">
             <h2 className="mb-2 font-display text-2xl font-bold text-white md:text-3xl">Where Will You Live?</h2>
-            <p className="text-sm text-[#8ea097]">Your living situation affects your costs and happiness</p>
+            <p className="text-sm text-[#94a8a0]">Your living situation affects your costs and happiness</p>
           </div>
           <div className="space-y-3">
             {LIVING_OPTIONS.map((option, index) => (
@@ -121,20 +121,20 @@ export default function BackgroundSelector({ onComplete }: Props) {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleLiving(option.id)}
-                className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] p-5 text-left transition-all hover:shadow-[0_0_28px_rgba(52,211,153,0.18)]"
+                className="flex w-full items-center gap-4 rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] p-5 text-left transition-all hover:shadow-[0_0_24px_rgba(16,185,129,0.16)]"
               >
                 <div className="text-3xl">{option.icon}</div>
                 <div className="flex-1">
                   <h3 className="font-display font-semibold text-white">{option.title}</h3>
-                  <p className="text-sm text-[#8ea097]">{option.desc}</p>
+                  <p className="text-sm text-[#94a8a0]">{option.desc}</p>
                   <p className="mt-1 text-xs text-emerald-300">{option.effect}</p>
                 </div>
-                <div className="text-[#8ea097]">→</div>
+                <div className="text-[#94a8a0]">→</div>
               </motion.button>
             ))}
           </div>
           <div className="mt-4 text-center">
-            <button onClick={() => setStep("career")} className="font-display text-sm text-[#8ea097] hover:text-white">
+            <button onClick={() => setStep("career")} className="font-display text-sm text-[#94a8a0] hover:text-white">
               ← Back
             </button>
           </div>
@@ -145,7 +145,7 @@ export default function BackgroundSelector({ onComplete }: Props) {
         <motion.div key="finances" initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
           <div className="mb-6 text-center">
             <h2 className="mb-2 font-display text-2xl font-bold text-white md:text-3xl">Starting Money</h2>
-            <p className="text-sm text-[#8ea097]">How much have you saved so far?</p>
+            <p className="text-sm text-[#94a8a0]">How much have you saved so far?</p>
           </div>
           <div className="space-y-3">
             {FINANCE_OPTIONS.map((option, index) => (
@@ -157,19 +157,19 @@ export default function BackgroundSelector({ onComplete }: Props) {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => handleFinances(option.id)}
-                className="flex w-full items-center gap-4 rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] p-5 text-left transition-all hover:shadow-[0_0_28px_rgba(52,211,153,0.18)]"
+                className="flex w-full items-center gap-4 rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] p-5 text-left transition-all hover:shadow-[0_0_24px_rgba(16,185,129,0.16)]"
               >
                 <div className="text-3xl">{option.icon}</div>
                 <div className="flex-1">
                   <h3 className="font-display font-semibold text-white">{option.title}</h3>
-                  <p className="text-sm text-[#8ea097]">{option.desc}</p>
+                  <p className="text-sm text-[#94a8a0]">{option.desc}</p>
                 </div>
                 <div className="font-display font-bold text-emerald-300">{option.amount}</div>
               </motion.button>
             ))}
           </div>
           <div className="mt-4 text-center">
-            <button onClick={() => setStep("living")} className="font-display text-sm text-[#8ea097] hover:text-white">
+            <button onClick={() => setStep("living")} className="font-display text-sm text-[#94a8a0] hover:text-white">
               ← Back
             </button>
           </div>

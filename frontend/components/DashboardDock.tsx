@@ -11,6 +11,7 @@ import {
   CrownIcon, 
   TargetIcon,
   CalendarIcon,
+  ChartBarIcon,
   LightBulbIcon,
   UserIcon,
   HomeIcon,
@@ -46,6 +47,13 @@ const dockItems = [
     href: '/dashboard/build-your-life',
     color: 'text-cyan-600 dark:text-cyan-400',
     bgColor: 'bg-cyan-100 hover:bg-cyan-200',
+  },
+  {
+    title: 'Build Your Business',
+    icon: ChartBarIcon,
+    href: '/dashboard/build-your-business',
+    color: 'text-amber-600 dark:text-amber-400',
+    bgColor: 'bg-amber-100 hover:bg-amber-200',
   },
   {
     title: 'Interactive Modules',

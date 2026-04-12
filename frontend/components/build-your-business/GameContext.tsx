@@ -64,7 +64,7 @@ type GameContextType = {
   dismissEvent: () => void;
   resetGame: () => void;
   newAchievements: string[];
-  clearNewAchievements: () => void;
+  consumeNewAchievement: () => void;
 };
 
 const GameContext = createContext<GameContextType | null>(null);
@@ -248,7 +248,9 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setNewAchievements([]);
   };
 
-  const clearNewAchievements = () => setNewAchievements([]);
+  const consumeNewAchievement = () => {
+    setNewAchievements((previous) => previous.slice(1));
+  };
 
   const value = useMemo(
     () => ({
@@ -267,7 +269,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       dismissEvent,
       resetGame,
       newAchievements,
-      clearNewAchievements,
+      consumeNewAchievement,
     }),
     [state, newAchievements]
   );

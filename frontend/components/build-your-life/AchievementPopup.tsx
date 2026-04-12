@@ -32,12 +32,12 @@ export default function AchievementPopup({ achievements }: Props) {
           exit={{ opacity: 0, y: -50, scale: 0.8 }}
           className="fixed left-1/2 top-6 z-50 -translate-x-1/2"
         >
-          <div className="flex items-center gap-3 rounded-xl border border-amber-300/25 bg-[rgba(10,16,14,0.92)] px-6 py-4 shadow-[0_0_28px_rgba(251,191,36,0.2)] backdrop-blur-xl">
+          <div className="flex items-center gap-3 rounded-xl border border-amber-300/20 bg-[rgba(27,31,39,0.98)] px-6 py-4 shadow-[0_0_22px_rgba(245,158,11,0.14)] backdrop-blur-xl">
             <span className="text-3xl">{current.icon}</span>
             <div>
               <div className="font-display text-xs uppercase tracking-widest text-amber-300">Achievement Unlocked</div>
               <div className="font-display font-bold text-white">{current.title}</div>
-              <div className="text-xs text-[#8ea097]">{current.description}</div>
+              <div className="text-xs text-[#94a8a0]">{current.description}</div>
             </div>
           </div>
         </motion.div>

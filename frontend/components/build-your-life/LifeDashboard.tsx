@@ -23,21 +23,21 @@ export default function LifeDashboard({ state }: Props) {
 
   return (
     <div className="mx-auto w-full max-w-5xl space-y-4">
-      <div className="flex items-center justify-between rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] px-5 py-3 backdrop-blur-xl">
+      <div className="flex items-center justify-between rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] px-5 py-3 backdrop-blur-xl">
         <div className="flex items-center gap-3">
           {state.avatar ? (
-            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-white/[0.04]">
+            <div className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full bg-[#1B1F27]">
               <AvatarPreview config={state.avatar} size={40} />
             </div>
           ) : null}
           <div>
             <div className="flex items-center gap-2">
               <span className="font-display text-2xl font-bold text-emerald-300">{state.age}</span>
-              <span className="text-sm text-[#8ea097]">years old</span>
+              <span className="text-sm text-[#94a8a0]">years old</span>
             </div>
             <div className="flex flex-wrap gap-1">
               {state.traits.map((trait) => (
-                <span key={trait} className="rounded-full bg-white/[0.04] px-1.5 py-0.5 text-[10px] text-[#a7b8b1]">
+                <span key={trait} className="rounded-full bg-[#1B1F27] px-1.5 py-0.5 text-[10px] text-[#a6b7b0]">
                   {TRAIT_LABELS[trait] || trait}
                 </span>
               ))}
@@ -45,10 +45,10 @@ export default function LifeDashboard({ state }: Props) {
           </div>
         </div>
         <div className="text-right">
-          <div className="font-display text-sm text-[#8ea097]">
+          <div className="font-display text-sm text-[#94a8a0]">
             {state.careerTitle} • {state.housing} • {state.lifestyle}
           </div>
-          <div className="flex items-center justify-end gap-2 text-xs text-[#8ea097]">
+          <div className="flex items-center justify-end gap-2 text-xs text-[#94a8a0]">
             {state.relationshipStatus !== "single" ? <span className="text-emerald-300">Relationship: {state.relationshipStatus}</span> : null}
             {state.socialPressure > 30 ? <span className="text-rose-300">Pressure: {state.socialPressure}%</span> : null}
             <span className="text-amber-300">Score: {state.lifeScore}</span>
@@ -64,15 +64,15 @@ export default function LifeDashboard({ state }: Props) {
       </div>
 
       <div className="grid grid-cols-2 gap-3">
-        <div className="rounded-lg border border-white/10 bg-[rgba(10,16,14,0.82)] p-3 backdrop-blur-xl">
-          <div className="mb-2 flex justify-between font-display text-xs uppercase tracking-wider text-[#8ea097]">
+        <div className="rounded-lg border border-white/8 bg-[rgba(27,31,39,0.94)] p-3 backdrop-blur-xl">
+          <div className="mb-2 flex justify-between font-display text-xs uppercase tracking-wider text-[#94a8a0]">
             <span>Happiness</span>
             <span>{state.happiness}%</span>
           </div>
           <ProgressBar value={state.happiness} variant="happiness" />
         </div>
-        <div className="rounded-lg border border-white/10 bg-[rgba(10,16,14,0.82)] p-3 backdrop-blur-xl">
-          <div className="mb-2 flex justify-between font-display text-xs uppercase tracking-wider text-[#8ea097]">
+        <div className="rounded-lg border border-white/8 bg-[rgba(27,31,39,0.94)] p-3 backdrop-blur-xl">
+          <div className="mb-2 flex justify-between font-display text-xs uppercase tracking-wider text-[#94a8a0]">
             <span>Stress</span>
             <span>{state.stress}%</span>
           </div>
@@ -81,8 +81,8 @@ export default function LifeDashboard({ state }: Props) {
       </div>
 
       {state.history.length > 1 ? (
-        <div className="rounded-xl border border-white/10 bg-[rgba(10,16,14,0.82)] p-4 backdrop-blur-xl">
-          <h3 className="mb-3 font-display text-xs uppercase tracking-widest text-[#8ea097]">Net Worth Over Time</h3>
+        <div className="rounded-xl border border-white/8 bg-[rgba(27,31,39,0.94)] p-4 backdrop-blur-xl">
+          <h3 className="mb-3 font-display text-xs uppercase tracking-widest text-[#94a8a0]">Net Worth Over Time</h3>
           <NetWorthChart history={state.history} />
         </div>
       ) : null}

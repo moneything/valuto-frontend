@@ -79,6 +79,7 @@ export interface Achievement {
 export interface GameState {
   stage: GameStage;
   week: number;
+  day: number;
   businessName: string;
   selectedIdea: BusinessIdea | null;
   metrics: BusinessMetrics;

@@ -113,7 +113,7 @@ export default function Stage4Build() {
       ) : null}
 
       <GameButton onClick={handleContinue} disabled={step === "channel" ? !channel : !style}>
-        {step === "channel" ? "Choose Brand Style" : "Start Marketing"}
+        {step === "channel" ? "Choose Brand Style →" : "Start Marketing →"}
       </GameButton>
     </motion.div>
   );

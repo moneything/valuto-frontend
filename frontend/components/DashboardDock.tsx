@@ -10,6 +10,7 @@ import {
   TrophyIcon, 
   CrownIcon, 
   TargetIcon,
+  CalendarIcon,
   LightBulbIcon,
   UserIcon,
   HomeIcon,
@@ -41,7 +42,7 @@ const dockItems = [
   },
   {
     title: 'Build Your Life',
-    icon: TargetIcon,
+    icon: CalendarIcon,
     href: '/dashboard/build-your-life',
     color: 'text-cyan-600 dark:text-cyan-400',
     bgColor: 'bg-cyan-100 hover:bg-cyan-200',

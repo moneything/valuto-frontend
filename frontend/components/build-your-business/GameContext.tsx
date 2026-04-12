@@ -29,6 +29,7 @@ const initialMetrics: BusinessMetrics = {
 const initialState: GameState = {
   stage: 1,
   week: 0,
+  day: 1,
   businessName: "",
   selectedIdea: null,
   metrics: { ...initialMetrics },
@@ -59,6 +60,7 @@ type GameContextType = {
   toggleMarketing: (channelId: string) => void;
   hireEmployee: (employee: Employee) => void;
   fireEmployee: (employeeId: string) => void;
+  advanceDay: () => void;
   advanceWeek: () => void;
   handleEventChoice: (eventId: string, choiceId: string) => void;
   dismissEvent: () => void;
@@ -156,84 +158,100 @@ export function GameProvider({ children }: { children: ReactNode }) {
     }));
   };
 
-  const advanceWeek = () => {
-    setState((previous) => {
-      const { pricePoint, productionCost, activeMarketing, employees, metrics, selectedIdea } = previous;
-      if (!selectedIdea) return previous;
+  const simulateProgress = useCallback((previous: GameState, daysToAdvance: number) => {
+    const { pricePoint, productionCost, activeMarketing, employees, metrics, selectedIdea } = previous;
+    if (!selectedIdea) return previous;
 
-      const baseDemand = (selectedIdea.marketDemand / 100) * 4.5;
-      const marketingBoost = activeMarketing.reduce((sum, channelId) => {
-        const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
-        if (!channel) return sum;
-        return sum + channel.conversionRate * 0.7;
-      }, 0);
-      const employeeBoost = employees.reduce((sum, employee) => sum + employee.productivity / 110, 0);
-      const reputationBoost = Math.max(-1.5, (metrics.reputation - 50) / 20);
-      const repeatCustomerDrag = Math.min(2.4, metrics.customers / 180);
-      const saturationMultiplier = Math.max(0.35, 1 - metrics.customers / 2200);
-      const rawCustomerGain = baseDemand + marketingBoost + employeeBoost + reputationBoost - repeatCustomerDrag;
-      const newCustomers = Math.max(0, Math.round(rawCustomerGain * saturationMultiplier));
+    const fractionOfWeek = daysToAdvance / 7;
+    const baseDemand = (selectedIdea.marketDemand / 100) * 2.8;
+    const marketingBoost = activeMarketing.reduce((sum, channelId) => {
+      const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
+      if (!channel) return sum;
+      return sum + channel.conversionRate * 0.45;
+    }, 0);
+    const employeeBoost = employees.reduce((sum, employee) => sum + employee.productivity / 160, 0);
+    const reputationBoost = Math.max(-1.8, (metrics.reputation - 50) / 28);
+    const repeatCustomerDrag = Math.min(3.2, metrics.customers / 120);
+    const saturationMultiplier = Math.max(0.18, 1 - metrics.customers / 1500);
+    const rawCustomerGain = baseDemand + marketingBoost + employeeBoost + reputationBoost - repeatCustomerDrag;
+    const newCustomers = Math.max(0, Math.round(rawCustomerGain * saturationMultiplier * fractionOfWeek));
 
-      const weeklyRevenue = Math.round(newCustomers * pricePoint);
-      const marketingCosts = activeMarketing.reduce((sum, channelId) => {
-        const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
-        return sum + (channel?.costPerWeek || 0);
-      }, 0);
-      const employeeCosts = employees.reduce((sum, employee) => sum + employee.cost, 0);
-      const productionCosts = newCustomers * productionCost;
-      const weeklyCosts = marketingCosts + employeeCosts + productionCosts;
-      const weeklyProfit = weeklyRevenue - weeklyCosts;
-      const reputationDelta = weeklyProfit > 150 ? 1 : weeklyProfit < 0 ? -1 : 0;
-      const stressDelta = weeklyProfit < 0 ? 4 : weeklyProfit < 120 ? 1 : -1;
-      const satisfactionDelta = weeklyProfit > 200 ? 1 : weeklyProfit < -50 ? -2 : 0;
+    const periodRevenue = Math.round(newCustomers * pricePoint);
+    const marketingCosts = Math.round(activeMarketing.reduce((sum, channelId) => {
+      const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
+      return sum + (channel?.costPerWeek || 0);
+    }, 0) * fractionOfWeek);
+    const employeeCosts = Math.round(employees.reduce((sum, employee) => sum + employee.cost, 0) * fractionOfWeek);
+    const productionCosts = newCustomers * productionCost;
+    const periodCosts = marketingCosts + employeeCosts + productionCosts;
+    const periodProfit = periodRevenue - periodCosts;
+    const reputationDelta = periodProfit > 180 * fractionOfWeek ? 1 : periodProfit < 0 ? -1 : 0;
+    const stressDelta = periodProfit < -120 * fractionOfWeek
+      ? 4 * daysToAdvance
+      : periodProfit < 0
+        ? 3 * daysToAdvance
+        : periodProfit < 90 * fractionOfWeek
+          ? 2 * daysToAdvance
+          : -daysToAdvance;
+    const satisfactionDelta = periodProfit > 200 * fractionOfWeek ? 1 : periodProfit < -50 * fractionOfWeek ? -1 : 0;
 
-      const nextMetrics: BusinessMetrics = {
-        revenue: metrics.revenue + weeklyRevenue,
-        profit: metrics.profit + weeklyProfit,
-        expenses: metrics.expenses + weeklyCosts,
-        customers: metrics.customers + newCustomers,
-        reputation: Math.min(100, Math.max(0, metrics.reputation + reputationDelta)),
-        stress: Math.min(100, Math.max(0, metrics.stress + stressDelta)),
-        satisfaction: Math.min(100, Math.max(0, metrics.satisfaction + satisfactionDelta)),
-        cash: metrics.cash + weeklyProfit,
-        valuation: Math.max(
-          0,
-          Math.round((metrics.revenue + weeklyRevenue) * 1.35 + Math.max(0, metrics.profit + weeklyProfit) * 2 + Math.max(0, metrics.reputation) * 75),
-        ),
-        weeklyRevenue,
-        weeklyCosts,
-      };
+    const nextMetrics: BusinessMetrics = {
+      revenue: metrics.revenue + periodRevenue,
+      profit: metrics.profit + periodProfit,
+      expenses: metrics.expenses + periodCosts,
+      customers: metrics.customers + newCustomers,
+      reputation: Math.min(100, Math.max(0, metrics.reputation + reputationDelta)),
+      stress: Math.min(100, Math.max(0, metrics.stress + stressDelta)),
+      satisfaction: Math.min(100, Math.max(0, metrics.satisfaction + satisfactionDelta)),
+      cash: metrics.cash + periodProfit,
+      valuation: Math.max(
+        0,
+        Math.round((metrics.revenue + periodRevenue) * 1.35 + Math.max(0, metrics.profit + periodProfit) * 2 + Math.max(0, metrics.reputation) * 75),
+      ),
+      weeklyRevenue: periodRevenue,
+      weeklyCosts: periodCosts,
+    };
 
-      const achievements = checkAchievements(nextMetrics, previous.achievements);
+    const achievements = checkAchievements(nextMetrics, previous.achievements);
+    const nextDay = previous.day + daysToAdvance;
+    const crossedWeekBoundary = nextDay > 7;
+    const week = previous.week + (crossedWeekBoundary ? 1 : 0);
+    const day = crossedWeekBoundary ? 1 : nextDay;
 
-      let showEvent = null;
-      if (Math.random() < 0.2 && previous.week > 1) {
-        const available = BUSINESS_EVENTS.filter((event) => !previous.eventsEncountered.includes(event.id));
-        if (available.length > 0) {
-          showEvent = available[Math.floor(Math.random() * available.length)];
-        }
+    let showEvent = null;
+    if (crossedWeekBoundary && Math.random() < 0.2 && week > 1) {
+      const available = BUSINESS_EVENTS.filter((event) => !previous.eventsEncountered.includes(event.id));
+      if (available.length > 0) {
+        showEvent = available[Math.floor(Math.random() * available.length)];
       }
+    }
 
-      const week = previous.week + 1;
-      const gameOver = nextMetrics.cash < -500 || nextMetrics.stress >= 100;
+    const gameOver = nextMetrics.cash < -500 || nextMetrics.stress >= 100;
+    const lessons = [...previous.lessons];
+    if (pricePoint < productionCost * 1.2 && !lessons.includes("low-price")) lessons.push("low-price");
+    if (activeMarketing.length === 0 && week > 3 && !lessons.includes("no-marketing")) lessons.push("no-marketing");
+    if (nextMetrics.stress > 70 && !lessons.includes("high-stress")) lessons.push("high-stress");
 
-      const lessons = [...previous.lessons];
-      if (pricePoint < productionCost * 1.2 && !lessons.includes("low-price")) lessons.push("low-price");
-      if (activeMarketing.length === 0 && week > 3 && !lessons.includes("no-marketing")) lessons.push("no-marketing");
-      if (nextMetrics.stress > 70 && !lessons.includes("high-stress")) lessons.push("high-stress");
+    return {
+      ...previous,
+      week,
+      day,
+      metrics: nextMetrics,
+      metricsHistory: crossedWeekBoundary ? [...previous.metricsHistory, nextMetrics] : previous.metricsHistory,
+      achievements,
+      showEvent,
+      eventsEncountered: showEvent ? [...previous.eventsEncountered, showEvent.id] : previous.eventsEncountered,
+      gameOver,
+      lessons,
+    };
+  }, [checkAchievements]);
 
-      return {
-        ...previous,
-        week,
-        metrics: nextMetrics,
-        metricsHistory: [...previous.metricsHistory, nextMetrics],
-        achievements,
-        showEvent,
-        eventsEncountered: showEvent ? [...previous.eventsEncountered, showEvent.id] : previous.eventsEncountered,
-        gameOver,
-        lessons,
-      };
-    });
+  const advanceDay = () => {
+    setState((previous) => simulateProgress(previous, 1));
+  };
+
+  const advanceWeek = () => {
+    setState((previous) => simulateProgress(previous, 7));
   };
 
   const handleEventChoice = (eventId: string, choiceId: string) => {
@@ -280,6 +298,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       toggleMarketing,
       hireEmployee,
       fireEmployee,
+      advanceDay,
       advanceWeek,
       handleEventChoice,
       dismissEvent,

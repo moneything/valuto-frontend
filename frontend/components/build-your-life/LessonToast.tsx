@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
@@ -8,6 +9,16 @@ interface Props {
 }
 
 export default function LessonToast({ lesson, onDismiss }: Props) {
+  useEffect(() => {
+    if (!lesson) return;
+
+    const timer = setTimeout(() => {
+      onDismiss();
+    }, 1400);
+
+    return () => clearTimeout(timer);
+  }, [lesson, onDismiss]);
+
   return (
     <AnimatePresence>
       {lesson ? (

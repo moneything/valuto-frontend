@@ -170,7 +170,7 @@ export function GameProvider({ children }: { children: ReactNode }) {
       return sum + channel.conversionRate * 0.45;
     }, 0);
     const employeeBoost = employees.reduce((sum, employee) => sum + employee.productivity / 160, 0);
-    const teamSupport = employees.reduce((sum, employee) => sum + employee.productivity / 220, 0);
+    const teamSupport = employees.reduce((sum, employee) => sum + employee.productivity / 140, 0);
     const reputationBoost = Math.max(-1.8, (metrics.reputation - 50) / 28);
     const repeatCustomerDrag = Math.min(3.2, metrics.customers / 120);
     const saturationMultiplier = Math.max(0.18, 1 - metrics.customers / 1500);
@@ -182,18 +182,18 @@ export function GameProvider({ children }: { children: ReactNode }) {
       const channel = MARKETING_CHANNELS.find((item) => item.id === channelId);
       return sum + (channel?.costPerWeek || 0);
     }, 0) * fractionOfWeek);
-    const marketingStressLoad = activeMarketing.length * 0.35 * daysToAdvance;
+    const marketingStressLoad = activeMarketing.length * 0.15 * daysToAdvance;
     const employeeCosts = Math.round(employees.reduce((sum, employee) => sum + employee.cost, 0) * fractionOfWeek);
     const productionCosts = newCustomers * productionCost;
     const periodCosts = marketingCosts + employeeCosts + productionCosts;
     const periodProfit = periodRevenue - periodCosts;
     const reputationDelta = periodProfit > 180 * fractionOfWeek ? 1 : periodProfit < 0 ? -1 : 0;
-    const baseStressDelta = periodProfit < -180 * fractionOfWeek
-      ? 3 * daysToAdvance
+    const baseStressDelta = periodProfit < -220 * fractionOfWeek
+      ? 2 * daysToAdvance
       : periodProfit < -40 * fractionOfWeek
-        ? 2 * daysToAdvance
+        ? daysToAdvance
         : periodProfit < 60 * fractionOfWeek
-          ? daysToAdvance
+          ? 0
           : -daysToAdvance;
     const stressDelta = Math.round(baseStressDelta + marketingStressLoad - teamSupport * fractionOfWeek);
     const satisfactionDelta = periodProfit > 200 * fractionOfWeek ? 1 : periodProfit < -50 * fractionOfWeek ? -1 : 0;

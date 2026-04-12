@@ -37,42 +37,42 @@ export default function SummaryScreen({ state, onRestart }: Props) {
 
         {state.avatar ? (
           <div className="mb-6 flex justify-center">
-            <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-amber-300/25 bg-[rgba(10,16,14,0.92)] shadow-[0_0_28px_rgba(251,191,36,0.15)]">
+            <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border border-amber-300/20 bg-[rgba(27,31,39,0.98)] shadow-[0_0_22px_rgba(245,158,11,0.12)]">
               <AvatarPreview config={state.avatar} size={90} />
             </div>
           </div>
         ) : null}
 
-        <div className="mb-6 rounded-2xl border border-white/10 bg-[rgba(10,16,14,0.88)] p-8 backdrop-blur-xl">
+        <div className="mb-6 rounded-2xl border border-white/8 bg-[rgba(27,31,39,0.98)] p-8 backdrop-blur-xl">
           <div className={`mb-2 font-display text-7xl font-bold ${gradeColor}`}>{grade}</div>
-          <div className="mb-2 text-sm text-[#8ea097]">Financial Life Grade</div>
+          <div className="mb-2 text-sm text-[#94a8a0]">Financial Life Grade</div>
           <div className="mb-6 font-display text-lg font-bold text-amber-300">Life Score: {state.lifeScore}</div>
 
           <div className="mb-6 grid grid-cols-2 gap-4 text-left">
-            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-              <div className="font-display text-xs uppercase text-[#8ea097]">Final Net Worth</div>
+            <div className="rounded-lg border border-white/8 bg-[#1B1F27] p-3">
+              <div className="font-display text-xs uppercase text-[#94a8a0]">Final Net Worth</div>
               <div className="font-display text-xl font-bold text-emerald-300">{formatMoney(state.netWorth)}</div>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-              <div className="font-display text-xs uppercase text-[#8ea097]">Final Salary</div>
+            <div className="rounded-lg border border-white/8 bg-[#1B1F27] p-3">
+              <div className="font-display text-xs uppercase text-[#94a8a0]">Final Salary</div>
               <div className="font-display text-xl font-bold text-white">{formatMoney(state.salary)}</div>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-              <div className="font-display text-xs uppercase text-[#8ea097]">Happiness</div>
+            <div className="rounded-lg border border-white/8 bg-[#1B1F27] p-3">
+              <div className="font-display text-xs uppercase text-[#94a8a0]">Happiness</div>
               <div className="font-display text-xl font-bold text-amber-300">{state.happiness}%</div>
             </div>
-            <div className="rounded-lg border border-white/10 bg-white/[0.04] p-3">
-              <div className="font-display text-xs uppercase text-[#8ea097]">Achievements</div>
+            <div className="rounded-lg border border-white/8 bg-[#1B1F27] p-3">
+              <div className="font-display text-xs uppercase text-[#94a8a0]">Achievements</div>
               <div className="font-display text-xl font-bold text-white">{state.achievements.length}</div>
             </div>
           </div>
 
           {state.traits.length > 0 ? (
             <div className="mb-4">
-              <div className="mb-2 font-display text-xs uppercase text-[#8ea097]">Your Traits</div>
+              <div className="mb-2 font-display text-xs uppercase text-[#94a8a0]">Your Traits</div>
               <div className="flex flex-wrap justify-center gap-2">
                 {state.traits.map((trait) => (
-                  <span key={trait} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-white capitalize">
+                  <span key={trait} className="rounded-full border border-white/8 bg-[#1B1F27] px-3 py-1 text-sm text-white capitalize">
                     {trait.replace("-", " ")}
                   </span>
                 ))}
@@ -83,7 +83,7 @@ export default function SummaryScreen({ state, onRestart }: Props) {
           {state.achievements.length > 0 ? (
             <div className="mb-6 flex flex-wrap justify-center gap-2">
               {state.achievements.map((achievement) => (
-                <span key={achievement.id} className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-sm text-white">
+                <span key={achievement.id} className="rounded-full border border-white/8 bg-[#1B1F27] px-3 py-1 text-sm text-white">
                   {achievement.icon} {achievement.title}
                 </span>
               ))}
@@ -97,11 +97,11 @@ export default function SummaryScreen({ state, onRestart }: Props) {
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={onRestart}
-          className="rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-300 px-8 py-4 font-display text-lg font-bold text-[#04120c] shadow-[0_0_30px_rgba(52,211,153,0.35)]"
+          className="rounded-xl bg-gradient-to-r from-emerald-400 to-emerald-500 px-8 py-4 font-display text-lg font-bold text-[#03110b] shadow-[0_0_26px_rgba(16,185,129,0.28)]"
         >
           Play Again
         </motion.button>
-        <p className="mt-3 text-sm text-[#8ea097]">New avatar, new traits, new strategy. Compare your outcomes.</p>
+        <p className="mt-3 text-sm text-[#94a8a0]">New avatar, new traits, new strategy. Compare your outcomes.</p>
       </motion.div>
     </div>
   );

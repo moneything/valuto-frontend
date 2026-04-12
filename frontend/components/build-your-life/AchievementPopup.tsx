@@ -18,10 +18,10 @@ export default function AchievementPopup({ achievements }: Props) {
 
     setCurrent(nextAchievement);
     setShown((previous) => new Set(previous).add(nextAchievement.id));
-    const timer = setTimeout(() => setCurrent(null), 3000);
+    const timer = setTimeout(() => setCurrent(null), 1400);
 
     return () => clearTimeout(timer);
-  }, [achievements, shown]);
+  }, [achievements]);
 
   return (
     <AnimatePresence>
@@ -30,7 +30,7 @@ export default function AchievementPopup({ achievements }: Props) {
           initial={{ opacity: 0, y: -50, scale: 0.8 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           exit={{ opacity: 0, y: -50, scale: 0.8 }}
-          className="fixed left-1/2 top-6 z-50 -translate-x-1/2"
+          className="fixed left-1/2 top-20 z-50 -translate-x-1/2"
         >
           <div className="flex items-center gap-3 rounded-xl border border-amber-300/20 bg-[rgba(27,31,39,0.98)] px-6 py-4 shadow-[0_0_22px_rgba(245,158,11,0.14)] backdrop-blur-xl">
             <span className="text-3xl">{current.icon}</span>

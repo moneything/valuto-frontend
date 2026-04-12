@@ -99,7 +99,7 @@ export default function Stage2Research() {
           </div>
         </div>
 
-        {!analysisComplete ? <GameButton onClick={() => setAnalysisComplete(true)}>Complete Analysis</GameButton> : null}
+        {!analysisComplete ? <GameButton onClick={() => setAnalysisComplete(true)}>Complete Analysis ✓</GameButton> : null}
       </Card>
 
       {analysisComplete ? (
@@ -138,7 +138,7 @@ export default function Stage2Research() {
                       : "Smart move. The best entrepreneurs adapt their strategy based on data."}
                   </p>
                 </div>
-                <GameButton onClick={() => setStage(3)}>Move to Pricing</GameButton>
+                <GameButton onClick={() => setStage(3)}>Move to Pricing →</GameButton>
               </motion.div>
             ) : null}
           </Card>

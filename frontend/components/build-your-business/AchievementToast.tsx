@@ -5,19 +5,25 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useGame } from "@/components/build-your-business/GameContext";
 
 export default function AchievementToast() {
-  const { state, newAchievements, clearNewAchievements } = useGame();
+  const { state, newAchievements, consumeNewAchievement } = useGame();
   const [showing, setShowing] = useState<string | null>(null);
 
   useEffect(() => {
-    if (newAchievements.length > 0 && !showing) {
+    if (!showing && newAchievements.length > 0) {
       setShowing(newAchievements[0]);
-      const timer = setTimeout(() => {
-        setShowing(null);
-        clearNewAchievements();
-      }, 1600);
-      return () => clearTimeout(timer);
     }
-  }, [newAchievements, showing, clearNewAchievements]);
+  }, [newAchievements, showing]);
+
+  useEffect(() => {
+    if (!showing) return;
+
+    const timer = setTimeout(() => {
+      setShowing(null);
+      consumeNewAchievement();
+    }, 1400);
+
+    return () => clearTimeout(timer);
+  }, [showing, consumeNewAchievement]);
 
   const achievement = state.achievements.find((item) => item.id === showing);
 

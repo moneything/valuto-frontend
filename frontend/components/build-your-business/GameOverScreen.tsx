@@ -27,6 +27,8 @@ export default function GameOverScreen() {
         <div className="grid grid-cols-2 gap-2 text-sm">
           <span className="text-[#94a8a0]">Weeks survived:</span>
           <span className="text-right font-display font-bold text-white">{state.week}</span>
+          <span className="text-[#94a8a0]">Final day:</span>
+          <span className="text-right font-display font-bold text-white">{state.day}</span>
           <span className="text-[#94a8a0]">Total revenue:</span>
           <span className="text-right font-display font-bold text-white">£{metrics.revenue.toLocaleString()}</span>
           <span className="text-[#94a8a0]">Total customers:</span>

@@ -88,7 +88,7 @@ export default function Stage5Marketing() {
         </div>
       ) : null}
 
-      <GameButton onClick={() => setStage(6)}>Launch & Grow!</GameButton>
+      <GameButton onClick={() => setStage(6)}>Launch & Grow! 🚀</GameButton>
     </motion.div>
   );
 }

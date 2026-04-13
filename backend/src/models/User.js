@@ -216,7 +216,7 @@ userSchema.statics.getLeaderboard = async function (options = {}) {
   }
 
   return this.find(query)
-    .select('name title role email school totalPoints gamesPlayed lessonsCompleted')
+    .select('name title role school totalPoints gamesPlayed lessonsCompleted')
     .sort({ totalPoints: -1 })
     .limit(limit)
     .lean();

@@ -102,7 +102,7 @@ This document provides a comprehensive analysis of all game-related features, sc
 
 ---
 
-### 1.5 **Daily Challenges**
+### 1.5 **Daily and Weekly Challenges**
 - **Location**: `frontend/app/dashboard/challenges/page.tsx`
 
 **Challenge Types**:
@@ -140,7 +140,7 @@ This document provides a comprehensive analysis of all game-related features, sc
 ### 2.1 **Point Sources**
 Based on code analysis, users earn points from:
 - **Trivia Games**: 100 points per correct answer (varies by question)
-- **Daily Challenges**: 50-200 points per challenge
+- **Daily and Weekly Challenges**: 50-200 points per challenge
 - **Learning Modules**: Points for completion (not explicitly defined in code)
 
 ### 2.2 **Profile Statistics** (from `dashboard/profile/page.tsx`)
@@ -315,4 +315,3 @@ Currently displaying:
 **Document Version**: 1.0  
 **Last Updated**: October 22, 2025  
 **Author**: Senior Full-Stack Engineer
-

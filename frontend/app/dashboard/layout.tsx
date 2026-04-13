@@ -148,9 +148,6 @@ export default function DashboardLayout({
           <div className="flex h-16 items-center justify-between">
             <Link href="/dashboard" className="flex items-center">
               <Image src="/valuto-logo.png" alt="Valuto Logo" width={40} height={40} />
-              <span className="flex items-end bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-2xl font-bold font-serif text-transparent">
-                aluto
-              </span>
               <span className="ml-3 hidden rounded-full border border-valuto-green-500/30 bg-valuto-green-500/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.18em] text-valuto-green-100 lg:inline-flex">
                 {profile?.role === "teacher" ? "Teacher Hub" : "Student Hub"}
               </span>

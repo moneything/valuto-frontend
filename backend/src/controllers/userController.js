@@ -176,7 +176,10 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
  */
 const completeOnboarding = asyncHandler(async (req, res) => {
   const { userId } = req.auth;
-  const updates = req.body;
+  const updates = {
+    ...req.body,
+    role: 'student',
+  };
 
   const user = await User.findOneAndUpdate(
     { clerkUserId: userId },
@@ -203,7 +206,7 @@ const completeOnboarding = asyncHandler(async (req, res) => {
  * @access Private
  */
 const createOrUpdateUser = asyncHandler(async (req, res) => {
-  const { name, title, email, role, age, school, grade, subject, completedOnboarding } = req.body;
+  const { name, title, email, age, school, grade, subject, completedOnboarding } = req.body;
   const { userId } = req.auth;
 
   let user = await User.findOne({ clerkUserId: userId });
@@ -212,7 +215,7 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
     user.name = name || user.name;
     user.title = title !== undefined ? title : user.title;
     user.email = email || user.email;
-    user.role = role || user.role;
+    user.role = 'student';
     if (age !== undefined) user.age = age;
     if (school !== undefined) user.school = school;
     if (grade !== undefined) user.grade = grade;
@@ -233,7 +236,7 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
       name,
       title,
       email,
-      role: role || 'student',
+      role: 'student',
       age,
       school,
       grade,
@@ -330,7 +333,6 @@ const getUserStats = asyncHandler(async (req, res) => {
   ]);
 
   const usersAbove = await User.countDocuments({
-    role: user.role,
     isActive: true,
     totalPoints: { $gt: user.totalPoints },
   });
@@ -584,21 +586,26 @@ const deleteUser = asyncHandler(async (req, res) => {
 
 
 /**
- * @desc Get user statistics by database ID (for teachers/admins)
+ * @desc Get user statistics by database ID
  * @route GET /api/user/:id/stats
- * @access Private (Teacher/Admin only)
+ * @access Private
  */
 const getUserStatsById = asyncHandler(async (req, res) => {
   const { id } = req.params;
   const clerkUserId = req.clerkUser?.id; // auth context
 
   const requestingUser = await User.findOne({ clerkUserId });
-  if (!requestingUser || requestingUser.role !== "teacher") {
-    throw new AppError("Only teachers can view student stats", 403);
-  }
+  if (!requestingUser) throw new AppError("User profile not found", 404);
 
   const targetUser = await User.findById(id);
-  if (!targetUser) throw new AppError("Student not found", 404);
+  if (!targetUser) throw new AppError("User not found", 404);
+  if (
+    !requestingUser.school ||
+    !targetUser.school ||
+    requestingUser.school.trim().toLowerCase() !== targetUser.school.trim().toLowerCase()
+  ) {
+    throw new AppError("You can only view stats for users in your school", 403);
+  }
 
   const GameResult = require("../models/GameResult");
   const LearningProgress = require("../models/LearningProgress");
@@ -611,7 +618,6 @@ const getUserStatsById = asyncHandler(async (req, res) => {
   ]);
 
   const usersAbove = await User.countDocuments({
-    role: targetUser.role,
     isActive: true,
     totalPoints: { $gt: targetUser.totalPoints },
   });

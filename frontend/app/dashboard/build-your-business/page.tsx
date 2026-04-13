@@ -45,7 +45,7 @@ function LandingScreen({ onStart }: { onStart: () => void }) {
             transition={{ delay: 0.2 }}
             className="flex justify-center"
           >
-            <Image src="/favicon.svg" alt="Valuto" width={48} height={48} className="h-12 w-12" />
+            <Image src="/valuto-logo.png" alt="Valuto" width={48} height={48} className="h-12 w-12" />
           </motion.div>
 
           <div className="space-y-4">
@@ -162,7 +162,7 @@ function GameContent({ onExit }: { onExit: () => void }) {
             }}
             className="flex items-center gap-2"
           >
-            <Image src="/favicon.svg" alt="Valuto" width={28} height={28} />
+            <Image src="/valuto-logo.png" alt="Valuto" width={28} height={28} />
             <span className="font-display text-sm font-semibold text-white">Build Your Business</span>
           </button>
           <MetricsBar />

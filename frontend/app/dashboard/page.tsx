@@ -30,7 +30,7 @@ export default function DashboardPage() {
   const { user: clerkUser, isLoaded: isClerkLoaded } = useClerkUser();
 
   // ✅ align names with userContext
-  const { profile, isLoadingProfile, isTeacher } = useUser();
+  const { profile, isLoadingProfile } = useUser();
   const { categories } = useLearningCategories();
   const { modules } = useLearningModules();
 
@@ -138,76 +138,6 @@ export default function DashboardPage() {
   // ✅ this now works correctly
   if (!profile) return null;
 
-  const studentCards: Array<{
-    title: string;
-    description: string;
-    icon: React.ReactElement;
-    href: string;
-    badge?: string;
-    color?: string;
-  }> = [
-    {
-      title: 'Trivia Games',
-      description: 'Join exciting Kahoot-style games and test your financial knowledge',
-      icon: <GameControllerIcon className="w-8 h-8" />,
-      href: '/dashboard/trivia',
-      badge: '2 Active'
-    },
-    {
-      title: 'Investment Calculator',
-      description: 'See how your money can grow with our interactive calculator',
-      icon: <CalculatorIcon className="w-8 h-8" />,
-      href: '/dashboard/calculator'
-    },
-    {
-      title: 'Build Your Life',
-      description: 'Design your future lifestyle and see how career, city, savings, and housing choices shape it',
-      icon: <TargetIcon className="w-8 h-8" />,
-      href: '/dashboard/build-your-life',
-      badge: 'New'
-    },
-    {
-      title: 'Build Your Business',
-      description: 'Create, launch, and grow your own startup through a stage-based business simulator',
-      icon: <TrendingUpIcon className="w-8 h-8" />,
-      href: '/dashboard/build-your-business',
-      badge: 'New'
-    },
-    {
-      title: 'Investment Simulation',
-      description: 'Practice investing in a risk-free environment with real market scenarios',
-      icon: <TrendingUpIcon className="w-8 h-8" />,
-      href: '/dashboard/investment',
-      badge: 'New'
-    },
-    {
-      title: 'Interactive Learning Modules',
-      description: 'Master financial concepts through interactive games, simulations, and quizzes',
-      icon: <BookOpenIcon className="w-8 h-8" />,
-      href: '/dashboard/learning-modules',
-      badge: 'Interactive'
-    },
-    {
-      title: 'Leaderboard',
-      description: 'See how you rank against other students',
-      icon: <CrownIcon className="w-8 h-8" />,
-      href: '/dashboard/leaderboard'
-    },
-    {
-      title: 'Challenges',
-      description: 'Complete daily challenges and earn rewards',
-      icon: <TargetIcon className="w-8 h-8" />,
-      href: '/dashboard/challenges'
-    },
-    {
-      title: 'Valuto AI',
-      description: 'Get instant financial advice and answers from our friendly AI assistant',
-      icon: <LightBulbIcon className="w-8 h-8" />,
-      href: '/dashboard/ai-chat',
-      badge: 'AI'
-    }
-  ];
-
   const teacherCards: Array<{
     title: string;
     description: string;
@@ -276,7 +206,7 @@ export default function DashboardPage() {
     }
   ];
 
-  const cards = isTeacher ? teacherCards : studentCards;
+  const cards = teacherCards;
   const progression = userStats?.progression;
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -565,19 +495,17 @@ export default function DashboardPage() {
                   </span>
                 </motion.button>
 
-                {isTeacher && (
-                  <motion.button
-                    className="w-full rounded-2xl border-2 border-primary/50 bg-primary/10 px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-primary sm:w-auto"
-                    onClick={handleCreateGame}
-                    whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsl(152 100% 45% / 0.4)" }}
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    <span className="flex items-center justify-center gap-2">
-                      <PlusLucide className="h-5 w-5" />
-                      Create Game
-                    </span>
-                  </motion.button>
-                )}
+                <motion.button
+                  className="w-full rounded-2xl border-2 border-primary/50 bg-primary/10 px-8 py-4 font-display text-lg font-bold uppercase tracking-wider text-primary sm:w-auto"
+                  onClick={handleCreateGame}
+                  whileHover={{ scale: 1.05, boxShadow: "0 0 30px hsl(152 100% 45% / 0.4)" }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  <span className="flex items-center justify-center gap-2">
+                    <PlusLucide className="h-5 w-5" />
+                    Create Game
+                  </span>
+                </motion.button>
               </div>
             </motion.div>
           </div>

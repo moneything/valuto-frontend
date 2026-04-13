@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useCallback } from "react";
 import { useAuth } from "@clerk/nextjs";
-import { useUserProfile } from "@/lib/userContext";
 
 type Challenge = {
   _id: string;
@@ -16,7 +15,6 @@ type Challenge = {
 
 export default function ChallengesPage() {
   const { getToken } = useAuth();
-  const { isTeacher } = useUserProfile();
   const [challenges, setChallenges] = useState<Challenge[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -97,12 +95,8 @@ export default function ChallengesPage() {
         </div>
       ) : challenges.length === 0 ? (
         <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
-          <div className="text-5xl mb-4">🧑‍🏫</div>
-          <p className="text-[#9a9a9d]">
-            {isTeacher
-              ? "Teacher daily challenges are coming soon."
-              : "No challenges available right now. Check back soon!"}
-          </p>
+          <div className="text-5xl mb-4">🎯</div>
+          <p className="text-[#9a9a9d]">No challenges available right now. Check back soon.</p>
         </div>
       ) : (
         <div className="space-y-4">

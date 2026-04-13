@@ -3,19 +3,15 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '@clerk/nextjs';
 import { leaderboardApi } from '@/lib/api';
-import { useUser } from '@/lib/userContext';
 import { formatDisplayName } from '@/lib/utils';
 
 export default function LeaderboardPage() {
   const { getToken } = useAuth();
-  const { isTeacher, isStudent, isLoadingProfile } = useUser();
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   useEffect(() => {
-    if (isLoadingProfile) return;
-
     const fetchLeaderboard = async () => {
       try {
         setLoading(true);
@@ -27,16 +23,11 @@ export default function LeaderboardPage() {
           return;
         }
 
-        if (isTeacher) {
-          const enriched = await leaderboardApi.getEnrichedLeaderboard(token);
-          setLeaderboard(enriched || []);
+        const response = await leaderboardApi.getGlobal(token, 10);
+        if (response.success && response.data?.leaderboard) {
+          setLeaderboard(response.data.leaderboard);
         } else {
-          const response = await leaderboardApi.getGlobal(token, 10);
-          if (response.success && response.data?.leaderboard) {
-            setLeaderboard(response.data.leaderboard);
-          } else {
-            setError(response.error || 'Failed to load leaderboard');
-          }
+          setError(response.error || 'Failed to load leaderboard');
         }
       } catch (err: any) {
         console.error('Failed to fetch leaderboard:', err);
@@ -47,7 +38,7 @@ export default function LeaderboardPage() {
     };
 
     fetchLeaderboard();
-  }, [getToken, isTeacher, isLoadingProfile]);
+  }, [getToken]);
 
   if (loading) {
     return (
@@ -66,12 +57,10 @@ export default function LeaderboardPage() {
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <div className="mb-8">
         <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
-          {isTeacher ? 'Class Leaderboard 👑' : 'Leaderboard 👑'}
+          Leaderboard 👑
         </h1>
         <p className="text-lg text-[#9a9a9d]">
-          {isTeacher
-            ? 'Track your students’ standings, activity, and progress'
-            : 'See how you rank against other students'}
+          See how everyone is ranking across the platform
         </p>
       </div>
 
@@ -93,55 +82,14 @@ export default function LeaderboardPage() {
       {leaderboard.length === 0 ? (
         <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-12 text-center shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
           <div className="text-6xl mb-4">📊</div>
-          <h3 className="mb-2 text-xl font-bold text-white">
-            {isTeacher ? 'No student activity yet' : 'No Rankings Yet'}
-          </h3>
-          <p className="mb-6 text-[#9a9a9d]">
-            {isTeacher
-              ? 'Invite your students to play trivia to populate the leaderboard.'
-              : 'Be the first to play games and earn points!'}
-          </p>
+          <h3 className="mb-2 text-xl font-bold text-white">No Rankings Yet</h3>
+          <p className="mb-6 text-[#9a9a9d]">Be the first to play games and earn points.</p>
           <a
             href="/dashboard/trivia"
             className="inline-block rounded-lg border border-valuto-green-500/20 bg-valuto-green-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-valuto-green-700"
           >
-            {isTeacher ? 'Create a Trivia Game' : 'Play Trivia Games'}
+            Play Trivia Games
           </a>
-        </div>
-      ) : isTeacher ? (
-        <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
-          <div className="mb-3 grid grid-cols-10 px-2 text-sm font-semibold text-[#9a9a9d]">
-            <div className="col-span-1 text-center">Place</div>
-            <div className="col-span-4">Student</div>
-            <div className="col-span-2 text-right">Games</div>
-            <div className="col-span-2 text-right">Lessons</div>
-            <div className="col-span-1 text-right">Points</div>
-          </div>
-          <div className="divide-y divide-white/10">
-            {leaderboard.map((student: any, index: number) => (
-              <div key={`${student.rank}-${student.name}-${index}`} className="grid grid-cols-10 items-center py-3 px-2">
-                {/* Trophy for top 3 */}
-                {index < 1 ? (
-                  <div className="text-3xl text-center">
-                    {index === 0 ? '🏆' : index === 1 ? '🥈' : '🥉'}
-                  </div>
-                ) : (
-                  <div 
-                    className="col-span-1 w-fit items-center justify-self-center rounded-full bg-white/10 pl-2 pr-2 text-3xl font-bold text-white">
-                    {student.rank}
-                  </div>
-                )}
-                <div className="col-span-4">
-                  <p className="font-semibold text-white">{student.name}</p>
-                </div>
-                <div className="col-span-2 text-right text-[#d7d7db]">{student.gamesPlayed}</div>
-                <div className="col-span-2 text-right text-[#d7d7db]">{student.lessonsCompleted}</div>
-                <div className="col-span-1 text-right font-bold text-valuto-green-300">
-                  {student.points?.toLocaleString() || 0}
-                </div>
-              </div>
-            ))}
-          </div>
         </div>
       ) : (
         <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">

@@ -11,7 +11,7 @@ export default function Footer() {
           <div className="flex flex-col gap-10 max-w-64">
             <div className="">
               <a href="/" className="flex-start bg-black flex">
-                <Image src="/favicon.svg" alt="Valuto logo" width={26} height={26} />
+                <Image src="/valuto-logo.png" alt="Valuto logo" width={26} height={26} />
                 <span className="h-8 m-0 text-lg font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end">aluto</span>
               </a>
               <p className="mt-3 max-w-sm text-md leading-relaxed text-slate-400">

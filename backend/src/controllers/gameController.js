@@ -59,11 +59,6 @@ const submitGameResult = asyncHandler(async (req, res) => {
 
   // Update related challenges (e.g., daily trivia)
   try {
-    if (user.role === 'teacher') {
-      // Teachers do not have student challenges
-      return;
-    }
-
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
     const endOfDay = new Date(startOfDay);

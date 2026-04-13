@@ -33,7 +33,6 @@ export default function Header() {
           <div className="flex items-center">
             <a href="/" className="flex items-center">
               <Image src="/valuto-logo.png" alt="Valuto Logo" width={40} height={40} />
-              <span className="text-2xl font-bold font-serif bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-transparent flex items-end h-[-webkit-fill-available]">aluto</span>
             </a>
           </div>
 

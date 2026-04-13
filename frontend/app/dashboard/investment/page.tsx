@@ -12,8 +12,10 @@ import {
   InvestmentResult,
 } from "./logic/gameLogic";
 import { FiTrendingUp } from "react-icons/fi";
+import { useFeaturedGameMonthlyChallenge } from "@/lib/hooks/useFeaturedGameMonthlyChallenge";
 
 export default function InvestmentPage() {
+  useFeaturedGameMonthlyChallenge("monthly_investment_simulation");
   const [started, setStarted] = useState(false);
   const [round, setRound] = useState(1);
   const [balance, setBalance] = useState(1000);

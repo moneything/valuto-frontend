@@ -37,6 +37,7 @@ const validateUserCreation = [
   body("email").isEmail().withMessage("Valid email is required").normalizeEmail(),
 
   body("role")
+    .optional()
     .isIn(["student", "teacher"])
     .withMessage("Role must be either student or teacher"),
 
@@ -44,14 +45,7 @@ const validateUserCreation = [
     .optional()
     .trim()
     .isLength({ min: 2, max: 20 })
-    .withMessage("Title must be between 2 and 20 characters")
-    .bail()
-    .custom((value, { req }) => {
-      if (req.body.role === "teacher" && (!value || !value.trim())) {
-        throw new Error("Title is required for teachers");
-      }
-      return true;
-    }),
+    .withMessage("Title must be between 2 and 20 characters"),
 
   body("age").optional().isInt({ min: 5, max: 120 }),
 

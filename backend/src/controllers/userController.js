@@ -16,6 +16,15 @@ function assertSchoolChangeAllowed(user, nextSchool) {
   throw new AppError('School cannot be changed after it has been set', 403);
 }
 
+function assertSameSchoolAccess(requestingUser, targetUser) {
+  const requestingSchool = normalizeSchoolName(requestingUser?.school).toLowerCase();
+  const targetSchool = normalizeSchoolName(targetUser?.school).toLowerCase();
+
+  if (!requestingSchool || !targetSchool || requestingSchool !== targetSchool) {
+    throw new AppError('You can only view stats for users in your school', 403);
+  }
+}
+
 function calculateLevelFromXp(xp = 0) {
   return Math.max(1, Math.floor(xp / 100) + 1);
 }
@@ -616,13 +625,7 @@ const getUserStatsById = asyncHandler(async (req, res) => {
 
   const targetUser = await User.findById(id);
   if (!targetUser) throw new AppError("User not found", 404);
-  if (
-    !requestingUser.school ||
-    !targetUser.school ||
-    requestingUser.school.trim().toLowerCase() !== targetUser.school.trim().toLowerCase()
-  ) {
-    throw new AppError("You can only view stats for users in your school", 403);
-  }
+  assertSameSchoolAccess(requestingUser, targetUser);
 
   const GameResult = require("../models/GameResult");
   const LearningProgress = require("../models/LearningProgress");

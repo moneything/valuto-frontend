@@ -16,6 +16,7 @@ import Timeline from "@/components/build-your-life/Timeline";
 import SummaryScreen from "@/components/build-your-life/SummaryScreen";
 import AIAdvisor from "@/components/build-your-life/AIAdvisor";
 import { useGameEngine } from "@/components/build-your-life/useGameEngine";
+import { useFeaturedGameMonthlyChallenge } from "@/lib/hooks/useFeaturedGameMonthlyChallenge";
 import {
   AvatarConfig,
   CareerPath,
@@ -28,6 +29,7 @@ import {
 type SetupStep = "welcome" | "avatar" | "traits" | "background";
 
 export default function BuildYourLifePage() {
+  useFeaturedGameMonthlyChallenge("monthly_build_your_life");
   const { state, startGame, makeDecision, resolveEvent, dismissLesson, restart, skipYear } =
     useGameEngine();
   const [setupStep, setSetupStep] = useState<SetupStep>("welcome");

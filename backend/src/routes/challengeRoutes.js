@@ -14,11 +14,11 @@ const { validateChallenge, validatePaginationParams } = require('../utils/valida
 
 /**
  * Challenge Routes
- * Handles daily challenges and special tasks
+ * Handles daily and weekly challenges and special tasks
  */
 
 // @route   GET /api/challenges/daily
-// @desc    Get user's daily challenges
+// @desc    Get user's daily and weekly challenges
 // @access  Private
 router.get('/daily', authenticateClerkUser, getDailyChallenges);
 

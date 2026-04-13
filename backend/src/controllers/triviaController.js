@@ -10,7 +10,7 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
 /**
  * @desc    Create trivia session via REST
  * @route   POST /api/trivia/session
- * @access  Private (Teacher only)
+ * @access  Private
  */
 const createSession = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
@@ -26,13 +26,9 @@ const createSession = asyncHandler(async (req, res) => {
       clerkUserId,
       name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || 'User',
       email: clerkUser.emailAddresses[0]?.emailAddress || `user_${clerkUserId}@placeholder.com`,
-      role: 'teacher',
+      role: 'student',
       completedOnboarding: false,
     });
-  }
-
-  if (user.role !== 'teacher') {
-    throw new AppError('Only teachers can create trivia sessions', 403);
   }
 
   const joinCode = await Session.generateJoinCode();
@@ -142,9 +138,9 @@ const getUserSessions = asyncHandler(async (req, res) => {
   const user = await User.findOne({ clerkUserId });
   if (!user) throw new AppError('User profile not found', 404);
 
-  let query = user.role === 'teacher'
-    ? { hostId: clerkUserId }
-    : { 'players.userId': clerkUserId };
+  let query = {
+    $or: [{ hostId: clerkUserId }, { 'players.userId': clerkUserId }],
+  };
 
   if (status) query.status = status;
 

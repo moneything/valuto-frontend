@@ -12,11 +12,10 @@ const { asyncHandler } = require('../utils/errorHandler');
  * @access  Public
  */
 const getGlobalLeaderboard = asyncHandler(async (req, res) => {
-  const { limit = 100, role = 'student', school } = req.query;
+  const { limit = 100, school } = req.query;
 
   const leaderboard = await User.getLeaderboard({
     limit: parseInt(limit),
-    role,
     school,
   });
 
@@ -31,7 +30,6 @@ const getGlobalLeaderboard = asyncHandler(async (req, res) => {
     data: {
       leaderboard: rankedLeaderboard,
       filters: {
-        role,
         school: school || 'all',
         limit: parseInt(limit),
       },
@@ -59,7 +57,6 @@ const getUserRank = asyncHandler(async (req, res) => {
 
   // Calculate global rank
   const usersAbove = await User.countDocuments({
-    role: currentUser.role,
     isActive: true,
     totalPoints: { $gt: currentUser.totalPoints },
   });
@@ -70,7 +67,6 @@ const getUserRank = asyncHandler(async (req, res) => {
   let schoolRank = null;
   if (currentUser.school) {
     const schoolUsersAbove = await User.countDocuments({
-      role: currentUser.role,
       school: currentUser.school,
       isActive: true,
       totalPoints: { $gt: currentUser.totalPoints },
@@ -80,7 +76,6 @@ const getUserRank = asyncHandler(async (req, res) => {
 
   // Get total users for context
   const totalUsers = await User.countDocuments({
-    role: currentUser.role,
     isActive: true,
   });
 
@@ -109,7 +104,6 @@ const getSchoolLeaderboard = asyncHandler(async (req, res) => {
   const leaderboard = await User.getLeaderboard({
     limit: parseInt(limit),
     school: schoolName,
-    role: 'student',
   });
 
   const rankedLeaderboard = leaderboard.map((user, index) => ({
@@ -134,7 +128,7 @@ const getSchoolLeaderboard = asyncHandler(async (req, res) => {
 const getTopPerformers = asyncHandler(async (req, res) => {
   const { limit = 10 } = req.query;
 
-  const topPerformers = await User.find({ role: 'student', isActive: true })
+  const topPerformers = await User.find({ isActive: true })
     .select('name title role email school totalPoints gamesPlayed lessonsCompleted currentStreak')
     .sort({ totalPoints: -1 })
     .limit(parseInt(limit))
@@ -173,13 +167,11 @@ const getLeaderboardWithContext = asyncHandler(async (req, res) => {
   // Get leaderboard
   const leaderboard = await User.getLeaderboard({
     limit: parseInt(limit),
-    role: currentUser.role,
     school: null, // Global leaderboard
   });
 
   // Calculate user's rank
   const usersAbove = await User.countDocuments({
-    role: currentUser.role,
     isActive: true,
     totalPoints: { $gt: currentUser.totalPoints },
   });
@@ -214,24 +206,18 @@ const getLeaderboardWithContext = asyncHandler(async (req, res) => {
  * @access  Public
  */
 const getLeaderboardStats = asyncHandler(async (req, res) => {
-  const [totals, studentStats] = await Promise.all([
+  const [totals, userStats] = await Promise.all([
     User.aggregate([
       { $match: { isActive: true } },
       {
         $group: {
           _id: null,
           totalUsers: { $sum: 1 },
-          totalStudents: {
-            $sum: { $cond: [{ $eq: ['$role', 'student'] }, 1, 0] },
-          },
-          totalTeachers: {
-            $sum: { $cond: [{ $eq: ['$role', 'teacher'] }, 1, 0] },
-          },
         },
       },
     ]),
     User.aggregate([
-      { $match: { role: 'student', isActive: true } },
+      { $match: { isActive: true } },
       {
         $group: {
           _id: null,
@@ -246,19 +232,19 @@ const getLeaderboardStats = asyncHandler(async (req, res) => {
   ]);
 
   const totalResult = totals[0] || null;
-  const studentResult = studentStats[0] || null;
+  const userResult = userStats[0] || null;
 
   res.status(200).json({
     success: true,
     data: {
       totalUsers: totalResult?.totalUsers || 0,
-      totalStudents: totalResult?.totalStudents || 0,
-      totalTeachers: totalResult?.totalTeachers || 0,
-      totalPoints: studentResult?.totalPoints || 0,
-      avgPoints: studentResult?.avgPoints || 0,
-      totalGamesPlayed: studentResult?.totalGamesPlayed || 0,
-      avgGamesPlayed: studentResult?.avgGamesPlayed || 0,
-      totalLessonsCompleted: studentResult?.totalLessonsCompleted || 0,
+      totalStudents: totalResult?.totalUsers || 0,
+      totalTeachers: 0,
+      totalPoints: userResult?.totalPoints || 0,
+      avgPoints: userResult?.avgPoints || 0,
+      totalGamesPlayed: userResult?.totalGamesPlayed || 0,
+      avgGamesPlayed: userResult?.avgGamesPlayed || 0,
+      totalLessonsCompleted: userResult?.totalLessonsCompleted || 0,
     },
   });
 });

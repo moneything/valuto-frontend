@@ -147,7 +147,7 @@ export default function DashboardLayout({
         <nav className="mx-auto bg-hero/90 px-4 shadow-lg sm:px-6 lg:pl-8 lg:pr-8">
           <div className="flex h-16 items-center justify-between">
             <Link href="/dashboard" className="flex items-center">
-              <Image src="/favicon.svg" alt="Valuto Logo" width={40} height={40} />
+              <Image src="/valuto-logo.png" alt="Valuto Logo" width={40} height={40} />
               <span className="flex items-end bg-gradient-to-r from-valuto-green-600 to-valuto-green-400 bg-clip-text text-2xl font-bold font-serif text-transparent">
                 aluto
               </span>

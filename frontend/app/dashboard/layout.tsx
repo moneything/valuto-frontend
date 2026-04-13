@@ -238,7 +238,7 @@ export default function DashboardLayout({
                   {formatDisplayName(profile || {}, { useFirstNameForStudents: false })}
                 </p>
                 <p className="text-sm text-gray-300">
-                  {profile?.school || (profile?.role === "teacher" ? "Valuto Teacher" : "Valuto Student")}
+                  {profile?.school || "Valuto Member"}
                 </p>
               </div>
 

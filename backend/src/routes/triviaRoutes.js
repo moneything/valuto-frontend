@@ -38,8 +38,8 @@ const validateSessionCreation = [
     .trim()
     .notEmpty()
     .withMessage('Question text is required')
-    .isLength({ max: 500 })
-    .withMessage('Question text must be 500 characters or fewer'),
+    .isLength({ min: 5, max: 500 })
+    .withMessage('Question text must be between 5 and 500 characters'),
   body('questions.*.options')
     .isArray({ min: 4, max: 4 })
     .withMessage('Must have exactly 4 options'),
@@ -47,8 +47,8 @@ const validateSessionCreation = [
     .trim()
     .notEmpty()
     .withMessage('Option text is required')
-    .isLength({ max: 200 })
-    .withMessage('Option text must be 200 characters or fewer'),
+    .isLength({ min: 1, max: 200 })
+    .withMessage('Option text must be between 1 and 200 characters'),
   body('questions.*.correctAnswer')
     .isInt({ min: 0, max: 3 })
     .withMessage('Correct answer must be between 0 and 3'),

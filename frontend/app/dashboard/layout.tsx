@@ -69,6 +69,11 @@ export default function DashboardLayout({
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [featuredGamesOpen, setFeaturedGamesOpen] = useState(false);
 
+  const isNavLinkActive = (href: string) => {
+    if (href === "/dashboard") return pathname === "/dashboard";
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   useEffect(() => {
     if (!isLoaded || loading) return; // wait for both Clerk and profile to load
 
@@ -163,8 +168,7 @@ export default function DashboardLayout({
             <div className="hidden xl:flex xl:items-center xl:gap-8">
               <div className="flex items-center gap-6">
                 {dashboardNavGroups[0].links.map((link) => {
-                  const isActive =
-                    pathname === link.href || pathname.startsWith(`${link.href}/`);
+                  const isActive = isNavLinkActive(link.href);
 
                   return (
                     <Link
@@ -204,9 +208,8 @@ export default function DashboardLayout({
                 {featuredGamesOpen ? (
                   <div className="absolute left-0 top-full mt-3 min-w-[220px] overflow-hidden rounded-2xl border border-white/10 bg-[#14181f]/95 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl">
                     <div className="flex flex-col">
-                      {featuredGameLinks.map((link) => {
-                        const isActive =
-                          pathname === link.href || pathname.startsWith(`${link.href}/`);
+                    {featuredGameLinks.map((link) => {
+                      const isActive = isNavLinkActive(link.href);
 
                         return (
                           <Link
@@ -264,8 +267,7 @@ export default function DashboardLayout({
             <div className="py-4 xl:hidden">
               <div className="flex flex-col space-y-3">
                 {dashboardNavGroups[0].links.map((link) => {
-                  const isActive =
-                    pathname === link.href || pathname.startsWith(`${link.href}/`);
+                  const isActive = isNavLinkActive(link.href);
 
                   return (
                     <Link
@@ -286,8 +288,7 @@ export default function DashboardLayout({
                     Featured Games
                   </div>
                   {featuredGameLinks.map((link) => {
-                    const isActive =
-                      pathname === link.href || pathname.startsWith(`${link.href}/`);
+                    const isActive = isNavLinkActive(link.href);
 
                     return (
                       <Link

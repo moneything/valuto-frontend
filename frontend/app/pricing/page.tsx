@@ -12,7 +12,7 @@ export default function Features() {
     "All interactive learning modules",
     "Investment simulator",
     "Investment calculator",
-    "Trivia games & daily challenges",
+    "Trivia games & daily and weekly challenges",
     "Leaderboards",
     "\"Future You\" simulator",
     "Ask Valuto AI",
@@ -97,4 +97,3 @@ export default function Features() {
     </>
   );
 }
-

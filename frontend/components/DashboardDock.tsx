@@ -1,7 +1,8 @@
 "use client";
 
 import Link from 'next/link';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { motion } from 'framer-motion';
 import { 
   GameControllerIcon, 
@@ -144,18 +145,40 @@ const dockItems = [
 
 function DockItem({ item }: { item: typeof dockItems[0] }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [mounted, setMounted] = useState(false);
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
   const itemRef = useRef<HTMLDivElement>(null);
   const Icon = item.icon;
 
-  const showTooltip = () => {
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const updateTooltipPosition = () => {
     const rect = itemRef.current?.getBoundingClientRect();
     if (rect) {
       setTooltipPosition({
-        top: rect.top + rect.height / 2 - 76,
-        left: rect.right - 16,
+        top: rect.top + rect.height / 2,
+        left: rect.right + 18,
       });
     }
+  };
+
+  useEffect(() => {
+    if (!isHovered) return;
+
+    let frameId = 0;
+    const syncPosition = () => {
+      updateTooltipPosition();
+      frameId = window.requestAnimationFrame(syncPosition);
+    };
+
+    syncPosition();
+    return () => window.cancelAnimationFrame(frameId);
+  }, [isHovered]);
+
+  const showTooltip = () => {
+    updateTooltipPosition();
     setIsHovered(true);
   };
 
@@ -175,28 +198,31 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
       >
         <Icon className={`w-6 h-6 ${item.color}`} />
       </motion.div>
-      {isHovered && (
-        <motion.div
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -10 }}
-          className="pointer-events-none fixed whitespace-nowrap rounded-xl border px-3 py-2 text-sm font-medium shadow-[0_14px_34px_rgba(0,0,0,0.38)] z-[9999]"
-          style={{
-            top: tooltipPosition.top,
-            left: tooltipPosition.left,
-            transform: 'translateY(-50%)',
-            backgroundColor: item.tooltipBg,
-            borderColor: item.tooltipBorder,
-            color: item.tooltipText,
-          }}
-        >
-          {item.title}
-          <div
-            className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent"
-            style={{ borderRightColor: item.tooltipBg }}
-          />
-        </motion.div>
-      )}
+      {mounted && isHovered
+        ? createPortal(
+            <motion.div
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              className="pointer-events-none fixed whitespace-nowrap rounded-xl border px-3 py-2 text-sm font-medium shadow-[0_14px_34px_rgba(0,0,0,0.38)] z-[9999]"
+              style={{
+                top: tooltipPosition.top,
+                left: tooltipPosition.left,
+                transform: 'translateY(-50%)',
+                backgroundColor: item.tooltipBg,
+                borderColor: item.tooltipBorder,
+                color: item.tooltipText,
+              }}
+            >
+              {item.title}
+              <div
+                className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent"
+                style={{ borderRightColor: item.tooltipBg }}
+              />
+            </motion.div>,
+            document.body
+          )
+        : null}
     </Link>
   );
 }

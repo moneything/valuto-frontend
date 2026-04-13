@@ -97,8 +97,8 @@ export function UserProvider({ children }: { children: React.ReactNode }) {
     profile,
     updateProfile,
     setUserProfile: (p) => updateProfile(p),
-    isTeacher: profile?.role === "teacher",
-    isStudent: profile?.role === "student",
+    isTeacher: false,
+    isStudent: true,
     loading,
     isLoadingProfile: loading,
   };

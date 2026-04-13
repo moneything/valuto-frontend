@@ -23,12 +23,32 @@ const { handleValidationErrors } = require('../utils/validators');
 
 // Validation middleware for session creation
 const validateSessionCreation = [
-  body('title').trim().notEmpty().withMessage('Title is required').isLength({ max: 200 }),
-  body('questions').isArray({ min: 1 }).withMessage('At least one question is required'),
-  body('questions.*.question').trim().notEmpty().withMessage('Question text is required'),
+  body('title')
+    .trim()
+    .notEmpty()
+    .withMessage('Title is required')
+    .isLength({ min: 3, max: 120 })
+    .withMessage('Title must be between 3 and 120 characters'),
+  body('questions')
+    .isArray({ min: 1, max: 50 })
+    .withMessage('Questions must contain between 1 and 50 items')
+    .custom((questions) => JSON.stringify(questions).length <= 50000)
+    .withMessage('Trivia payload is too large'),
+  body('questions.*.question')
+    .trim()
+    .notEmpty()
+    .withMessage('Question text is required')
+    .isLength({ max: 500 })
+    .withMessage('Question text must be 500 characters or fewer'),
   body('questions.*.options')
     .isArray({ min: 4, max: 4 })
     .withMessage('Must have exactly 4 options'),
+  body('questions.*.options.*')
+    .trim()
+    .notEmpty()
+    .withMessage('Option text is required')
+    .isLength({ max: 200 })
+    .withMessage('Option text must be 200 characters or fewer'),
   body('questions.*.correctAnswer')
     .isInt({ min: 0, max: 3 })
     .withMessage('Correct answer must be between 0 and 3'),
@@ -36,6 +56,24 @@ const validateSessionCreation = [
     .optional()
     .isInt({ min: 10, max: 120 })
     .withMessage('Time limit must be between 10 and 120 seconds'),
+  body('questions.*.explanation')
+    .optional()
+    .trim()
+    .isLength({ max: 1000 })
+    .withMessage('Explanation must be 1000 characters or fewer'),
+  body('settings').optional().isObject().withMessage('Settings must be an object'),
+  body('settings.pointsPerCorrect')
+    .optional()
+    .isInt({ min: 0, max: 1000 })
+    .withMessage('pointsPerCorrect must be between 0 and 1000'),
+  body('settings.speedBonusEnabled')
+    .optional()
+    .isBoolean()
+    .withMessage('speedBonusEnabled must be boolean'),
+  body('settings.maxSpeedBonus')
+    .optional()
+    .isInt({ min: 0, max: 1000 })
+    .withMessage('maxSpeedBonus must be between 0 and 1000'),
   handleValidationErrors,
 ];
 

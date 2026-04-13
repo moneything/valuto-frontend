@@ -66,7 +66,7 @@ export default function ChallengesPage() {
     <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 md:py-12">
       <div className="mb-8">
         <h1 className="mb-3 text-3xl font-bold text-white md:text-4xl">
-          Daily Challenges 🎯
+          Daily and Weekly Challenges 🎯
         </h1>
         <p className="text-lg text-[#9a9a9d]">
           Complete challenges to earn bonus points

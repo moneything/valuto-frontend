@@ -94,7 +94,7 @@ const dockItems = [
   {
     title: 'News & Events',
     icon: NewspaperIcon,
-    href: '/news',
+    href: '/dashboard/news',
     color: 'text-purple-600 dark:text-purple-400',
     bgColor: 'bg-purple-100 hover:bg-purple-200',
     tooltipBg: '#241334',

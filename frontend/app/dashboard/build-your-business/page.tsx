@@ -15,6 +15,7 @@ import Stage3Pricing from "@/components/build-your-business/stages/Stage3Pricing
 import Stage4Build from "@/components/build-your-business/stages/Stage4Build";
 import Stage5Marketing from "@/components/build-your-business/stages/Stage5Marketing";
 import Stage6Growth from "@/components/build-your-business/stages/Stage6Growth";
+import { useFeaturedGameMonthlyChallenge } from "@/lib/hooks/useFeaturedGameMonthlyChallenge";
 
 function LandingScreen({ onStart }: { onStart: () => void }) {
   return (
@@ -190,6 +191,7 @@ function GameContent({ onExit }: { onExit: () => void }) {
 }
 
 export default function BuildYourBusinessPage() {
+  useFeaturedGameMonthlyChallenge("monthly_build_your_business");
   const [started, setStarted] = useState(false);
 
   if (!started) {

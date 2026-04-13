@@ -13,16 +13,26 @@ import Link from "next/link";
 import DashboardDock from "@/components/DashboardDock";
 import Image from "next/image";
 
-const dashboardNavLinks = [
-  { label: "Dashboard", href: "/dashboard" },
-  { label: "Trivia", href: "/dashboard/trivia" },
-  { label: "Calculator", href: "/dashboard/calculator" },
-  { label: "Build Your Life", href: "/dashboard/build-your-life" },
-  { label: "Build Your Business", href: "/dashboard/build-your-business" },
-  { label: "Modules", href: "/dashboard/learning-modules" },
-  { label: "Investment", href: "/dashboard/investment" },
-  { label: "AI Chat", href: "/dashboard/ai-chat" },
-  { label: "Profile", href: "/dashboard/profile" },
+const dashboardNavGroups = [
+  {
+    label: null,
+    links: [
+      { label: "Dashboard", href: "/dashboard" },
+      { label: "Trivia", href: "/dashboard/trivia" },
+      { label: "Calculator", href: "/dashboard/calculator" },
+      { label: "Modules", href: "/dashboard/learning-modules" },
+      { label: "AI Chat", href: "/dashboard/ai-chat" },
+      { label: "Profile", href: "/dashboard/profile" },
+    ],
+  },
+  {
+    label: "Featured Games",
+    links: [
+      { label: "Build Your Life", href: "/dashboard/build-your-life" },
+      { label: "Build Your Business", href: "/dashboard/build-your-business" },
+      { label: "Investment", href: "/dashboard/investment" },
+    ],
+  },
 ];
 
 const floatingParticles = [
@@ -153,23 +163,34 @@ export default function DashboardLayout({
               </span>
             </Link>
 
-            <div className="hidden xl:flex xl:items-center lg:space-x-6 xl:space-x-8">
-              {dashboardNavLinks.map((link) => {
-                const isActive =
-                  pathname === link.href || pathname.startsWith(`${link.href}/`);
+            <div className="hidden xl:flex xl:items-center xl:gap-8">
+              {dashboardNavGroups.map((group, groupIndex) => (
+                <div key={group.label || `group-${groupIndex}`} className="flex items-center gap-4">
+                  {group.label ? (
+                    <span className="rounded-full border border-violet-400/25 bg-violet-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
+                      {group.label}
+                    </span>
+                  ) : null}
+                  <div className="flex items-center gap-6">
+                    {group.links.map((link) => {
+                      const isActive =
+                        pathname === link.href || pathname.startsWith(`${link.href}/`);
 
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`text-sm font-medium transition-colors lg:text-base ${
-                      isActive ? "text-primary" : "text-gray-300 hover:text-white"
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                );
-              })}
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          className={`text-sm font-medium transition-colors lg:text-base ${
+                            isActive ? "text-primary" : "text-gray-300 hover:text-white"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                </div>
+              ))}
             </div>
 
             <div className="flex items-center space-x-3">
@@ -206,23 +227,32 @@ export default function DashboardLayout({
           {mobileMenuOpen && (
             <div className="py-4 xl:hidden">
               <div className="flex flex-col space-y-3">
-                {dashboardNavLinks.map((link) => {
-                  const isActive =
-                    pathname === link.href || pathname.startsWith(`${link.href}/`);
+                {dashboardNavGroups.map((group, groupIndex) => (
+                  <div key={group.label || `mobile-group-${groupIndex}`} className="space-y-3">
+                    {group.label ? (
+                      <div className="pt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
+                        {group.label}
+                      </div>
+                    ) : null}
+                    {group.links.map((link) => {
+                      const isActive =
+                        pathname === link.href || pathname.startsWith(`${link.href}/`);
 
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      onClick={() => setMobileMenuOpen(false)}
-                      className={`text-base font-medium ${
-                        isActive ? "text-primary" : "text-gray-300 hover:text-white"
-                      }`}
-                    >
-                      {link.label}
-                    </Link>
-                  );
-                })}
+                      return (
+                        <Link
+                          key={link.href}
+                          href={link.href}
+                          onClick={() => setMobileMenuOpen(false)}
+                          className={`block text-base font-medium ${
+                            isActive ? "text-primary" : "text-gray-300 hover:text-white"
+                          }`}
+                        >
+                          {link.label}
+                        </Link>
+                      );
+                    })}
+                  </div>
+                ))}
 
               </div>
             </div>

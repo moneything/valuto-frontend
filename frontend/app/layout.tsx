@@ -17,7 +17,9 @@ export const metadata: Metadata = {
   title: "Valuto - Financial Education for Young People",
   description: "Teaching money skills to young people aged 11-18 through interactive workshops and gamified learning.",
   icons: {
-    icon: "/favicon.svg",
+    icon: "/valuto-logo.png",
+    shortcut: "/valuto-logo.png",
+    apple: "/valuto-logo.png",
   },
 };
 

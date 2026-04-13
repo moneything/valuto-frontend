@@ -35,6 +35,9 @@ const challengeSchema = new mongoose.Schema(
         'learning_streak_9',
         'daily_lesson',
         'calculator_expert',
+        'monthly_build_your_life',
+        'monthly_build_your_business',
+        'monthly_investment_simulation',
         'perfect_score',
         'speed_demon',
         'knowledge_master',
@@ -142,12 +145,18 @@ challengeSchema.statics.getDailyChallenges = async function (userId, date = new 
 
   return this.find({
     userId,
-    challengeDate: {
-      $gte: startOfDay,
-      $lte: endOfDay,
-    },
+    challengeDate: { $lte: endOfDay },
+    $or: [
+      {
+        expiresAt: {
+          $gte: startOfDay,
+        },
+      },
+      { expiresAt: { $exists: false } },
+      { expiresAt: null },
+    ],
   })
-    .sort({ createdAt: 1 })
+    .sort({ expiresAt: 1, createdAt: 1 })
     .lean();
 };
 
@@ -299,21 +308,73 @@ challengeSchema.statics.buildDailyChallenges = function (dayStart, userId, clerk
   ];
 };
 
-// Ensure each daily challenge type exists for the given day/user
+challengeSchema.statics.buildMonthlyChallenges = function (monthStart, userId, clerkUserId) {
+  const monthStamp = `${monthStart.getFullYear()}_${monthStart.getMonth() + 1}`;
+  const nextMonth = new Date(monthStart.getFullYear(), monthStart.getMonth() + 1, 1);
+
+  return [
+    {
+      userId,
+      clerkUserId,
+      challengeId: `monthly_build_your_life_${monthStamp}`,
+      challengeType: 'monthly_build_your_life',
+      challengeName: 'Monthly Build Your Life',
+      challengeDescription: 'Complete one Build Your Life playthrough this month',
+      pointsEarned: 250,
+      targetProgress: 1,
+      challengeDate: monthStart,
+      expiresAt: nextMonth,
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `monthly_build_your_business_${monthStamp}`,
+      challengeType: 'monthly_build_your_business',
+      challengeName: 'Monthly Build Your Business',
+      challengeDescription: 'Start and play through a Build Your Business run this month',
+      pointsEarned: 250,
+      targetProgress: 1,
+      challengeDate: monthStart,
+      expiresAt: nextMonth,
+    },
+    {
+      userId,
+      clerkUserId,
+      challengeId: `monthly_investment_simulation_${monthStamp}`,
+      challengeType: 'monthly_investment_simulation',
+      challengeName: 'Monthly Investment Simulation',
+      challengeDescription: 'Complete one Investment Simulation round this month',
+      pointsEarned: 250,
+      targetProgress: 1,
+      challengeDate: monthStart,
+      expiresAt: nextMonth,
+    },
+  ];
+};
+
+// Ensure each daily, weekly, and monthly challenge exists for the given user context
 challengeSchema.statics.ensureDailyChallenges = async function (userId, clerkUserId, date = new Date()) {
   const dayStart = new Date(date);
   dayStart.setHours(0, 0, 0, 0);
   const dayEnd = new Date(dayStart);
   dayEnd.setHours(23, 59, 59, 999);
+  const monthStart = new Date(dayStart.getFullYear(), dayStart.getMonth(), 1);
+  const monthEnd = new Date(dayStart.getFullYear(), dayStart.getMonth() + 1, 0, 23, 59, 59, 999);
 
-  const templates = this.buildDailyChallenges(dayStart, userId, clerkUserId);
+  const templates = [
+    ...this.buildDailyChallenges(dayStart, userId, clerkUserId),
+    ...this.buildMonthlyChallenges(monthStart, userId, clerkUserId),
+  ];
   let createdAny = false;
 
   for (const template of templates) {
+    const isMonthlyTemplate = template.challengeType.startsWith('monthly_');
     const existing = await this.findOne({
       userId,
       challengeType: template.challengeType,
-      challengeDate: { $gte: dayStart, $lte: dayEnd },
+      challengeDate: isMonthlyTemplate
+        ? { $gte: monthStart, $lte: monthEnd }
+        : { $gte: dayStart, $lte: dayEnd },
     });
 
     if (!existing) {

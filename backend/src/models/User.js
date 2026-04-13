@@ -169,6 +169,15 @@ userSchema.methods.updateStreak = function () {
   const lastActive = new Date(this.lastActiveDate);
   lastActive.setHours(0, 0, 0, 0);
 
+  if (!this.currentStreak || this.currentStreak <= 0) {
+    this.currentStreak = 1;
+    if (this.currentStreak > this.longestStreak) {
+      this.longestStreak = this.currentStreak;
+    }
+    this.lastActiveDate = today;
+    return this.currentStreak;
+  }
+
   const daysDiff = Math.floor((today - lastActive) / (1000 * 60 * 60 * 24));
 
   if (daysDiff === 0) {

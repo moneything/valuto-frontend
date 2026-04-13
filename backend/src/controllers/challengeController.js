@@ -25,15 +25,6 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
   }
   console.log("[Challenges] Found user:", user._id.toString(), "role:", user.role);
 
-  // Teachers do not receive challenges
-  if (user.role === 'teacher') {
-    console.log("[Challenges] User is teacher; returning empty challenges.");
-    return res.status(200).json({
-      success: true,
-      data: [],
-    });
-  }
-
   // Date boundaries for today
   const today = new Date();
   const startOfDay = new Date(today);
@@ -323,52 +314,12 @@ const getChallengeStats = asyncHandler(async (req, res) => {
 });
 
 /**
- * @desc    Create custom challenge (admin/teacher)
+ * @desc    Create custom challenge
  * @route   POST /api/challenges/create
- * @access  Private (Teacher only)
+ * @access  Private
  */
 const createCustomChallenge = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const {
-    challengeId,
-    challengeType,
-    challengeName,
-    challengeDescription,
-    pointsEarned,
-    targetProgress,
-    expiresAt,
-  } = req.body;
-
-  // Get user
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Check if user is teacher
-  if (user.role !== 'teacher') {
-    throw new AppError('Only teachers can create custom challenges', 403);
-  }
-
-  // Create challenge
-  const challenge = await Challenge.create({
-    userId: user._id.toString(),
-    clerkUserId,
-    challengeId,
-    challengeType,
-    challengeName,
-    challengeDescription,
-    pointsEarned,
-    targetProgress,
-    expiresAt: expiresAt ? new Date(expiresAt) : undefined,
-  });
-
-  res.status(201).json({
-    success: true,
-    message: 'Custom challenge created successfully',
-    data: challenge,
-  });
+  throw new AppError('Custom challenges are disabled for all users', 403);
 });
 
 /**

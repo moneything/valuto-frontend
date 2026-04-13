@@ -1,6 +1,5 @@
 // backend/src/controllers/learningModuleController.js
 const LearningModule = require('../models/LearningModule');
-const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
@@ -60,87 +59,21 @@ const getModule = asyncHandler(async (req, res) => {
  * CREATE MODULE (Teacher only)
  * -------------------------------------------------------- */
 const createModule = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) throw new AppError("User not found", 404);
-  if (user.role !== "teacher" && user.role !== "admin") {
-    throw new AppError("Only teachers can create modules", 403);
-  }
-
-  const moduleData = {
-    ...req.body,
-    createdBy: clerkUserId,
-  };
-
-  const module = await LearningModule.create(moduleData);
-
-  res.status(201).json({
-    success: true,
-    message: "Module created",
-    data: module,
-  });
+  throw new AppError("Learning module creation is disabled", 403);
 });
 
 /* --------------------------------------------------------
  * UPDATE MODULE (Teacher only)
  * -------------------------------------------------------- */
 const updateModule = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) throw new AppError("User not found", 404);
-  if (user.role !== "teacher" && user.role !== "admin") {
-    throw new AppError("Only teachers can update modules", 403);
-  }
-
-  const module = await LearningModule.findById(req.params.id);
-
-  if (!module) throw new AppError("Module not found", 404);
-
-  // Only creator or admin
-  if (module.createdBy !== clerkUserId && user.role !== "admin") {
-    throw new AppError("You can only update modules you created", 403);
-  }
-
-  Object.assign(module, req.body);
-  await module.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Module updated",
-    data: module,
-  });
+  throw new AppError("Learning module updates are disabled", 403);
 });
 
 /* --------------------------------------------------------
  * DELETE MODULE (Soft delete)
  * -------------------------------------------------------- */
 const deleteModule = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) throw new AppError("User not found", 404);
-  if (user.role !== "teacher" && user.role !== "admin") {
-    throw new AppError("Only teachers can delete modules", 403);
-  }
-
-  const module = await LearningModule.findById(req.params.id);
-
-  if (!module) throw new AppError("Module not found", 404);
-
-  // Only creator or admin
-  if (module.createdBy !== clerkUserId && user.role !== "admin") {
-    throw new AppError("You can only delete modules you created", 403);
-  }
-
-  module.isActive = false;
-  await module.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Module deleted",
-  });
+  throw new AppError("Learning module deletion is disabled", 403);
 });
 
 module.exports = {

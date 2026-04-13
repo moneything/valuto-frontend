@@ -21,7 +21,7 @@ const dashboardNavGroups = [
       { label: "Trivia", href: "/dashboard/trivia" },
       { label: "Calculator", href: "/dashboard/calculator" },
       { label: "Interactive Modules", href: "/dashboard/learning-modules" },
-      { label: "News", href: "/news" },
+      { label: "News", href: "/dashboard/news" },
       { label: "AI Chat", href: "/dashboard/ai-chat" },
       { label: "Profile", href: "/dashboard/profile" },
     ],

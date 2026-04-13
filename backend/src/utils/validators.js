@@ -88,6 +88,10 @@ const validateGameResult = [
     .trim()
     .isLength({ min: 6, max: 6 })
     .withMessage("Game code must be 6 characters"),
+  body("gameCode")
+    .optional()
+    .matches(/^[A-Z0-9]{6}$/i)
+    .withMessage("Game code format is invalid"),
   body().custom((value) => {
     if (!value?.sessionId && !value?.gameCode) {
       throw new Error("sessionId or gameCode is required");

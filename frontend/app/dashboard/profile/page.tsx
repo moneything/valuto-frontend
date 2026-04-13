@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from 'react';
-import { useUser, useAuth } from '@clerk/nextjs';
+import { useAuth } from '@clerk/nextjs';
 import { useUserProfile } from '@/lib/userContext';
 import { UserProfile } from '@/lib/localStorage';
 import { Input } from '@/components/ui/input';
@@ -9,9 +9,8 @@ import { Label } from '@/components/ui/label';
 import { userApi } from '@/lib/api';
 
 export default function ProfilePage() {
-  const { user } = useUser();
   const { getToken } = useAuth();
-  const { profile, updateProfile, isTeacher, isStudent } = useUserProfile();
+  const { profile, updateProfile } = useUserProfile();
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
     title: profile?.title || '',
@@ -153,10 +152,8 @@ export default function ProfilePage() {
               return <h2 className="mb-1 text-xl font-bold text-white">{displayName}</h2>;
             })()}
             <p className="mb-1 break-all text-sm text-[#9a9a9d]">{profile?.email}</p>
-            <span className={`inline-block px-3 py-1 rounded-full text-sm font-semibold ${
-              isTeacher ? 'border border-blue-500/20 bg-blue-500/10 text-blue-300' : 'border border-green-500/20 bg-green-500/10 text-green-300'
-            }`}>
-              {isTeacher ? '👨‍🏫 Teacher' : '🎓 Student'}
+            <span className="inline-block rounded-full border border-green-500/20 bg-green-500/10 px-3 py-1 text-sm font-semibold text-green-300">
+              👤 Valuto Member
             </span>
           </div>
 
@@ -200,9 +197,9 @@ export default function ProfilePage() {
                   <span className="text-[#9a9a9d]">Current Streak</span>
                   <span className="font-bold text-orange-400">{stats.streak} {stats.streak > 0 ? 'days 🔥' : 'days'}</span>
                 </div>
-                {isStudent && stats.rank > 0 && (
+                {stats.rank > 0 && (
                   <div className="flex justify-between">
-                    <span className="text-[#9a9a9d]">Class Rank</span>
+                    <span className="text-[#9a9a9d]">Rank</span>
                     <span className="font-bold text-white">#{stats.rank}</span>
                   </div>
                 )}
@@ -308,48 +305,26 @@ export default function ProfilePage() {
                 )}
               </div>
 
-              {isStudent && (
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold text-[#d7d7db]">Grade</Label>
-                  {isEditing ? (
-                    <Input
-                      type="text"
-                      value={formData.grade}
-                      onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
-                      className={inputClassName}
-                    />
-                  ) : (
-                    <p className="text-white">{profile?.grade || 'Not set'}</p>
-                  )}
-                </div>
-              )}
-
-              {isTeacher && (
-                <div className="space-y-2">
-                  <Label className="text-sm font-semibold text-[#d7d7db]">Subject</Label>
-                  {isEditing ? (
-                    <Input
-                      type="text"
-                      value={formData.subject}
-                      onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
-                      className={inputClassName}
-                    />
-                  ) : (
-                    <p className="text-white">{profile?.subject || 'Not set'}</p>
-                  )}
-                </div>
-              )}
+              <div className="space-y-2">
+                <Label className="text-sm font-semibold text-[#d7d7db]">Grade</Label>
+                {isEditing ? (
+                  <Input
+                    type="text"
+                    value={formData.grade}
+                    onChange={(e) => setFormData({ ...formData, grade: e.target.value })}
+                    className={inputClassName}
+                  />
+                ) : (
+                  <p className="text-white">{profile?.grade || 'Not set'}</p>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Achievements */}
           <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
             <h3 className="mb-6 text-xl font-bold text-white">Achievements</h3>
-            {isTeacher ? (
-              <p className="text-sm text-[#9a9a9d]">
-                Teacher achievements are coming soon. Assign activities and track class progress from your dashboard.
-              </p>
-            ) : achievements.length === 0 ? (
+            {achievements.length === 0 ? (
               <p className="text-sm text-[#9a9a9d]">No achievements yet. Play games and complete modules to earn badges!</p>
             ) : (
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
@@ -378,10 +353,8 @@ export default function ProfilePage() {
 
           {/* Activity Log */}
           <div className="rounded-xl border border-white/10 bg-[#232324]/95 p-6 shadow-[0_20px_60px_rgba(0,0,0,0.28)]">
-            <h3 className="mb-4 text-xl font-bold text-white">{isTeacher ? 'Class Activity' : 'Recent Activity'}</h3>
-            {isTeacher ? (
-              <p className="text-sm text-[#9a9a9d]">Class-level activity insights will appear here once available.</p>
-            ) : loading ? (
+            <h3 className="mb-4 text-xl font-bold text-white">Recent Activity</h3>
+            {loading ? (
               <div className="space-y-3 animate-pulse">
                 <div className="flex items-start gap-3 border-b border-white/10 pb-3">
                   <div className="h-8 w-8 rounded bg-white/[0.08]"></div>

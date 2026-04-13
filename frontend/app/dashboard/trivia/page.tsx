@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@clerk/nextjs';
-import { useUserProfile } from '@/lib/userContext';
 import { triviaApi } from '@/lib/api';
 import Link from 'next/link';
 import PageLayout from '@/components/theme/PageLayout';
@@ -15,7 +14,6 @@ import { Input } from '@/components/ui/input';
 export default function TriviaHubPage() {
   const router = useRouter();
   const { getToken } = useAuth();
-  const { isTeacher, isStudent } = useUserProfile();
   const [joinCode, setJoinCode] = useState('');
   const [sessions, setSessions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -59,60 +57,49 @@ export default function TriviaHubPage() {
   return (
     <PageLayout
       title="Trivia Games"
-      subtitle={
-        isTeacher
-          ? 'Create and manage engaging financial literacy games for your students'
-          : 'Join live games and test your financial knowledge'
-      }
+      subtitle="Create, host, join, and manage financial literacy trivia games"
       icon={<GameControllerIcon className="w-16 h-16 text-valuto-green-600" />}
     >
-      {/* Student: Join Game Section */}
-      {isStudent && (
-        <Card className="mb-12 border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] via-[#1a3a2d] to-[#12261d] text-white shadow-[0_0_30px_rgba(34,197,94,0.16)]">
-          <div className="text-center">
-            <h2 className="text-3xl font-bold mb-4">Join a Game</h2>
-            <p className="mb-8 text-xl text-white/80">Enter the game code from your teacher to join</p>
-            <form
-              onSubmit={handleJoinGame}
-              className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
-            >
-              <Input
-                type="text"
-                value={joinCode}
-                onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
-                placeholder="Enter game code (e.g., ABC123)"
-                className="flex-1 h-14 rounded-xl border border-white/10 bg-black/30 px-6 py-4 text-center text-xl font-semibold uppercase tracking-wider text-white placeholder:text-white/35 focus:outline-none focus:ring-4 focus:ring-valuto-green-500/20"
-                maxLength={6}
-              />
-              <Button type="submit" className="border border-white/10 px-8 py-4 text-lg font-bold shadow-[0_12px_30px_rgba(22,163,74,0.28)]" variant="primary">
-                Join Game
-              </Button>
-            </form>
-          </div>
-        </Card>
-      )}
-
-      {/* Teacher: Create Game Button */}
-      {isTeacher && (
-        <div className="mb-12 text-center">
-          <Link href="/dashboard/trivia/create">
-            <Button
-              size="lg"
-              className="border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] to-[#204332] px-8 py-4 text-lg font-bold text-white shadow-[0_12px_30px_rgba(22,163,74,0.24)] hover:from-[#1b3c2d] hover:to-[#28513d]"
-            >
-              ✨ Create New Game
+      <Card className="mb-12 border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] via-[#1a3a2d] to-[#12261d] text-white shadow-[0_0_30px_rgba(34,197,94,0.16)]">
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-4">Join a Game</h2>
+          <p className="mb-8 text-xl text-white/80">Enter a live game code to jump in straight away</p>
+          <form
+            onSubmit={handleJoinGame}
+            className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto"
+          >
+            <Input
+              type="text"
+              value={joinCode}
+              onChange={(e) => setJoinCode(e.target.value.toUpperCase())}
+              placeholder="Enter game code (e.g., ABC123)"
+              className="flex-1 h-14 rounded-xl border border-white/10 bg-black/30 px-6 py-4 text-center text-xl font-semibold uppercase tracking-wider text-white placeholder:text-white/35 focus:outline-none focus:ring-4 focus:ring-valuto-green-500/20"
+              maxLength={6}
+            />
+            <Button type="submit" className="border border-white/10 px-8 py-4 text-lg font-bold shadow-[0_12px_30px_rgba(22,163,74,0.28)]" variant="primary">
+              Join Game
             </Button>
-          </Link>
+          </form>
         </div>
-      )}
+      </Card>
+
+      <div className="mb-12 text-center">
+        <Link href="/dashboard/trivia/create">
+          <Button
+            size="lg"
+            className="border border-valuto-green-500/20 bg-gradient-to-r from-[#163126] to-[#204332] px-8 py-4 text-lg font-bold text-white shadow-[0_12px_30px_rgba(22,163,74,0.24)] hover:from-[#1b3c2d] hover:to-[#28513d]"
+          >
+            ✨ Create New Game
+          </Button>
+        </Link>
+      </div>
 
       {/* =============== Active Games Section =============== */}
       <Section
-        title={isTeacher ? "Your Games" : "Available Games"}
+        title="My Trivia Games"
         sessions={activeSessions}
         loading={loading}
         error={error}
-        isTeacher={isTeacher}
         getToken={getToken}
         router={router}
       />
@@ -125,7 +112,6 @@ export default function TriviaHubPage() {
             sessions={archivedSessions}
             loading={false}
             error=""
-            isTeacher={isTeacher}
             getToken={getToken}
             router={router}
             isArchived
@@ -139,7 +125,7 @@ export default function TriviaHubPage() {
 // ======================
 // Section Component
 // ======================
-function Section({ title, sessions, loading, error, isTeacher, getToken, router, isArchived = false }: any) {
+function Section({ title, sessions, loading, error, getToken, router, isArchived = false }: any) {
   if (error) {
     return (
       <div className="mb-6 border-l-4 border-yellow-400 bg-yellow-500/10 p-4">
@@ -161,15 +147,13 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
     return (
       <Card className="text-center py-16">
         <div className="text-6xl mb-4">🎮</div>
-        <h3 className="mb-2 text-2xl font-bold text-white">
-          {isTeacher ? 'No Games Yet' : 'No Active Games'}
-        </h3>
+        <h3 className="mb-2 text-2xl font-bold text-white">No Games Yet</h3>
         <p className="mb-6 text-[#9a9a9d]">
-          {isTeacher
-            ? 'Create your first trivia game to get started!'
-            : 'Ask your teacher to create a game, or use the join code to enter an active game.'}
+          {isArchived
+            ? 'No archived games yet.'
+            : 'Create your first trivia game or join one with a live code.'}
         </p>
-        {isTeacher && !isArchived && (
+        {!isArchived && (
           <Link href="/dashboard/trivia/create">
             <Button className="border border-valuto-green-500/20 bg-valuto-green-600 text-white hover:bg-valuto-green-700">
               Create Your First Game
@@ -235,15 +219,11 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
 
             {/* Action Buttons */}
             <div className="mt-auto">
-              {isTeacher ? (
-                <TeacherButtons
-                  session={session}
-                  getToken={getToken}
-                  router={router}
-                />
-              ) : (
-                <StudentButtons session={session} router={router} />
-              )}
+              <SessionButtons
+                session={session}
+                getToken={getToken}
+                router={router}
+              />
             </div>
           </Card>
         ))}
@@ -255,25 +235,41 @@ function Section({ title, sessions, loading, error, isTeacher, getToken, router,
 // ======================
 // Teacher Buttons
 // ======================
-function TeacherButtons({ session, getToken, router }: any) {
+function SessionButtons({ session, getToken, router }: any) {
   return (
     <div className="flex gap-2">
       {session.status === 'waiting' && (
-        <Button
-          onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
-          className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white"
-        >
-          Start Game
-        </Button>
+        <>
+          <Button
+            onClick={() => router.push(`/dashboard/trivia/play/${session.joinCode}`)}
+            className="flex-1 border border-white/10 bg-white/5 text-white hover:bg-white/10"
+          >
+            Join
+          </Button>
+          <Button
+            onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
+            className="flex-1 bg-valuto-green-600 hover:bg-valuto-green-700 text-white"
+          >
+            Start
+          </Button>
+        </>
       )}
 
       {session.status === 'active' && (
-        <Button
-          onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
-          className="flex-1 border border-green-500/20 bg-green-600 text-white hover:bg-green-700"
-        >
-          Manage
-        </Button>
+        <>
+          <Button
+            onClick={() => router.push(`/dashboard/trivia/play/${session.joinCode}`)}
+            className="flex-1 border border-white/10 bg-white/5 text-white hover:bg-white/10"
+          >
+            Join Live
+          </Button>
+          <Button
+            onClick={() => router.push(`/dashboard/trivia/host/${session.sessionId}`)}
+            className="flex-1 border border-green-500/20 bg-green-600 text-white hover:bg-green-700"
+          >
+            Manage
+          </Button>
+        </>
       )}
 
       {session.status === 'ended' && (
@@ -316,25 +312,5 @@ function TeacherButtons({ session, getToken, router }: any) {
         </Button>
       )}
     </div>
-  );
-}
-
-// ======================
-// Student Buttons
-// ======================
-function StudentButtons({ session, router }: any) {
-  const isEndedOrArchived = session.status === 'ended' || session.status === 'archived';
-  return (
-    <Button
-      onClick={() => router.push(`/dashboard/trivia/play/${session.joinCode}`)}
-      disabled={isEndedOrArchived}
-      className={`w-full ${
-        isEndedOrArchived
-          ? 'cursor-not-allowed border border-white/10 bg-white/5 text-[#6f6f73]'
-          : 'border border-valuto-green-500/20 bg-valuto-green-600 text-white hover:bg-valuto-green-700'
-      }`}
-    >
-      {isEndedOrArchived ? 'Game Ended' : 'Join Game'}
-    </Button>
   );
 }

@@ -5,11 +5,11 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
  * Challenge Controller
- * Handles daily challenges and special tasks
+ * Handles daily and weekly challenges and special tasks
  */
 
 /**
- * @desc    Get user's daily challenges
+ * @desc    Get user's daily and weekly challenges
  * @route   GET /api/challenges/daily
  * @access  Private
  */

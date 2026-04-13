@@ -3,6 +3,12 @@ const User = require('../models/User');
 const LearningProgress = require('../models/LearningProgress');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
+const MANUAL_CHALLENGE_TYPES = new Set([
+  'monthly_build_your_life',
+  'monthly_build_your_business',
+  'monthly_investment_simulation',
+]);
+
 /**
  * Challenge Controller
  * Handles daily and weekly challenges and special tasks
@@ -187,9 +193,17 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
     throw new AppError('Challenge not found', 404);
   }
 
+  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
+    throw new AppError('This challenge cannot be updated directly', 403);
+  }
+
   // Update progress
   const wasCompleted = challenge.completed;
-  await challenge.updateProgress(increment);
+  const safeIncrement = Number.isFinite(Number(increment)) && Number(increment) > 0 ? 1 : 0;
+  if (safeIncrement === 0) {
+    throw new AppError('Increment must be a positive value', 400);
+  }
+  await challenge.updateProgress(safeIncrement);
 
   // If newly completed, award points
   if (!wasCompleted && challenge.completed) {
@@ -233,6 +247,10 @@ const completeChallenge = asyncHandler(async (req, res) => {
 
   if (!challenge) {
     throw new AppError('Challenge not found', 404);
+  }
+
+  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
+    throw new AppError('This challenge cannot be completed directly', 403);
   }
 
   if (challenge.completed) {

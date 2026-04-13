@@ -1,6 +1,7 @@
 const GameResult = require('../models/GameResult');
 const User = require('../models/User');
 const Challenge = require('../models/Challenge');
+const Session = require('../models/Session');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
 /**
@@ -15,17 +16,7 @@ const { AppError, asyncHandler } = require('../utils/errorHandler');
  */
 const submitGameResult = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
-  const {
-    gameCode,
-    gameTitle,
-    gameType,
-    score,
-    maxPossibleScore,
-    questionsAnswered,
-    correctAnswers,
-    timeTaken,
-    questionResults,
-  } = req.body;
+  const { sessionId, gameCode } = req.body;
 
   // Get user
   const user = await User.findOne({ clerkUserId });
@@ -34,25 +25,85 @@ const submitGameResult = asyncHandler(async (req, res) => {
     throw new AppError('User profile not found', 404);
   }
 
+  const sessionQuery = sessionId
+    ? { sessionId }
+    : { joinCode: String(gameCode || '').toUpperCase() };
+
+  const session = await Session.findOne(sessionQuery);
+  if (!session) {
+    throw new AppError('Verified game session not found', 404);
+  }
+
+  if (!['ended', 'archived'].includes(session.status)) {
+    throw new AppError('Game session must be finished before results can be recorded', 400);
+  }
+
+  const player = session.players.find((entry) => entry.userId === clerkUserId);
+  if (!player || player.answeredQuestions <= 0) {
+    throw new AppError('You are not eligible to submit results for this session', 403);
+  }
+
+  const normalizedGameCode = session.joinCode.toUpperCase();
+  const existingResult = await GameResult.findOne({
+    clerkUserId,
+    gameCode: normalizedGameCode,
+    completed: true,
+  });
+
+  if (existingResult) {
+    return res.status(200).json({
+      success: true,
+      message: 'Game result already recorded',
+      data: {
+        gameResult: existingResult,
+        updatedStats: {
+          totalPoints: user.totalPoints,
+          gamesPlayed: user.gamesPlayed,
+        },
+      },
+    });
+  }
+
+  const maxPossibleScore = session.questions.reduce(
+    (total, question) => total + (question.points || session.settings?.pointsPerCorrect || 100),
+    0
+  );
+  const questionResults = player.answers.map((answer) => {
+    const sessionQuestion = session.questions.find((question) => question.id === answer.questionId);
+    return {
+      questionId: answer.questionId,
+      question: sessionQuestion?.question,
+      selectedAnswer: answer.selectedIndex,
+      correctAnswer: sessionQuestion?.correctIndex,
+      isCorrect: answer.isCorrect,
+      timeSpent: answer.timeSpentMs ? Math.round(answer.timeSpentMs / 1000) : undefined,
+      pointsEarned: answer.pointsEarned,
+    };
+  });
+  const timeTaken = player.answers.reduce((total, answer) => total + (answer.timeSpentMs || 0), 0);
+
   // Create game result
   const gameResult = await GameResult.create({
     userId: user._id.toString(),
     clerkUserId,
-    gameCode: gameCode.toUpperCase(),
-    gameTitle,
-    gameType: gameType || 'trivia',
-    score,
+    gameCode: normalizedGameCode,
+    gameTitle: session.title,
+    gameType: 'trivia',
+    score: player.score,
     maxPossibleScore,
-    questionsAnswered,
-    correctAnswers,
-    timeTaken,
-    questionResults: questionResults || [],
+    questionsAnswered: player.answeredQuestions,
+    correctAnswers: player.correctAnswers,
+    timeTaken: Math.round(timeTaken / 1000),
+    questionResults,
     completed: true,
     completedAt: new Date(),
+    metadata: {
+      sessionId: session.sessionId,
+    },
   });
 
   // Update user stats
-  user.totalPoints += score;
+  user.totalPoints += player.score;
   user.gamesPlayed += 1;
   user.updateStreak();
   await user.save();

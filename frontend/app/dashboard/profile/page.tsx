@@ -113,7 +113,7 @@ export default function ProfilePage() {
         title: formData.title,
         name: formData.name,
         age: formData.age ? parseInt(formData.age.toString()) : undefined,
-        school: formData.school,
+        school: profile.school,
         grade: formData.grade,
         subject: formData.subject
       };
@@ -293,16 +293,8 @@ export default function ProfilePage() {
 
               <div className="space-y-2">
                 <Label className="text-sm font-semibold text-[#d7d7db]">School</Label>
-                {isEditing ? (
-                  <Input
-                    type="text"
-                    value={formData.school}
-                    onChange={(e) => setFormData({ ...formData, school: e.target.value })}
-                    className={inputClassName}
-                  />
-                ) : (
-                  <p className="text-white">{profile?.school || 'Not set'}</p>
-                )}
+                <p className="text-white">{profile?.school || 'Not set'}</p>
+                <p className="text-xs text-[#9a9a9d]">School membership is locked after setup.</p>
               </div>
 
               <div className="space-y-2">

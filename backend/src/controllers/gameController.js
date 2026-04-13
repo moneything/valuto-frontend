@@ -34,11 +34,13 @@ const submitGameResult = asyncHandler(async (req, res) => {
     throw new AppError('Verified game session not found', 404);
   }
 
+  const normalizedClerkUserId = String(clerkUserId);
+
   if (!['ended', 'archived'].includes(session.status)) {
     throw new AppError('Game session must be finished before results can be recorded', 400);
   }
 
-  const player = session.players.find((entry) => entry.userId === clerkUserId);
+  const player = session.players.find((entry) => String(entry.userId) === normalizedClerkUserId);
   if (!player || player.answeredQuestions <= 0) {
     throw new AppError('You are not eligible to submit results for this session', 403);
   }
@@ -72,7 +74,7 @@ const submitGameResult = asyncHandler(async (req, res) => {
     const sessionQuestion = session.questions.find((question) => question.id === answer.questionId);
     return {
       questionId: answer.questionId,
-      question: sessionQuestion?.question,
+      question: sessionQuestion?.question || '',
       selectedAnswer: answer.selectedIndex,
       correctAnswer: sessionQuestion?.correctIndex,
       isCorrect: answer.isCorrect,
@@ -99,6 +101,7 @@ const submitGameResult = asyncHandler(async (req, res) => {
     completedAt: new Date(),
     metadata: {
       sessionId: session.sessionId,
+      verifiedFromSession: true,
     },
   });
 

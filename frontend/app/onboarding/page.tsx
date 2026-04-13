@@ -9,15 +9,6 @@ import { createOrUpdateUser } from "@/lib/api/user";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
-  Choicebox,
-  ChoiceboxItem,
-  ChoiceboxItemHeader,
-  ChoiceboxItemTitle,
-  ChoiceboxItemDescription,
-  ChoiceboxItemContent,
-  ChoiceboxItemIndicator,
-} from "@/components/ui/choicebox";
-import {
   Select,
   SelectContent,
   SelectItem,
@@ -35,11 +26,9 @@ export default function OnboardingPage() {
     title: "",
     name: "",
     email: "",
-    role: "student" as "student" | "teacher",
     age: "",
     school: "",
     grade: "",
-    subject: "",
   });
 
   useEffect(() => {
@@ -66,21 +55,15 @@ export default function OnboardingPage() {
       const token = await getToken({ template: "default" });
       if (!token) throw new Error("No Clerk token found!");
 
-      if (formData.role === "teacher" && !formData.title.trim()) {
-        alert("Title is required for teachers (e.g., Mr, Mrs, Ms, Dr).");
-        return;
-      }
-
       const profile: UserProfile = {
         clerkUserId: user?.id || "",
-        title: formData.role === "teacher" ? formData.title || "" : formData.title,
+        title: formData.title || "",
         name: formData.name,
         email: formData.email,
-        role: formData.role,
+        role: "student",
         age: formData.age ? parseInt(formData.age) : undefined,
         school: formData.school,
-        grade: formData.role === "student" ? formData.grade : undefined,
-        subject: formData.role === "teacher" ? formData.subject : undefined,
+        grade: formData.grade || undefined,
         completedOnboarding: true,
         createdAt: new Date().toISOString(),
       };
@@ -149,7 +132,6 @@ export default function OnboardingPage() {
               type="text"
               value={formData.title}
               onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-              required={formData.role === "teacher"}
               className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
               placeholder="e.g., Mr, Mrs, Ms, Dr"
             />
@@ -186,50 +168,6 @@ export default function OnboardingPage() {
             />
           </div>
 
-          {/* Role */}
-          <div className="space-y-2">
-            <Label className="text-sm font-semibold text-gray-700">
-              I am a...
-            </Label>
-            <Choicebox
-              value={formData.role}
-              onValueChange={(value) =>
-                setFormData({ ...formData, role: value as "student" | "teacher" })
-              }
-              className="grid grid-cols-1 md:grid-cols-2 gap-4"
-            >
-              <ChoiceboxItem value="student" className="border-2 hover:border-valuto-green-300">
-                <ChoiceboxItemHeader>
-                  <div className="text-4xl mb-3">🎓</div>
-                  <ChoiceboxItemTitle className="text-xl font-bold text-gray-900">
-                    Student
-                  </ChoiceboxItemTitle>
-                  <ChoiceboxItemDescription className="text-sm text-gray-600">
-                    Learn about money and play educational games
-                  </ChoiceboxItemDescription>
-                </ChoiceboxItemHeader>
-                <ChoiceboxItemContent>
-                  <ChoiceboxItemIndicator />
-                </ChoiceboxItemContent>
-              </ChoiceboxItem>
-
-              <ChoiceboxItem value="teacher" className="border-2 hover:border-valuto-green-300">
-                <ChoiceboxItemHeader>
-                  <div className="text-4xl mb-3">👨‍🏫</div>
-                  <ChoiceboxItemTitle className="text-xl font-bold text-gray-900">
-                    Teacher
-                  </ChoiceboxItemTitle>
-                  <ChoiceboxItemDescription className="text-sm text-gray-600">
-                    Create games and teach financial literacy
-                  </ChoiceboxItemDescription>
-                </ChoiceboxItemHeader>
-                <ChoiceboxItemContent>
-                  <ChoiceboxItemIndicator />
-                </ChoiceboxItemContent>
-              </ChoiceboxItem>
-            </Choicebox>
-          </div>
-
           {/* School */}
           <div className="space-y-2">
             <Label htmlFor="school" className="text-sm font-semibold text-gray-700">
@@ -245,52 +183,30 @@ export default function OnboardingPage() {
             />
           </div>
 
-          {/* Grade (Student) */}
-          {formData.role === "student" && (
-            <div className="space-y-2">
-              <Label htmlFor="grade" className="text-sm font-semibold text-gray-700">
-                Grade/Year
-              </Label>
-              <Select
-                value={formData.grade}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, grade: value })
-                }
-              >
-                <SelectTrigger className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600">
-                  <SelectValue placeholder="Select your grade" />
-                </SelectTrigger>
-                <SelectContent>
-                  {["Year 7", "Year 8", "Year 9", "Year 10", "Year 11", "Year 12", "Year 13"].map(
-                    (year) => (
-                      <SelectItem key={year} value={year}>
-                        {year}
-                      </SelectItem>
-                    )
-                  )}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
-
-          {/* Subject (Teacher) */}
-          {formData.role === "teacher" && (
-            <div className="space-y-2">
-              <Label htmlFor="subject" className="text-sm font-semibold text-gray-700">
-                Subject
-              </Label>
-              <Input
-                id="subject"
-                type="text"
-                value={formData.subject}
-                onChange={(e) =>
-                  setFormData({ ...formData, subject: e.target.value })
-                }
-                className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600"
-                placeholder="e.g., Mathematics, Economics"
-              />
-            </div>
-          )}
+          <div className="space-y-2">
+            <Label htmlFor="grade" className="text-sm font-semibold text-gray-700">
+              Grade/Year
+            </Label>
+            <Select
+              value={formData.grade}
+              onValueChange={(value) =>
+                setFormData({ ...formData, grade: value })
+              }
+            >
+              <SelectTrigger className="w-full px-4 py-3 h-12 border-2 border-gray-200 rounded-lg focus:border-valuto-green-600">
+                <SelectValue placeholder="Select your grade" />
+              </SelectTrigger>
+              <SelectContent>
+                {["Year 7", "Year 8", "Year 9", "Year 10", "Year 11", "Year 12", "Year 13"].map(
+                  (year) => (
+                    <SelectItem key={year} value={year}>
+                      {year}
+                    </SelectItem>
+                  )
+                )}
+              </SelectContent>
+            </Select>
+          </div>
 
           {/* Submit */}
           <div className="flex justify-end pt-4">

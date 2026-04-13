@@ -63,7 +63,7 @@ export const userApi = {
   async createProfile(token: string, userData: {
     name: string;
     email: string;
-    role: 'student' | 'teacher';
+    role?: string;
     age?: number;
     school?: string;
     grade?: string;

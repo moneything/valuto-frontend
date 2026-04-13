@@ -1,7 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useMemo, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Settings2, TrendingUp, Zap } from "lucide-react";
 import ControlSlider from "@/components/calculator/ControlSlider";
 import EducationalPanel from "@/components/calculator/EducationalPanel";
@@ -10,6 +10,7 @@ import ParticleBackground from "@/components/calculator/ParticleBackground";
 import ResultsPanel from "@/components/calculator/ResultsPanel";
 
 export default function InvestmentCalculatorPage() {
+  const [showIntro, setShowIntro] = useState(true);
   const [monthlyInvestment, setMonthlyInvestment] = useState(200);
   const [initialInvestment, setInitialInvestment] = useState(1000);
   const [annualReturn, setAnnualReturn] = useState(8);
@@ -17,6 +18,11 @@ export default function InvestmentCalculatorPage() {
   const [inflationOn, setInflationOn] = useState(false);
   const [advancedMode, setAdvancedMode] = useState(false);
   const [volatility, setVolatility] = useState(0);
+
+  useEffect(() => {
+    const timer = window.setTimeout(() => setShowIntro(false), 2600);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   const results = useMemo(() => {
     const totalInvested = initialInvestment + monthlyInvestment * 12 * years;
@@ -37,6 +43,61 @@ export default function InvestmentCalculatorPage() {
 
     return { totalInvested, totalValue, totalGrowth, compoundingGain, inflationAdjusted };
   }, [monthlyInvestment, initialInvestment, annualReturn, years, inflationOn]);
+
+  if (showIntro) {
+    return (
+      <AnimatePresence>
+        <motion.div
+          initial={{ opacity: 1 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#07110d] px-6 text-white"
+        >
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,hsl(152_72%_36%_/_0.22),transparent_36%),radial-gradient(circle_at_80%_18%,hsl(45_90%_55%_/_0.18),transparent_28%),linear-gradient(160deg,#07110d,#0d1712,#0a1210)]" />
+          <motion.div
+            initial={{ opacity: 0, y: 22, scale: 0.97 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="relative z-10 w-full max-w-3xl rounded-[2rem] border border-white/10 bg-[#0f1613]/85 px-8 py-14 text-center shadow-[0_30px_90px_rgba(0,0,0,0.4)] backdrop-blur-xl"
+          >
+            <motion.div
+              animate={{ y: [0, -5, 0] }}
+              transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
+              className="mx-auto mb-6 flex h-20 w-20 items-center justify-center rounded-3xl border border-[#36d67d]/20 bg-[#36d67d]/10 text-[#36d67d]"
+            >
+              <TrendingUp className="h-10 w-10" />
+            </motion.div>
+            <motion.p
+              initial={{ opacity: 0, scale: 0.92 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.15, duration: 0.45, ease: "easeOut" }}
+              className="mb-4 text-lg font-black uppercase tracking-[0.32em] text-[#8ff0ba] drop-shadow-[0_0_22px_rgba(143,240,186,0.5)] sm:text-2xl"
+            >
+              Investment Calculator
+            </motion.p>
+            <h1 className="mb-4 text-4xl font-bold sm:text-5xl">
+              Model Your Future
+            </h1>
+            <p className="mx-auto max-w-2xl text-sm leading-7 text-[#9ca8a2] sm:text-base">
+              Explore compound growth, test different contribution levels, and
+              see how time and consistency change the outcome.
+            </p>
+            <div className="mt-8 flex items-center justify-center gap-3 text-xs text-[#8b9791] sm:text-sm">
+              <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                Compound interest
+              </span>
+              <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                Inflation view
+              </span>
+              <span className="rounded-full border border-white/10 bg-white/5 px-4 py-2">
+                Long-term planning
+              </span>
+            </div>
+          </motion.div>
+        </motion.div>
+      </AnimatePresence>
+    );
+  }
 
   return (
     <div className="relative min-h-screen overflow-hidden bg-[#07110d] text-white">

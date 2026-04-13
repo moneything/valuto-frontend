@@ -427,11 +427,6 @@ class TriviaGameController {
 
               // Update daily trivia challenge for this user
               try {
-                if (user.role === 'teacher') {
-                  await user.save();
-                  continue;
-                }
-
                 const startOfDay = new Date();
                 startOfDay.setHours(0, 0, 0, 0);
                 const endOfDay = new Date(startOfDay);

@@ -9,6 +9,12 @@ const MANUAL_CHALLENGE_TYPES = new Set([
   'monthly_investment_simulation',
 ]);
 
+function assertManualChallenge(challenge) {
+  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
+    throw new AppError('This challenge cannot be updated directly', 403);
+  }
+}
+
 /**
  * Challenge Controller
  * Handles daily and weekly challenges and special tasks
@@ -193,17 +199,15 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
     throw new AppError('Challenge not found', 404);
   }
 
-  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
-    throw new AppError('This challenge cannot be updated directly', 403);
-  }
+  assertManualChallenge(challenge);
 
-  // Update progress
   const wasCompleted = challenge.completed;
-  const safeIncrement = Number.isFinite(Number(increment)) && Number(increment) > 0 ? 1 : 0;
-  if (safeIncrement === 0) {
+  if (!Number.isFinite(Number(increment)) || Number(increment) <= 0) {
     throw new AppError('Increment must be a positive value', 400);
   }
-  await challenge.updateProgress(safeIncrement);
+
+  // Manual challenge progress is server-capped to one step per verified action.
+  await challenge.updateProgress(1);
 
   // If newly completed, award points
   if (!wasCompleted && challenge.completed) {
@@ -249,9 +253,7 @@ const completeChallenge = asyncHandler(async (req, res) => {
     throw new AppError('Challenge not found', 404);
   }
 
-  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
-    throw new AppError('This challenge cannot be completed directly', 403);
-  }
+  assertManualChallenge(challenge);
 
   if (challenge.completed) {
     return res.status(400).json({
@@ -260,8 +262,7 @@ const completeChallenge = asyncHandler(async (req, res) => {
     });
   }
 
-  // Complete challenge
-  await challenge.complete();
+  await challenge.updateProgress(challenge.targetProgress - challenge.currentProgress);
 
   // Award points
   user.totalPoints += challenge.pointsEarned * challenge.bonusMultiplier;

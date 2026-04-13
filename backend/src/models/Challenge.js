@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 /**
  * Challenge Schema
- * Tracks user completion of daily challenges and special tasks
+ * Tracks user completion of daily and weekly challenges and special tasks
  */
 const challengeSchema = new mongoose.Schema(
   {
@@ -132,7 +132,7 @@ challengeSchema.methods.complete = function () {
   return this.save();
 };
 
-// Static method to get user's daily challenges
+// Static method to get user's daily and weekly challenges for the current day context
 challengeSchema.statics.getDailyChallenges = async function (userId, date = new Date()) {
   const startOfDay = new Date(date);
   startOfDay.setHours(0, 0, 0, 0);
@@ -201,14 +201,14 @@ challengeSchema.statics.getUserChallengeStats = async function (userId) {
   };
 };
 
-// Static method to create default daily challenges for user
+// Static method to create default daily and weekly challenges for user
 challengeSchema.statics.createDailyChallenges = async function (userId, clerkUserId) {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   return this.ensureDailyChallenges(userId, clerkUserId, today);
 };
 
-// Helper to build the daily challenge templates
+// Helper to build the daily and weekly challenge templates
 challengeSchema.statics.buildDailyChallenges = function (dayStart, userId, clerkUserId) {
   const t = dayStart.getTime();
   return [

@@ -221,7 +221,6 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
     if (grade !== undefined) user.grade = grade;
     if (subject !== undefined) user.subject = subject;
     if (completedOnboarding !== undefined) user.completedOnboarding = completedOnboarding;
-    user.updateStreak();
 
     await user.save();
 
@@ -287,7 +286,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (school !== undefined) user.school = school;
   if (grade !== undefined) user.grade = grade;
   if (subject !== undefined) user.subject = subject;
-  user.updateStreak();
 
   await user.save();
 
@@ -390,7 +388,6 @@ const addPoints = asyncHandler(async (req, res) => {
   if (!user) throw new AppError('User profile not found', 404);
 
   user.totalPoints += points;
-  user.updateStreak();
 
   await user.save();
 
@@ -412,7 +409,6 @@ const incrementGameCount = asyncHandler(async (req, res) => {
   if (!user) throw new AppError('User profile not found', 404);
 
   user.gamesPlayed += 1;
-  user.updateStreak();
   await user.save();
 
   res.status(200).json({

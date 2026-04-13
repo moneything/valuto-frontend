@@ -15,7 +15,7 @@ export default function Features() {
       { icon: TrendingUp, title: "Investment Simulator", desc: "Practice investing with virtual money. Learn the ropes without the risk." },
       { icon: Gamepad2, title: "Trivia Games", desc: "Challenge yourself and friends with fun money quizzes. Learn while you compete." },
       { icon: Trophy, title: "Leaderboards", desc: "Climb the ranks, beat your mates, and prove you're the money master." },
-      { icon: Flame, title: "Daily Challenges", desc: "Quick daily tasks that build real financial habits over time." },
+      { icon: Flame, title: "Daily and Weekly Challenges", desc: "Quick daily tasks and weekly goals that build real financial habits over time." },
       { icon: Sparkles, title: '"Future You" Simulator', desc: "Visualise your financial future with interactive sliders for savings, investing, and compound interest." },
       { icon: MessageCircle, title: "Ask Valuto AI", desc: "Your personal finance helper. Ask anything — get simple, jargon-free answers." },
       { icon: Newspaper, title: "Financial News Feed", desc: "All the financial news that matters to you, explained in plain English." },
@@ -69,4 +69,3 @@ export default function Features() {
     </>
   );
 }
-

@@ -20,19 +20,18 @@ const dashboardNavGroups = [
       { label: "Dashboard", href: "/dashboard" },
       { label: "Trivia", href: "/dashboard/trivia" },
       { label: "Calculator", href: "/dashboard/calculator" },
-      { label: "Modules", href: "/dashboard/learning-modules" },
+      { label: "Interactive Modules", href: "/dashboard/learning-modules" },
+      { label: "News", href: "/news" },
       { label: "AI Chat", href: "/dashboard/ai-chat" },
       { label: "Profile", href: "/dashboard/profile" },
     ],
   },
-  {
-    label: "Featured Games",
-    links: [
-      { label: "Build Your Life", href: "/dashboard/build-your-life" },
-      { label: "Build Your Business", href: "/dashboard/build-your-business" },
-      { label: "Investment", href: "/dashboard/investment" },
-    ],
-  },
+];
+
+const featuredGameLinks = [
+  { label: "Build Your Life", href: "/dashboard/build-your-life" },
+  { label: "Build Your Business", href: "/dashboard/build-your-business" },
+  { label: "Investment Simulation", href: "/dashboard/investment" },
 ];
 
 const floatingParticles = [
@@ -68,6 +67,7 @@ export default function DashboardLayout({
   const { isSignedIn, isLoaded } = useUser();
   const { profile, loading } = useUserProfile();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [featuredGamesOpen, setFeaturedGamesOpen] = useState(false);
 
   useEffect(() => {
     if (!isLoaded || loading) return; // wait for both Clerk and profile to load
@@ -164,33 +164,72 @@ export default function DashboardLayout({
             </Link>
 
             <div className="hidden xl:flex xl:items-center xl:gap-8">
-              {dashboardNavGroups.map((group, groupIndex) => (
-                <div key={group.label || `group-${groupIndex}`} className="flex items-center gap-4">
-                  {group.label ? (
-                    <span className="rounded-full border border-violet-400/25 bg-violet-400/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
-                      {group.label}
-                    </span>
-                  ) : null}
-                  <div className="flex items-center gap-6">
-                    {group.links.map((link) => {
-                      const isActive =
-                        pathname === link.href || pathname.startsWith(`${link.href}/`);
+              <div className="flex items-center gap-6">
+                {dashboardNavGroups[0].links.map((link) => {
+                  const isActive =
+                    pathname === link.href || pathname.startsWith(`${link.href}/`);
 
-                      return (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          className={`text-sm font-medium transition-colors lg:text-base ${
-                            isActive ? "text-primary" : "text-gray-300 hover:text-white"
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      );
-                    })}
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`text-sm font-medium transition-colors lg:text-base ${
+                        isActive ? "text-primary" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+              </div>
+
+              <div className="relative">
+                <button
+                  type="button"
+                  onClick={() => setFeaturedGamesOpen((open) => !open)}
+                  className={`inline-flex items-center gap-2 rounded-full border px-3 py-1.5 text-sm font-semibold transition-colors ${
+                    featuredGameLinks.some((link) => pathname === link.href || pathname.startsWith(`${link.href}/`))
+                      ? "border-violet-300/40 bg-violet-400/10 text-violet-100"
+                      : "border-violet-400/25 bg-violet-400/10 text-violet-200 hover:text-white"
+                  }`}
+                >
+                  Featured Games
+                  <svg
+                    className={`h-4 w-4 transition-transform ${featuredGamesOpen ? "rotate-180" : ""}`}
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+
+                {featuredGamesOpen ? (
+                  <div className="absolute left-0 top-full mt-3 min-w-[220px] overflow-hidden rounded-2xl border border-white/10 bg-[#14181f]/95 p-2 shadow-[0_20px_50px_rgba(0,0,0,0.45)] backdrop-blur-xl">
+                    <div className="flex flex-col">
+                      {featuredGameLinks.map((link) => {
+                        const isActive =
+                          pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+                        return (
+                          <Link
+                            key={link.href}
+                            href={link.href}
+                            onClick={() => setFeaturedGamesOpen(false)}
+                            className={`rounded-xl px-4 py-3 text-sm font-medium transition-colors ${
+                              isActive
+                                ? "bg-violet-400/10 text-violet-100"
+                                : "text-gray-300 hover:bg-white/5 hover:text-white"
+                            }`}
+                          >
+                            {link.label}
+                          </Link>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
-              ))}
+                ) : null}
+              </div>
             </div>
 
             <div className="flex items-center space-x-3">
@@ -227,32 +266,46 @@ export default function DashboardLayout({
           {mobileMenuOpen && (
             <div className="py-4 xl:hidden">
               <div className="flex flex-col space-y-3">
-                {dashboardNavGroups.map((group, groupIndex) => (
-                  <div key={group.label || `mobile-group-${groupIndex}`} className="space-y-3">
-                    {group.label ? (
-                      <div className="pt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
-                        {group.label}
-                      </div>
-                    ) : null}
-                    {group.links.map((link) => {
-                      const isActive =
-                        pathname === link.href || pathname.startsWith(`${link.href}/`);
+                {dashboardNavGroups[0].links.map((link) => {
+                  const isActive =
+                    pathname === link.href || pathname.startsWith(`${link.href}/`);
 
-                      return (
-                        <Link
-                          key={link.href}
-                          href={link.href}
-                          onClick={() => setMobileMenuOpen(false)}
-                          className={`block text-base font-medium ${
-                            isActive ? "text-primary" : "text-gray-300 hover:text-white"
-                          }`}
-                        >
-                          {link.label}
-                        </Link>
-                      );
-                    })}
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className={`block text-base font-medium ${
+                        isActive ? "text-primary" : "text-gray-300 hover:text-white"
+                      }`}
+                    >
+                      {link.label}
+                    </Link>
+                  );
+                })}
+
+                <div className="space-y-3">
+                  <div className="pt-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-violet-200">
+                    Featured Games
                   </div>
-                ))}
+                  {featuredGameLinks.map((link) => {
+                    const isActive =
+                      pathname === link.href || pathname.startsWith(`${link.href}/`);
+
+                    return (
+                      <Link
+                        key={link.href}
+                        href={link.href}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className={`block text-base font-medium ${
+                          isActive ? "text-primary" : "text-gray-300 hover:text-white"
+                        }`}
+                      >
+                        {link.label}
+                      </Link>
+                    );
+                  })}
+                </div>
 
               </div>
             </div>

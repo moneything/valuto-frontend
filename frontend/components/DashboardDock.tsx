@@ -158,8 +158,8 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
     const rect = itemRef.current?.getBoundingClientRect();
     if (rect) {
       setTooltipPosition({
-        top: rect.top + rect.height / 2,
-        left: rect.right + 18,
+        top: rect.top + rect.height / 2 - 16,
+        left: rect.right ,
       });
     }
   };

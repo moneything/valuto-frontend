@@ -78,33 +78,22 @@ const validateUserUpdate = [
    GameResult Validation
 -------------------------- */
 const validateGameResult = [
-  body("userId").trim().notEmpty(),
-  body("clerkUserId").trim().notEmpty(),
-
-  body("gameCode")
+  body("sessionId")
+    .optional()
     .trim()
     .notEmpty()
+    .withMessage("sessionId cannot be empty"),
+  body("gameCode")
+    .optional()
+    .trim()
     .isLength({ min: 6, max: 6 })
     .withMessage("Game code must be 6 characters"),
-
-  body("gameTitle").trim().notEmpty(),
-
-  body("gameType").optional().isIn(["trivia", "quiz", "challenge"]),
-
-  body("score").isInt({ min: 0 }),
-  body("maxPossibleScore").isInt({ min: 0 }),
-
-  body("questionsAnswered").isInt({ min: 0 }),
-  body("correctAnswers").isInt({ min: 0 }),
-
-  body("timeTaken").optional().isInt({ min: 0 }),
-
-  body("questionResults")
-    .optional()
-    .isArray()
-    .custom((arr) =>
-      arr.every((q) => q.questionId && q.selectedAnswer !== undefined)
-    ),
+  body().custom((value) => {
+    if (!value?.sessionId && !value?.gameCode) {
+      throw new Error("sessionId or gameCode is required");
+    }
+    return true;
+  }),
 
   handleValidationErrors,
 ];

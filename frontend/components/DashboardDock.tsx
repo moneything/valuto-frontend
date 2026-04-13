@@ -26,6 +26,9 @@ const dockItems = [
     href: '/dashboard',
     color: 'text-valuto-green-600 dark:text-valuto-green-400',
     bgColor: 'bg-valuto-green-100 hover:bg-valuto-green-200',
+    tooltipBg: '#0f2a1f',
+    tooltipBorder: 'rgba(34, 197, 94, 0.28)',
+    tooltipText: '#dcfce7',
   },
   {
     title: 'Trivia Games',
@@ -33,6 +36,9 @@ const dockItems = [
     href: '/dashboard/trivia',
     color: 'text-valuto-green-600 dark:text-valuto-green-400',
     bgColor: 'bg-green-100 hover:bg-green-200',
+    tooltipBg: '#10281f',
+    tooltipBorder: 'rgba(34, 197, 94, 0.28)',
+    tooltipText: '#dcfce7',
   },
   {
     title: 'Calculator',
@@ -40,6 +46,9 @@ const dockItems = [
     href: '/dashboard/calculator',
     color: 'text-blue-600 dark:text-blue-400',
     bgColor: 'bg-blue-100 hover:bg-blue-200',
+    tooltipBg: '#0f1f33',
+    tooltipBorder: 'rgba(96, 165, 250, 0.3)',
+    tooltipText: '#dbeafe',
   },
   {
     title: 'Build Your Life',
@@ -47,6 +56,9 @@ const dockItems = [
     href: '/dashboard/build-your-life',
     color: 'text-cyan-600 dark:text-cyan-400',
     bgColor: 'bg-cyan-100 hover:bg-cyan-200',
+    tooltipBg: '#0d2730',
+    tooltipBorder: 'rgba(34, 211, 238, 0.28)',
+    tooltipText: '#cffafe',
   },
   {
     title: 'Build Your Business',
@@ -54,6 +66,9 @@ const dockItems = [
     href: '/dashboard/build-your-business',
     color: 'text-amber-600 dark:text-amber-400',
     bgColor: 'bg-amber-100 hover:bg-amber-200',
+    tooltipBg: '#2b1d0f',
+    tooltipBorder: 'rgba(251, 191, 36, 0.3)',
+    tooltipText: '#fef3c7',
   },
   {
     title: 'Interactive Modules',
@@ -61,6 +76,9 @@ const dockItems = [
     href: '/dashboard/learning-modules',
     color: 'text-indigo-600 dark:text-indigo-400',
     bgColor: 'bg-indigo-100 hover:bg-indigo-200',
+    tooltipBg: '#171f3a',
+    tooltipBorder: 'rgba(129, 140, 248, 0.3)',
+    tooltipText: '#e0e7ff',
   },
   {
     title: 'Investment Simulation',
@@ -68,6 +86,9 @@ const dockItems = [
     href: '/dashboard/investment',
     color: 'text-emerald-600 dark:text-emerald-400',
     bgColor: 'bg-emerald-100 hover:bg-emerald-200',
+    tooltipBg: '#0d261f',
+    tooltipBorder: 'rgba(52, 211, 153, 0.28)',
+    tooltipText: '#d1fae5',
   },
   {
     title: 'News & Events',
@@ -75,6 +96,9 @@ const dockItems = [
     href: '/news',
     color: 'text-purple-600 dark:text-purple-400',
     bgColor: 'bg-purple-100 hover:bg-purple-200',
+    tooltipBg: '#241334',
+    tooltipBorder: 'rgba(192, 132, 252, 0.3)',
+    tooltipText: '#f3e8ff',
   },
   {
     title: 'Leaderboard',
@@ -82,6 +106,9 @@ const dockItems = [
     href: '/dashboard/leaderboard',
     color: 'text-yellow-600 dark:text-yellow-400',
     bgColor: 'bg-yellow-100 hover:bg-yellow-200',
+    tooltipBg: '#2b250e',
+    tooltipBorder: 'rgba(250, 204, 21, 0.3)',
+    tooltipText: '#fef9c3',
   },
   {
     title: 'Challenges',
@@ -89,6 +116,9 @@ const dockItems = [
     href: '/dashboard/challenges',
     color: 'text-red-600 dark:text-red-400',
     bgColor: 'bg-red-100 hover:bg-red-200',
+    tooltipBg: '#331417',
+    tooltipBorder: 'rgba(248, 113, 113, 0.3)',
+    tooltipText: '#fee2e2',
   },
   {
     title: 'Valuto AI',
@@ -96,6 +126,9 @@ const dockItems = [
     href: '/dashboard/ai-chat',
     color: 'text-indigo-600 dark:text-indigo-400',
     bgColor: 'bg-indigo-100 hover:bg-indigo-200',
+    tooltipBg: '#191d3a',
+    tooltipBorder: 'rgba(129, 140, 248, 0.3)',
+    tooltipText: '#e0e7ff',
   },
   {
     title: 'My Profile',
@@ -103,6 +136,9 @@ const dockItems = [
     href: '/dashboard/profile',
     color: 'text-neutral-600 dark:text-neutral-300',
     bgColor: 'bg-gray-100 hover:bg-gray-200',
+    tooltipBg: '#20242c',
+    tooltipBorder: 'rgba(203, 213, 225, 0.22)',
+    tooltipText: '#f8fafc',
   },
 ];
 
@@ -116,8 +152,8 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
     const rect = itemRef.current?.getBoundingClientRect();
     if (rect) {
       setTooltipPosition({
-        top: rect.top + rect.height / 2 - 2,
-        left: rect.right + 16,
+        top: rect.top + rect.height / 2 - 76,
+        left: rect.right - 16,
       });
     }
     setIsHovered(true);
@@ -144,11 +180,21 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
-          className="pointer-events-none fixed whitespace-nowrap rounded-lg bg-gray-900 px-3 py-2 text-sm font-medium text-white shadow-lg z-[9999]"
-          style={{ top: tooltipPosition.top, left: tooltipPosition.left, transform: 'translateY(-50%)' }}
+          className="pointer-events-none fixed whitespace-nowrap rounded-xl border px-3 py-2 text-sm font-medium shadow-[0_14px_34px_rgba(0,0,0,0.38)] z-[9999]"
+          style={{
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
+            transform: 'translateY(-50%)',
+            backgroundColor: item.tooltipBg,
+            borderColor: item.tooltipBorder,
+            color: item.tooltipText,
+          }}
         >
           {item.title}
-          <div className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent border-r-gray-900" />
+          <div
+            className="absolute right-full top-1/2 -translate-y-1/2 border-8 border-transparent"
+            style={{ borderRightColor: item.tooltipBg }}
+          />
         </motion.div>
       )}
     </Link>
@@ -157,9 +203,9 @@ function DockItem({ item }: { item: typeof dockItems[0] }) {
 
 export default function DashboardDock() {
   return (
-    <div className='fixed left-6 top-1/2 -translate-y-1/2 z-[190] hidden lg:block'>
+    <div className='fixed left-6 top-[56%] -translate-y-1/2 z-[190] hidden lg:block'>
       <div className="overflow-visible rounded-2xl border border-white/10 bg-[#1b1b1d]/95 p-4 backdrop-blur-lg shadow-[0_20px_60px_rgba(0,0,0,0.4)]">
-        <div className="flex max-h-[80vh] flex-col gap-3 overflow-y-auto overflow-x-visible pr-1">
+        <div className="flex h-min min-h-min flex-col gap-3 overflow-visible">
           {dockItems.map((item, idx) => (
             <DockItem key={idx} item={item} />
           ))}

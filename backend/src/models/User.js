@@ -199,9 +199,9 @@ userSchema.methods.addAchievement = function (achievementId) {
 
 // Static method to get leaderboard
 userSchema.statics.getLeaderboard = async function (options = {}) {
-  const { limit = 100, school = null, role = 'student' } = options;
+  const { limit = 100, school = null } = options;
 
-  const query = { role, isActive: true };
+  const query = { isActive: true };
   if (school) {
     query.school = school;
   }

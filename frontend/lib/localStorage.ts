@@ -4,7 +4,7 @@ export interface UserProfile {
   clerkUserId: string;
   name: string;
   email: string;
-  role: 'student' | 'teacher';
+  role?: string;
   title?: string;
   age?: number;
   school?: string;

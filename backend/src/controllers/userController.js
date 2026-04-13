@@ -1,6 +1,21 @@
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
+function normalizeSchoolName(value) {
+  return typeof value === 'string' ? value.trim() : '';
+}
+
+function assertSchoolChangeAllowed(user, nextSchool) {
+  const currentSchool = normalizeSchoolName(user?.school);
+  const requestedSchool = normalizeSchoolName(nextSchool);
+
+  if (!requestedSchool || !currentSchool || requestedSchool.toLowerCase() === currentSchool.toLowerCase()) {
+    return requestedSchool;
+  }
+
+  throw new AppError('School cannot be changed after it has been set', 403);
+}
+
 function calculateLevelFromXp(xp = 0) {
   return Math.max(1, Math.floor(xp / 100) + 1);
 }
@@ -176,10 +191,17 @@ const getOrCreateUser = asyncHandler(async (req, res) => {
  */
 const completeOnboarding = asyncHandler(async (req, res) => {
   const { userId } = req.auth;
+  const existingUser = await User.findOne({ clerkUserId: userId });
+  if (!existingUser) throw new AppError('User not found', 404);
+
   const updates = {
     ...req.body,
     role: 'student',
   };
+
+  if (Object.prototype.hasOwnProperty.call(req.body, 'school')) {
+    updates.school = assertSchoolChangeAllowed(existingUser, req.body.school);
+  }
 
   const user = await User.findOneAndUpdate(
     { clerkUserId: userId },
@@ -217,7 +239,7 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
     user.email = email || user.email;
     user.role = 'student';
     if (age !== undefined) user.age = age;
-    if (school !== undefined) user.school = school;
+    if (school !== undefined) user.school = assertSchoolChangeAllowed(user, school);
     if (grade !== undefined) user.grade = grade;
     if (subject !== undefined) user.subject = subject;
     if (completedOnboarding !== undefined) user.completedOnboarding = completedOnboarding;
@@ -237,7 +259,7 @@ const createOrUpdateUser = asyncHandler(async (req, res) => {
       email,
       role: 'student',
       age,
-      school,
+      school: normalizeSchoolName(school),
       grade,
       subject,
       completedOnboarding: completedOnboarding || false,
@@ -275,7 +297,7 @@ const getUserProfile = asyncHandler(async (req, res) => {
  */
 const updateUserProfile = asyncHandler(async (req, res) => {
   const { userId } = req.auth;
-  const { name, title, age, school, grade, subject } = req.body;
+  const { name, title, age, grade, subject } = req.body;
 
   const user = await User.findOne({ clerkUserId: userId });
   if (!user) throw new AppError('User profile not found', 404);
@@ -283,7 +305,6 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   if (name) user.name = name;
   if (title !== undefined) user.title = title;
   if (age !== undefined) user.age = age;
-  if (school !== undefined) user.school = school;
   if (grade !== undefined) user.grade = grade;
   if (subject !== undefined) user.subject = subject;
 

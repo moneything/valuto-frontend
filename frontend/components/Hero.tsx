@@ -13,7 +13,7 @@ export default function Hero() {
     { icon: TrendingUp, title: "Investment Simulator", desc: "Learn investing without risking real money." },
     { icon: Gamepad2, title: "Trivia Games", desc: "Test your money knowledge and challenge your mates." },
     { icon: Trophy, title: "Leaderboards", desc: "Compete with friends and climb the ranks." },
-    { icon: Flame, title: "Daily Challenges", desc: "Build real money habits, one day at a time." },
+    { icon: Flame, title: "Daily and Weekly Challenges", desc: "Build real money habits through quick daily tasks and longer weekly goals." },
     { icon: Newspaper, title: "Financial News", desc: "All the news that impacts your future — explained simply." },
     { icon: Target, title: "Progress Tracking", desc: "See how far you've come and what's next." },
   ];

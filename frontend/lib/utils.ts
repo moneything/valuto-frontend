@@ -16,9 +16,8 @@ export function formatDisplayName(
   const first = parts[0] || name;
   const last = parts.length ? parts[parts.length - 1] : name;
 
-  if (person.role === "teacher") {
-    if (person.title) return `${person.title} ${last}`;
-    return last;
+  if (person.title) {
+    return `${person.title} ${last}`;
   }
 
   if (options?.useFirstNameForStudents) {

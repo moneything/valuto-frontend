@@ -116,3 +116,83 @@ test('getUserStatsById blocks cross-school access', async () => {
   assert.equal(captured.statusCode, 403);
   assert.match(captured.message, /users in your school/);
 });
+
+test('getUserStatsById returns stats for same-school access', async () => {
+  const gameResultPath = require.resolve('../../src/models/GameResult');
+  const learningProgressPath = require.resolve('../../src/models/LearningProgress');
+  const challengePath = require.resolve('../../src/models/Challenge');
+  const originalGameResult = require.cache[gameResultPath];
+  const originalLearningProgress = require.cache[learningProgressPath];
+  const originalChallenge = require.cache[challengePath];
+
+  require.cache[gameResultPath] = {
+    id: gameResultPath,
+    filename: gameResultPath,
+    loaded: true,
+    exports: {
+      getUserStats: async () => ({ totalQuestions: 10, totalCorrect: 8, totalGames: 2, avgAccuracy: 80 }),
+    },
+  };
+  require.cache[learningProgressPath] = {
+    id: learningProgressPath,
+    filename: learningProgressPath,
+    loaded: true,
+    exports: {
+      getUserProgress: async () => [],
+    },
+  };
+  require.cache[challengePath] = {
+    id: challengePath,
+    filename: challengePath,
+    loaded: true,
+    exports: {
+      getUserChallengeStats: async () => ({ totalCompleted: 4 }),
+    },
+  };
+
+  const targetUser = {
+    _id: { toString: () => 'target_1' },
+    name: 'Target User',
+    title: 'Mx',
+    email: 'target@test.com',
+    role: 'student',
+    school: 'School A',
+    grade: 'Year 9',
+    totalPoints: 320,
+    gamesPlayed: 6,
+    lessonsCompleted: 5,
+    currentStreak: 3,
+    longestStreak: 7,
+  };
+
+  const { getUserStatsById } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {
+      findOne: async () => ({ school: 'School A' }),
+      findById: async () => targetUser,
+      countDocuments: async () => 2,
+    },
+  });
+
+  const req = {
+    params: { id: 'targetUserId' },
+    clerkUser: { id: 'clerk_1' },
+  };
+  const res = createMockRes();
+
+  try {
+    await getUserStatsById(req, res, () => {});
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.body.success, true);
+    assert.equal(res.body.data.user.name, 'Target User');
+    assert.equal(res.body.data.user.school, 'School A');
+    assert.equal(res.body.data.rank, 3);
+  } finally {
+    if (originalGameResult) require.cache[gameResultPath] = originalGameResult;
+    else delete require.cache[gameResultPath];
+    if (originalLearningProgress) require.cache[learningProgressPath] = originalLearningProgress;
+    else delete require.cache[learningProgressPath];
+    if (originalChallenge) require.cache[challengePath] = originalChallenge;
+    else delete require.cache[challengePath];
+  }
+});

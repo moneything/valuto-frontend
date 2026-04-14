@@ -63,3 +63,19 @@ test('updateStreak keeps same streak if already active today', () => {
   assert.equal(user.longestStreak, 6);
 });
 
+test('updateStreak starts streak at one on first meaningful activity', () => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const user = createUser({
+    currentStreak: 0,
+    longestStreak: 0,
+    lastActiveDate: yesterday,
+  });
+
+  const streak = user.updateStreak();
+
+  assert.equal(streak, 1);
+  assert.equal(user.currentStreak, 1);
+  assert.equal(user.longestStreak, 1);
+});

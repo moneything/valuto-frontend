@@ -34,6 +34,12 @@ STRIPE_PRICE_ID=price_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 GEMINI_API_KEY=...
 GEMINI_MODEL=gemini-1.5-flash
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=mailer@example.com
+SMTP_PASS=...
+CONTACT_FROM_EMAIL=hello@example.com
+CONTACT_TO_EMAIL=team@example.com
 ```
 
 ### 3. Frontend env (`frontend/.env.local`)
@@ -46,7 +52,9 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
 
 Important:
 - always set `NEXT_PUBLIC_BACKEND_URL` explicitly
-- backend CORS depends on the deployed/local frontend URL
+- backend HTTP CORS depends on `NEXT_PUBLIC_APP_URL`
+- backend Socket.IO CORS depends on both `NEXT_PUBLIC_APP_URL` and `FRONTEND_URL`
+- several frontend files still have mixed `5000`/`5001` fallbacks, so missing `NEXT_PUBLIC_BACKEND_URL` causes avoidable local/runtime bugs
 
 ### 4. Start services
 
@@ -69,6 +77,7 @@ npm run dev
 - Backend health: `http://localhost:5000/api/health`
 - Frontend: `http://localhost:3000`
 - Sign in and confirm dashboard/profile/challenges/leaderboard data load
+- If SMTP is configured, verify the `/contact` form sends successfully
 
 ## Backend Scripts
 
@@ -89,6 +98,18 @@ What they do:
 - `npm run verify:single-role`: verifies that all users are now `student`
 - `npm run smoke:post-deploy`: authenticated post-deploy smoke checks against a deployed backend
 
+`smoke:post-deploy` env:
+
+```env
+SMOKE_BASE_URL=https://your-backend.example.com
+SMOKE_BEARER_TOKEN=...
+SMOKE_SAME_SCHOOL_USER_ID=optional-user-id
+SMOKE_VERIFIED_SESSION_ID=optional-session-id
+SMOKE_VERIFIED_GAME_CODE=optional-game-code
+SMOKE_PROFILE_TITLE=optional-title
+SMOKE_ALLOW_PROFILE_UPDATE=false
+```
+
 ## Staging / Migration Rehearsal
 
 Before production:
@@ -105,6 +126,7 @@ Recommended staging checks:
 - trivia session creation works
 - leaderboard loads
 - challenges seed and load correctly
+- if SMTP is configured, contact form delivery works
 
 ## Railway Production
 
@@ -129,6 +151,9 @@ npm run verify:single-role
 ```bash
 npm run smoke:post-deploy
 ```
+
+Production note:
+- Stripe billing, Gemini chat, and contact-form email delivery are optional integrations and will return configuration errors until their env vars are set correctly.
 
 ## Real Mongo Testing
 

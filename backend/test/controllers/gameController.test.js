@@ -202,6 +202,98 @@ test('submitGameResult rejects unfinished sessions', async () => {
   assert.match(captured.message, /must be finished/i);
 });
 
+test('submitGameResult rejects when verified session is missing', async () => {
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {},
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'user_db_1' } }),
+    },
+    '../models/Session': {
+      findOne: async () => null,
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await submitGameResult(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 404);
+  assert.match(captured.message, /verified game session not found/i);
+});
+
+test('submitGameResult rejects users who are not in the verified session', async () => {
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {},
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'user_db_1' } }),
+    },
+    '../models/Session': {
+      findOne: async () => ({
+        joinCode: 'ABC123',
+        status: 'ended',
+        players: [{ userId: 'other_user', answeredQuestions: 4 }],
+      }),
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await submitGameResult(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /not eligible/i);
+});
+
+test('submitGameResult rejects players with no answered questions', async () => {
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {},
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'user_db_1' } }),
+    },
+    '../models/Session': {
+      findOne: async () => ({
+        joinCode: 'ABC123',
+        status: 'ended',
+        players: [{ userId: 'clerk_1', answeredQuestions: 0 }],
+      }),
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await submitGameResult(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /not eligible/i);
+});
+
 test('getGameResult returns 403 when requesting another user result', async () => {
   const { getGameResult } = loadWithMocks('../../src/controllers/gameController', {
     '../models/GameResult': {

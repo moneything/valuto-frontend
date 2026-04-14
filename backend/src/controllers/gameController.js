@@ -4,6 +4,92 @@ const Challenge = require('../models/Challenge');
 const Session = require('../models/Session');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
+async function syncDailyTriviaChallenge(user, clerkUserId) {
+  const userId = user?._id?.toString?.() || user?.id?.toString?.();
+  if (!userId) {
+    throw new AppError('User profile not found', 404);
+  }
+
+  const startOfDay = new Date();
+  startOfDay.setHours(0, 0, 0, 0);
+  const endOfDay = new Date(startOfDay);
+  endOfDay.setHours(23, 59, 59, 999);
+
+  let triviaChallenge = await Challenge.findOne({
+    userId,
+    challengeType: 'daily_trivia',
+    challengeDate: { $gte: startOfDay, $lte: endOfDay },
+  });
+
+  if (!triviaChallenge) {
+    console.log('[Challenge] No trivia challenge found for user', userId, '— creating');
+    await Challenge.createDailyChallenges(userId, clerkUserId);
+    triviaChallenge = await Challenge.findOne({
+      userId,
+      challengeType: 'daily_trivia',
+      challengeDate: { $gte: startOfDay, $lte: endOfDay },
+    });
+  }
+
+  if (!triviaChallenge) {
+    console.log('[Challenge] Trivia challenge missing after creation attempt', {
+      userId,
+    });
+    return 0;
+  }
+
+  const challengeId = triviaChallenge?._id?.toString?.() || triviaChallenge?.challengeId || 'unknown';
+
+  if (!triviaChallenge.completed) {
+    const before = triviaChallenge.currentProgress;
+    await triviaChallenge.updateProgress(1);
+    console.log('[Challenge] Trivia progress updated', {
+      userId,
+      challengeId,
+      before,
+      after: triviaChallenge.currentProgress,
+      completed: triviaChallenge.completed,
+    });
+  } else {
+    console.log('[Challenge] Trivia challenge already completed', {
+      userId,
+      challengeId,
+    });
+  }
+
+  if (!triviaChallenge.completed) {
+    return 0;
+  }
+
+  if (typeof Challenge.findOneAndUpdate !== 'function') {
+    return 0;
+  }
+
+  const rewardGrant = await Challenge.findOneAndUpdate(
+    {
+      _id: triviaChallenge._id,
+      rewardGranted: { $ne: true },
+    },
+    {
+      $set: {
+        rewardGranted: true,
+        rewardedAt: new Date(),
+      },
+    },
+    { new: true }
+  );
+
+  if (!rewardGrant) {
+    return 0;
+  }
+
+  const rewardPoints = triviaChallenge.pointsEarned * triviaChallenge.bonusMultiplier;
+  user.totalPoints += rewardPoints;
+  user.updateStreak();
+  await user.save();
+  return rewardPoints;
+}
+
 /**
  * Game Controller
  * Handles game result submission and retrieval
@@ -114,65 +200,7 @@ const submitGameResult = asyncHandler(async (req, res) => {
 
     // Update related challenges (e.g., daily trivia)
     try {
-      const startOfDay = new Date();
-      startOfDay.setHours(0, 0, 0, 0);
-      const endOfDay = new Date(startOfDay);
-      endOfDay.setHours(23, 59, 59, 999);
-
-      let triviaChallenge = await Challenge.findOne({
-        userId: user._id.toString(),
-        challengeType: 'daily_trivia',
-        challengeDate: { $gte: startOfDay, $lte: endOfDay },
-      });
-
-      if (!triviaChallenge) {
-        console.log('[Challenge] No trivia challenge found for user', user._id.toString(), '— creating');
-        await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
-        triviaChallenge = await Challenge.findOne({
-          userId: user._id.toString(),
-          challengeType: 'daily_trivia',
-          challengeDate: { $gte: startOfDay, $lte: endOfDay },
-        });
-      }
-
-      if (triviaChallenge && !triviaChallenge.completed) {
-        const before = triviaChallenge.currentProgress;
-        await triviaChallenge.updateProgress(1);
-        console.log('[Challenge] Trivia progress updated', {
-          userId: user._id.toString(),
-          challengeId: triviaChallenge._id.toString(),
-          before,
-          after: triviaChallenge.currentProgress,
-          completed: triviaChallenge.completed,
-        });
-
-        if (triviaChallenge.completed) {
-          const rewardGrant = await Challenge.findOneAndUpdate(
-            {
-              _id: triviaChallenge._id,
-              rewardGranted: { $ne: true },
-            },
-            {
-              $set: {
-                rewardGranted: true,
-                rewardedAt: new Date(),
-              },
-            },
-            { new: true }
-          );
-
-          if (rewardGrant) {
-            user.totalPoints += triviaChallenge.pointsEarned * triviaChallenge.bonusMultiplier;
-            user.updateStreak();
-            await user.save();
-          }
-        }
-      } else {
-        console.log('[Challenge] Trivia challenge already completed or missing after creation', {
-          userId: user._id.toString(),
-          hasChallenge: !!triviaChallenge,
-        });
-      }
+      await syncDailyTriviaChallenge(user, clerkUserId);
     } catch (err) {
       console.error('Failed to update trivia challenge progress:', err);
     }

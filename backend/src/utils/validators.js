@@ -12,8 +12,10 @@ const handleValidationErrors = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    console.log("❌ VALIDATION FAILED:");
-    console.dir(errors.array(), { depth: null });
+    if (process.env.NODE_ENV !== "test") {
+      console.log("❌ VALIDATION FAILED:");
+      console.dir(errors.array(), { depth: null });
+    }
     return res.status(400).json({
       success: false,
       message: "Validation failed",

@@ -11,6 +11,7 @@ Backend is operational and provides:
 - MongoDB persistence
 - Optional Stripe billing endpoints
 - Optional Gemini chat endpoint
+- Optional contact-form email delivery
 
 ## Runtime
 
@@ -33,6 +34,7 @@ Mounted in `src/server.js`:
 - `/api/categories`
 - `/api/billing`
 - `/api/ai`
+- `/api/contact`
 - `/api/webhooks`
 
 Special route behavior:
@@ -67,6 +69,16 @@ Common runtime settings:
 Feature-specific:
 - Stripe: `STRIPE_SECRET_KEY`, `STRIPE_PRICE_ID`, `STRIPE_WEBHOOK_SECRET`
 - Gemini: `GEMINI_API_KEY`, `GEMINI_MODEL`
+- Contact email: `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS`, `CONTACT_FROM_EMAIL`, `CONTACT_TO_EMAIL`
+
+## Current Behavioral Rules
+
+- The platform currently behaves as a single-role app: all users are treated as `student`.
+- Any authenticated user can create trivia sessions.
+- Learning module create/update/delete routes are present but intentionally disabled for all users.
+- Custom challenge creation is intentionally disabled for all users.
+- Same-school access is the privacy boundary for cross-user stats.
+- Verified trivia result submission is tied to finished server-side sessions.
 
 ## Related Docs
 
@@ -74,3 +86,4 @@ Feature-specific:
 - `backend/docs/API_DOCUMENTATION.md`
 - `backend/docs/SOCKETS-API.md`
 - `backend/docs/SETUP_GUIDE.md`
+- `backend/docs/ops-testing-runbook.md`

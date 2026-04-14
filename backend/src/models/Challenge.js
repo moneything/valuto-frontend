@@ -64,6 +64,13 @@ const challengeSchema = new mongoose.Schema(
     completedAt: {
       type: Date,
     },
+    rewardGranted: {
+      type: Boolean,
+      default: false,
+    },
+    rewardedAt: {
+      type: Date,
+    },
 
     // Points & Rewards
     pointsEarned: {

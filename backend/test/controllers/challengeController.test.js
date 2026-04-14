@@ -95,6 +95,72 @@ test('updateChallengeProgress awards points only on first completion', async () 
   assert.equal(userSaved, 1);
 });
 
+test('updateChallengeProgress rejects direct updates for non-manual challenge types', async () => {
+  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => ({
+        challengeType: 'daily_trivia',
+        completed: false,
+      }),
+    },
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'u1' } }),
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    params: { challengeId: 'c1' },
+    body: { increment: 5 },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await updateChallengeProgress(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /cannot be updated directly/i);
+});
+
+test('updateChallengeProgress caps manual progress updates to one step', async () => {
+  let receivedIncrement = null;
+  const challenge = {
+    challengeType: 'monthly_investment_simulation',
+    completed: false,
+    pointsEarned: 20,
+    bonusMultiplier: 1,
+    updateProgress: async (increment) => {
+      receivedIncrement = increment;
+    },
+  };
+
+  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => challenge,
+    },
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'u1' }, totalPoints: 0 }),
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    params: { challengeId: 'c1' },
+    body: { increment: 999 },
+  };
+  const res = createMockRes();
+
+  await updateChallengeProgress(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(receivedIncrement, 1);
+});
+
 test('completeChallenge returns 400 when challenge already completed', async () => {
   const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
     '../models/Challenge': {
@@ -114,4 +180,28 @@ test('completeChallenge returns 400 when challenge already completed', async () 
   assert.equal(res.statusCode, 400);
   assert.equal(res.body.success, false);
   assert.match(res.body.message, /already completed/i);
+});
+
+test('completeChallenge rejects direct completion for non-manual challenge types', async () => {
+  const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => ({ challengeType: 'daily_lesson', completed: false }),
+    },
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'u1' } }),
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = { clerkUser: { id: 'clerk_1' }, params: { challengeId: 'c1' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await completeChallenge(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /cannot be updated directly/i);
 });

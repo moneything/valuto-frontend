@@ -171,6 +171,82 @@ test('submitGameResult returns existing result without re-awarding points', asyn
   assert.equal(sessionLookups, 1);
 });
 
+test('submitGameResult returns existing session result when create hits duplicate key race', async () => {
+  let saveCount = 0;
+  const user = {
+    _id: { toString: () => 'user_db_1' },
+    totalPoints: 150,
+    gamesPlayed: 4,
+    updateStreak: () => {},
+    save: async () => {
+      saveCount += 1;
+    },
+  };
+  const duplicateResult = {
+    _id: 'gr_existing',
+    sessionId: 'session_1',
+    gameCode: 'ABC123',
+    completed: true,
+  };
+
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {
+      findOne: async (query) => {
+        if (query.sessionId === 'session_1') {
+          return duplicateResult;
+        }
+        return null;
+      },
+      create: async () => {
+        const error = new Error('duplicate key');
+        error.code = 11000;
+        throw error;
+      },
+    },
+    '../models/User': {
+      findOne: async () => user,
+    },
+    '../models/Session': {
+      findOne: async () => ({
+        sessionId: 'session_1',
+        joinCode: 'ABC123',
+        title: 'Money Quiz',
+        status: 'ended',
+        settings: { pointsPerCorrect: 100 },
+        questions: [
+          { id: 'q1', question: 'Q1', correctIndex: 1, points: 100 },
+        ],
+        players: [
+          {
+            userId: 'clerk_1',
+            answeredQuestions: 1,
+            correctAnswers: 1,
+            score: 100,
+            answers: [
+              { questionId: 'q1', selectedIndex: 1, isCorrect: true, timeSpentMs: 5000, pointsEarned: 100 },
+            ],
+          },
+        ],
+      }),
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+
+  await submitGameResult(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.gameResult, duplicateResult);
+  assert.equal(res.body.data.updatedStats.totalPoints, 150);
+  assert.equal(saveCount, 0);
+});
+
 test('submitGameResult rejects unfinished sessions', async () => {
   const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
     '../models/GameResult': {},

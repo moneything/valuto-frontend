@@ -128,6 +128,8 @@ app.use("/api/categories", categoryRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/contact', contactRoutes);
+const webhookRoutes = require("./routes/webhookRoutes");
+app.use("/api/webhooks", webhookRoutes);
 
 // ==================== ERROR HANDLING ====================
 
@@ -216,10 +218,6 @@ const startServer = async () => {
     process.exit(1);
   }
 };
-
-const webhookRoutes = require("./routes/webhookRoutes");
-app.use("/api/webhooks", webhookRoutes);
-
 
 if (require.main === module) {
   startServer();

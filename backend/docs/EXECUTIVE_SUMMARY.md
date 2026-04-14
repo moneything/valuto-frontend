@@ -13,7 +13,7 @@ The current platform supports:
 - learning modules and progress tracking
 - daily, weekly, and monthly challenges
 - trivia game creation, live play, verified result submission, and leaderboards
-- billing endpoints (Stripe) and AI chat endpoint (Gemini) when configured
+- billing endpoints (Stripe), AI chat (Gemini), and contact email delivery when configured
 
 ## Security/Integrity Highlights
 
@@ -22,6 +22,7 @@ The current platform supports:
 - public leaderboard endpoints strip email addresses
 - challenge rewards are awarded once, including duplicate/concurrent request paths
 - school is locked after first set and used as the stats-sharing boundary
+- contact form input is sanitized and validated before mail delivery is attempted
 
 ## Deployment Model
 
@@ -40,8 +41,8 @@ The current platform supports:
 ## Primary Risks to Watch
 
 - missing or incorrect frontend/backend base URLs
-- CORS env mismatch blocking API or socket traffic
-- missing Stripe/Gemini keys for optional features
+- CORS/socket origin env mismatch blocking API or live trivia traffic
+- missing Stripe, Gemini, or SMTP/contact env vars for optional features
 - running production without rehearsing single-role migration and smoke checks
 
 ## Source of Truth

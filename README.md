@@ -1,7 +1,7 @@
 # Valuto - Financial Education Platform
 
 Monorepo for the Valuto product with:
-- `frontend/`: Next.js 14 App Router app
+- `frontend/`: Next.js 15 App Router app
 - `backend/`: Express + MongoDB API with Socket.IO
 
 ## Repository Layout
@@ -18,10 +18,12 @@ valuto-frontend/
 ## Current Stack
 
 Frontend:
-- Next.js 14
+- Next.js 15
 - React 18 + TypeScript
 - Tailwind CSS
 - Clerk (`@clerk/nextjs`)
+- Vercel AI SDK + OpenAI integration
+- Framer Motion
 - Socket.IO client
 
 Backend:
@@ -30,11 +32,16 @@ Backend:
 - Clerk server SDK (`@clerk/clerk-sdk-node`)
 - Socket.IO
 - Stripe (billing)
+- Nodemailer (contact form)
 - Google Gemini API
 
 ## Local Development
 
 This repo does not use a root workspace script. Run each service in its own terminal.
+
+Required runtime:
+- Node.js `>=18`
+- npm `>=9`
 
 ### 1) Start backend
 
@@ -103,6 +110,29 @@ Important: set `NEXT_PUBLIC_BACKEND_URL` explicitly. Some frontend files still i
 - Public leaderboard responses do not expose email addresses.
 - Verified trivia results are tied to finished server-side sessions and deduplicated per user/session.
 
+## Current App Surface
+
+Frontend route groups:
+- Marketing/public: `/`, `/about`, `/features`, `/news`, `/contact`, `/pricing`, `/subscribe`
+- Auth/onboarding: `/sign-in/[[...sign-in]]`, `/sign-up/[[...sign-up]]`, `/auth/[[...rest]]`, `/onboarding`
+- Legal: `/privacy-policy`, `/terms-and-conditions`
+- Dashboard: `/dashboard`, `/dashboard/profile`, `/dashboard/challenges`, `/dashboard/learning-modules`, `/dashboard/learning-modules/[moduleId]`, `/dashboard/trivia`, `/dashboard/trivia/create`, `/dashboard/trivia/play/[code]`, `/dashboard/trivia/host/[sessionId]`, `/dashboard/trivia/session/[sessionId]/results`, `/dashboard/leaderboard`, `/dashboard/calculator`, `/dashboard/investment`, `/dashboard/students`, `/dashboard/ai-chat`, `/dashboard/news`, `/dashboard/build-your-life`, `/dashboard/build-your-business`
+
+Backend API mounts:
+- `/api/auth`
+- `/api/user`
+- `/api/game`
+- `/api/leaderboard`
+- `/api/learning`
+- `/api/challenges`
+- `/api/trivia`
+- `/api/news`
+- `/api/categories`
+- `/api/billing`
+- `/api/ai`
+- `/api/contact`
+- `/api/webhooks`
+
 ## Useful Backend Commands
 
 From `backend/`:
@@ -131,3 +161,4 @@ For operational details, see:
 - `backend/README.md`
 - `FRONTEND_INTEGRATION_GUIDE.md`
 - `DEPLOYMENT_CHECKLIST.md`
+- `PRODUCTION_ERROR_FIX.md`

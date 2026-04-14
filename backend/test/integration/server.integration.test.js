@@ -45,21 +45,68 @@ const createServerApp = () => {
   });
 };
 
-const withTestServer = async (app, run) => {
-  const server = app.listen(0);
-  try {
-    const address = server.address();
-    const baseUrl = `http://127.0.0.1:${address.port}`;
-    return await run(baseUrl);
-  } finally {
-    await new Promise((resolve, reject) => {
-      server.close((error) => {
-        if (error) reject(error);
-        else resolve();
-      });
-    });
-  }
-};
+const runAppRequest = (app, { method = 'GET', url = '/', headers = {} } = {}) =>
+  new Promise((resolve, reject) => {
+    const req = {
+      method,
+      url,
+      originalUrl: url,
+      path: url,
+      headers,
+      socket: {},
+      connection: {},
+      get(name) {
+        return this.headers[name.toLowerCase()];
+      },
+    };
+
+    let body = '';
+    const res = {
+      statusCode: 200,
+      headersSent: false,
+      locals: {},
+      _headers: {},
+      setHeader(name, value) {
+        this._headers[name.toLowerCase()] = value;
+      },
+      getHeader(name) {
+        return this._headers[name.toLowerCase()];
+      },
+      removeHeader(name) {
+        delete this._headers[name.toLowerCase()];
+      },
+      writeHead(statusCode, headers = {}) {
+        this.statusCode = statusCode;
+        Object.entries(headers).forEach(([name, value]) => {
+          this.setHeader(name, value);
+        });
+      },
+      write(chunk) {
+        if (chunk) {
+          body += chunk;
+        }
+      },
+      end(chunk) {
+        if (chunk) {
+          body += chunk;
+        }
+        this.headersSent = true;
+        let parsedBody = body;
+        try {
+          parsedBody = body ? JSON.parse(body) : null;
+        } catch (error) {
+          parsedBody = body;
+        }
+        resolve({
+          statusCode: this.statusCode,
+          headers: this._headers,
+          body: parsedBody,
+        });
+      },
+    };
+
+    app.handle(req, res, reject);
+  });
 
 test('server root and health endpoints return expected payloads', async () => {
   const originalNodeEnv = process.env.NODE_ENV;
@@ -70,25 +117,23 @@ test('server root and health endpoints return expected payloads', async () => {
   try {
     const app = createServerApp();
 
-    await withTestServer(app, async (baseUrl) => {
-      const rootResponse = await fetch(`${baseUrl}/`, {
-        headers: { Origin: 'http://test.local' },
-      });
-      const rootPayload = await rootResponse.json();
-
-      assert.equal(rootResponse.status, 200);
-      assert.equal(rootPayload.success, true);
-      assert.match(rootPayload.message, /valuto backend api is running/i);
-
-      const healthResponse = await fetch(`${baseUrl}/api/health`, {
-        headers: { Origin: 'http://test.local' },
-      });
-      const healthPayload = await healthResponse.json();
-
-      assert.equal(healthResponse.status, 200);
-      assert.equal(healthPayload.success, true);
-      assert.equal(healthPayload.database, 'connected');
+    const rootResponse = await runAppRequest(app, {
+      url: '/',
+      headers: { origin: 'http://test.local' },
     });
+
+    assert.equal(rootResponse.statusCode, 200);
+    assert.equal(rootResponse.body.success, true);
+    assert.match(rootResponse.body.message, /valuto backend api is running/i);
+
+    const healthResponse = await runAppRequest(app, {
+      url: '/api/health',
+      headers: { origin: 'http://test.local' },
+    });
+
+    assert.equal(healthResponse.statusCode, 200);
+    assert.equal(healthResponse.body.success, true);
+    assert.equal(healthResponse.body.database, 'connected');
   } finally {
     process.env.NODE_ENV = originalNodeEnv;
     process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
@@ -106,16 +151,14 @@ test('server returns structured 404 responses through notFound handler', async (
   try {
     const app = createServerApp();
 
-    await withTestServer(app, async (baseUrl) => {
-      const response = await fetch(`${baseUrl}/does-not-exist`, {
-        headers: { Origin: 'http://test.local' },
-      });
-      const payload = await response.json();
-
-      assert.equal(response.status, 404);
-      assert.equal(payload.success, false);
-      assert.match(payload.message, /route not found/i);
+    const response = await runAppRequest(app, {
+      url: '/does-not-exist',
+      headers: { origin: 'http://test.local' },
     });
+
+    assert.equal(response.statusCode, 404);
+    assert.equal(response.body.success, false);
+    assert.match(response.body.message, /route not found/i);
   } finally {
     console.error = originalConsoleError;
     process.env.NODE_ENV = originalNodeEnv;
@@ -134,16 +177,14 @@ test('server global error handler serializes AppError from mounted routes', asyn
   try {
     const app = createServerApp();
 
-    await withTestServer(app, async (baseUrl) => {
-      const response = await fetch(`${baseUrl}/api/ai/boom`, {
-        headers: { Origin: 'http://test.local' },
-      });
-      const payload = await response.json();
-
-      assert.equal(response.status, 418);
-      assert.equal(payload.success, false);
-      assert.equal(payload.message, 'Boom');
+    const response = await runAppRequest(app, {
+      url: '/api/ai/boom',
+      headers: { origin: 'http://test.local' },
     });
+
+    assert.equal(response.statusCode, 418);
+    assert.equal(response.body.success, false);
+    assert.equal(response.body.message, 'Boom');
   } finally {
     console.error = originalConsoleError;
     process.env.NODE_ENV = originalNodeEnv;

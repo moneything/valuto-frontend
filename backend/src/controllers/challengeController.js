@@ -201,6 +201,13 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
 
   assertManualChallenge(challenge);
 
+  if (challenge.completed) {
+    return res.status(400).json({
+      success: false,
+      message: 'Challenge already completed',
+    });
+  }
+
   const wasCompleted = challenge.completed;
   if (!Number.isFinite(Number(increment)) || Number(increment) <= 0) {
     throw new AppError('Increment must be a positive value', 400);

@@ -19,6 +19,11 @@ const gameResultSchema = new mongoose.Schema(
     },
 
     // Game Information
+    sessionId: {
+      type: String,
+      trim: true,
+      index: true,
+    },
     gameCode: {
       type: String,
       required: true,
@@ -108,6 +113,13 @@ const gameResultSchema = new mongoose.Schema(
 gameResultSchema.index({ userId: 1, completedAt: -1 }); // User's game history
 gameResultSchema.index({ gameCode: 1, score: -1 }); // Game leaderboard
 gameResultSchema.index({ completedAt: -1 }); // Recent games
+gameResultSchema.index(
+  { clerkUserId: 1, sessionId: 1 },
+  {
+    unique: true,
+    partialFilterExpression: { sessionId: { $exists: true, $type: 'string' } },
+  }
+);
 
 // Pre-save middleware to calculate accuracy
 gameResultSchema.pre('save', function (next) {

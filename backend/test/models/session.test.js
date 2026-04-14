@@ -116,3 +116,37 @@ test('getLeaderboard sorts by score and includes rank/accuracy', () => {
   assert.equal(leaderboard[1].rank, 2);
   assert.equal(leaderboard[1].accuracy, 50);
 });
+
+test('submitAnswer throws when player is not part of the session', () => {
+  const session = createSession();
+
+  assert.throws(
+    () =>
+      session.submitAnswer('missing-user', 'q1', {
+        selectedIndex: 0,
+        timeSpentMs: 1000,
+      }),
+    /Player not found/
+  );
+});
+
+test('endGame moves session to ended and stamps endedAt', () => {
+  const session = createSession();
+  session.startGame();
+
+  session.endGame();
+
+  assert.equal(session.status, 'ended');
+  assert.ok(session.endedAt instanceof Date);
+});
+
+test('nextQuestion ends the session when the question list is exhausted', () => {
+  const session = createSession();
+  session.startGame();
+
+  const next = session.nextQuestion();
+
+  assert.equal(next, null);
+  assert.equal(session.status, 'ended');
+  assert.ok(session.endedAt instanceof Date);
+});

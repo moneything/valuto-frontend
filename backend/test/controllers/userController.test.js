@@ -93,6 +93,94 @@ test('createOrUpdateUser updates existing user', async () => {
   assert.equal(existingUser.school, 'Test School');
 });
 
+test('createOrUpdateUser allows first-time school assignment', async () => {
+  const existingUser = {
+    name: 'Old Name',
+    title: null,
+    email: 'old@test.com',
+    role: 'student',
+    school: '',
+    save: async () => {},
+  };
+
+  const { createOrUpdateUser } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {
+      findOne: async () => existingUser,
+    },
+  });
+
+  const req = {
+    auth: { userId: 'clerk_1' },
+    body: { school: '  Test School  ' },
+  };
+  const res = createMockRes();
+
+  await createOrUpdateUser(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(existingUser.school, 'Test School');
+});
+
+test('createOrUpdateUser allows same school with different casing and spacing', async () => {
+  const existingUser = {
+    name: 'Old Name',
+    title: null,
+    email: 'old@test.com',
+    role: 'student',
+    school: 'Test School',
+    save: async () => {},
+  };
+
+  const { createOrUpdateUser } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {
+      findOne: async () => existingUser,
+    },
+  });
+
+  const req = {
+    auth: { userId: 'clerk_1' },
+    body: { school: '  test school ' },
+  };
+  const res = createMockRes();
+
+  await createOrUpdateUser(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(existingUser.school, 'test school');
+});
+
+test('createOrUpdateUser rejects changing school after it has been set', async () => {
+  const existingUser = {
+    name: 'Old Name',
+    title: null,
+    email: 'old@test.com',
+    role: 'student',
+    school: 'Test School',
+    save: async () => {},
+  };
+
+  const { createOrUpdateUser } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {
+      findOne: async () => existingUser,
+    },
+  });
+
+  const req = {
+    auth: { userId: 'clerk_1' },
+    body: { school: 'Other School' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await createOrUpdateUser(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /cannot be changed/i);
+});
+
 test('getUserStatsById blocks cross-school access', async () => {
   const { getUserStatsById } = loadWithMocks('../../src/controllers/userController', {
     '../models/User': {

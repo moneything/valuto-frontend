@@ -70,12 +70,9 @@ test('getModule returns 403 for inactive module', async () => {
   assert.match(captured.message, /inactive/i);
 });
 
-test('createModule blocks non-teacher/non-admin users', async () => {
+test('createModule is disabled for all users', async () => {
   const { createModule } = loadWithMocks('../../src/controllers/learningModuleController', {
     '../models/LearningModule': { create: async () => ({}) },
-    '../models/User': {
-      findOne: async () => ({ role: 'student' }),
-    },
   });
 
   const req = { clerkUser: { id: 'clerk_1' }, body: { topic: 'budgeting' } };
@@ -88,26 +85,12 @@ test('createModule blocks non-teacher/non-admin users', async () => {
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /Only teachers can create modules/);
+  assert.match(captured.message, /creation is disabled/i);
 });
 
-test('updateModule allows admin to update any module', async () => {
-  const moduleDoc = {
-    createdBy: 'other_user',
-    title: 'Old',
-    saveCalled: false,
-    save: async function save() {
-      this.saveCalled = true;
-    },
-  };
-
+test('updateModule is disabled for all users', async () => {
   const { updateModule } = loadWithMocks('../../src/controllers/learningModuleController', {
-    '../models/LearningModule': {
-      findById: async () => moduleDoc,
-    },
-    '../models/User': {
-      findOne: async () => ({ role: 'admin' }),
-    },
+    '../models/LearningModule': {},
   });
 
   const req = {
@@ -116,12 +99,13 @@ test('updateModule allows admin to update any module', async () => {
     body: { title: 'Updated Title' },
   };
   const res = createMockRes();
+  let captured = null;
 
-  await updateModule(req, res, () => {});
+  await updateModule(req, res, (err) => {
+    captured = err;
+  });
 
-  assert.equal(moduleDoc.title, 'Updated Title');
-  assert.equal(moduleDoc.saveCalled, true);
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /updates are disabled/i);
 });
-

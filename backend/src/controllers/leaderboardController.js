@@ -1,6 +1,10 @@
 const User = require('../models/User');
 const { asyncHandler } = require('../utils/errorHandler');
 
+function stripEmailFromUsers(users = []) {
+  return users.map(({ email, ...user }) => user);
+}
+
 /**
  * Leaderboard Controller
  * Handles global and filtered leaderboard operations
@@ -20,7 +24,7 @@ const getGlobalLeaderboard = asyncHandler(async (req, res) => {
   });
 
   // Add rankings
-  const rankedLeaderboard = leaderboard.map((user, index) => ({
+  const rankedLeaderboard = stripEmailFromUsers(leaderboard).map((user, index) => ({
     rank: index + 1,
     ...user,
   }));
@@ -106,7 +110,7 @@ const getSchoolLeaderboard = asyncHandler(async (req, res) => {
     school: schoolName,
   });
 
-  const rankedLeaderboard = leaderboard.map((user, index) => ({
+  const rankedLeaderboard = stripEmailFromUsers(leaderboard).map((user, index) => ({
     rank: index + 1,
     ...user,
   }));
@@ -134,7 +138,7 @@ const getTopPerformers = asyncHandler(async (req, res) => {
     .limit(parseInt(limit))
     .lean();
 
-  const rankedPerformers = topPerformers.map((user, index) => ({
+  const rankedPerformers = stripEmailFromUsers(topPerformers).map((user, index) => ({
     rank: index + 1,
     ...user,
   }));

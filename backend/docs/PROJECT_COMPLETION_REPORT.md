@@ -5,10 +5,10 @@ This file replaces the old dated completion report with a maintenance-oriented s
 ## Current State
 
 The repository currently contains:
-- Frontend app in `frontend/` (Next.js 14)
+- Frontend app in `frontend/` (Next.js 15)
 - Backend API + Socket.IO in `backend/` (Express + MongoDB)
 - Clerk auth integration across both services
-- Documentation updated to reflect current setup and route mounts
+- Current-state documentation for setup, deployment, REST APIs, and Socket.IO trivia
 
 ## Canonical Setup Docs
 
@@ -22,6 +22,7 @@ The repository currently contains:
 
 - `backend/docs/API_DOCUMENTATION.md`
 - `backend/docs/SOCKETS-API.md`
+- `backend/docs/trivia-overview.md`
 
 ## Maintenance Rules
 
@@ -29,3 +30,4 @@ The repository currently contains:
 2. When routes/env vars/scripts change, update docs in the same PR.
 3. Keep environment examples explicit (`NEXT_PUBLIC_BACKEND_URL`, Clerk keys, CORS vars).
 4. Avoid dated “complete” claims; prefer current-state documentation.
+5. Prefer operational summaries over planning documents once features are live.

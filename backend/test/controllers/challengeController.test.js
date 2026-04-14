@@ -16,15 +16,20 @@ const createMockRes = () => ({
   },
 });
 
-test('getDailyChallenges returns empty list for teacher role', async () => {
+test('getDailyChallenges returns challenge list for authenticated users', async () => {
   const { getDailyChallenges } = loadWithMocks('../../src/controllers/challengeController', {
     '../models/Challenge': {
-      getDailyChallenges: async () => [{ id: 'unused' }],
+      getDailyChallenges: async () => [{ id: 'c1' }],
+      ensureDailyChallenges: async () => false,
+      find: async () => [],
+      findOne: async () => null,
     },
     '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' }, role: 'teacher' }),
+      findOne: async () => ({ _id: { toString: () => 'u1' }, role: 'student' }),
     },
-    '../models/LearningProgress': {},
+    '../models/LearningProgress': {
+      countDocuments: async () => 0,
+    },
   });
 
   const req = { clerkUser: { id: 'clerk_1' } };
@@ -40,7 +45,7 @@ test('getDailyChallenges returns empty list for teacher role', async () => {
 
   assert.equal(res.statusCode, 200);
   assert.equal(res.body.success, true);
-  assert.deepEqual(res.body.data, []);
+  assert.deepEqual(res.body.data, [{ id: 'c1' }]);
 });
 
 test('updateChallengeProgress awards points only on first completion', async () => {
@@ -55,6 +60,7 @@ test('updateChallengeProgress awards points only on first completion', async () 
   };
 
   const challenge = {
+    challengeType: 'monthly_build_your_life',
     completed: false,
     pointsEarned: 50,
     bonusMultiplier: 2,
@@ -92,7 +98,7 @@ test('updateChallengeProgress awards points only on first completion', async () 
 test('completeChallenge returns 400 when challenge already completed', async () => {
   const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
     '../models/Challenge': {
-      findOne: async () => ({ completed: true }),
+      findOne: async () => ({ challengeType: 'monthly_build_your_business', completed: true }),
     },
     '../models/User': {
       findOne: async () => ({ _id: { toString: () => 'u1' } }),

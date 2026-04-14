@@ -94,6 +94,31 @@ NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
 
 Important: set `NEXT_PUBLIC_BACKEND_URL` explicitly. Some frontend files still include mixed fallback ports (`5000`/`5001`), so this variable should always be defined.
 
+## Current Product Rules
+
+- The platform currently uses a single effective user role: all users are treated as `student`.
+- Same-school access is the privacy boundary for cross-user stats.
+- Any authenticated user can create trivia sessions.
+- Custom challenges and learning module mutations are disabled for all users.
+- Public leaderboard responses do not expose email addresses.
+- Verified trivia results are tied to finished server-side sessions and deduplicated per user/session.
+
+## Useful Backend Commands
+
+From `backend/`:
+
+```bash
+npm test
+npm run test:real-mongo
+npm run migrate:single-role
+npm run verify:single-role
+npm run smoke:post-deploy
+```
+
+For operational details, see:
+- `backend/docs/API_DOCUMENTATION.md`
+- `backend/docs/ops-testing-runbook.md`
+
 ## Service URLs
 
 - Frontend: `http://localhost:3000`

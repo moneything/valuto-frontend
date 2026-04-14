@@ -141,6 +141,38 @@ test('challenge progress route rejects non-positive increments for monthly chall
   assert.match(captured.message, /increment must be a positive value/i);
 });
 
+test('challenge progress route returns 400 when monthly challenge is already completed', async () => {
+  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
+    '@clerk/clerk-sdk-node': {
+      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
+      clerkClient: {},
+    },
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'user_1' } }),
+    },
+    '../models/Challenge': {
+      findOne: async () => ({
+        challengeType: 'monthly_build_your_life',
+        completed: true,
+      }),
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    headers: { authorization: 'Bearer valid-token' },
+    params: { challengeId: 'c1' },
+    body: { increment: 1 },
+  };
+  const res = createMockRes();
+
+  await runRouteHandlers(handlers, req, res);
+
+  assert.equal(res.statusCode, 400);
+  assert.equal(res.body.success, false);
+  assert.match(res.body.message, /already completed/i);
+});
+
 test('challenge completion route blocks direct completion for normal challenge types', async () => {
   const handlers = getChallengeHandlers('/:challengeId/complete', 'put', {
     '@clerk/clerk-sdk-node': {

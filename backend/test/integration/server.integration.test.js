@@ -125,6 +125,8 @@ test('server root and health endpoints return expected payloads', async () => {
     assert.equal(rootResponse.statusCode, 200);
     assert.equal(rootResponse.body.success, true);
     assert.match(rootResponse.body.message, /valuto backend api is running/i);
+    assert.equal(rootResponse.headers['access-control-allow-origin'], 'http://test.local');
+    assert.equal(rootResponse.headers['access-control-allow-credentials'], 'true');
 
     const healthResponse = await runAppRequest(app, {
       url: '/api/health',
@@ -135,6 +137,32 @@ test('server root and health endpoints return expected payloads', async () => {
     assert.equal(healthResponse.body.success, true);
     assert.equal(healthResponse.body.database, 'connected');
   } finally {
+    process.env.NODE_ENV = originalNodeEnv;
+    process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
+  }
+});
+
+test('server rejects disallowed origins through CORS middleware', async () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalAppUrl = process.env.NEXT_PUBLIC_APP_URL;
+  const originalConsoleError = console.error;
+  process.env.NODE_ENV = 'test';
+  process.env.NEXT_PUBLIC_APP_URL = 'http://allowed.test';
+  console.error = () => {};
+
+  try {
+    const app = createServerApp();
+
+    const response = await runAppRequest(app, {
+      url: '/',
+      headers: { origin: 'http://blocked.test' },
+    });
+
+    assert.equal(response.statusCode, 500);
+    assert.equal(response.body.success, false);
+    assert.equal(response.body.message, 'Not allowed by CORS');
+  } finally {
+    console.error = originalConsoleError;
     process.env.NODE_ENV = originalNodeEnv;
     process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
   }

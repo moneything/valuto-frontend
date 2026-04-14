@@ -34,11 +34,15 @@ async function run() {
   console.log('After:', afterCounts);
 }
 
-run()
-  .catch((error) => {
-    console.error('Migration failed:', error);
-    process.exitCode = 1;
-  })
-  .finally(async () => {
-    await mongoose.connection.close();
-  });
+if (require.main === module) {
+  run()
+    .catch((error) => {
+      console.error('Migration failed:', error);
+      process.exitCode = 1;
+    })
+    .finally(async () => {
+      await mongoose.connection.close();
+    });
+}
+
+module.exports = { run };

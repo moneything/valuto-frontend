@@ -93,10 +93,11 @@ test('createOrUpdateUser updates existing user', async () => {
   assert.equal(existingUser.school, 'Test School');
 });
 
-test('getUserStatsById blocks non-teacher requester', async () => {
+test('getUserStatsById blocks cross-school access', async () => {
   const { getUserStatsById } = loadWithMocks('../../src/controllers/userController', {
     '../models/User': {
-      findOne: async () => ({ role: 'student' }),
+      findOne: async () => ({ school: 'School A' }),
+      findById: async () => ({ school: 'School B' }),
     },
   });
 
@@ -113,6 +114,5 @@ test('getUserStatsById blocks non-teacher requester', async () => {
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /Only teachers can view student stats/);
+  assert.match(captured.message, /users in your school/);
 });
-

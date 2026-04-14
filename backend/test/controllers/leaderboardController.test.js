@@ -47,6 +47,57 @@ test('getGlobalLeaderboard returns ranked users with applied filters', async () 
   assert.equal('email' in res.body.data.leaderboard[0], false);
 });
 
+test('getSchoolLeaderboard preserves privacy and ranks users', async () => {
+  const { getSchoolLeaderboard } = loadWithMocks('../../src/controllers/leaderboardController', {
+    '../models/User': {
+      getLeaderboard: async () => [
+        { _id: 'u1', name: 'A', totalPoints: 300 },
+        { _id: 'u2', name: 'B', totalPoints: 200 },
+      ],
+    },
+  });
+
+  const req = { params: { schoolName: 'Test School' }, query: { limit: '2' } };
+  const res = createMockRes();
+
+  await getSchoolLeaderboard(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.school, 'Test School');
+  assert.equal(res.body.data.leaderboard[0].rank, 1);
+  assert.equal('email' in res.body.data.leaderboard[0], false);
+});
+
+test('getTopPerformers excludes email addresses from public payloads', async () => {
+  const { getTopPerformers } = loadWithMocks('../../src/controllers/leaderboardController', {
+    '../models/User': {
+      find: () => ({
+        select: () => ({
+          sort: () => ({
+            limit: () => ({
+              lean: async () => [
+                { name: 'A', totalPoints: 300, currentStreak: 4 },
+                { name: 'B', totalPoints: 200, currentStreak: 2 },
+              ],
+            }),
+          }),
+        }),
+      }),
+    },
+  });
+
+  const req = { query: { limit: '2' } };
+  const res = createMockRes();
+
+  await getTopPerformers(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data[0].rank, 1);
+  assert.equal('email' in res.body.data[0], false);
+});
+
 test('getUserRank returns 404 when profile is missing', async () => {
   const { getUserRank } = loadWithMocks('../../src/controllers/leaderboardController', {
     '../models/User': {

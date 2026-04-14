@@ -38,12 +38,19 @@ STRIPE_PRICE_ID=price_...
 STRIPE_WEBHOOK_SECRET=whsec_...
 GEMINI_API_KEY=...
 GEMINI_MODEL=gemini-1.5-flash
+SMTP_HOST=smtp.example.com
+SMTP_PORT=587
+SMTP_USER=mailer@example.com
+SMTP_PASS=...
+CONTACT_FROM_EMAIL=hello@example.com
+CONTACT_TO_EMAIL=team@example.com
 ```
 
 ### Smoke tests
 - `GET /api/health` returns success
 - `POST /api/billing/webhook` reachable (for Stripe)
 - Socket.IO connection succeeds from deployed frontend
+- `/api/contact` works if SMTP/contact delivery is enabled
 
 ## 2) Frontend Deployment Checklist (Railway)
 
@@ -70,6 +77,7 @@ NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 - Dashboard loads with real user profile
 - Learning modules/challenges/leaderboard load from backend
 - Trivia create/join/play works across two browser sessions
+- AI chat works if Gemini is enabled
 
 ## 3) Post-Deploy Validation
 
@@ -79,6 +87,7 @@ NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 - Confirm Clerk production keys are used on both services
 - Confirm MongoDB Atlas network access and credentials are correct
 - Confirm Stripe webhooks are configured with backend webhook URL
+- Confirm optional Gemini and SMTP/contact env vars are set if those features are expected in production
 
 ## 4) Rollback Plan
 

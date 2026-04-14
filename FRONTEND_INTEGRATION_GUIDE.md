@@ -57,6 +57,8 @@ Expected:
 - Dashboard stats load from backend (no hardcoded values).
 - Learning modules and progress load from backend.
 - Challenges and leaderboard screens load from backend.
+- AI chat reaches `/api/ai/chat` for authenticated users.
+- Contact form posts to `/api/contact` when backend email delivery is configured.
 
 ### Trivia REST + Socket.IO
 - Create trivia session from `/dashboard/trivia/create`.
@@ -80,6 +82,10 @@ FRONTEND_URL=http://localhost:3000
 
 Restart backend.
 
+### Contact form returns configuration error
+Cause: SMTP/contact env vars are missing on the backend.
+Fix: set `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, and contact sender/recipient env vars.
+
 ### Socket connects then fails auth
 Cause: missing/invalid Clerk token.
 Fix: ensure Clerk keys are valid in frontend and backend; sign out/in and retry.
@@ -102,3 +108,4 @@ Fix: ensure Clerk keys are valid in frontend and backend; sign out/in and retry.
 - `backend/README.md`
 - `backend/docs/API_DOCUMENTATION.md`
 - `backend/docs/SOCKETS-API.md`
+- `backend/docs/SETUP_GUIDE.md`

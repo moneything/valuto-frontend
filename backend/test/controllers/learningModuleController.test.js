@@ -109,3 +109,24 @@ test('updateModule is disabled for all users', async () => {
   assert.equal(captured.statusCode, 403);
   assert.match(captured.message, /updates are disabled/i);
 });
+
+test('deleteModule is disabled for all users', async () => {
+  const { deleteModule } = loadWithMocks('../../src/controllers/learningModuleController', {
+    '../models/LearningModule': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'user_1' },
+    params: { id: 'm1' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await deleteModule(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /deletion is disabled/i);
+});

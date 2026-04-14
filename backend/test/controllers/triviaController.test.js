@@ -49,7 +49,7 @@ test('getSessionByCode uppercases join code and returns 404 when not found', asy
   assert.match(captured.message, /Session not found/);
 });
 
-test('createSession returns 403 for non-teacher user', async () => {
+test('createSession allows authenticated users to create trivia sessions', async () => {
   const userModelPath = require.resolve('../../src/models/User');
   const originalUserModelCache = require.cache[userModelPath];
   require.cache[userModelPath] = {
@@ -61,11 +61,13 @@ test('createSession returns 403 for non-teacher user', async () => {
     },
   };
 
+  let createdPayload = null;
   const { createSession } = loadWithMocks('../../src/controllers/triviaController', {
     '../models/Session': {
       generateJoinCode: async () => 'ABC123',
-      create: async () => {
-        throw new Error('should not create for non-teacher');
+      create: async (payload) => {
+        createdPayload = payload;
+        return payload;
       },
     },
     '../models/SessionResult': {},
@@ -79,12 +81,9 @@ test('createSession returns 403 for non-teacher user', async () => {
     },
   };
   const res = createMockRes();
-  let captured = null;
 
   try {
-    await createSession(req, res, (err) => {
-      captured = err;
-    });
+    await createSession(req, res, () => {});
   } finally {
     if (originalUserModelCache) {
       require.cache[userModelPath] = originalUserModelCache;
@@ -93,9 +92,10 @@ test('createSession returns 403 for non-teacher user', async () => {
     }
   }
 
-  assert.ok(captured);
-  assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /Only teachers can create trivia sessions/);
+  assert.equal(res.statusCode, 201);
+  assert.equal(res.body.success, true);
+  assert.equal(createdPayload.hostName, 'Learner One');
+  assert.equal(createdPayload.status, 'waiting');
 });
 
 test('createSession creates waiting session and returns summary payload', async () => {

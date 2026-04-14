@@ -19,9 +19,13 @@ From `backend/`:
 ```bash
 npm run dev
 npm start
+npm run migrate:single-role
+npm run verify:single-role
+npm run smoke:post-deploy
 npm run format
 npm run format:check
 npm test
+npm run test:real-mongo
 ```
 
 ## Environment
@@ -85,6 +89,27 @@ Special handling:
 ## Realtime
 
 Socket.IO is initialized on the same HTTP server and currently used for trivia session gameplay.
+
+## Current Platform Rules
+
+- The app currently operates with a single user role in practice: all users are treated as `student`.
+- Any authenticated user can create trivia sessions.
+- Custom challenge creation is disabled for all users.
+- Learning module create/update/delete routes are disabled for all users.
+- `GET /api/user/:id/stats` is restricted by same-school access.
+- Verified trivia result submission is deduplicated per `clerkUserId + sessionId`.
+- Public leaderboard routes do not expose email addresses.
+
+## Operational Testing
+
+- `npm test` runs the normal backend suite.
+- `npm run test:real-mongo` runs real-Mongo integration and concurrency tests when `MONGODB_URI_TEST` is set.
+- `npm run verify:single-role` verifies that a migrated database has no non-student users remaining.
+- `npm run smoke:post-deploy` runs authenticated post-deploy smoke checks against a deployed backend.
+
+See:
+- [API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md)
+- [ops-testing-runbook.md](./docs/ops-testing-runbook.md)
 
 ## Structure
 

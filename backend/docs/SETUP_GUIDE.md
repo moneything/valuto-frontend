@@ -1,24 +1,24 @@
-# Valuto Full-Stack Setup Guide
+# Valuto Setup Guide
 
-Current setup guide for local development and production deployment.
+Current setup guide for local development, staging verification, and production operations.
 
 ## Prerequisites
 
 - Node.js >= 18
 - npm >= 9
-- MongoDB local or Atlas
-- Clerk account
+- MongoDB local/Atlas, or Railway-connected MongoDB
+- Clerk account and keys
 
 ## Local Setup
 
-### 1) Install dependencies
+### 1. Install dependencies
 
 ```bash
 cd backend && npm install
 cd ../frontend && npm install
 ```
 
-### 2) Backend env (`backend/.env`)
+### 2. Backend env (`backend/.env`)
 
 ```env
 NODE_ENV=development
@@ -36,7 +36,7 @@ GEMINI_API_KEY=...
 GEMINI_MODEL=gemini-1.5-flash
 ```
 
-### 3) Frontend env (`frontend/.env.local`)
+### 3. Frontend env (`frontend/.env.local`)
 
 ```env
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY=pk_test_...
@@ -44,9 +44,11 @@ CLERK_SECRET_KEY=sk_test_...
 NEXT_PUBLIC_BACKEND_URL=http://localhost:5000
 ```
 
-Important: set `NEXT_PUBLIC_BACKEND_URL` explicitly.
+Important:
+- always set `NEXT_PUBLIC_BACKEND_URL` explicitly
+- backend CORS depends on the deployed/local frontend URL
 
-### 4) Start services
+### 4. Start services
 
 Terminal 1:
 
@@ -62,18 +64,91 @@ cd frontend
 npm run dev
 ```
 
-### 5) Verify
+### 5. Verify locally
 
 - Backend health: `http://localhost:5000/api/health`
 - Frontend: `http://localhost:3000`
-- Sign in and confirm dashboard data loads from backend.
+- Sign in and confirm dashboard/profile/challenges/leaderboard data load
 
-## Production Setup (High Level)
+## Backend Scripts
 
-- Deploy backend from `backend/` on Railway
-- Deploy frontend from `frontend/` on Railway
-- Set backend production env vars before go-live
-- Set frontend `NEXT_PUBLIC_BACKEND_URL` to deployed backend URL
-- Update backend CORS env vars to deployed frontend URL
+Run from `backend/`:
 
-For detailed deployment steps, see `DEPLOYMENT_CHECKLIST.md`.
+```bash
+npm test
+npm run test:real-mongo
+npm run migrate:single-role
+npm run verify:single-role
+npm run smoke:post-deploy
+```
+
+What they do:
+- `npm test`: standard backend suite
+- `npm run test:real-mongo`: real Mongo integration + concurrency tests when `MONGODB_URI_TEST` is set
+- `npm run migrate:single-role`: converts non-student users to `student`
+- `npm run verify:single-role`: verifies that all users are now `student`
+- `npm run smoke:post-deploy`: authenticated post-deploy smoke checks against a deployed backend
+
+## Staging / Migration Rehearsal
+
+Before production:
+
+```bash
+cd backend
+MONGODB_URI="your-staging-uri" npm run migrate:single-role
+MONGODB_URI="your-staging-uri" npm run verify:single-role
+```
+
+Recommended staging checks:
+- all users end up as `student`
+- same-school stats still work
+- trivia session creation works
+- leaderboard loads
+- challenges seed and load correctly
+
+## Railway Production
+
+For Railway:
+
+1. Deploy the code that contains the migration.
+2. Open the backend service shell.
+3. Run:
+
+```bash
+npm run migrate:single-role
+```
+
+4. Then verify:
+
+```bash
+npm run verify:single-role
+```
+
+5. Run post-deploy smoke checks with the required env vars:
+
+```bash
+npm run smoke:post-deploy
+```
+
+## Real Mongo Testing
+
+If you have a disposable Mongo instance:
+
+```bash
+cd backend
+MONGODB_URI_TEST="mongodb://127.0.0.1:27017/valuto_real_mongo_tests" npm run test:real-mongo
+```
+
+These tests cover:
+- unique `GameResult` session dedupe
+- one-time challenge reward claims
+- day/month challenge seeding persistence
+- concurrent result/challenge writes
+
+## Related Docs
+
+- `README.md`
+- `backend/README.md`
+- `backend/docs/API_DOCUMENTATION.md`
+- `backend/docs/ops-testing-runbook.md`
+- `DEPLOYMENT_CHECKLIST.md`

@@ -9,6 +9,7 @@ Trivia is implemented with:
 - Socket.IO events for real-time gameplay
 - Clerk-authenticated access
 - MongoDB persistence for sessions and results
+- separate verified result submission under `/api/game/result`
 
 ## Frontend Trivia Surface
 
@@ -23,6 +24,7 @@ Trivia is implemented with:
 - Routes: `backend/src/routes/triviaRoutes.js`
 - Socket handlers: `backend/src/sockets/triviaSocketHandlers.js`
 - Core game logic: `backend/src/controllers/triviaGameController.js`
+- Verified result controller: `backend/src/controllers/gameController.js`
 
 ## Operational Requirements
 
@@ -37,3 +39,4 @@ Trivia is implemented with:
 - REST details: `backend/docs/API_DOCUMENTATION.md`
 - Socket event contract: `backend/docs/SOCKETS-API.md`
 - Runtime composition: `backend/src/server.js`
+- Result verification rules: `backend/src/controllers/gameController.js`

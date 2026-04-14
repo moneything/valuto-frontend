@@ -83,94 +83,136 @@ const submitGameResult = asyncHandler(async (req, res) => {
     };
   });
   const timeTaken = player.answers.reduce((total, answer) => total + (answer.timeSpentMs || 0), 0);
-
-  // Create game result
-  const gameResult = await GameResult.create({
-    userId: user._id.toString(),
-    clerkUserId,
-    gameCode: normalizedGameCode,
-    gameTitle: session.title,
-    gameType: 'trivia',
-    score: player.score,
-    maxPossibleScore,
-    questionsAnswered: player.answeredQuestions,
-    correctAnswers: player.correctAnswers,
-    timeTaken: Math.round(timeTaken / 1000),
-    questionResults,
-    completed: true,
-    completedAt: new Date(),
-    metadata: {
-      sessionId: session.sessionId,
-      verifiedFromSession: true,
-    },
-  });
-
-  // Update user stats
-  user.totalPoints += player.score;
-  user.gamesPlayed += 1;
-  user.updateStreak();
-  await user.save();
-
-  // Update related challenges (e.g., daily trivia)
   try {
-    const startOfDay = new Date();
-    startOfDay.setHours(0, 0, 0, 0);
-    const endOfDay = new Date(startOfDay);
-    endOfDay.setHours(23, 59, 59, 999);
-
-    let triviaChallenge = await Challenge.findOne({
+    // Create game result
+    const gameResult = await GameResult.create({
       userId: user._id.toString(),
-      challengeType: 'daily_trivia',
-      challengeDate: { $gte: startOfDay, $lte: endOfDay },
+      clerkUserId,
+      sessionId: session.sessionId,
+      gameCode: normalizedGameCode,
+      gameTitle: session.title,
+      gameType: 'trivia',
+      score: player.score,
+      maxPossibleScore,
+      questionsAnswered: player.answeredQuestions,
+      correctAnswers: player.correctAnswers,
+      timeTaken: Math.round(timeTaken / 1000),
+      questionResults,
+      completed: true,
+      completedAt: new Date(),
+      metadata: {
+        sessionId: session.sessionId,
+        verifiedFromSession: true,
+      },
     });
 
-    if (!triviaChallenge) {
-      console.log('[Challenge] No trivia challenge found for user', user._id.toString(), '— creating');
-      await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
-      triviaChallenge = await Challenge.findOne({
+    // Update user stats
+    user.totalPoints += player.score;
+    user.gamesPlayed += 1;
+    user.updateStreak();
+    await user.save();
+
+    // Update related challenges (e.g., daily trivia)
+    try {
+      const startOfDay = new Date();
+      startOfDay.setHours(0, 0, 0, 0);
+      const endOfDay = new Date(startOfDay);
+      endOfDay.setHours(23, 59, 59, 999);
+
+      let triviaChallenge = await Challenge.findOne({
         userId: user._id.toString(),
         challengeType: 'daily_trivia',
         challengeDate: { $gte: startOfDay, $lte: endOfDay },
       });
-    }
 
-    if (triviaChallenge && !triviaChallenge.completed) {
-      const before = triviaChallenge.currentProgress;
-      await triviaChallenge.updateProgress(1);
-      console.log('[Challenge] Trivia progress updated', {
-        userId: user._id.toString(),
-        challengeId: triviaChallenge._id.toString(),
-        before,
-        after: triviaChallenge.currentProgress,
-        completed: triviaChallenge.completed,
-      });
-
-      if (triviaChallenge.completed) {
-        user.totalPoints += triviaChallenge.pointsEarned * triviaChallenge.bonusMultiplier;
-        user.updateStreak();
-        await user.save();
+      if (!triviaChallenge) {
+        console.log('[Challenge] No trivia challenge found for user', user._id.toString(), '— creating');
+        await Challenge.createDailyChallenges(user._id.toString(), clerkUserId);
+        triviaChallenge = await Challenge.findOne({
+          userId: user._id.toString(),
+          challengeType: 'daily_trivia',
+          challengeDate: { $gte: startOfDay, $lte: endOfDay },
+        });
       }
-    } else {
-      console.log('[Challenge] Trivia challenge already completed or missing after creation', {
-        userId: user._id.toString(),
-        hasChallenge: !!triviaChallenge,
-      });
-    }
-  } catch (err) {
-    console.error('Failed to update trivia challenge progress:', err);
-  }
 
-  res.status(201).json({
-    success: true,
-    message: 'Game result submitted successfully',
-    data: {
-      gameResult,
-      updatedStats: {
-        totalPoints: user.totalPoints,
-        gamesPlayed: user.gamesPlayed,
+      if (triviaChallenge && !triviaChallenge.completed) {
+        const before = triviaChallenge.currentProgress;
+        await triviaChallenge.updateProgress(1);
+        console.log('[Challenge] Trivia progress updated', {
+          userId: user._id.toString(),
+          challengeId: triviaChallenge._id.toString(),
+          before,
+          after: triviaChallenge.currentProgress,
+          completed: triviaChallenge.completed,
+        });
+
+        if (triviaChallenge.completed) {
+          const rewardGrant = await Challenge.findOneAndUpdate(
+            {
+              _id: triviaChallenge._id,
+              rewardGranted: { $ne: true },
+            },
+            {
+              $set: {
+                rewardGranted: true,
+                rewardedAt: new Date(),
+              },
+            },
+            { new: true }
+          );
+
+          if (rewardGrant) {
+            user.totalPoints += triviaChallenge.pointsEarned * triviaChallenge.bonusMultiplier;
+            user.updateStreak();
+            await user.save();
+          }
+        }
+      } else {
+        console.log('[Challenge] Trivia challenge already completed or missing after creation', {
+          userId: user._id.toString(),
+          hasChallenge: !!triviaChallenge,
+        });
+      }
+    } catch (err) {
+      console.error('Failed to update trivia challenge progress:', err);
+    }
+
+    res.status(201).json({
+      success: true,
+      message: 'Game result submitted successfully',
+      data: {
+        gameResult,
+        updatedStats: {
+          totalPoints: user.totalPoints,
+          gamesPlayed: user.gamesPlayed,
+        },
       },
-    },
-  });
+    });
+  } catch (error) {
+    if (error?.code === 11000 && session.sessionId) {
+      const existingSessionResult = await GameResult.findOne({
+        clerkUserId,
+        sessionId: session.sessionId,
+        completed: true,
+      });
+
+      if (existingSessionResult) {
+        return res.status(200).json({
+          success: true,
+          message: 'Game result already recorded',
+          data: {
+            gameResult: existingSessionResult,
+            updatedStats: {
+              totalPoints: user.totalPoints,
+              gamesPlayed: user.gamesPlayed,
+            },
+          },
+        });
+      }
+    }
+
+    throw error;
+  }
 });
 
 /**

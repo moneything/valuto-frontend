@@ -13,6 +13,7 @@ This file now serves as a current-state production note instead of the old one-o
 - Cross-user stats access is restricted by same-school membership.
 - Learning module create/update/delete routes are disabled for all users.
 - Custom challenge creation is disabled for all users.
+- Contact form delivery requires SMTP/contact env vars on the backend.
 
 ## Learning Modules
 
@@ -47,6 +48,7 @@ After each deploy:
 5. Open leaderboard.
 6. Open challenges.
 7. If applicable, submit a verified trivia result from a finished session.
+8. If SMTP is configured, submit a contact-form test message.
 
 ## Railway
 

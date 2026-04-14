@@ -265,6 +265,34 @@ test('updateChallengeProgress rejects non-positive increments', async () => {
   assert.match(captured.message, /increment must be a positive value/i);
 });
 
+test('updateChallengeProgress returns 400 when manual challenge is already completed', async () => {
+  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => ({
+        challengeType: 'monthly_build_your_business',
+        completed: true,
+      }),
+    },
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'u1' } }),
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    params: { challengeId: 'c1' },
+    body: { increment: 1 },
+  };
+  const res = createMockRes();
+
+  await updateChallengeProgress(req, res, () => {});
+
+  assert.equal(res.statusCode, 400);
+  assert.equal(res.body.success, false);
+  assert.match(res.body.message, /already completed/i);
+});
+
 test('updateChallengeProgress rejects direct updates for non-manual challenge types', async () => {
   const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
     '../models/Challenge': {

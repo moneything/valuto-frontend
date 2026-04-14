@@ -1,14 +1,15 @@
 # Valuto Frontend
 
-Next.js 14 App Router frontend for Valuto.
+Next.js 15 App Router frontend for Valuto.
 
 ## Tech
 
-- Next.js 14
+- Next.js 15
 - React 18 + TypeScript
 - Tailwind CSS
 - Clerk auth
 - Framer Motion
+- Vercel AI SDK + OpenAI integration
 - Socket.IO client
 
 ## Scripts
@@ -20,7 +21,12 @@ npm run dev
 npm run build
 npm run start
 npm run lint
+npm run test:e2e
 ```
+
+Runtime requirements:
+- Node.js `>=18`
+- npm `>=9`
 
 ## Environment
 
@@ -48,6 +54,11 @@ Open `http://localhost:3000`.
 
 Public/auth routes:
 - `/`
+- `/about`
+- `/features`
+- `/news`
+- `/contact`
+- `/pricing`
 - `/sign-in/[[...sign-in]]`
 - `/sign-up/[[...sign-up]]`
 - `/auth/[[...rest]]`
@@ -58,6 +69,7 @@ Public/auth routes:
 
 Dashboard routes:
 - `/dashboard`
+- `/dashboard/news`
 - `/dashboard/profile`
 - `/dashboard/challenges`
 - `/dashboard/learning-modules`
@@ -70,6 +82,8 @@ Dashboard routes:
 - `/dashboard/leaderboard`
 - `/dashboard/calculator`
 - `/dashboard/investment`
+- `/dashboard/build-your-life`
+- `/dashboard/build-your-business`
 - `/dashboard/students`
 - `/dashboard/ai-chat`
 
@@ -89,3 +103,4 @@ frontend/
 
 - Root layout wraps app with `ClerkProvider` and custom `UserProvider`.
 - Frontend expects backend APIs under `${NEXT_PUBLIC_BACKEND_URL}/api/*`.
+- Real-time trivia host/player flows use Socket.IO against the backend server.

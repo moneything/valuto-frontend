@@ -46,12 +46,11 @@ test('submitGameResult returns 404 when user profile is missing', async () => {
   assert.match(captured.message, /User profile not found/);
 });
 
-test('submitGameResult creates result and updates user stats for student flow', async () => {
+test('submitGameResult creates result from a verified finished session', async () => {
   let createdPayload = null;
   let saveCount = 0;
   const user = {
     _id: { toString: () => 'user_db_1' },
-    role: 'student',
     totalPoints: 100,
     gamesPlayed: 3,
     updateStreak: () => {},
@@ -61,15 +60,42 @@ test('submitGameResult creates result and updates user stats for student flow', 
   };
 
   const challenge = { completed: true };
+  const session = {
+    sessionId: 'session_1',
+    joinCode: 'ABC123',
+    title: 'Money Quiz',
+    status: 'ended',
+    settings: { pointsPerCorrect: 100 },
+    questions: [
+      { id: 'q1', question: 'Q1', correctIndex: 1, points: 100 },
+      { id: 'q2', question: 'Q2', correctIndex: 2, points: 100 },
+    ],
+    players: [
+      {
+        userId: 'clerk_1',
+        answeredQuestions: 2,
+        correctAnswers: 1,
+        score: 40,
+        answers: [
+          { questionId: 'q1', selectedIndex: 1, isCorrect: true, timeSpentMs: 5000, pointsEarned: 40 },
+          { questionId: 'q2', selectedIndex: 0, isCorrect: false, timeSpentMs: 4000, pointsEarned: 0 },
+        ],
+      },
+    ],
+  };
 
   const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
     '../models/GameResult': {
+      findOne: async () => null,
       create: async (payload) => {
         createdPayload = payload;
         return { _id: 'gr_1', ...payload };
       },
     },
     '../models/User': { findOne: async () => user },
+    '../models/Session': {
+      findOne: async () => session,
+    },
     '../models/Challenge': {
       findOne: async () => challenge,
       createDailyChallenges: async () => {},
@@ -80,14 +106,6 @@ test('submitGameResult creates result and updates user stats for student flow', 
     clerkUser: { id: 'clerk_1' },
     body: {
       gameCode: 'abc123',
-      gameTitle: 'Money Quiz',
-      gameType: 'trivia',
-      score: 40,
-      maxPossibleScore: 100,
-      questionsAnswered: 10,
-      correctAnswers: 4,
-      timeTaken: 60,
-      questionResults: [],
     },
   };
   const res = createMockRes();
@@ -103,6 +121,9 @@ test('submitGameResult creates result and updates user stats for student flow', 
   assert.equal(res.statusCode, 201);
   assert.equal(res.body.success, true);
   assert.equal(createdPayload.gameCode, 'ABC123');
+  assert.equal(createdPayload.gameTitle, 'Money Quiz');
+  assert.equal(createdPayload.score, 40);
+  assert.equal(createdPayload.questionsAnswered, 2);
   assert.equal(user.totalPoints, 140);
   assert.equal(user.gamesPlayed, 4);
   assert.equal(saveCount, 1);

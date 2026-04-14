@@ -78,6 +78,7 @@ test('challenge progress route allows monthly challenge updates but caps to one 
     },
     '../models/Challenge': {
       findOne: async () => ({
+        _id: 'c1',
         challengeType: 'monthly_build_your_life',
         completed: false,
         pointsEarned: 20,
@@ -86,6 +87,7 @@ test('challenge progress route allows monthly challenge updates but caps to one 
           receivedIncrement = increment;
         },
       }),
+      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
     },
     '../models/LearningProgress': {},
   });
@@ -102,6 +104,52 @@ test('challenge progress route allows monthly challenge updates but caps to one 
   assert.equal(res.statusCode, 200);
   assert.equal(res.body.success, true);
   assert.equal(receivedIncrement, 1);
+});
+
+test('challenge progress route does not re-award when reward grant was already claimed concurrently', async () => {
+  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
+    '@clerk/clerk-sdk-node': {
+      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
+      clerkClient: {},
+    },
+    '../models/User': {
+      findOne: async () => ({
+        _id: { toString: () => 'user_1' },
+        totalPoints: 120,
+        updateStreak: () => {},
+        save: async () => {
+          throw new Error('user.save should not be called when reward was already granted');
+        },
+      }),
+    },
+    '../models/Challenge': {
+      findOne: async () => ({
+        _id: 'c1',
+        challengeType: 'monthly_build_your_life',
+        completed: false,
+        pointsEarned: 20,
+        bonusMultiplier: 2,
+        updateProgress: async function updateProgress() {
+          this.completed = true;
+        },
+      }),
+      findOneAndUpdate: async () => null,
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    headers: { authorization: 'Bearer valid-token' },
+    params: { challengeId: 'c1' },
+    body: { increment: 1 },
+  };
+  const res = createMockRes();
+
+  await runRouteHandlers(handlers, req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.data.pointsEarned, 0);
+  assert.equal(res.body.data.totalPoints, 120);
 });
 
 test('challenge progress route rejects non-positive increments for monthly challenges', async () => {
@@ -239,6 +287,7 @@ test('challenge completion route awards points once for allowed monthly challeng
     },
     '../models/Challenge': {
       findOne: async () => challenge,
+      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
     },
     '../models/LearningProgress': {},
   });
@@ -255,4 +304,55 @@ test('challenge completion route awards points once for allowed monthly challeng
   assert.equal(res.body.success, true);
   assert.equal(user.totalPoints, 180);
   assert.equal(saveCount, 1);
+});
+
+test('challenge completion route does not re-award when reward grant was already claimed concurrently', async () => {
+  const user = {
+    _id: { toString: () => 'user_1' },
+    totalPoints: 180,
+    updateStreak: () => {},
+    save: async () => {
+      throw new Error('user.save should not be called when reward was already granted');
+    },
+  };
+  const challenge = {
+    _id: 'c1',
+    challengeType: 'monthly_investment_simulation',
+    completed: false,
+    targetProgress: 1,
+    currentProgress: 0,
+    pointsEarned: 40,
+    bonusMultiplier: 2,
+    updateProgress: async () => {
+      challenge.completed = true;
+      challenge.currentProgress = 1;
+    },
+  };
+
+  const handlers = getChallengeHandlers('/:challengeId/complete', 'put', {
+    '@clerk/clerk-sdk-node': {
+      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
+      clerkClient: {},
+    },
+    '../models/User': {
+      findOne: async () => user,
+    },
+    '../models/Challenge': {
+      findOne: async () => challenge,
+      findOneAndUpdate: async () => null,
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    headers: { authorization: 'Bearer valid-token' },
+    params: { challengeId: 'c1' },
+  };
+  const res = createMockRes();
+
+  await runRouteHandlers(handlers, req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.data.pointsEarned, 0);
+  assert.equal(res.body.data.totalPoints, 180);
 });

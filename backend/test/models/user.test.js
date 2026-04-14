@@ -79,3 +79,20 @@ test('updateStreak starts streak at one on first meaningful activity', () => {
   assert.equal(user.currentStreak, 1);
   assert.equal(user.longestStreak, 1);
 });
+
+test('updateStreak resets streak to one after a missed day gap', () => {
+  const threeDaysAgo = new Date();
+  threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
+
+  const user = createUser({
+    currentStreak: 6,
+    longestStreak: 8,
+    lastActiveDate: threeDaysAgo,
+  });
+
+  const streak = user.updateStreak();
+
+  assert.equal(streak, 1);
+  assert.equal(user.currentStreak, 1);
+  assert.equal(user.longestStreak, 8);
+});

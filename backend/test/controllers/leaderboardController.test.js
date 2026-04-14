@@ -18,7 +18,10 @@ const createMockRes = () => ({
 
 test('getGlobalLeaderboard returns ranked users with applied filters', async () => {
   let receivedOptions = null;
-  const users = [{ _id: 'u1', name: 'A', totalPoints: 300 }, { _id: 'u2', name: 'B', totalPoints: 200 }];
+  const users = [
+    { _id: 'u1', name: 'A', totalPoints: 300 },
+    { _id: 'u2', name: 'B', totalPoints: 200 },
+  ];
 
   const {
     getGlobalLeaderboard,
@@ -31,16 +34,17 @@ test('getGlobalLeaderboard returns ranked users with applied filters', async () 
     },
   });
 
-  const req = { query: { limit: '2', role: 'student', school: 'Test School' } };
+  const req = { query: { limit: '2', school: 'Test School' } };
   const res = createMockRes();
 
   await getGlobalLeaderboard(req, res, () => {});
 
-  assert.deepEqual(receivedOptions, { limit: 2, role: 'student', school: 'Test School' });
+  assert.deepEqual(receivedOptions, { limit: 2, school: 'Test School' });
   assert.equal(res.statusCode, 200);
   assert.equal(res.body.success, true);
   assert.equal(res.body.data.leaderboard[0].rank, 1);
   assert.equal(res.body.data.leaderboard[1].rank, 2);
+  assert.equal('email' in res.body.data.leaderboard[0], false);
 });
 
 test('getUserRank returns 404 when profile is missing', async () => {
@@ -90,4 +94,3 @@ test('getUserRank calculates global/school ranks and percentile', async () => {
   assert.equal(res.body.data.totalUsers, 100);
   assert.equal(res.body.data.percentile, 90);
 });
-

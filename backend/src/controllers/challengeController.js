@@ -15,6 +15,34 @@ function assertManualChallenge(challenge) {
   }
 }
 
+async function awardChallengePointsOnce(challengeId, user, points, bonusMultiplier = 1) {
+  const rewardedChallenge = await Challenge.findOneAndUpdate(
+    {
+      _id: challengeId,
+      rewardGranted: { $ne: true },
+    },
+    {
+      $set: {
+        rewardGranted: true,
+        rewardedAt: new Date(),
+      },
+    },
+    {
+      new: true,
+    }
+  );
+
+  if (!rewardedChallenge) {
+    return 0;
+  }
+
+  const totalAward = points * bonusMultiplier;
+  user.totalPoints += totalAward;
+  user.updateStreak();
+  await user.save();
+  return totalAward;
+}
+
 /**
  * Challenge Controller
  * Handles daily and weekly challenges and special tasks
@@ -100,11 +128,13 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
         console.log("[Challenges] Saved streak challenge updates.");
 
         if (!wasCompleted && streakChallenge.completed) {
-          const bonusMultiplier = streakChallenge.bonusMultiplier || 1;
-          console.log("[Challenges] Awarding streak points:", streakChallenge.pointsEarned * bonusMultiplier);
-          user.totalPoints += streakChallenge.pointsEarned * bonusMultiplier;
-          user.updateStreak();
-          await user.save();
+          const awardedPoints = await awardChallengePointsOnce(
+            streakChallenge._id,
+            user,
+            streakChallenge.pointsEarned,
+            streakChallenge.bonusMultiplier || 1
+          );
+          console.log("[Challenges] Awarding streak points:", awardedPoints);
         }
       }
     }
@@ -149,11 +179,13 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
       console.log("[Challenges] Saved daily lesson challenge updates.");
 
       if (!wasCompleted && dailyLessonChallenge.completed) {
-        const bonusMultiplier = dailyLessonChallenge.bonusMultiplier || 1;
-        console.log("[Challenges] Awarding daily lesson points:", dailyLessonChallenge.pointsEarned * bonusMultiplier);
-        user.totalPoints += dailyLessonChallenge.pointsEarned * bonusMultiplier;
-        user.updateStreak();
-        await user.save();
+        const awardedPoints = await awardChallengePointsOnce(
+          dailyLessonChallenge._id,
+          user,
+          dailyLessonChallenge.pointsEarned,
+          dailyLessonChallenge.bonusMultiplier || 1
+        );
+        console.log("[Challenges] Awarding daily lesson points:", awardedPoints);
       }
     }
   } else {
@@ -217,10 +249,14 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
   await challenge.updateProgress(1);
 
   // If newly completed, award points
+  let awardedPoints = 0;
   if (!wasCompleted && challenge.completed) {
-    user.totalPoints += challenge.pointsEarned * challenge.bonusMultiplier;
-    user.updateStreak();
-    await user.save();
+    awardedPoints = await awardChallengePointsOnce(
+      challenge._id,
+      user,
+      challenge.pointsEarned,
+      challenge.bonusMultiplier
+    );
   }
 
   res.status(200).json({
@@ -228,7 +264,7 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
     message: challenge.completed ? 'Challenge completed!' : 'Progress updated',
     data: {
       challenge,
-      pointsEarned: !wasCompleted && challenge.completed ? challenge.pointsEarned : 0,
+      pointsEarned: awardedPoints,
       totalPoints: user.totalPoints,
     },
   });
@@ -271,17 +307,19 @@ const completeChallenge = asyncHandler(async (req, res) => {
 
   await challenge.updateProgress(challenge.targetProgress - challenge.currentProgress);
 
-  // Award points
-  user.totalPoints += challenge.pointsEarned * challenge.bonusMultiplier;
-  user.updateStreak();
-  await user.save();
+  const awardedPoints = await awardChallengePointsOnce(
+    challenge._id,
+    user,
+    challenge.pointsEarned,
+    challenge.bonusMultiplier
+  );
 
   res.status(200).json({
     success: true,
     message: 'Challenge completed successfully!',
     data: {
       challenge,
-      pointsEarned: challenge.pointsEarned * challenge.bonusMultiplier,
+      pointsEarned: awardedPoints,
       totalPoints: user.totalPoints,
     },
   });

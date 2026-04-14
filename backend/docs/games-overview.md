@@ -11,12 +11,12 @@ This document provides a comprehensive analysis of all game-related features, sc
 - **Location**: `frontend/app/dashboard/trivia/`
 - **Components**:
   - Main Hub: `page.tsx` - Game listing and join interface
-  - Create Game: `create/page.tsx` - Teacher game creation interface
+  - Create Game: `create/page.tsx` - Authenticated user game creation interface
   - Play Game: `play/[code]/page.tsx` - Real-time game play interface
 
 **Key Features**:
-- Teacher creates games with multiple-choice questions
-- Students join using 6-character game codes (e.g., ABC123)
+- Any authenticated user can create games with multiple-choice questions
+- Players join using 6-character game codes (e.g., ABC123)
 - Timer-based questions (10-120 seconds per question)
 - Point system based on correctness and speed
 - End-of-game results with percentage scores
@@ -27,7 +27,7 @@ This document provides a comprehensive analysis of all game-related features, sc
 - Game results (user ID, game ID, score, accuracy, timestamp)
 - Real-time participant data
 
-**Current State**: Uses mock data from `lib/mockData.ts`
+**Current State**: Backed by live session, result, and leaderboard APIs
 
 ---
 
@@ -80,7 +80,7 @@ This document provides a comprehensive analysis of all game-related features, sc
 - Time spent on each module
 - Overall learning progress percentage
 
-**Current State**: Mock data with completed flags, no actual progress tracking
+**Current State**: Read/progress flows are live; create/update/delete mutations are disabled for all users
 
 ---
 
@@ -102,20 +102,23 @@ This document provides a comprehensive analysis of all game-related features, sc
 
 ---
 
-### 1.5 **Daily and Weekly Challenges**
+### 1.5 **Daily, Weekly and Monthly Challenges**
 - **Location**: `frontend/app/dashboard/challenges/page.tsx`
 
 **Challenge Types**:
 - Daily Trivia (50 points)
 - Learning Streak - 3 lessons/week (200 points)
 - Calculator Expert - 5 uses (100 points)
+- Monthly Build Your Life
+- Monthly Build Your Business
+- Monthly Investment Simulation
 
 **Data Storage Needs**:
 - Challenge completion status per user per day
 - Streak tracking
 - Bonus points earned
 
-**Current State**: Hardcoded mock challenges with static completion flags
+**Current State**: Live challenge seeding, completion tracking, and once-only reward claims
 
 ---
 
@@ -131,7 +134,7 @@ This document provides a comprehensive analysis of all game-related features, sc
 - School/class filtering capability
 - Historical ranking data
 
-**Current State**: Mock data with 5 hardcoded users
+**Current State**: Live aggregated leaderboard with public email stripping
 
 ---
 
@@ -152,7 +155,7 @@ Currently displaying:
 - Current Streak: 3 days
 - Class Rank: #15
 
-**All currently hardcoded - needs backend integration**
+These stats are now generated from live backend user, game, learning, and challenge data.
 
 ---
 
@@ -164,7 +167,7 @@ Currently displaying:
   userId: string (Clerk ID)
   name: string
   email: string
-  role: 'student' | 'teacher'
+  role: 'student'
   age?: number
   school?: string
   grade?: string
@@ -178,6 +181,7 @@ Currently displaying:
   lessonsCompleted: number
   currentStreak: number
   lastActiveDate: string
+  longestStreak: number
 }
 ```
 
@@ -186,6 +190,8 @@ Currently displaying:
 {
   gameResultId: string
   userId: string
+  clerkUserId: string
+  sessionId: string
   gameId: string
   gameCode: string
   gameTitle: string
@@ -222,6 +228,8 @@ Currently displaying:
   challengeType: string
   completedAt: string
   pointsEarned: number
+  rewardGranted: boolean
+  rewardedAt?: string
 }
 ```
 
@@ -246,17 +254,23 @@ Currently displaying:
 
 ## 5. Backend Integration Gaps & Priorities
 
-### 5.1 **HIGH PRIORITY**
+### 5.1 **Implemented**
 - ✅ User profile CRUD with Clerk integration
-- ✅ Trivia game creation and retrieval
-- ✅ Game result submission and storage
-- ✅ Leaderboard aggregation API
-- ✅ Points calculation and tracking
-
-### 5.2 **MEDIUM PRIORITY**
-- ✅ Learning module progress tracking
-- ✅ Challenge completion tracking
+- ✅ Single-role onboarding flow
+- ✅ Same-school stats access boundary
+- ✅ Trivia session creation and retrieval
+- ✅ Verified game result submission from finished sessions
+- ✅ Duplicate result protection per `clerkUserId + sessionId`
+- ✅ Leaderboard aggregation with email stripping on public endpoints
+- ✅ Daily, weekly, and monthly challenge seeding
+- ✅ One-time challenge reward claiming
 - ✅ User statistics aggregation
+
+### 5.2 **Operational Tooling**
+- ✅ Single-role migration script
+- ✅ Single-role verification script
+- ✅ Post-deploy smoke script
+- ✅ Real-Mongo and concurrency test coverage
 
 ### 5.3 **LOW PRIORITY** (future enhancements)
 - Real-time game synchronization (WebSocket)
@@ -269,13 +283,13 @@ Currently displaying:
 ## 6. Current Technology Stack
 
 ### Frontend
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 15 (App Router)
 - **Auth**: Clerk (already integrated)
 - **State**: React Context API (`lib/userContext.tsx`)
-- **Storage**: localStorage (temporary)
+- **Storage**: Mixed backend APIs plus local cached profile state where needed
 - **Styling**: Tailwind CSS
 
-### Backend (To Be Built)
+### Backend
 - **Runtime**: Node.js + Express
 - **Database**: MongoDB
 - **Auth**: Clerk Server SDK
@@ -285,18 +299,10 @@ Currently displaying:
 
 ## 7. Recommendations
 
-1. **Immediate Action**: Build REST API with the following endpoints:
-   - `POST /api/auth/verify` - Verify Clerk tokens
-   - `GET/POST /api/user` - User profile management
-   - `POST /api/game` - Submit game results
-   - `GET /api/leaderboard` - Retrieve rankings
-   - `GET/POST /api/progress` - Learning progress
-
-2. **Data Migration**: Replace all mock data and localStorage calls with API calls
-
-3. **Real-time Features**: Consider WebSocket implementation for live trivia games (Phase 2)
-
-4. **Analytics**: Add event tracking for user engagement metrics
+1. **Operational Action**: Rehearse `migrate:single-role` and `verify:single-role` against staging before production rollout.
+2. **Testing Action**: Run `test:real-mongo` against a disposable Mongo instance to exercise unique result/session and one-time reward behavior.
+3. **Frontend Action**: Replace the remaining client-side mock flows where still present, especially AI chat simulation and any residual mock dashboard widgets.
+4. **Analytics**: Add event tracking for user engagement metrics.
 
 ---
 
@@ -307,11 +313,12 @@ Currently displaying:
 - **Mock Games Available**: 4 trivia games
 - **Point-Earning Activities**: 5+ types
 - **Pages Needing Backend**: 10+ routes
-- **Current Data**: 100% mock/localStorage
+- **Current Data**: Core trivia, leaderboard, profile, challenge, and learning progress flows are backend-backed
 - **Authentication**: ✅ Clerk (production-ready)
+- **Single-Role Migration**: ✅ Implemented with verification and smoke tooling
 
 ---
 
-**Document Version**: 1.0  
-**Last Updated**: October 22, 2025  
+**Document Version**: 1.1  
+**Last Updated**: April 14, 2026  
 **Author**: Senior Full-Stack Engineer

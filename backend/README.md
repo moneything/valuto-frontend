@@ -10,6 +10,7 @@ Express + MongoDB backend for Valuto, with Clerk auth, Socket.IO trivia, Stripe 
 - Clerk server SDK
 - Socket.IO
 - Stripe
+- Nodemailer
 - Google Generative AI (Gemini)
 
 ## Scripts
@@ -27,6 +28,10 @@ npm run format:check
 npm test
 npm run test:real-mongo
 ```
+
+Runtime requirements:
+- Node.js `>=18`
+- npm `>=9`
 
 ## Environment
 
@@ -81,10 +86,48 @@ Mounted in `src/server.js`:
 - `/api/categories`
 - `/api/billing`
 - `/api/ai`
+- `/api/contact`
 - `/api/webhooks`
 
 Special handling:
 - `POST /api/billing/webhook` uses raw body middleware for Stripe signature verification.
+
+## Key Endpoints
+
+Auth:
+- `POST /api/auth/verify`
+- `GET /api/auth/session`
+- `GET /api/auth/health`
+
+User:
+- `GET /api/user/me`
+- `POST /api/user/onboarding`
+- `GET /api/user/stats`
+- `GET /api/user/:id/stats`
+
+Trivia / games:
+- `POST /api/game/result`
+- `GET /api/game/history`
+- `GET /api/game/stats`
+- `POST /api/trivia/session`
+- `GET /api/trivia/session/code/:joinCode`
+- `GET /api/trivia/session/:sessionId`
+- `GET /api/trivia/session/:sessionId/results`
+- `POST /api/trivia/session/:sessionId/restart`
+
+Learning / leaderboard:
+- `GET /api/learning/modules`
+- `GET /api/learning/progress`
+- `GET /api/leaderboard`
+- `GET /api/leaderboard/with-context`
+
+Other:
+- `GET /api/news/all`
+- `GET /api/categories`
+- `POST /api/billing/checkout`
+- `POST /api/billing/portal`
+- `POST /api/contact`
+- `POST /api/webhooks/clerk`
 
 ## Realtime
 
@@ -109,7 +152,9 @@ Socket.IO is initialized on the same HTTP server and currently used for trivia s
 
 See:
 - [API_DOCUMENTATION.md](./docs/API_DOCUMENTATION.md)
+- [SOCKETS-API.md](./docs/SOCKETS-API.md)
 - [ops-testing-runbook.md](./docs/ops-testing-runbook.md)
+- [SETUP_GUIDE.md](./docs/SETUP_GUIDE.md)
 
 ## Structure
 

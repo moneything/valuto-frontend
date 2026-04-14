@@ -42,6 +42,8 @@ Set:
 - optionally `SMOKE_ALLOW_PROFILE_UPDATE=true`
 - optionally `SMOKE_PROFILE_TITLE`
 
+Use a backend base URL without a trailing `/api`, because the script appends API paths itself.
+
 Run:
 
 ```bash
@@ -61,6 +63,8 @@ Checks:
 - verified game result submission
 - leaderboard
 - challenges
+
+If contact delivery is configured separately, test `/api/contact` as a manual verification step rather than part of the smoke script.
 
 ## Browser e2e smoke
 

@@ -126,6 +126,7 @@ Progress tracking:
 - GET `/session/:sessionId/results`
 - GET `/history`
 - GET `/stats`
+- GET `/platform-stats`
 - DELETE `/session/:sessionId`
 
 ### News & Events (`/api/news`)
@@ -148,11 +149,15 @@ Progress tracking:
 
 - POST `/checkout` - Stripe Checkout session
 - POST `/portal` - Stripe billing portal
-- POST `/webhook` - Stripe webhook (raw body)
+- POST `/webhook` - Stripe webhook (raw body, mounted directly in `src/server.js`)
 
 ### AI (`/api/ai`)
 
 - POST `/chat` - Gemini chat (auth required)
+
+### Contact (`/api/contact`)
+
+- POST `/` - Contact form email send attempt (public, requires SMTP/contact env to be configured)
 
 ### Webhooks (`/api/webhooks`)
 
@@ -169,6 +174,7 @@ Real-time trivia events are documented in `docs/SOCKETS-API.md`.
 - Public leaderboard endpoints do not expose user email addresses.
 - Challenge rewards are designed to be awarded once, even under duplicate or concurrent requests.
 - Verified trivia results are deduplicated per `clerkUserId + sessionId`.
+- Contact form payloads are sanitized and validated before mail delivery is attempted.
 
 ## Operations & Testing
 
@@ -183,4 +189,6 @@ npm run smoke:post-deploy
 ```
 
 See also:
+- `docs/SETUP_GUIDE.md`
+- `docs/SOCKETS-API.md`
 - `docs/ops-testing-runbook.md`

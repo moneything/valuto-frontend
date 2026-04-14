@@ -126,6 +126,76 @@ test('ensureDailyChallenges creates missing daily and monthly templates only onc
   assert.ok(created.includes('monthly_investment_simulation'));
 });
 
+test('ensureDailyChallenges does not recreate monthly templates within the same month', async () => {
+  const created = [];
+  const aprilDate = new Date('2026-04-20T12:00:00.000Z');
+
+  const MockChallenge = {
+    buildDailyChallenges: Challenge.buildDailyChallenges,
+    buildMonthlyChallenges: Challenge.buildMonthlyChallenges,
+    findOne: async ({ challengeType }) => {
+      if (challengeType.startsWith('monthly_')) {
+        return { challengeType };
+      }
+      return null;
+    },
+    create: async (template) => {
+      created.push(template.challengeType);
+      return template;
+    },
+  };
+
+  await Challenge.ensureDailyChallenges.call(MockChallenge, 'user_1', 'clerk_1', aprilDate);
+
+  assert.equal(created.some((challengeType) => challengeType.startsWith('monthly_')), false);
+  assert.ok(created.includes('daily_trivia'));
+  assert.ok(created.includes('daily_lesson'));
+});
+
+test('ensureDailyChallenges creates a fresh set of monthly templates after month rollover', async () => {
+  const created = [];
+  const mayDate = new Date('2026-05-02T12:00:00.000Z');
+
+  const MockChallenge = {
+    buildDailyChallenges: Challenge.buildDailyChallenges,
+    buildMonthlyChallenges: Challenge.buildMonthlyChallenges,
+    findOne: async ({ challengeType, challengeDate }) => {
+      if (
+        challengeType.startsWith('monthly_') &&
+        challengeDate &&
+        challengeDate.$gte instanceof Date &&
+        challengeDate.$gte.getMonth() === 4
+      ) {
+        return null;
+      }
+
+      if (challengeType.startsWith('monthly_')) {
+        return { challengeType };
+      }
+
+      return null;
+    },
+    create: async (template) => {
+      created.push(template);
+      return template;
+    },
+  };
+
+  await Challenge.ensureDailyChallenges.call(MockChallenge, 'user_1', 'clerk_1', mayDate);
+
+  const monthlyCreated = created.filter((template) => template.challengeType.startsWith('monthly_'));
+
+  assert.equal(monthlyCreated.length, 3);
+  assert.deepEqual(
+    monthlyCreated.map((template) => template.challengeId),
+    [
+      'monthly_build_your_life_2026_5',
+      'monthly_build_your_business_2026_5',
+      'monthly_investment_simulation_2026_5',
+    ]
+  );
+});
+
 test('getDailyChallenges queries active daily and monthly windows for the given day', async () => {
   let receivedQuery = null;
 

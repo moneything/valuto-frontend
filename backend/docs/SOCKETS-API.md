@@ -260,33 +260,49 @@ Broadcasts the current question.
 
 ### `answer_result`
 
-Sent to the player after `submit_answer`.
+Sent back to the answering player after a valid answer submission.
 
 ```ts
-{ isCorrect: boolean; correctIndex: number; pointsEarned: number; explanation?: string }
-```
-
-### `leaderboard_update`
-
-Broadcasts updated scores.
-
-```ts
-{ leaderboard: Array<{ userId: string; name: string; score: number; rank: number }> }
-```
-
-### `game_over`
-
-Broadcasts final results.
-
-```ts
-{ leaderboard: Array<{ userId: string; name: string; score: number; rank: number }>; sessionId: string; title: string }
+{
+  isCorrect: boolean;
+  correctIndex: number;
+  pointsEarned: number;
+  explanation?: string;
+}
 ```
 
 ### `answer_error`
 
-Emitted when an answer submission fails.
+Sent to the player when answer submission fails.
 
 ```ts
 { message: string }
 ```
 
+### `leaderboard_update`
+
+Broadcast after answer submissions.
+
+```ts
+{
+  leaderboard: Array<{ userId: string; name: string; score: number; rank: number }>;
+}
+```
+
+### `game_over`
+
+Broadcast when the session ends.
+
+```ts
+{
+  leaderboard: Array<{ userId: string; name: string; score: number; rank: number }>;
+  sessionId: string;
+  title: string;
+}
+```
+
+## Notes
+
+- `game_started` is followed by a server-side delayed first question send.
+- `next_question` schedules the next question after a short server delay.
+- Host disconnect behavior is not currently a full failover flow; player disconnects notify the host via `player_left`.

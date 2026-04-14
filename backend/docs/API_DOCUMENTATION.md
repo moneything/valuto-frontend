@@ -57,12 +57,12 @@ Errors are formatted by `utils/errorHandler.js`:
 ### Users (`/api/user`)
 
 - GET `/me` - Sync Clerk user to Mongo and return profile
-- POST `/onboarding` - Complete onboarding
+- POST `/onboarding` - Complete onboarding using the single-role student flow
 - POST `/` - Create or update profile
 - GET `/` - Get profile
-- PUT `/` - Update profile
+- PUT `/` - Update profile (`school` is locked after first set)
 - GET `/stats` - Current user stats
-- GET `/:id/stats` - Stats by user id (teacher use)
+- GET `/:id/stats` - Stats by user id (same-school access only)
 - POST `/points` - Add points
 - POST `/game-played` - Increment game count
 - POST `/lesson-completed` - Increment lesson count
@@ -73,7 +73,7 @@ Errors are formatted by `utils/errorHandler.js`:
 
 ### Games (`/api/game`)
 
-- POST `/result` - Submit game result
+- POST `/result` - Submit a verified trivia result from a finished server-side session
 - GET `/history` - User game history
 - GET `/result/:id` - Game result by id
 - GET `/leaderboard/:gameCode` - Game leaderboard (auth optional)
@@ -94,9 +94,9 @@ Errors are formatted by `utils/errorHandler.js`:
 Content modules:
 - GET `/modules`
 - GET `/modules/:id`
-- POST `/modules`
-- PUT `/modules/:id`
-- DELETE `/modules/:id`
+- POST `/modules` - Disabled for all users
+- PUT `/modules/:id` - Disabled for all users
+- DELETE `/modules/:id` - Disabled for all users
 
 Progress tracking:
 - POST `/progress`
@@ -108,18 +108,18 @@ Progress tracking:
 
 ### Challenges (`/api/challenges`)
 
-- GET `/daily`
-- PUT `/:challengeId/progress`
-- PUT `/:challengeId/complete`
+- GET `/daily` - Returns active daily, weekly, and monthly challenges
+- PUT `/:challengeId/progress` - Direct progress allowed only for featured-game monthly challenges
+- PUT `/:challengeId/complete` - Direct completion allowed only for featured-game monthly challenges
 - GET `/completed`
 - GET `/stats`
-- POST `/create`
+- POST `/create` - Disabled for all users
 - DELETE `/:challengeId`
 
 ### Trivia (`/api/trivia`)
 
 - POST `/session/:sessionId/restart`
-- POST `/session`
+- POST `/session` - Create trivia session (authenticated users)
 - GET `/session/code/:joinCode`
 - GET `/session/:sessionId`
 - GET `/sessions`
@@ -162,3 +162,25 @@ Progress tracking:
 
 Real-time trivia events are documented in `docs/SOCKETS-API.md`.
 
+## Current Access Rules
+
+- The platform uses a single user role in practice: all users are treated as `student`.
+- Same-school access is the boundary for `GET /api/user/:id/stats`.
+- Public leaderboard endpoints do not expose user email addresses.
+- Challenge rewards are designed to be awarded once, even under duplicate or concurrent requests.
+- Verified trivia results are deduplicated per `clerkUserId + sessionId`.
+
+## Operations & Testing
+
+Useful scripts from `backend/`:
+
+```bash
+npm test
+npm run test:real-mongo
+npm run migrate:single-role
+npm run verify:single-role
+npm run smoke:post-deploy
+```
+
+See also:
+- `docs/ops-testing-runbook.md`

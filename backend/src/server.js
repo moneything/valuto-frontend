@@ -221,9 +221,11 @@ const webhookRoutes = require("./routes/webhookRoutes");
 app.use("/api/webhooks", webhookRoutes);
 
 
-// Start the server
-startServer();
-console.log("🔥 USING MIDDLEWARE:", app._router.stack.length);
+if (require.main === module) {
+  startServer();
+  console.log("🔥 USING MIDDLEWARE:", app._router.stack.length);
+}
 
 // Export app for testing
 module.exports = app;
+module.exports.startServer = startServer;

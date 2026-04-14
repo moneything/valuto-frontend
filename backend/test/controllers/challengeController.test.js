@@ -82,6 +82,7 @@ test('getDailyChallenges syncs daily lesson progress and awards points on first 
       getDailyChallenges: async () => [{ id: 'c1' }],
       ensureDailyChallenges: async () => false,
       find: async () => [],
+      findOneAndUpdate: async () => ({ _id: 'daily_1', rewardGranted: true }),
       findOne: async (query) => {
         if (query.challengeType === 'daily_lesson') {
           return dailyLessonChallenge;
@@ -211,6 +212,7 @@ test('updateChallengeProgress awards points only on first completion', async () 
   const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
     '../models/Challenge': {
       findOne: async () => challenge,
+      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
     },
     '../models/User': {
       findOne: async () => user,
@@ -229,9 +231,56 @@ test('updateChallengeProgress awards points only on first completion', async () 
 
   assert.equal(res.statusCode, 200);
   assert.equal(res.body.success, true);
-  assert.equal(res.body.data.pointsEarned, 50);
+  assert.equal(res.body.data.pointsEarned, 100);
   assert.equal(user.totalPoints, 200);
   assert.equal(userSaved, 1);
+});
+
+test('updateChallengeProgress does not re-award when reward grant is already claimed concurrently', async () => {
+  let userSaved = 0;
+  const user = {
+    _id: { toString: () => 'u1' },
+    totalPoints: 100,
+    updateStreak: () => {},
+    save: async () => {
+      userSaved += 1;
+    },
+  };
+  const challenge = {
+    _id: 'c1',
+    challengeType: 'monthly_build_your_life',
+    completed: false,
+    pointsEarned: 50,
+    bonusMultiplier: 2,
+    updateProgress: async () => {
+      challenge.completed = true;
+    },
+  };
+
+  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => challenge,
+      findOneAndUpdate: async () => null,
+    },
+    '../models/User': {
+      findOne: async () => user,
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    params: { challengeId: 'c1' },
+    body: { increment: 1 },
+  };
+  const res = createMockRes();
+
+  await updateChallengeProgress(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.data.pointsEarned, 0);
+  assert.equal(user.totalPoints, 100);
+  assert.equal(userSaved, 0);
 });
 
 test('updateChallengeProgress rejects non-positive increments', async () => {
@@ -402,4 +451,50 @@ test('completeChallenge rejects direct completion for non-manual challenge types
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
   assert.match(captured.message, /cannot be updated directly/i);
+});
+
+test('completeChallenge does not re-award when reward grant is already claimed concurrently', async () => {
+  let userSaved = 0;
+  const user = {
+    _id: { toString: () => 'u1' },
+    totalPoints: 250,
+    updateStreak: () => {},
+    save: async () => {
+      userSaved += 1;
+    },
+  };
+  const challenge = {
+    _id: 'c1',
+    challengeType: 'monthly_build_your_business',
+    completed: false,
+    targetProgress: 1,
+    currentProgress: 0,
+    pointsEarned: 40,
+    bonusMultiplier: 2,
+    updateProgress: async () => {
+      challenge.completed = true;
+      challenge.currentProgress = 1;
+    },
+  };
+
+  const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
+    '../models/Challenge': {
+      findOne: async () => challenge,
+      findOneAndUpdate: async () => null,
+    },
+    '../models/User': {
+      findOne: async () => user,
+    },
+    '../models/LearningProgress': {},
+  });
+
+  const req = { clerkUser: { id: 'clerk_1' }, params: { challengeId: 'c1' } };
+  const res = createMockRes();
+
+  await completeChallenge(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.data.pointsEarned, 0);
+  assert.equal(user.totalPoints, 250);
+  assert.equal(userSaved, 0);
 });

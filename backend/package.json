@@ -8,9 +8,12 @@
     "start": "node src/server.js",
     "dev": "nodemon src/server.js",
     "migrate:single-role": "node src/scripts/migrate-single-role.js",
+    "verify:single-role": "node src/scripts/verify-single-role.js",
+    "smoke:post-deploy": "node src/scripts/post-deploy-smoke.js",
     "format": "prettier --write \"src/**/*.js\"",
     "format:check": "prettier --check \"src/**/*.js\"",
-    "test": "node --test test/**/*.test.js"
+    "test": "node --test test/**/*.test.js",
+    "test:real-mongo": "NODE_ENV=test node --test test/integration/realMongo.integration.test.js"
   },
   "keywords": [
     "education",

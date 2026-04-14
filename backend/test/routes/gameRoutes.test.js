@@ -98,6 +98,77 @@ test('game result route returns existing verified result without re-awarding poi
   assert.equal(saveCalled, false);
 });
 
+test('game result route returns existing session result when create hits duplicate key race', async () => {
+  let saveCalled = false;
+  const duplicateResult = { _id: 'gr_existing', sessionId: 'session_1', gameCode: 'ABC123', completed: true };
+  const handlers = getGameResultHandlers({
+    '@clerk/clerk-sdk-node': {
+      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
+      clerkClient: {},
+    },
+    '../models/GameResult': {
+      findOne: async (query) => {
+        if (query.sessionId === 'session_1') {
+          return duplicateResult;
+        }
+        return null;
+      },
+      create: async () => {
+        const error = new Error('duplicate key');
+        error.code = 11000;
+        throw error;
+      },
+    },
+    '../models/User': {
+      findOne: async () => ({
+        _id: { toString: () => 'user_1' },
+        totalPoints: 150,
+        gamesPlayed: 4,
+        updateStreak: () => {},
+        save: async () => {
+          saveCalled = true;
+        },
+      }),
+    },
+    '../models/Session': {
+      findOne: async () => ({
+        sessionId: 'session_1',
+        joinCode: 'ABC123',
+        title: 'Money Quiz',
+        status: 'ended',
+        settings: { pointsPerCorrect: 100 },
+        questions: [{ id: 'q1', question: 'Q1', correctIndex: 1, points: 100 }],
+        players: [
+          {
+            userId: 'clerk_1',
+            answeredQuestions: 1,
+            correctAnswers: 1,
+            score: 100,
+            answers: [
+              { questionId: 'q1', selectedIndex: 1, isCorrect: true, timeSpentMs: 5000, pointsEarned: 100 },
+            ],
+          },
+        ],
+      }),
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    headers: { authorization: 'Bearer valid-token' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+
+  await runRouteHandlers(handlers, req, res);
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.gameResult, duplicateResult);
+  assert.equal(res.body.data.updatedStats.totalPoints, 150);
+  assert.equal(saveCalled, false);
+});
+
 test('game result route rejects unfinished verified sessions end-to-end', async () => {
   const handlers = getGameResultHandlers({
     '@clerk/clerk-sdk-node': {

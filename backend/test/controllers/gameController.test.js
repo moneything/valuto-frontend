@@ -129,6 +129,79 @@ test('submitGameResult creates result from a verified finished session', async (
   assert.equal(saveCount, 1);
 });
 
+test('submitGameResult returns existing result without re-awarding points', async () => {
+  let sessionLookups = 0;
+  const existingResult = { _id: 'gr_existing', gameCode: 'ABC123', completed: true };
+  const user = {
+    _id: { toString: () => 'user_db_1' },
+    totalPoints: 150,
+    gamesPlayed: 4,
+  };
+
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {
+      findOne: async () => existingResult,
+    },
+    '../models/User': { findOne: async () => user },
+    '../models/Session': {
+      findOne: async () => {
+        sessionLookups += 1;
+        return {
+          joinCode: 'ABC123',
+          status: 'ended',
+          players: [{ userId: 'clerk_1', answeredQuestions: 1 }],
+        };
+      },
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+
+  await submitGameResult(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.gameResult, existingResult);
+  assert.equal(res.body.data.updatedStats.totalPoints, 150);
+  assert.equal(sessionLookups, 1);
+});
+
+test('submitGameResult rejects unfinished sessions', async () => {
+  const { submitGameResult } = loadWithMocks('../../src/controllers/gameController', {
+    '../models/GameResult': {},
+    '../models/User': {
+      findOne: async () => ({ _id: { toString: () => 'user_db_1' } }),
+    },
+    '../models/Session': {
+      findOne: async () => ({
+        joinCode: 'ABC123',
+        status: 'active',
+      }),
+    },
+    '../models/Challenge': {},
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: { gameCode: 'abc123' },
+  };
+  const res = createMockRes();
+  let captured = null;
+
+  await submitGameResult(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 400);
+  assert.match(captured.message, /must be finished/i);
+});
+
 test('getGameResult returns 403 when requesting another user result', async () => {
   const { getGameResult } = loadWithMocks('../../src/controllers/gameController', {
     '../models/GameResult': {

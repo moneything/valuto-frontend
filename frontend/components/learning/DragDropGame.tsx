@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '@/components/theme/Button';
 
@@ -153,7 +153,7 @@ export default function DragDropGame({ items, onComplete, title, description }: 
             
             <div className="space-y-2">
               <AnimatePresence>
-                {droppedItems[category.id].map((item, index) => (
+                {droppedItems[category.id].map((item) => (
                   <motion.div
                     key={item.id}
                     initial={{ opacity: 0, scale: 0.8 }}

@@ -12,7 +12,7 @@
     "smoke:post-deploy": "node src/scripts/post-deploy-smoke.js",
     "format": "prettier --write \"src/**/*.js\"",
     "format:check": "prettier --check \"src/**/*.js\"",
-    "test": "node --test test/**/*.test.js",
+    "test": "NODE_ENV=test node --test test/**/*.test.js",
     "test:real-mongo": "NODE_ENV=test node --test test/integration/realMongo.integration.test.js"
   },
   "keywords": [

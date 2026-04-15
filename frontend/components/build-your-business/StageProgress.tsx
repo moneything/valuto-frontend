@@ -15,7 +15,6 @@ export default function StageProgress() {
         {stages.map((stage, index) => {
           const isActive = state.stage === stage;
           const isCompleted = state.stage > stage;
-          const isLocked = state.stage < stage;
 
           return (
             <div key={stage} className="flex items-center">

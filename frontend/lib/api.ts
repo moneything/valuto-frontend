@@ -384,7 +384,7 @@ export const healthCheck = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/api/health`);
     return await response.json();
-  } catch (error) {
+  } catch {
     return { success: false, error: 'Backend not reachable' };
   }
 };

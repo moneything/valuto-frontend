@@ -96,7 +96,7 @@ function renderNode(
   const { action, ...restProps } = props;
 
   // Auto-add onClick handler for components with actions
-  let finalProps = { ...restProps };
+  const finalProps = { ...restProps };
   if (restProps.style && typeof restProps.style === "object" && !Array.isArray(restProps.style)) {
     finalProps.style = normalizeStyleObject(restProps.style);
   }

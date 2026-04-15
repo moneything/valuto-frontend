@@ -12,6 +12,13 @@ interface InteractiveActivityProps {
 
 export default function InteractiveActivity({ activity, onComplete }: InteractiveActivityProps) {
   const [isCompleted, setIsCompleted] = useState(false);
+  const [bondPrice, setBondPrice] = useState(Number(activity.data.defaultPrice ?? 0));
+  const [bondPayment, setBondPayment] = useState(Number(activity.data.defaultPayment ?? 0));
+  const [yieldValue, setYieldValue] = useState(0);
+  const [shares, setShares] = useState(100);
+  const [sharePrice, setSharePrice] = useState(Number(activity.data.currentPrice ?? 0));
+  const [buyers, setBuyers] = useState(50);
+  const [sellers, setSellers] = useState(50);
 
   const handleComplete = () => {
     setIsCompleted(true);
@@ -19,12 +26,8 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
   };
 
   const renderCalculator = () => {
-    const [price, setPrice] = useState(activity.data.defaultPrice);
-    const [payment, setPayment] = useState(activity.data.defaultPayment);
-    const [yieldValue, setYieldValue] = useState(0);
-
     const calculateYield = () => {
-      const result = (payment / price) * 100;
+      const result = (bondPayment / bondPrice) * 100;
       setYieldValue(result);
     };
 
@@ -35,23 +38,23 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
             <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
               Bond Price ($)
             </label>
-            <input
-              type="number"
-              value={price}
-              onChange={(e) => setPrice(Number(e.target.value))}
-              className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
-            />
+              <input
+                type="number"
+                value={bondPrice}
+                onChange={(e) => setBondPrice(Number(e.target.value))}
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
+              />
           </div>
           <div>
             <label className="mb-2 block text-sm font-medium text-[#d7d7db]">
               Annual Payment ($)
             </label>
-            <input
-              type="number"
-              value={payment}
-              onChange={(e) => setPayment(Number(e.target.value))}
-              className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
-            />
+              <input
+                type="number"
+                value={bondPayment}
+                onChange={(e) => setBondPayment(Number(e.target.value))}
+                className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
+              />
           </div>
         </div>
 
@@ -78,8 +81,8 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
               <button
                 key={index}
                 onClick={() => {
-                  setPrice(example.price);
-                  setPayment(example.payment);
+                  setBondPrice(example.price);
+                  setBondPayment(example.payment);
                   setYieldValue(example.yield);
                 }}
                 className="w-full rounded-lg border border-white/10 bg-white/[0.04] p-3 text-left text-[#e5e5e7] transition-colors hover:border-valuto-green-300 hover:bg-white/[0.08]"
@@ -96,10 +99,8 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
   const renderSimulation = () => {
     if (activity.type === 'simulation' && activity.data.companyName) {
       // Ownership calculator
-      const [shares, setShares] = useState(100);
-      const [price, setPrice] = useState(activity.data.currentPrice);
       const ownership = (shares / activity.data.totalShares) * 100;
-      const totalCost = shares * price;
+      const totalCost = shares * sharePrice;
 
       return (
         <div className="space-y-6">
@@ -109,7 +110,7 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
               Total shares outstanding: {activity.data.totalShares.toLocaleString()}
             </p>
             <p className="text-sm text-blue-200">
-              Current price per share: ${price}
+              Current price per share: ${sharePrice}
             </p>
           </div>
 
@@ -133,8 +134,8 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
               </label>
               <input
                 type="number"
-                value={price}
-                onChange={(e) => setPrice(Number(e.target.value))}
+                value={sharePrice}
+                onChange={(e) => setSharePrice(Number(e.target.value))}
                 className="w-full rounded-lg border border-white/10 bg-white/[0.04] px-3 py-2 text-white focus:border-valuto-green-500 focus:ring-2 focus:ring-valuto-green-500"
                 min="0.01"
                 step="0.01"
@@ -163,8 +164,6 @@ export default function InteractiveActivity({ activity, onComplete }: Interactiv
       );
     } else {
       // Supply & Demand simulator
-      const [buyers, setBuyers] = useState(50);
-      const [sellers, setSellers] = useState(50);
       const priceChange = ((buyers - sellers) / 100) * 5; // Price change based on difference
       const newPrice = Math.max(activity.data.priceRange[0], Math.min(activity.data.priceRange[1], activity.data.initialPrice + priceChange));
 

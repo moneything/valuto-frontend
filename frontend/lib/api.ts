@@ -236,16 +236,13 @@ export const triviaApi = {
 
 export const gameApi = {
   /**
-   * Save game result
+   * Submit a verified trivia result from a finished server-side session
    */
   async saveResult(token: string, gameData: {
-    gameType: string;
-    score: number;
-    totalQuestions: number;
-    correctAnswers: number;
-    timeTaken: number;
+    sessionId?: string;
+    gameCode?: string;
   }) {
-    return apiRequest('/api/game', {
+    return apiRequest('/api/game/result', {
       method: 'POST',
       body: JSON.stringify(gameData),
     }, token);
@@ -254,9 +251,17 @@ export const gameApi = {
   /**
    * Get game history
    */
-  async getHistory(token: string, gameId?: string) {
-    const endpoint = gameId ? `/api/game/${gameId}/results` : '/api/game/history';
-    return apiRequest(endpoint, {
+  async getHistory(token: string) {
+    return apiRequest('/api/game/history', {
+      method: 'GET',
+    }, token);
+  },
+
+  /**
+   * Get a specific game result
+   */
+  async getResult(token: string, resultId: string) {
+    return apiRequest(`/api/game/result/${resultId}`, {
       method: 'GET',
     }, token);
   },
@@ -293,10 +298,10 @@ export const leaderboardApi = {
   },
 
   /**
-   * Get session leaderboard
+   * Get game leaderboard by join code
    */
-  async getSession(token: string, sessionId: string) {
-    return apiRequest(`/api/trivia/leaderboard/${sessionId}`, {
+  async getSession(token: string, gameCode: string) {
+    return apiRequest(`/api/game/leaderboard/${gameCode}`, {
       method: 'GET',
     }, token);
   },

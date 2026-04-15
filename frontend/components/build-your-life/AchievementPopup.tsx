@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Achievement } from "@/components/build-your-life/types";
 
@@ -9,15 +9,15 @@ interface Props {
 }
 
 export default function AchievementPopup({ achievements }: Props) {
-  const [shown, setShown] = useState<Set<string>>(new Set());
+  const shownRef = useRef<Set<string>>(new Set());
   const [current, setCurrent] = useState<Achievement | null>(null);
 
   useEffect(() => {
-    const nextAchievement = achievements.find((achievement) => !shown.has(achievement.id));
+    const nextAchievement = achievements.find((achievement) => !shownRef.current.has(achievement.id));
     if (!nextAchievement) return;
 
     setCurrent(nextAchievement);
-    setShown((previous) => new Set(previous).add(nextAchievement.id));
+    shownRef.current.add(nextAchievement.id);
     const timer = setTimeout(() => setCurrent(null), 1400);
 
     return () => clearTimeout(timer);

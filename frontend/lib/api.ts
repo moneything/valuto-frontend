@@ -378,61 +378,6 @@ export const leaderboardApi = {
 
 };
 
-// ==================== Learning API ====================
-
-export const learningApi = {
-  /**
-   * Update learning progress
-   */
-  async updateProgress(token: string, progressData: {
-    moduleId: string;
-    lessonId: string;
-    completed: boolean;
-    score?: number;
-  }) {
-    return apiRequest('/api/learning', {
-      method: 'POST',
-      body: JSON.stringify(progressData),
-    }, token);
-  },
-
-  /**
-   * Get learning progress
-   */
-  async getProgress(token: string, moduleId?: string) {
-    const endpoint = moduleId ? `/api/learning/${moduleId}` : '/api/learning';
-    return apiRequest(endpoint, {
-      method: 'GET',
-    }, token);
-  },
-};
-
-// ==================== Challenge API ====================
-
-export const challengeApi = {
-  /**
-   * Complete challenge
-   */
-  async completeChallenge(token: string, challengeData: {
-    challengeId: string;
-    rewardPoints: number;
-  }) {
-    return apiRequest(`/api/challenges/${challengeData.challengeId}/complete`, {
-      method: 'POST',
-      body: JSON.stringify({ rewardPoints: challengeData.rewardPoints }),
-    }, token);
-  },
-
-  /**
-   * Get user challenges
-   */
-  async getChallenges(token: string) {
-    return apiRequest('/api/challenges', {
-      method: 'GET',
-    }, token);
-  },
-};
-
 // ==================== Health Check ====================
 
 export const healthCheck = async () => {

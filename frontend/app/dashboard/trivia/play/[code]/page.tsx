@@ -4,11 +4,13 @@
 
 import { useState, useEffect, use } from 'react';
 import { useRouter } from 'next/navigation';
+import { useUser } from '@clerk/nextjs';
 import { useTrivia } from '@/lib/hooks/useTrivia';
 import GameSidebar from '@/components/GameSidebar';
 
 export default function PlayTriviaPage({ params }: { params: Promise<{ code: string }> }) {
   const router = useRouter();
+  const { user } = useUser();
   const { socket, isConnected } = useTrivia();
   const resolvedRouteParams = use(params);
   const [resolvedParams, setResolvedParams] = useState<{ code: string } | null>(null);
@@ -23,6 +25,7 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
   const [timeLeft, setTimeLeft] = useState(0);
   const [myScore, setMyScore] = useState(0);
   const [playerName, setPlayerName] = useState<string>('');
+  const currentUserId = user?.id;
 
   // standalone effect to populate resolvedParams
   useEffect(() => {
@@ -234,8 +237,9 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
 
   // Game ended
   if (gameState === 'ended') {
-    const myEntry = leaderboard.find((p: any) => p.socketId === socket?.id || p.userId === socket?.id);
+    const myEntry = leaderboard.find((p: any) => p.userId === currentUserId);
     const myRank = myEntry?.rank || 0;
+    const displayedScore = myEntry?.score ?? myScore;
     const topThree = leaderboard.slice(0, 3);
     
     return (
@@ -254,7 +258,7 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
               {myRank === 1 ? '🎉 Champion!' : myRank === 2 ? 'Great Job!' : myRank === 3 ? 'Well Done!' : 'Game Complete!'}
             </h1>
             <div className="inline-block bg-gradient-to-r from-valuto-green-500 to-valuto-green-600 text-white px-8 py-4 rounded-2xl shadow-xl">
-              <div className="text-5xl font-bold mb-1">{myScore}</div>
+              <div className="text-5xl font-bold mb-1">{displayedScore}</div>
               <p className="text-sm opacity-90">points</p>
             </div>
             {myRank > 0 && (
@@ -323,7 +327,7 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
             </h3>
             <div className="space-y-2">
               {leaderboard.map((player: any, idx: number) => {
-                const isMe = player.socketId === socket?.id || player.userId === socket?.id;
+                const isMe = player.userId === currentUserId;
                 const medals = ['🥇', '🥈', '🥉'];
                 
                 return (
@@ -493,7 +497,7 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
                     </h3>
                     <div className="space-y-2">
                       {leaderboard.slice(0, 5).map((player: any, idx: number) => {
-                        const isMe = player.socketId === socket?.id || player.userId === socket?.id;
+                        const isMe = player.userId === currentUserId;
                         const medals = ['🥇', '🥈', '🥉'];
                         
                         return (

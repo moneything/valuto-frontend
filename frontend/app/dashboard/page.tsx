@@ -18,7 +18,6 @@ import {
   BookOpenIcon,
   CrownIcon,
   TargetIcon,
-  LightBulbIcon,
   PlusIcon,
   UserIcon,
   TrendingUpIcon,

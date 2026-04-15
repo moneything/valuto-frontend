@@ -34,7 +34,13 @@ const createServerApp = () => {
     './routes/categoryRoutes': createEmptyRouter(),
     './routes/billingRoutes': createEmptyRouter(),
     './routes/contactRoutes': createEmptyRouter(),
-    './routes/webhookRoutes': createEmptyRouter(),
+    './routes/webhookRoutes': (() => {
+      const router = express.Router();
+      router.post('/clerk', (req, res) => {
+        res.status(200).json({ ok: true, route: 'webhook-clerk' });
+      });
+      return router;
+    })(),
     './routes/aiRoutes': (() => {
       const router = express.Router();
       router.get('/boom', (req, res, next) => {
@@ -215,6 +221,29 @@ test('server global error handler serializes AppError from mounted routes', asyn
     assert.equal(response.body.message, 'Boom');
   } finally {
     console.error = originalConsoleError;
+    process.env.NODE_ENV = originalNodeEnv;
+    process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
+  }
+});
+
+test('server mounts /api/webhooks before notFound handling', async () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalAppUrl = process.env.NEXT_PUBLIC_APP_URL;
+  process.env.NODE_ENV = 'test';
+  process.env.NEXT_PUBLIC_APP_URL = 'http://test.local';
+
+  try {
+    const app = createServerApp();
+
+    const response = await runAppRequest(app, {
+      method: 'POST',
+      url: '/api/webhooks/clerk',
+      headers: { origin: 'http://test.local' },
+    });
+
+    assert.equal(response.statusCode, 200);
+    assert.deepEqual(response.body, { ok: true, route: 'webhook-clerk' });
+  } finally {
     process.env.NODE_ENV = originalNodeEnv;
     process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
   }

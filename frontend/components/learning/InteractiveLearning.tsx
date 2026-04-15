@@ -26,7 +26,6 @@ interface InteractiveLearningProps {
 
 export default function InteractiveLearning({ steps, onComplete, onProgress }: InteractiveLearningProps) {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
-  const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set());
   const [userAnswers, setUserAnswers] = useState<Record<string, any>>({});
   const [showCelebration, setShowCelebration] = useState(false);
   const [totalPoints, setTotalPoints] = useState(0);
@@ -41,11 +40,6 @@ export default function InteractiveLearning({ steps, onComplete, onProgress }: I
   }, [currentStepIndex, steps.length, onProgress]);
 
   const handleStepComplete = (points: number) => {
-    setCompletedSteps(prev => {
-      const newSet = new Set(prev);
-      newSet.add(currentStepIndex);
-      return newSet;
-    });
     setTotalPoints(prev => prev + points);
     
     if (isLastStep) {

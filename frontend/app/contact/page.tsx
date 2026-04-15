@@ -177,8 +177,8 @@ export default function Features() {
                 </AnimatedSection>
         
                 <AnimatedSection delay={0.1}>
-                    <div className="mb-5 rounded-xl border border-amber-300/40 bg-amber-50 px-4 py-3 text-sm text-amber-900">
-                        Contact form sending is temporarily unavailable while email delivery is being configured. You can still fill this out, but the message will not send yet.
+                    <div className="mb-5 rounded-xl border border-emerald-300/40 bg-emerald-50 px-4 py-3 text-sm text-emerald-900">
+                        Use the form to send us a message. If email delivery is temporarily unavailable, you can still reach us directly at the address below.
                     </div>
                     <div className="space-y-6">
                         <div>

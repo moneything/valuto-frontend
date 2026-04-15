@@ -34,7 +34,6 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
   const [currentStep, setCurrentStep] = useState(0);
   const [userChoices, setUserChoices] = useState<any[]>([]);
   const [currentData, setCurrentData] = useState(simulation.initialData || {});
-  const [showResult, setShowResult] = useState(false);
   const [timeSpent, setTimeSpent] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
 
@@ -92,7 +91,6 @@ export default function SimulationActivity({ simulation, onComplete, onProgress 
 
   const completeSimulation = (choices: any[]) => {
     const result = calculateSimulationResult(choices);
-    setShowResult(true);
     setIsCompleted(true);
     onComplete(result);
   };

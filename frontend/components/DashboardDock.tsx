@@ -8,7 +8,6 @@ import {
   GameControllerIcon, 
   CalculatorIcon, 
   BookOpenIcon, 
-  TrophyIcon, 
   CrownIcon, 
   TargetIcon,
   CalendarIcon,

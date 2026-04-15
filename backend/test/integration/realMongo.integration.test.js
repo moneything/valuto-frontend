@@ -7,6 +7,7 @@ const Challenge = require('../../src/models/Challenge');
 const GameResult = require('../../src/models/GameResult');
 const Session = require('../../src/models/Session');
 const { submitGameResult } = require('../../src/controllers/gameController');
+const TriviaGameController = require('../../src/controllers/triviaGameController');
 const {
   updateChallengeProgress,
   completeChallenge,
@@ -231,6 +232,145 @@ test(
       assert.equal(refreshedUser.gamesPlayed, 1);
       assert.ok([200, 201].includes(firstCall.res.statusCode));
       assert.ok([200, 201].includes(secondCall.res.statusCode));
+    } finally {
+      console.log = originalConsoleLog;
+      console.error = originalConsoleError;
+      await clearCollections();
+      await mongoose.connection.close();
+    }
+  }
+);
+
+test(
+  'real Mongo: endGame then submitGameResult does not double-award stats or daily trivia reward',
+  { skip: !hasRealMongo },
+  async () => {
+    await mongoose.connect(mongoUri, { dbName: 'valuto_real_mongo_tests' });
+    const originalConsoleLog = console.log;
+    const originalConsoleError = console.error;
+    console.log = () => {};
+    console.error = () => {};
+
+    try {
+      await clearCollections();
+      await GameResult.syncIndexes();
+      await Challenge.syncIndexes();
+
+      const user = await User.create({
+        clerkUserId: 'clerk_endgame_1',
+        name: 'Endgame User',
+        email: 'endgame@test.com',
+        school: 'Test School',
+      });
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      await Challenge.create({
+        userId: user._id.toString(),
+        clerkUserId: 'clerk_endgame_1',
+        challengeId: `daily_trivia_${today.getTime()}`,
+        challengeType: 'daily_trivia',
+        challengeName: 'Daily Trivia',
+        pointsEarned: 50,
+        targetProgress: 1,
+        currentProgress: 0,
+        completed: false,
+        rewardGranted: false,
+        challengeDate: today,
+        expiresAt: new Date(today.getTime() + 24 * 60 * 60 * 1000),
+      });
+
+      await Session.create({
+        sessionId: 'session_endgame_1',
+        joinCode: 'END123',
+        title: 'Endgame Regression Quiz',
+        hostId: 'host_1',
+        hostName: 'Host',
+        hostSocketId: 'host_socket_1',
+        status: 'active',
+        startedAt: new Date(),
+        questions: [
+          {
+            id: 'q1',
+            question: 'Question 1',
+            options: ['A', 'B', 'C', 'D'],
+            correctIndex: 1,
+            timeLimit: 30,
+            points: 100,
+          },
+        ],
+        players: [
+          {
+            userId: 'clerk_endgame_1',
+            name: 'Endgame User',
+            socketId: 'player_socket_1',
+            isConnected: true,
+            score: 100,
+            answeredQuestions: 1,
+            correctAnswers: 1,
+            answers: [
+              {
+                questionId: 'q1',
+                selectedIndex: 1,
+                isCorrect: true,
+                timeSpentMs: 4000,
+                pointsEarned: 100,
+                answeredAt: new Date(),
+              },
+            ],
+          },
+        ],
+      });
+
+      const io = {
+        to() {
+          return {
+            emit() {},
+          };
+        },
+      };
+
+      const gameController = new TriviaGameController(io);
+      await gameController.endGame('session_endgame_1');
+
+      const afterEndGameUser = await User.findOne({ clerkUserId: 'clerk_endgame_1' }).lean();
+      const afterEndGameChallenge = await Challenge.findOne({
+        userId: user._id.toString(),
+        challengeType: 'daily_trivia',
+      }).lean();
+      const sessionResults = await require('../../src/models/SessionResult')
+        .find({ sessionId: 'session_endgame_1' })
+        .lean();
+
+      assert.equal(afterEndGameUser.totalPoints, 0);
+      assert.equal(afterEndGameUser.gamesPlayed, 0);
+      assert.equal(afterEndGameChallenge.currentProgress, 0);
+      assert.equal(afterEndGameChallenge.completed, false);
+      assert.equal(afterEndGameChallenge.rewardGranted, false);
+      assert.equal(sessionResults.length, 1);
+
+      const { res, error } = await invokeController(submitGameResult, {
+        clerkUser: { id: 'clerk_endgame_1' },
+        body: { gameCode: 'end123' },
+      });
+
+      assert.equal(error, null);
+      assert.equal(res.statusCode, 201);
+
+      const refreshedUser = await User.findOne({ clerkUserId: 'clerk_endgame_1' }).lean();
+      const refreshedChallenge = await Challenge.findOne({
+        userId: user._id.toString(),
+        challengeType: 'daily_trivia',
+      }).lean();
+      const gameResults = await GameResult.find({ clerkUserId: 'clerk_endgame_1' }).lean();
+
+      assert.equal(gameResults.length, 1);
+      assert.equal(refreshedUser.totalPoints, 150);
+      assert.equal(refreshedUser.gamesPlayed, 1);
+      assert.equal(refreshedChallenge.currentProgress, 1);
+      assert.equal(refreshedChallenge.completed, true);
+      assert.equal(refreshedChallenge.rewardGranted, true);
     } finally {
       console.log = originalConsoleLog;
       console.error = originalConsoleError;

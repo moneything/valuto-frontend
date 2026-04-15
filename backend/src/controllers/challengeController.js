@@ -55,7 +55,6 @@ async function awardChallengePointsOnce(challengeId, user, points, bonusMultipli
  */
 const getDailyChallenges = asyncHandler(async (req, res) => {
   const clerkUserId = req.clerkUser.id;
-  console.log("[Challenges] Fetch daily challenges for clerkUserId:", clerkUserId);
 
   // Get user
   const user = await User.findOne({ clerkUserId });
@@ -63,7 +62,6 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
   if (!user) {
     throw new AppError('User profile not found', 404);
   }
-  console.log("[Challenges] Found user:", user._id.toString(), "role:", user.role);
 
   // Date boundaries for today
   const today = new Date();
@@ -74,14 +72,11 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
 
   // Check if challenges exist for today
   let challenges = await Challenge.getDailyChallenges(user._id.toString());
-  console.log("[Challenges] Existing challenges today:", challenges.length);
 
   // Ensure daily challenges exist (backfill missing types)
   const ensured = await Challenge.ensureDailyChallenges(user._id.toString(), clerkUserId, startOfDay);
   if (ensured || challenges.length === 0) {
-    console.log("[Challenges] Ensured daily challenges; refetching.");
     challenges = await Challenge.getDailyChallenges(user._id.toString());
-    console.log("[Challenges] Challenge count after ensure:", challenges.length);
   }
 
   const streakChallenges = await Challenge.find({
@@ -104,19 +99,14 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
         completedAt: { $gte: periodStart, $lte: periodEnd },
       });
 
-      console.log("[Challenges] Learning streak lessons in window:", lessonsCompletedThisWeek, "window:", periodStart.toISOString(), "-", periodEnd.toISOString(), "type:", streakChallenge.challengeType);
-
-      console.log("[Challenges] Found streak challenge:", streakChallenge._id.toString());
       const newProgress = Math.min(lessonsCompletedThisWeek, streakChallenge.targetProgress);
       const wasCompleted = streakChallenge.completed;
 
       if (streakChallenge.currentProgress !== newProgress) {
-        console.log("[Challenges] Updating streak progress from", streakChallenge.currentProgress, "to", newProgress);
         streakChallenge.currentProgress = newProgress;
       }
 
       if (!streakChallenge.completed && newProgress >= streakChallenge.targetProgress) {
-        console.log("[Challenges] Streak completed via sync.");
         streakChallenge.completed = true;
         streakChallenge.completedAt = new Date();
         streakChallenge.currentProgress = streakChallenge.targetProgress;
@@ -125,21 +115,17 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
       if (streakChallenge.isModified()) {
         await streakChallenge.save();
         didModifyChallenges = true;
-        console.log("[Challenges] Saved streak challenge updates.");
 
         if (!wasCompleted && streakChallenge.completed) {
-          const awardedPoints = await awardChallengePointsOnce(
+          await awardChallengePointsOnce(
             streakChallenge._id,
             user,
             streakChallenge.pointsEarned,
             streakChallenge.bonusMultiplier || 1
           );
-          console.log("[Challenges] Awarding streak points:", awardedPoints);
         }
       }
     }
-  } else {
-    console.log("[Challenges] No streak challenge found for today.");
   }
 
   // Daily lesson challenge auto-sync (complete 1 lesson today)
@@ -156,18 +142,14 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
       completedAt: { $gte: startOfDay, $lte: endOfDay },
     });
 
-    console.log("[Challenges] Lessons completed today:", lessonsCompletedToday);
-
     const newProgress = Math.min(lessonsCompletedToday, dailyLessonChallenge.targetProgress);
     const wasCompleted = dailyLessonChallenge.completed;
 
     if (dailyLessonChallenge.currentProgress !== newProgress) {
-      console.log("[Challenges] Updating daily lesson progress from", dailyLessonChallenge.currentProgress, "to", newProgress);
       dailyLessonChallenge.currentProgress = newProgress;
     }
 
     if (!dailyLessonChallenge.completed && newProgress >= dailyLessonChallenge.targetProgress) {
-      console.log("[Challenges] Daily lesson completed via sync.");
       dailyLessonChallenge.completed = true;
       dailyLessonChallenge.completedAt = new Date();
       dailyLessonChallenge.currentProgress = dailyLessonChallenge.targetProgress;
@@ -176,26 +158,21 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
     if (dailyLessonChallenge.isModified()) {
       await dailyLessonChallenge.save();
       didModifyChallenges = true;
-      console.log("[Challenges] Saved daily lesson challenge updates.");
 
       if (!wasCompleted && dailyLessonChallenge.completed) {
-        const awardedPoints = await awardChallengePointsOnce(
+        await awardChallengePointsOnce(
           dailyLessonChallenge._id,
           user,
           dailyLessonChallenge.pointsEarned,
           dailyLessonChallenge.bonusMultiplier || 1
         );
-        console.log("[Challenges] Awarding daily lesson points:", awardedPoints);
       }
     }
-  } else {
-    console.log("[Challenges] No daily lesson challenge found for today.");
   }
 
   // Refresh challenges list with latest values if modified
   if (didModifyChallenges) {
     challenges = await Challenge.getDailyChallenges(user._id.toString());
-    console.log("[Challenges] Refetched challenges after sync. Count:", challenges.length);
   }
 
   res.status(200).json({

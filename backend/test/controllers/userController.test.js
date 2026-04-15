@@ -16,12 +16,12 @@ const createMockRes = () => ({
   },
 });
 
-test('addPoints rejects invalid points', async () => {
+test('addPoints is disabled for direct client mutation', async () => {
   const { addPoints } = loadWithMocks('../../src/controllers/userController', {
     '../models/User': {},
   });
 
-  const req = { auth: { userId: 'clerk_1' }, body: { points: -10 } };
+  const req = { auth: { userId: 'clerk_1' }, body: { points: 25 } };
   const res = createMockRes();
   let captured = null;
 
@@ -30,8 +30,44 @@ test('addPoints rejects invalid points', async () => {
   });
 
   assert.ok(captured);
-  assert.equal(captured.statusCode, 400);
-  assert.match(captured.message, /Invalid points value/);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Direct point mutation is disabled/i);
+});
+
+test('incrementGameCount is disabled for direct client mutation', async () => {
+  const { incrementGameCount } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {},
+  });
+
+  const req = { auth: { userId: 'clerk_1' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await incrementGameCount(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Direct game-count mutation is disabled/i);
+});
+
+test('incrementLessonCount is disabled for direct client mutation', async () => {
+  const { incrementLessonCount } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {},
+  });
+
+  const req = { auth: { userId: 'clerk_1' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await incrementLessonCount(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Direct lesson-count mutation is disabled/i);
 });
 
 test('createOrUpdateUser creates user when missing', async () => {

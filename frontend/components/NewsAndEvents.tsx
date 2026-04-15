@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import Card from '@/components/theme/Card';
 import Button from '@/components/theme/Button';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -32,11 +32,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
     'Scams'
   ];
 
-  useEffect(() => {
-    loadData();
-  }, []);
-
-  const loadData = async (limit = newsLimit) => {
+  const loadData = useCallback(async (limit: number) => {
     setLoading(true);
     setError(null);
     try {
@@ -50,7 +46,11 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
+
+  useEffect(() => {
+    loadData(5);
+  }, [loadData]);
 
   const formatTime = (timeString: string) => {
     if (timeString === 'Recently' || timeString === 'TBA') return timeString;
@@ -224,7 +224,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           <div className="text-4xl mb-4">📰</div>
           <h3 className="mb-2 text-lg font-semibold text-white">Unable to Load News & Events</h3>
           <p className="mb-4 text-[#9a9a9d]">{error}</p>
-          <Button onClick={loadData} variant="outline">
+          <Button onClick={() => loadData(newsLimit)} variant="outline">
             Try Again
           </Button>
         </div>
@@ -246,7 +246,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
           </div>
         </div>
         <Button
-          onClick={loadData}
+          onClick={() => loadData(newsLimit)}
           variant="outline"
           size="sm"
           className="text-sm"

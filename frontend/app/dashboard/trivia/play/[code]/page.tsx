@@ -24,7 +24,6 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
   const [leaderboard, setLeaderboard] = useState<any[]>([]);
   const [timeLeft, setTimeLeft] = useState(0);
   const [myScore, setMyScore] = useState(0);
-  const [playerName, setPlayerName] = useState<string>('');
   const currentUserId = user?.id;
 
   // standalone effect to populate resolvedParams
@@ -40,10 +39,6 @@ export default function PlayTriviaPage({ params }: { params: Promise<{ code: str
 
     console.log('Attempting to join session with code:', resolvedParams.code);
     setGameState('joining');
-
-    // Get player name from localStorage or use socket user
-    const storedName = localStorage.getItem('playerName') || 'Player';
-    setPlayerName(storedName);
 
     // Join session via socket
     socket.emit('join_session', { joinCode: resolvedParams.code }, (response: any) => {

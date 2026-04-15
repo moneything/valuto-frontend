@@ -128,3 +128,103 @@ test('getLearningStats computes completion and score aggregates', async () => {
   assert.equal(res.body.data.averageQuizScore, 90);
 });
 
+test('saveProgress does not accept client-supplied completed status without a passing score', async () => {
+  let savedUser = 0;
+  let createdPayload = null;
+
+  const { saveProgress } = loadWithMocks('../../src/controllers/learningController', {
+    '../models/LearningProgress': {
+      findOne: async () => null,
+      create: async (payload) => {
+        createdPayload = payload;
+        return payload;
+      },
+    },
+    '../models/LearningModule': {
+      findOne: async () => ({
+        topic: 'budgeting',
+        title: 'Budgeting Basics',
+        points: 100,
+      }),
+    },
+    '../models/User': {
+      findOne: async () => ({
+        _id: { toString: () => 'user_db_1' },
+        totalPoints: 0,
+        lessonsCompleted: 0,
+        updateStreak: () => {},
+        save: async () => {
+          savedUser += 1;
+        },
+      }),
+    },
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: {
+      moduleId: 'budgeting',
+      status: 'completed',
+    },
+  };
+  const res = createMockRes();
+  const originalConsoleLog = console.log;
+  const originalConsoleDir = console.dir;
+  const originalConsoleError = console.error;
+  console.log = () => {};
+  console.dir = () => {};
+  console.error = () => {};
+
+  try {
+    await saveProgress(req, res, () => {});
+  } finally {
+    console.log = originalConsoleLog;
+    console.dir = originalConsoleDir;
+    console.error = originalConsoleError;
+  }
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(createdPayload.status, 'in_progress');
+  assert.equal(res.body.pointsEarned, 0);
+  assert.equal(res.body.lessonsCompleted, 0);
+  assert.equal(savedUser, 0);
+});
+
+test('getModuleLeaderboard maps aggregated _id back to user records', async () => {
+  const { getModuleLeaderboard } = loadWithMocks('../../src/controllers/learningController', {
+    '../models/LearningProgress': {
+      getModuleLeaderboard: async () => [
+        {
+          _id: '507f1f77bcf86cd799439011',
+          avgQuizScore: 92,
+          totalTimeSpent: 180,
+          completedAt: '2026-04-15T10:00:00.000Z',
+        },
+      ],
+    },
+    '../models/LearningModule': {},
+    '../models/User': {
+      findById: (id) => ({
+        select: async () => ({
+          _id: id,
+          name: 'Ada Lovelace',
+          school: 'Valuto Academy',
+        }),
+      }),
+    },
+  });
+
+  const req = {
+    params: { moduleId: 'budgeting' },
+    query: {},
+  };
+  const res = createMockRes();
+
+  await getModuleLeaderboard(req, res, () => {});
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(res.body.success, true);
+  assert.equal(res.body.data.leaderboard[0].userId, '507f1f77bcf86cd799439011');
+  assert.equal(res.body.data.leaderboard[0].name, 'Ada Lovelace');
+  assert.equal(res.body.data.leaderboard[0].school, 'Valuto Academy');
+});

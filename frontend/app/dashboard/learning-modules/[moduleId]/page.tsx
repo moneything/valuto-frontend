@@ -11,7 +11,7 @@ import {  Card as UICard } from "@/components/ui/card" ;
 import Button from "@/components/theme/Button";
 
 import QuizActivity from "@/components/learning/QuizActivity";
-import { BookOpenIcon, ClockIcon, StarIcon } from "@/components/icons";
+import { BookOpenIcon, ClockIcon } from "@/components/icons";
 
 import {
   useLearningModule,
@@ -195,8 +195,6 @@ export default function LearningModulePage({
     (visualIconName && (LucideIcons as any)[visualIconName]) ||
     (LucideIcons as any)["BookOpen"] ||
     null;
-
-  const visualColorClass = module.visual?.iconColor || "bg-blue-500";
 
   /* ----------------- RELATED LESSONS ----------------- */
 

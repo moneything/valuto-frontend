@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import Image from "next/image"
 import { motion, AnimatePresence } from "framer-motion"
 import { cn } from "@/lib/utils"
 // Using inline SVG icons instead of external library
@@ -58,10 +59,11 @@ const BlurImage = React.forwardRef<
   }
 >(({ src, alt = "Background of a beautiful view", className, fill = false, width, height, ...props }, ref) => {
   return (
-    <img
+    <Image
       ref={ref}
       src={src}
       alt={alt}
+      fill={fill}
       width={width}
       height={height}
       className={cn(

@@ -409,23 +409,7 @@ const getUserStats = asyncHandler(async (req, res) => {
  * @access Private
  */
 const addPoints = asyncHandler(async (req, res) => {
-  const { userId } = req.auth;
-  const { points, source } = req.body;
-
-  if (!points || points < 0) throw new AppError('Invalid points value', 400);
-
-  const user = await User.findOne({ clerkUserId: userId });
-  if (!user) throw new AppError('User profile not found', 404);
-
-  user.totalPoints += points;
-
-  await user.save();
-
-  res.status(200).json({
-    success: true,
-    message: `${points} points added successfully`,
-    data: { totalPoints: user.totalPoints, pointsAdded: points, source },
-  });
+  throw new AppError('Direct point mutation is disabled. Points are awarded only by verified server-side flows.', 403);
 });
 
 /**
@@ -434,18 +418,10 @@ const addPoints = asyncHandler(async (req, res) => {
  * @access Private
  */
 const incrementGameCount = asyncHandler(async (req, res) => {
-  const { userId } = req.auth;
-  const user = await User.findOne({ clerkUserId: userId });
-  if (!user) throw new AppError('User profile not found', 404);
-
-  user.gamesPlayed += 1;
-  await user.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Game count updated',
-    data: { gamesPlayed: user.gamesPlayed },
-  });
+  throw new AppError(
+    'Direct game-count mutation is disabled. Game counts are updated only by verified server-side flows.',
+    403
+  );
 });
 
 /**
@@ -454,19 +430,10 @@ const incrementGameCount = asyncHandler(async (req, res) => {
  * @access Private
  */
 const incrementLessonCount = asyncHandler(async (req, res) => {
-  const { userId } = req.auth;
-  const user = await User.findOne({ clerkUserId: userId });
-  if (!user) throw new AppError('User profile not found', 404);
-
-  user.lessonsCompleted += 1;
-  user.updateStreak();
-  await user.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Lesson count updated',
-    data: { lessonsCompleted: user.lessonsCompleted },
-  });
+  throw new AppError(
+    'Direct lesson-count mutation is disabled. Lesson completion is updated only by verified server-side flows.',
+    403
+  );
 });
 
 /**

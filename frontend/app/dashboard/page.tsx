@@ -123,6 +123,35 @@ export default function DashboardPage() {
     }
   }, [isClerkLoaded, isLoadingProfile, clerkUser, profile, router]);
 
+  const progression = userStats?.progression;
+  const today = new Date();
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  const currentDay = today.getDay();
+
+  const battleCategories = useMemo(() => {
+    if (!categories?.length) return [];
+
+    return categories
+      .map((category: any) => ({
+        ...category,
+        questionCount:
+          modules?.filter((module: any) => module.categoryId === category.id).length || 0,
+      }))
+      .filter((category: any) => category.questionCount > 0);
+  }, [categories, modules]);
+
+  const streakDays = useMemo(() => {
+    const streakCount = Math.max(0, Number(progression?.streak ?? 0));
+    const days = Array(7).fill(false);
+
+    for (let offset = 0; offset < Math.min(streakCount, 7); offset += 1) {
+      const index = (currentDay - offset + 7) % 7;
+      days[index] = true;
+    }
+
+    return days;
+  }, [currentDay, progression?.streak]);
+
   // ✅ loading state (consistent)
   if (!isClerkLoaded || isLoadingProfile) {
     return (
@@ -207,10 +236,6 @@ export default function DashboardPage() {
   ];
 
   const cards = teacherCards;
-  const progression = userStats?.progression;
-  const today = new Date();
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  const currentDay = today.getDay();
 
   const progressionCards = [
     {
@@ -268,30 +293,6 @@ export default function DashboardPage() {
     "future-planning": "border-teal-500/40 hover:border-teal-400 shadow-[0_0_30px_rgba(20,184,166,0.2)]",
     "money-society": "border-pink-500/40 hover:border-pink-400 shadow-[0_0_30px_rgba(236,72,153,0.2)]",
   };
-
-  const battleCategories = useMemo(() => {
-    if (!categories?.length) return [];
-
-    return categories
-      .map((category: any) => ({
-        ...category,
-        questionCount:
-          modules?.filter((module: any) => module.categoryId === category.id).length || 0,
-      }))
-      .filter((category: any) => category.questionCount > 0);
-  }, [categories, modules]);
-
-  const streakDays = useMemo(() => {
-    const streakCount = Math.max(0, Number(progression?.streak ?? 0));
-    const days = Array(7).fill(false);
-
-    for (let offset = 0; offset < Math.min(streakCount, 7); offset += 1) {
-      const index = (currentDay - offset + 7) % 7;
-      days[index] = true;
-    }
-
-    return days;
-  }, [currentDay, progression?.streak]);
 
   const dailyChallengeStats = {
     dayStreak: Number(progression?.streak ?? 0),

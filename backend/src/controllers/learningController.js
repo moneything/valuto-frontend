@@ -37,12 +37,6 @@ function normalizeQuizAnswers({ quizAnswers, responses }) {
  *  POST /api/learning/progress
  * -------------------------------------------------------- */
 const saveProgress = asyncHandler(async (req, res) => {
-  console.log("🔥 Incoming Progress Payload:");
-  console.dir(req.body, { depth: null });
-
-  console.log("🔥 Incoming Auth User:");
-  console.dir(req.clerkUser, { depth: null });
-
   const clerkUserId = req.clerkUser.id;
 
   const {
@@ -60,18 +54,15 @@ const saveProgress = asyncHandler(async (req, res) => {
   if (!moduleId) {
     throw new AppError("Missing moduleId (topic slug)", 400);
   }
-  console.log("📌 moduleId received:", moduleId);
 
   // 1) Get user
   const user = await User.findOne({ clerkUserId });
   if (!user) throw new AppError("User profile not found", 404);
 
   // 2) Get module using topic slug
-  console.log("🔍 Searching for module with topic:", moduleId);
   let module; // <--- IMPORTANT
   try {
     module = await LearningModule.findOne({ topic: moduleId });
-    console.log("🟩 Module returned:", module);
   } catch (err) {
     console.error("🟥 ERROR WHEN FETCHING MODULE:", err);
     throw new AppError("Database error while searching for module", 500);

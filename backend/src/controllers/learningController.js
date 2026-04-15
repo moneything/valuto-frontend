@@ -125,10 +125,7 @@ const saveProgress = asyncHandler(async (req, res) => {
         : "in_progress"
       : null;
 
-  const effectiveStatus =
-    status === "completed"
-      ? "completed"
-      : status || "in_progress";
+  const requestedStatus = status || "in_progress";
 
   // -----------------------
   // FIND EXISTING PROGRESS
@@ -141,8 +138,10 @@ const saveProgress = asyncHandler(async (req, res) => {
   let pointsEarned = 0;
   let isFirstCompletion = false;
 
-  const nextStatus = scoreStatus || progress?.status || effectiveStatus;
-  const isCompleted = nextStatus === "completed" || progress?.status === "completed";
+  const nextStatus =
+    scoreStatus ||
+    (progress?.status === "completed" ? "completed" : null) ||
+    (requestedStatus === "not_started" ? "not_started" : "in_progress");
 
   if (progress) {
     const wasCompleted = progress.status === "completed";
@@ -321,11 +320,12 @@ const getModuleLeaderboard = asyncHandler(async (req, res) => {
 
   const enriched = await Promise.all(
     leaderboard.map(async (entry, index) => {
-      const user = await User.findById(entry.userId).select("name school");
+      const userId = entry._id;
+      const user = await User.findById(userId).select("name school");
 
       return {
         rank: index + 1,
-        userId: entry.userId,
+        userId,
         name: user?.name || "Unknown",
         school: user?.school,
         avgQuizScore: entry.avgQuizScore,

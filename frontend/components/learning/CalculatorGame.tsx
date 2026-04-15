@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import Button from '@/components/theme/Button';
 
@@ -67,11 +67,12 @@ export default function CalculatorGame({
     }
   };
 
-  const tryExample = (example: typeof examples[0]) => {
+  const tryExample = (example: typeof examples[0], index: number) => {
     setAmount(example.amount.toString());
     setRate(example.rate.toString());
     setResult(null);
     setAttempts(0);
+    setCurrentExample(index);
   };
 
   const resetCalculator = () => {
@@ -82,20 +83,6 @@ export default function CalculatorGame({
     setIsCompleted(false);
     setShowFeedback(false);
     setAttempts(0);
-  };
-
-  const nextExample = () => {
-    if (currentExample < examples.length - 1) {
-      setCurrentExample(prev => prev + 1);
-      tryExample(examples[currentExample + 1]);
-    }
-  };
-
-  const prevExample = () => {
-    if (currentExample > 0) {
-      setCurrentExample(prev => prev - 1);
-      tryExample(examples[currentExample - 1]);
-    }
   };
 
   return (
@@ -188,7 +175,7 @@ export default function CalculatorGame({
                 key={index}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                onClick={() => tryExample(example)}
+                onClick={() => tryExample(example, index)}
                 disabled={isCompleted}
                 className={`w-full p-4 rounded-lg border-2 transition-all text-left ${
                   currentExample === index

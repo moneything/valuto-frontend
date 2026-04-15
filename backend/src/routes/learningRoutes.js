@@ -62,12 +62,7 @@ router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 // @route   POST /api/learning/progress
 // @desc    Save or update progress for a module
 // @access  Private
-router.post('/progress', (req, res, next) => {
-  console.log("🚨 ROUTE HIT BEFORE VALIDATOR");
-  console.log("🧪 RAW BODY RECEIVED BY BACKEND:");
-  console.log(req.body);
-  next();
-}, authenticateClerkUser, validateLearningProgress, saveProgress);
+router.post('/progress', authenticateClerkUser, validateLearningProgress, saveProgress);
 
 // @route   GET /api/learning/progress/:moduleId
 // @desc    Get user's progress for a specific module

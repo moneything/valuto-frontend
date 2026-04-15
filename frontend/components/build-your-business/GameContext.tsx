@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, ReactNode, useCallback, useContext, useMemo, useState } from "react";
+import React, { createContext, ReactNode, useCallback, useContext, useState } from "react";
 import {
   BrandStyle,
   BusinessIdea,
@@ -289,28 +289,25 @@ export function GameProvider({ children }: { children: ReactNode }) {
     setNewAchievements((previous) => previous.slice(1));
   };
 
-  const value = useMemo(
-    () => ({
-      state,
-      selectIdea,
-      setBusinessName,
-      setStage,
-      setPricing,
-      setLaunchChannel,
-      setBrandStyle,
-      toggleMarketing,
-      hireEmployee,
-      fireEmployee,
-      advanceDay,
-      advanceWeek,
-      handleEventChoice,
-      dismissEvent,
-      resetGame,
-      newAchievements,
-      consumeNewAchievement,
-    }),
-    [state, newAchievements]
-  );
+  const value = {
+    state,
+    selectIdea,
+    setBusinessName,
+    setStage,
+    setPricing,
+    setLaunchChannel,
+    setBrandStyle,
+    toggleMarketing,
+    hireEmployee,
+    fireEmployee,
+    advanceDay,
+    advanceWeek,
+    handleEventChoice,
+    dismissEvent,
+    resetGame,
+    newAchievements,
+    consumeNewAchievement,
+  };
 
   return <GameContext.Provider value={value}>{children}</GameContext.Provider>;
 }

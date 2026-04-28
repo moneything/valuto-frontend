@@ -3,16 +3,41 @@ import { UserProfile } from "@/lib/localStorage";
 
 type SubscriptionStatus = UserProfile["subscriptionStatus"];
 
+const PUBLIC_MARKETING_PATHS = [
+  "/",
+  "/about",
+  "/contact",
+  "/features",
+  "/pricing",
+  "/privacy-policy",
+  "/terms-and-conditions",
+] as const;
+
+const SUBSCRIPTION_EXEMPT_PATHS = [
+  "/auth",
+  "/sign-in",
+  "/sign-up",
+  "/onboarding",
+  "/subscribe",
+] as const;
+
 export function hasActiveSubscription(status?: SubscriptionStatus): boolean {
   return status === "active" || status === "trialing";
 }
 
-export function isFreeDashboardPath(pathname: string): boolean {
-  if (pathname === "/dashboard") return true;
-  if (pathname === "/dashboard/calculator") return true;
-  if (pathname === "/dashboard/learning-modules") return true;
-  if (pathname.startsWith("/dashboard/learning-modules/")) return true;
-  return false;
+function matchesPathPrefix(pathname: string, prefix: string): boolean {
+  return pathname === prefix || pathname.startsWith(`${prefix}/`);
+}
+
+export function isPublicMarketingPath(pathname: string): boolean {
+  return PUBLIC_MARKETING_PATHS.some((path) => matchesPathPrefix(pathname, path));
+}
+
+export function isSubscriptionExemptPath(pathname: string): boolean {
+  return (
+    isPublicMarketingPath(pathname) ||
+    SUBSCRIPTION_EXEMPT_PATHS.some((path) => matchesPathPrefix(pathname, path))
+  );
 }
 
 export function sortLearningModulesForAccess(

@@ -52,20 +52,23 @@ Open `http://localhost:3000`.
 
 ## App Surface (Current)
 
-Public/auth routes:
+Public marketing routes:
 - `/`
 - `/about`
 - `/features`
-- `/news`
 - `/contact`
 - `/pricing`
+- `/privacy-policy`
+- `/terms-and-conditions`
+
+Auth and onboarding routes:
 - `/sign-in/[[...sign-in]]`
 - `/sign-up/[[...sign-up]]`
 - `/auth/[[...rest]]`
 - `/onboarding`
+
+Authenticated but subscription-exempt routes:
 - `/subscribe`
-- `/privacy-policy`
-- `/terms-and-conditions`
 
 Dashboard routes:
 - `/dashboard`
@@ -104,3 +107,13 @@ frontend/
 - Root layout wraps app with `ClerkProvider` and custom `UserProvider`.
 - Frontend expects backend APIs under `${NEXT_PUBLIC_BACKEND_URL}/api/*`.
 - Real-time trivia host/player flows use Socket.IO against the backend server.
+- Clerk middleware protects all non-public routes.
+- Signed-in users without onboarding completion are redirected to `/onboarding`.
+- Signed-in users without an `active` or `trialing` subscription are redirected to `/subscribe`.
+
+## Recommended Reading
+
+- `../docs/START_HERE.md`
+- `../docs/ACCESS_AND_BILLING_FLOW.md`
+- `./docs/APP_GUIDE.md`
+- `../FRONTEND_INTEGRATION_GUIDE.md`

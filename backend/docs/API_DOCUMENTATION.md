@@ -149,7 +149,9 @@ Progress tracking:
 
 - POST `/checkout` - Stripe Checkout session
 - POST `/portal` - Stripe billing portal
-- POST `/webhook` - Stripe webhook (raw body, mounted directly in `src/server.js`)
+- POST `/webhook` - Stripe webhook with raw body, mounted directly in `src/server.js`
+- Webhook delivery requires `STRIPE_WEBHOOK_SECRET` on the backend
+- Server-to-server webhook requests are accepted without a browser `Origin` header
 
 ### AI (`/api/ai`)
 

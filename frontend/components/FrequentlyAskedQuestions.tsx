@@ -3,7 +3,7 @@
 import { ChevronDown } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 import Button from "./theme/Button";
-import { SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 
 export default function FrequentlyAskedQuestions() {
     
@@ -43,11 +43,18 @@ export default function FrequentlyAskedQuestions() {
              <p className="text-muted-foreground mb-8 max-w-md mx-auto">Join thousands of young people building their financial future with Valuto.</p>
              <div className="flex flex-wrap justify-center gap-4">
                
-               <SignedOut>
-                   <a href="/auth">
-                     <Button size="md" className="text-base px-8 hover:bg-emerald-500">Start for £1/month</Button>
-                   </a>
-                 </SignedOut>
+              <SignedOut>
+                <a href="/auth">
+                  <Button size="md" className="text-base px-8 hover:bg-emerald-500">Start for £1/month</Button>
+                </a>
+              </SignedOut>
+              <SignedIn>
+                <a href="/auth">
+                  <Button size="md" className="text-base px-8 hover:bg-emerald-500">Go to Valuto</Button>
+                </a>
+              </SignedIn>
+
+
              </div>
            </AnimatedSection>
          </div>

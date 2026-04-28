@@ -48,7 +48,7 @@ CONTACT_TO_EMAIL=team@example.com
 
 ### Smoke tests
 - `GET /api/health` returns success
-- `POST /api/billing/webhook` reachable (for Stripe)
+- `POST /api/billing/webhook` reachable and not returning `500` for valid Stripe deliveries
 - Socket.IO connection succeeds from deployed frontend
 - `/api/contact` works if SMTP/contact delivery is enabled
 
@@ -74,7 +74,9 @@ NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 
 ### Smoke tests
 - Sign-in/sign-up works
-- Dashboard loads with real user profile
+- New users are redirected through onboarding
+- Unsubscribed users are redirected to `/subscribe`
+- Subscribed users can reach the dashboard with a real user profile
 - Learning modules/challenges/leaderboard load from backend
 - Trivia create/join/play works across two browser sessions
 - AI chat works if Gemini is enabled
@@ -87,6 +89,8 @@ NEXT_PUBLIC_APP_URL=https://your-frontend.up.railway.app
 - Confirm Clerk production keys are used on both services
 - Confirm MongoDB Atlas network access and credentials are correct
 - Confirm Stripe webhooks are configured with backend webhook URL
+- Confirm `STRIPE_WEBHOOK_SECRET` matches the configured Stripe endpoint secret
+- Confirm Stripe webhook deliveries succeed even though Stripe sends no browser `Origin` header
 - Confirm optional Gemini and SMTP/contact env vars are set if those features are expected in production
 
 ## 4) Rollback Plan

@@ -113,10 +113,17 @@ Important: set `NEXT_PUBLIC_BACKEND_URL` explicitly. Some frontend files still i
 ## Current App Surface
 
 Frontend route groups:
-- Marketing/public: `/`, `/about`, `/features`, `/news`, `/contact`, `/pricing`, `/subscribe`
+- Marketing/public: `/`, `/about`, `/features`, `/contact`, `/pricing`, `/privacy-policy`, `/terms-and-conditions`
 - Auth/onboarding: `/sign-in/[[...sign-in]]`, `/sign-up/[[...sign-up]]`, `/auth/[[...rest]]`, `/onboarding`
+- Authenticated but subscription-exempt: `/subscribe`
 - Legal: `/privacy-policy`, `/terms-and-conditions`
 - Dashboard: `/dashboard`, `/dashboard/profile`, `/dashboard/challenges`, `/dashboard/learning-modules`, `/dashboard/learning-modules/[moduleId]`, `/dashboard/trivia`, `/dashboard/trivia/create`, `/dashboard/trivia/play/[code]`, `/dashboard/trivia/host/[sessionId]`, `/dashboard/trivia/session/[sessionId]/results`, `/dashboard/leaderboard`, `/dashboard/calculator`, `/dashboard/investment`, `/dashboard/students`, `/dashboard/ai-chat`, `/dashboard/news`, `/dashboard/build-your-life`, `/dashboard/build-your-business`
+
+Access model:
+- Clerk middleware protects all non-public app routes.
+- Users without completed onboarding are redirected to `/onboarding`.
+- Users without an `active` or `trialing` subscription are redirected to `/subscribe`.
+- The paywall is app-wide outside the public marketing surface and auth/onboarding flow.
 
 Backend API mounts:
 - `/api/auth`

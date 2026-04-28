@@ -174,6 +174,29 @@ test('server rejects disallowed origins through CORS middleware', async () => {
   }
 });
 
+test('server allows requests without an origin header for server-to-server traffic', async () => {
+  const originalNodeEnv = process.env.NODE_ENV;
+  const originalAppUrl = process.env.NEXT_PUBLIC_APP_URL;
+  process.env.NODE_ENV = 'test';
+  process.env.NEXT_PUBLIC_APP_URL = 'http://allowed.test';
+
+  try {
+    const app = createServerApp();
+
+    const response = await runAppRequest(app, {
+      method: 'POST',
+      url: '/api/billing/webhook',
+      headers: {},
+    });
+
+    assert.equal(response.statusCode, 200);
+    assert.deepEqual(response.body, { received: true });
+  } finally {
+    process.env.NODE_ENV = originalNodeEnv;
+    process.env.NEXT_PUBLIC_APP_URL = originalAppUrl;
+  }
+});
+
 test('server returns structured 404 responses through notFound handler', async () => {
   const originalNodeEnv = process.env.NODE_ENV;
   const originalAppUrl = process.env.NEXT_PUBLIC_APP_URL;

@@ -43,7 +43,12 @@ if (process.env.NEXT_PUBLIC_APP_URL) {
 
 const corsOptions = {
   origin: function (origin, callback) {
-    
+    // Allow non-browser/server-to-server requests such as Stripe webhooks.
+    if (!origin) {
+      callback(null, true);
+      return;
+    }
+
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
       callback(null, true);
     } else {

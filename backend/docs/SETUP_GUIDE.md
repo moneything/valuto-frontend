@@ -54,6 +54,8 @@ Important:
 - always set `NEXT_PUBLIC_BACKEND_URL` explicitly
 - backend HTTP CORS depends on `NEXT_PUBLIC_APP_URL`
 - backend Socket.IO CORS depends on both `NEXT_PUBLIC_APP_URL` and `FRONTEND_URL`
+- Stripe webhook delivery depends on `STRIPE_WEBHOOK_SECRET` being set correctly on the backend
+- Stripe and other server-to-server callers may send no `Origin` header; current backend CORS allows this
 - several frontend files still have mixed `5000`/`5001` fallbacks, so missing `NEXT_PUBLIC_BACKEND_URL` causes avoidable local/runtime bugs
 
 ### 4. Start services
@@ -76,7 +78,9 @@ npm run dev
 
 - Backend health: `http://localhost:5000/api/health`
 - Frontend: `http://localhost:3000`
-- Sign in and confirm dashboard/profile/challenges/leaderboard data load
+- Sign in and confirm onboarding completes for a new account
+- Confirm unsubscribed users are redirected to `/subscribe`
+- Confirm subscribed users can reach dashboard/profile/challenges/leaderboard
 - If SMTP is configured, verify the `/contact` form sends successfully
 
 ## Backend Scripts
@@ -154,6 +158,7 @@ npm run smoke:post-deploy
 
 Production note:
 - Stripe billing, Gemini chat, and contact-form email delivery are optional integrations and will return configuration errors until their env vars are set correctly.
+- If Stripe subscriptions are enabled, confirm webhook delivery succeeds in the Stripe Dashboard after deployment.
 
 ## Real Mongo Testing
 

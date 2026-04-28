@@ -138,7 +138,7 @@ export default function Hero() {
               </div>
               <div className="min-w-[-webkit-fill-available] flex items-center m-3 justify-center mt-8">
                 <a href="/features">
-                <Button variant="secondary" className="">Learn More</Button>
+                <Button variant="secondary" className="text-black">Learn More</Button>
                 </a>
               </div>
             </div>

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UserProvider } from "@/lib/userContext";
 import ConsoleGuard from "@/components/ConsoleGuard";
+import SubscriptionGate from "@/components/SubscriptionGate";
 import { Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
@@ -49,6 +50,7 @@ export default function RootLayout({
         <body className={spaceGrotesk.variable} suppressHydrationWarning>
           <UserProvider>
             <ConsoleGuard />
+            <SubscriptionGate />
             {children}
           </UserProvider>
         </body>

@@ -36,7 +36,7 @@ export default function WhyWeExist() {
                   </a>
                 </SignedIn>
                 <a href="/about" className="">
-                  <Button variant="secondary" size="md" className="w-[-webkit-fill-available]">Learn More</Button>
+                  <Button variant="secondary" size="md" className="w-[-webkit-fill-available] border-black !text-black">Learn More</Button>
                 </a>
             </div>
                   

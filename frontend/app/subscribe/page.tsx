@@ -10,6 +10,12 @@ import Card from "@/components/theme/Card";
 import Button from "@/components/theme/Button";
 import { useUserProfile } from "@/lib/userContext";
 
+const includedFeatures = [
+  "All lessons and interactive tools",
+  "Games, calculators, and simulations",
+  "Progress tracking across the platform",
+];
+
 export default function SubscribePage() {
   const { getToken } = useAuth();
   const router = useRouter();
@@ -68,7 +74,13 @@ export default function SubscribePage() {
         },
       });
       const data = await res.json();
-      if (!res.ok) throw new Error(data?.message || "Failed to open billing portal");
+      if (!res.ok) {
+        const message =
+          data?.message === "No Stripe customer found for this user."
+            ? "No billing history associated with this account has been found."
+            : data?.message || "Failed to open billing portal";
+        throw new Error(message);
+      }
       if (data.url) {
         window.location.href = data.url;
       }
@@ -80,47 +92,82 @@ export default function SubscribePage() {
   };
 
   return (
-    <PageLayout title="Unlock Valuto" subtitle="Subscribe to access your dashboard and interactive learning tools">
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="lg:col-span-2">
-          <h2 className="text-2xl font-bold mb-3">Full Dashboard Access</h2>
-          <p className="text-gray-600 mb-4">
-            Get unlimited access to interactive learning modules, investment tools, trivia games, leaderboards, and classroom analytics.
-          </p>
-          <ul className="space-y-2 text-gray-700 mb-6">
-            <li>✔️ All dashboard features</li>
-            <li>✔️ Unlimited quizzes and challenges</li>
-            <li>✔️ Investment calculator and simulations</li>
-            <li>✔️ Progress tracking and reports</li>
-          </ul>
-          <div className="flex flex-col sm:flex-row gap-3">
-            <Button onClick={startCheckout} disabled={loadingCheckout}>
-              {loadingCheckout ? "Redirecting to Stripe..." : "Upgrade with Stripe"}
-            </Button>
-            <Button variant="secondary" onClick={openBillingPortal} disabled={loadingPortal}>
-              {loadingPortal ? "Opening billing..." : "Manage billing"}
-            </Button>
-          </div>
-          {error && <p className="mt-4 text-red-600 text-sm">{error}</p>}
-        </Card>
+    <PageLayout
+      title="Unlock Valuto"
+      subtitle="Subscribe to continue into the platform."
+      className="relative overflow-hidden"
+    >
+      <div className="pointer-events-none absolute inset-x-0 top-8 mx-auto h-72 w-72 rounded-full bg-valuto-green-500/15 blur-3xl" />
+      <div className="pointer-events-none absolute right-0 top-1/3 h-80 w-80 rounded-full bg-emerald-300/10 blur-3xl" />
 
-        <Card className="bg-valuto-green-50 border-valuto-green-100">
-          <h3 className="text-xl font-semibold mb-2 text-valuto-green-800">Why subscribe?</h3>
-          <p className="text-gray-700 mb-3">Secure checkout powered by Stripe. Cancel anytime.</p>
-          <div className="space-y-2 text-sm text-gray-700">
-            <p>✅ Safe payments</p>
-            <p>✅ Instant access after payment</p>
-            <p>✅ Email receipts and billing portal</p>
+      <div className="relative mx-auto max-w-4xl">
+        <Card className="overflow-hidden border-valuto-green-500/20 bg-[radial-gradient(circle_at_top_left,rgba(0,230,118,0.14),transparent_34%),linear-gradient(155deg,rgba(25,28,28,0.98),rgba(16,18,18,0.98))] p-0">
+          <div className="grid gap-0 md:grid-cols-[1.05fr_0.95fr]">
+            <div className="px-6 py-8 sm:px-8 sm:py-10">
+              <div className="inline-flex rounded-full border border-valuto-green-400/20 bg-valuto-green-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-valuto-green-200">
+                Full access
+              </div>
+
+              <div className="mt-6">
+                <div className="flex items-end gap-2">
+                  <span className="text-5xl font-bold text-white">£1</span>
+                  <span className="pb-2 text-base text-[#b9bbbe]">/ month</span>
+                </div>
+                <p className="mt-4 max-w-md text-sm leading-7 text-[#b9bbbe]">
+                  One plan. Everything unlocked.
+                </p>
+              </div>
+
+              <div className="mt-8 space-y-3">
+                {includedFeatures.map((feature) => (
+                  <div key={feature} className="flex items-center gap-3 text-sm text-[#d9dbde]">
+                    <div className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-valuto-green-400/15 text-valuto-green-200">
+                      ✓
+                    </div>
+                    <span>{feature}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="border-t border-white/10 px-6 py-8 sm:px-8 sm:py-10 md:border-l md:border-t-0 self-center">
+              <Button onClick={startCheckout} disabled={loadingCheckout} className="w-full !rounded-2xl !py-4 text-base">
+                {loadingCheckout ? "Redirecting to Stripe..." : "Subscribe now"}
+              </Button>
+
+              <p className="mt-4 text-center text-sm text-[#9a9a9d]">
+                Secure checkout with Stripe.
+              </p>
+
+              <div className="mt-8 rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-4 text-center">
+                <p className="text-sm text-[#d9dbde] justify-self-center">Already subscribed?</p>
+                <button
+                  type="button"
+                  onClick={openBillingPortal}
+                  disabled={loadingPortal}
+                  className="mt-2 text-sm font-medium text-valuto-green-300 transition-colors hover:text-valuto-green-200 disabled:opacity-50 justify-self-center"
+                >
+                  {loadingPortal ? "Opening billing..." : "Manage billing"}
+                </button>
+              </div>
+
+              {error && (
+                <div className="mt-4 rounded-2xl border border-red-500/25 bg-red-500/10 px-4 py-3 text-sm text-red-200">
+                  {error}
+                </div>
+              )}
+            </div>
           </div>
         </Card>
       </div>
-      <div className="mt-6 text-sm text-gray-600 text-center">
+
+      <div className="relative mx-auto mt-8 max-w-3xl text-center text-sm leading-6 text-[#9a9a9d]">
         By subscribing, you agree to our{" "}
-        <Link href="/privacy-policy" className="text-valuto-green-700 hover:text-valuto-green-800 underline">
+        <Link href="/privacy-policy" className="text-valuto-green-300 underline decoration-valuto-green-500/40 underline-offset-4 transition-colors hover:text-valuto-green-200">
           Privacy Policy
         </Link>
         {" "}and{" "}
-        <Link href="/terms-and-conditions" className="text-valuto-green-700 hover:text-valuto-green-800 underline">
+        <Link href="/terms-and-conditions" className="text-valuto-green-300 underline decoration-valuto-green-500/40 underline-offset-4 transition-colors hover:text-valuto-green-200">
           Terms & Conditions
         </Link>
         .

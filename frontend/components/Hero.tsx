@@ -66,7 +66,7 @@ export default function Hero() {
                 <div className="mt-8 flex ">
                   <SignedOut>
                     <a href="/auth" className="w-[-webkit-fill-available]">
-                      <Button size="lg" className="text-base px-8 w-[-webkit-fill-available]">
+                      <Button size="lg" className="text-base px-8 w-[-webkit-fill-available] text-white bg-green-500">
                         Start for £1/month
                       </Button>
                     </a>
@@ -77,19 +77,11 @@ export default function Hero() {
                     <a href="/dashboard" className="w-[-webkit-fill-available]">
                       <Button
                         size="lg"
-                        className="text-base px-8 bg-white text-green-600 hover:bg-gray-100 border border-valuto-green-300 w-[-webkit-fill-available]"
+                        className="text-base px-8 bg-green-700 text-white  border border-valuto-green-300 w-[-webkit-fill-available]"
                       >
                         Go to Valuto
                       </Button>
                     </a>
-                    <UserButton 
-                      afterSignOutUrl="/"
-                      appearance={{
-                        elements: {
-                          avatarBox: "w-9 h-9"
-                        }
-                      }}
-                    />
                   </SignedIn>
                 </div>
       
@@ -138,7 +130,7 @@ export default function Hero() {
               </div>
               <div className="min-w-[-webkit-fill-available] flex items-center m-3 justify-center mt-8">
                 <a href="/features">
-                <Button variant="secondary" className="text-black">Learn More</Button>
+                <Button variant="secondary" className="border-black !text-black">Learn More</Button>
                 </a>
               </div>
             </div>

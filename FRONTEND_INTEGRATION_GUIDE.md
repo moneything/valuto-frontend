@@ -52,6 +52,9 @@ Expected:
 ### Auth + profile sync
 - Sign in from frontend.
 - Confirm `GET /api/user/me` is called and user profile loads in dashboard.
+- Confirm new users complete onboarding before reaching dashboard routes.
+- Confirm non-subscribed users are redirected to `/subscribe` from protected app routes.
+- Confirm subscribed users can continue into the platform normally.
 
 ### REST API integration
 - Dashboard stats load from backend (no hardcoded values).

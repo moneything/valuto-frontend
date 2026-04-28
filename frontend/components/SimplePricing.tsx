@@ -1,6 +1,6 @@
 "use client";
 
-import { SignedOut } from "@clerk/nextjs";
+import { SignedIn, SignedOut } from "@clerk/nextjs";
 import AnimatedSection from "./AnimatedSection";
 import Button from "./theme/Button";
 
@@ -34,12 +34,17 @@ export default function SimplePricing() {
               </ul>
               <div className="grid grid-cols-2 gap-4">
                 <SignedOut>
-                    <a href="/auth" className="">
-                      <Button size="md" className="w-[-webkit-fill-available] text-base hover:bg-emerald-500">Start for £1/month</Button>
-                    </a>
-                  </SignedOut>
+                  <a href="/auth" className="">
+                    <Button size="md" className="w-[-webkit-fill-available] text-base hover:bg-emerald-500">Start for £1/month</Button>
+                  </a>
+                </SignedOut>
+                <SignedIn>
+                  <a href="/dashboard" className="hidden sm:block">
+                    <Button size="md" className="w-[-webkit-fill-available] text-base hover:bg-emerald-500">Go to Valuto</Button>
+                  </a>
+                </SignedIn>
                   <a href="/pricing" className="">
-                    <Button variant="secondary" size="md" className="w-[-webkit-fill-available]">Learn More</Button>
+                    <Button variant="secondary" size="md" className="text-black w-[-webkit-fill-available]">Learn More</Button>
                   </a>
               </div>
             </div>

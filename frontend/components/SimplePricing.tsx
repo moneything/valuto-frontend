@@ -44,7 +44,7 @@ export default function SimplePricing() {
                   </a>
                 </SignedIn>
                   <a href="/pricing" className="">
-                    <Button variant="secondary" size="md" className="text-black w-[-webkit-fill-available]">Learn More</Button>
+                    <Button variant="secondary" size="md" className="text-black w-[-webkit-fill-available] border-black !text-black">Learn More</Button>
                   </a>
               </div>
             </div>

@@ -15,7 +15,8 @@ Protected endpoints require a Clerk session JWT in the `Authorization` header:
 Authorization: Bearer <clerk_session_token>
 ```
 
-Some endpoints allow optional auth (they work without a token but can personalize results).
+Paid platform endpoints additionally require the authenticated Mongo user profile to have
+`subscriptionStatus` of `active` or `trialing`. Missing subscription access returns `402`.
 
 ## Response Shape
 
@@ -63,10 +64,10 @@ Errors are formatted by `utils/errorHandler.js`:
 - PUT `/` - Update profile (`school` is locked after first set)
 - GET `/stats` - Current user stats
 - GET `/:id/stats` - Stats by user id (same-school access only)
-- POST `/points` - Add points
-- POST `/game-played` - Increment game count
-- POST `/lesson-completed` - Increment lesson count
-- POST `/achievement` - Add achievement
+- POST `/points` - Disabled for direct client mutation
+- POST `/game-played` - Disabled for direct client mutation
+- POST `/lesson-completed` - Disabled for direct client mutation
+- POST `/achievement` - Disabled for direct client mutation
 - GET `/achievements` - List achievements
 - GET `/activity` - Activity feed
 - DELETE `/` - Soft delete account
@@ -76,18 +77,18 @@ Errors are formatted by `utils/errorHandler.js`:
 - POST `/result` - Submit a verified trivia result from a finished server-side session
 - GET `/history` - User game history
 - GET `/result/:id` - Game result by id
-- GET `/leaderboard/:gameCode` - Game leaderboard (auth optional)
+- GET `/leaderboard/:gameCode` - Game leaderboard
 - GET `/stats` - User game stats
-- GET `/recent` - Recent games (auth optional)
+- GET `/recent` - Recent games
 
 ### Leaderboards (`/api/leaderboard`)
 
-- GET `/` - Global leaderboard (auth optional)
+- GET `/` - Global leaderboard
 - GET `/rank` - Current user rank
-- GET `/school/:schoolName` - School leaderboard (auth optional)
-- GET `/top` - Top performers (auth optional)
+- GET `/school/:schoolName` - School leaderboard
+- GET `/top` - Top performers
 - GET `/with-context` - Leaderboard with user context
-- GET `/stats` - Leaderboard statistics (auth optional)
+- GET `/stats` - Leaderboard statistics
 
 ### Learning (`/api/learning`)
 
@@ -99,18 +100,18 @@ Content modules:
 - DELETE `/modules/:id` - Disabled for all users
 
 Progress tracking:
-- POST `/progress`
+- POST `/progress` - Saves progress only; client input cannot award points or complete modules
 - GET `/progress/:moduleId`
 - GET `/progress`
 - PUT `/time/:moduleId`
-- GET `/leaderboard/:moduleId` (auth optional)
+- GET `/leaderboard/:moduleId`
 - GET `/stats`
 
 ### Challenges (`/api/challenges`)
 
 - GET `/daily` - Returns active daily, weekly, and monthly challenges
-- PUT `/:challengeId/progress` - Direct progress allowed only for featured-game monthly challenges
-- PUT `/:challengeId/complete` - Direct completion allowed only for featured-game monthly challenges
+- PUT `/:challengeId/progress` - Disabled for direct client mutation
+- PUT `/:challengeId/complete` - Disabled for direct client mutation
 - GET `/completed`
 - GET `/stats`
 - POST `/create` - Disabled for all users
@@ -134,32 +135,32 @@ Progress tracking:
 - GET `/all`
 - GET `/news`
 - GET `/events`
-- POST `/news` (auth required)
-- POST `/events` (auth required)
+- POST `/news` - Disabled for all users
+- POST `/events` - Disabled for all users
 
 ### Categories (`/api/categories`)
 
 - GET `/`
 - GET `/:id`
-- POST `/` (auth required)
-- PUT `/:id` (auth required)
-- DELETE `/:id` (auth required)
+- POST `/` - Disabled for all users
+- PUT `/:id` - Disabled for all users
+- DELETE `/:id` - Disabled for all users
 
 ### Billing (`/api/billing`)
 
-- POST `/checkout` - Stripe Checkout session
-- POST `/portal` - Stripe billing portal
+- POST `/checkout` - Stripe Checkout session, rate limited
+- POST `/portal` - Stripe billing portal, rate limited
 - POST `/webhook` - Stripe webhook with raw body, mounted directly in `src/server.js`
 - Webhook delivery requires `STRIPE_WEBHOOK_SECRET` on the backend
 - Server-to-server webhook requests are accepted without a browser `Origin` header
 
 ### AI (`/api/ai`)
 
-- POST `/chat` - Gemini chat (auth required)
+- POST `/chat` - Gemini chat
 
 ### Contact (`/api/contact`)
 
-- POST `/` - Contact form email send attempt (public, requires SMTP/contact env to be configured)
+- POST `/` - Contact form email send attempt, rate limited and Turnstile protected in production
 
 ### Webhooks (`/api/webhooks`)
 
@@ -172,11 +173,13 @@ Real-time trivia events are documented in `docs/SOCKETS-API.md`.
 ## Current Access Rules
 
 - The platform uses a single user role in practice: all users are treated as `student`.
+- Paid platform data APIs require Clerk authentication and an active or trialing subscription.
 - Same-school access is the boundary for `GET /api/user/:id/stats`.
-- Public leaderboard endpoints do not expose user email addresses.
-- Challenge rewards are designed to be awarded once, even under duplicate or concurrent requests.
+- Leaderboard endpoints do not expose user email addresses.
+- Challenge rewards are awarded only by verified server-side flows.
+- Category, news/event, and learning-module mutations are disabled for all app users.
 - Verified trivia results are deduplicated per `clerkUserId + sessionId`.
-- Contact form payloads are sanitized and validated before mail delivery is attempted.
+- Contact form payloads are rate limited, captcha checked, sanitized, and validated before mail delivery is attempted.
 
 ## Operations & Testing
 

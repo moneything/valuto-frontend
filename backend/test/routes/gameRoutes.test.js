@@ -25,7 +25,17 @@ const clearGameRouteCache = () => {
 
 const getGameResultHandlers = (mocks) => {
   clearGameRouteCache();
-  const router = loadWithMocks('../../src/routes/gameRoutes', mocks);
+  const router = loadWithMocks('../../src/routes/gameRoutes', {
+    '../middleware/auth': {
+      authenticateClerkUser: (req, _res, next) => {
+        req.clerkUser = { id: 'clerk_1' };
+        req.auth = { userId: 'clerk_1' };
+        next();
+      },
+      requireActiveSubscription: (_req, _res, next) => next(),
+    },
+    ...mocks,
+  });
   return getRouteHandlers(router, '/result', 'post');
 };
 

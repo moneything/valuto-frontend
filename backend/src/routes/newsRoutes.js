@@ -7,7 +7,7 @@ const {
   createNews,
   createEvent,
 } = require('../controllers/newsController');
-const { authenticateClerkUser } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 
 /**
  * News and Events Routes
@@ -16,28 +16,27 @@ const { authenticateClerkUser } = require('../middleware/auth');
 
 // @route   GET /api/news/all
 // @desc    Get both news and events
-// @access  Public
-router.get('/all', getNewsAndEvents);
+// @access  Paid platform access
+router.get('/all', authenticateClerkUser, requireActiveSubscription, getNewsAndEvents);
 
 // @route   GET /api/news/news
 // @desc    Get all news articles
-// @access  Public
-router.get('/news', getNews);
+// @access  Paid platform access
+router.get('/news', authenticateClerkUser, requireActiveSubscription, getNews);
 
 // @route   GET /api/news/events
 // @desc    Get all events
-// @access  Public
-router.get('/events', getEvents);
+// @access  Paid platform access
+router.get('/events', authenticateClerkUser, requireActiveSubscription, getEvents);
 
 // @route   POST /api/news/news
 // @desc    Create a news article
-// @access  Private (Admin only)
+// @access  Disabled
 router.post('/news', authenticateClerkUser, createNews);
 
 // @route   POST /api/news/events
 // @desc    Create an event
-// @access  Private (Admin only)
+// @access  Disabled
 router.post('/events', authenticateClerkUser, createEvent);
 
 module.exports = router;
-

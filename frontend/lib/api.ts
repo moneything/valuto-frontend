@@ -170,10 +170,10 @@ export const triviaApi = {
   /**
    * Get session by join code
    */
-  async getSessionByCode(joinCode: string) {
+  async getSessionByCode(token: string, joinCode: string) {
     return apiRequest(`/api/trivia/session/code/${joinCode}`, {
       method: 'GET',
-    });
+    }, token);
   },
 
   /**
@@ -216,10 +216,10 @@ export const triviaApi = {
   /**
    * Get live platform trivia statistics
    */
-  async getPlatformStats() {
+  async getPlatformStats(token: string) {
     return apiRequest('/api/trivia/platform-stats', {
       method: 'GET',
-    });
+    }, token);
   },
 
   /**
@@ -282,19 +282,19 @@ export const leaderboardApi = {
   /**
    * Get top performers for hero/dashboard leaderboard layouts
    */
-  async getTop(limit = 8) {
+  async getTop(token: string, limit = 8) {
     return apiRequest(`/api/leaderboard/top?limit=${limit}`, {
       method: 'GET',
-    });
+    }, token);
   },
 
   /**
    * Get leaderboard aggregate stats including total active user counts
    */
-  async getStats() {
+  async getStats(token: string) {
     return apiRequest('/api/leaderboard/stats', {
       method: 'GET',
-    });
+    }, token);
   },
 
   /**

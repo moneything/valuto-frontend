@@ -188,35 +188,10 @@ test('getDailyChallenges does not re-award already completed daily lesson challe
   assert.equal(userSaveCount, 0);
 });
 
-test('updateChallengeProgress awards points only on first completion', async () => {
-  let userSaved = 0;
-  const user = {
-    _id: { toString: () => 'u1' },
-    totalPoints: 100,
-    updateStreak: () => {},
-    save: async () => {
-      userSaved += 1;
-    },
-  };
-
-  const challenge = {
-    challengeType: 'monthly_build_your_life',
-    completed: false,
-    pointsEarned: 50,
-    bonusMultiplier: 2,
-    updateProgress: async () => {
-      challenge.completed = true;
-    },
-  };
-
+test('updateChallengeProgress is disabled for direct client mutation', async () => {
   const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => challenge,
-      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
-    },
-    '../models/User': {
-      findOne: async () => user,
-    },
+    '../models/Challenge': {},
+    '../models/User': {},
     '../models/LearningProgress': {},
   });
 
@@ -224,142 +199,6 @@ test('updateChallengeProgress awards points only on first completion', async () 
     clerkUser: { id: 'clerk_1' },
     params: { challengeId: 'c1' },
     body: { increment: 1 },
-  };
-  const res = createMockRes();
-
-  await updateChallengeProgress(req, res, () => {});
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
-  assert.equal(res.body.data.pointsEarned, 100);
-  assert.equal(user.totalPoints, 200);
-  assert.equal(userSaved, 1);
-});
-
-test('updateChallengeProgress does not re-award when reward grant is already claimed concurrently', async () => {
-  let userSaved = 0;
-  const user = {
-    _id: { toString: () => 'u1' },
-    totalPoints: 100,
-    updateStreak: () => {},
-    save: async () => {
-      userSaved += 1;
-    },
-  };
-  const challenge = {
-    _id: 'c1',
-    challengeType: 'monthly_build_your_life',
-    completed: false,
-    pointsEarned: 50,
-    bonusMultiplier: 2,
-    updateProgress: async () => {
-      challenge.completed = true;
-    },
-  };
-
-  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => challenge,
-      findOneAndUpdate: async () => null,
-    },
-    '../models/User': {
-      findOne: async () => user,
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    clerkUser: { id: 'clerk_1' },
-    params: { challengeId: 'c1' },
-    body: { increment: 1 },
-  };
-  const res = createMockRes();
-
-  await updateChallengeProgress(req, res, () => {});
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.data.pointsEarned, 0);
-  assert.equal(user.totalPoints, 100);
-  assert.equal(userSaved, 0);
-});
-
-test('updateChallengeProgress rejects non-positive increments', async () => {
-  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => ({
-        challengeType: 'monthly_build_your_business',
-        completed: false,
-      }),
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' } }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    clerkUser: { id: 'clerk_1' },
-    params: { challengeId: 'c1' },
-    body: { increment: 0 },
-  };
-  const res = createMockRes();
-  let captured = null;
-
-  await updateChallengeProgress(req, res, (err) => {
-    captured = err;
-  });
-
-  assert.ok(captured);
-  assert.equal(captured.statusCode, 400);
-  assert.match(captured.message, /increment must be a positive value/i);
-});
-
-test('updateChallengeProgress returns 400 when manual challenge is already completed', async () => {
-  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => ({
-        challengeType: 'monthly_build_your_business',
-        completed: true,
-      }),
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' } }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    clerkUser: { id: 'clerk_1' },
-    params: { challengeId: 'c1' },
-    body: { increment: 1 },
-  };
-  const res = createMockRes();
-
-  await updateChallengeProgress(req, res, () => {});
-
-  assert.equal(res.statusCode, 400);
-  assert.equal(res.body.success, false);
-  assert.match(res.body.message, /already completed/i);
-});
-
-test('updateChallengeProgress rejects direct updates for non-manual challenge types', async () => {
-  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => ({
-        challengeType: 'daily_trivia',
-        completed: false,
-      }),
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' } }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    clerkUser: { id: 'clerk_1' },
-    params: { challengeId: 'c1' },
-    body: { increment: 5 },
   };
   const res = createMockRes();
   let captured = null;
@@ -370,73 +209,13 @@ test('updateChallengeProgress rejects direct updates for non-manual challenge ty
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /cannot be updated directly/i);
+  assert.match(captured.message, /Direct challenge progress updates are disabled/i);
 });
 
-test('updateChallengeProgress caps manual progress updates to one step', async () => {
-  let receivedIncrement = null;
-  const challenge = {
-    challengeType: 'monthly_investment_simulation',
-    completed: false,
-    pointsEarned: 20,
-    bonusMultiplier: 1,
-    updateProgress: async (increment) => {
-      receivedIncrement = increment;
-    },
-  };
-
-  const { updateChallengeProgress } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => challenge,
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' }, totalPoints: 0 }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    clerkUser: { id: 'clerk_1' },
-    params: { challengeId: 'c1' },
-    body: { increment: 999 },
-  };
-  const res = createMockRes();
-
-  await updateChallengeProgress(req, res, () => {});
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(receivedIncrement, 1);
-});
-
-test('completeChallenge returns 400 when challenge already completed', async () => {
+test('completeChallenge is disabled for direct client mutation', async () => {
   const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => ({ challengeType: 'monthly_build_your_business', completed: true }),
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' } }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = { clerkUser: { id: 'clerk_1' }, params: { challengeId: 'c1' } };
-  const res = createMockRes();
-
-  await completeChallenge(req, res, () => {});
-
-  assert.equal(res.statusCode, 400);
-  assert.equal(res.body.success, false);
-  assert.match(res.body.message, /already completed/i);
-});
-
-test('completeChallenge rejects direct completion for non-manual challenge types', async () => {
-  const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => ({ challengeType: 'daily_lesson', completed: false }),
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'u1' } }),
-    },
+    '../models/Challenge': {},
+    '../models/User': {},
     '../models/LearningProgress': {},
   });
 
@@ -450,51 +229,5 @@ test('completeChallenge rejects direct completion for non-manual challenge types
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /cannot be updated directly/i);
-});
-
-test('completeChallenge does not re-award when reward grant is already claimed concurrently', async () => {
-  let userSaved = 0;
-  const user = {
-    _id: { toString: () => 'u1' },
-    totalPoints: 250,
-    updateStreak: () => {},
-    save: async () => {
-      userSaved += 1;
-    },
-  };
-  const challenge = {
-    _id: 'c1',
-    challengeType: 'monthly_build_your_business',
-    completed: false,
-    targetProgress: 1,
-    currentProgress: 0,
-    pointsEarned: 40,
-    bonusMultiplier: 2,
-    updateProgress: async () => {
-      challenge.completed = true;
-      challenge.currentProgress = 1;
-    },
-  };
-
-  const { completeChallenge } = loadWithMocks('../../src/controllers/challengeController', {
-    '../models/Challenge': {
-      findOne: async () => challenge,
-      findOneAndUpdate: async () => null,
-    },
-    '../models/User': {
-      findOne: async () => user,
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = { clerkUser: { id: 'clerk_1' }, params: { challengeId: 'c1' } };
-  const res = createMockRes();
-
-  await completeChallenge(req, res, () => {});
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.data.pointsEarned, 0);
-  assert.equal(user.totalPoints, 250);
-  assert.equal(userSaved, 0);
+  assert.match(captured.message, /Direct challenge completion is disabled/i);
 });

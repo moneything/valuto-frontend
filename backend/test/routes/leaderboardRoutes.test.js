@@ -29,7 +29,7 @@ const getLeaderboardHandlers = (path, method, mocks) => {
   return getRouteHandlers(router, path, method);
 };
 
-test('leaderboard route strips emails from public global responses', async () => {
+test('leaderboard route strips emails from paid global responses', async () => {
   const handlers = getLeaderboardHandlers('/', 'get', {
     '../models/User': {
       getLeaderboard: async () => [
@@ -37,8 +37,8 @@ test('leaderboard route strips emails from public global responses', async () =>
       ],
     },
     '../middleware/auth': {
-      authenticateClerkUser: () => {},
-      optionalAuth: (_req, _res, next) => next(),
+      authenticateClerkUser: (_req, _res, next) => next(),
+      requireActiveSubscription: (_req, _res, next) => next(),
     },
   });
 
@@ -52,7 +52,7 @@ test('leaderboard route strips emails from public global responses', async () =>
   assert.equal('email' in res.body.data.leaderboard[0], false);
 });
 
-test('leaderboard school route strips emails from public school responses', async () => {
+test('leaderboard school route strips emails from paid school responses', async () => {
   const handlers = getLeaderboardHandlers('/school/:schoolName', 'get', {
     '../models/User': {
       getLeaderboard: async () => [
@@ -60,8 +60,8 @@ test('leaderboard school route strips emails from public school responses', asyn
       ],
     },
     '../middleware/auth': {
-      authenticateClerkUser: () => {},
-      optionalAuth: (_req, _res, next) => next(),
+      authenticateClerkUser: (_req, _res, next) => next(),
+      requireActiveSubscription: (_req, _res, next) => next(),
     },
   });
 
@@ -75,7 +75,7 @@ test('leaderboard school route strips emails from public school responses', asyn
   assert.equal('email' in res.body.data.leaderboard[0], false);
 });
 
-test('leaderboard top route strips emails from public hall of fame responses', async () => {
+test('leaderboard top route strips emails from paid hall of fame responses', async () => {
   const handlers = getLeaderboardHandlers('/top', 'get', {
     '../models/User': {
       find: () => ({
@@ -91,8 +91,8 @@ test('leaderboard top route strips emails from public hall of fame responses', a
       }),
     },
     '../middleware/auth': {
-      authenticateClerkUser: () => {},
-      optionalAuth: (_req, _res, next) => next(),
+      authenticateClerkUser: (_req, _res, next) => next(),
+      requireActiveSubscription: (_req, _res, next) => next(),
     },
   });
 

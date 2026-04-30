@@ -149,3 +149,82 @@ test('requireRole allows request and attaches req.user when role matches', async
   assert.equal(req.user, dbUser);
 });
 
+test('requireActiveSubscription returns 402 when subscription is inactive', async () => {
+  const modelPath = require.resolve('../../src/models/User');
+  const originalModelCache = require.cache[modelPath];
+  require.cache[modelPath] = {
+    id: modelPath,
+    filename: modelPath,
+    loaded: true,
+    exports: {
+      findOne: async () => ({
+        completedOnboarding: true,
+        subscriptionStatus: 'free',
+      }),
+    },
+  };
+
+  const { requireActiveSubscription } = loadWithMocks('../../src/middleware/auth', {
+    '@clerk/clerk-sdk-node': { verifyToken: async () => ({}) },
+  });
+
+  const req = { clerkUser: { id: 'user_1' } };
+  const res = createMockRes();
+  let nextCalled = false;
+
+  try {
+    await requireActiveSubscription(req, res, () => {
+      nextCalled = true;
+    });
+  } finally {
+    if (originalModelCache) {
+      require.cache[modelPath] = originalModelCache;
+    } else {
+      delete require.cache[modelPath];
+    }
+  }
+
+  assert.equal(nextCalled, false);
+  assert.equal(res.statusCode, 402);
+  assert.match(res.body.message, /active subscription/i);
+});
+
+test('requireActiveSubscription allows active subscriptions and attaches req.user', async () => {
+  const dbUser = {
+    completedOnboarding: true,
+    subscriptionStatus: 'active',
+  };
+  const modelPath = require.resolve('../../src/models/User');
+  const originalModelCache = require.cache[modelPath];
+  require.cache[modelPath] = {
+    id: modelPath,
+    filename: modelPath,
+    loaded: true,
+    exports: {
+      findOne: async () => dbUser,
+    },
+  };
+
+  const { requireActiveSubscription } = loadWithMocks('../../src/middleware/auth', {
+    '@clerk/clerk-sdk-node': { verifyToken: async () => ({}) },
+  });
+
+  const req = { clerkUser: { id: 'user_1' } };
+  const res = createMockRes();
+  let nextCalled = false;
+
+  try {
+    await requireActiveSubscription(req, res, () => {
+      nextCalled = true;
+    });
+  } finally {
+    if (originalModelCache) {
+      require.cache[modelPath] = originalModelCache;
+    } else {
+      delete require.cache[modelPath];
+    }
+  }
+
+  assert.equal(nextCalled, true);
+  assert.equal(req.user, dbUser);
+});

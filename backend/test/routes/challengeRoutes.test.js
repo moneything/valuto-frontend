@@ -23,31 +23,57 @@ const clearChallengeRouteCache = () => {
   delete require.cache[require.resolve('../../src/middleware/auth')];
 };
 
-const getChallengeHandlers = (path, method, mocks) => {
+const getChallengeHandlers = (path, method, mocks = {}) => {
   clearChallengeRouteCache();
-  const router = loadWithMocks('../../src/routes/challengeRoutes', mocks);
+  const router = loadWithMocks('../../src/routes/challengeRoutes', {
+    '@clerk/clerk-sdk-node': {
+      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
+      clerkClient: {},
+    },
+    '../models/User': {
+      findOne: async () => ({
+        _id: { toString: () => 'user_1' },
+        completedOnboarding: true,
+        subscriptionStatus: 'active',
+      }),
+    },
+    '../models/Challenge': {},
+    '../models/LearningProgress': {},
+    ...mocks,
+  });
   return getRouteHandlers(router, path, method);
 };
 
-test('challenge progress route blocks direct updates for normal challenge types', async () => {
+test('challenge progress route requires an active subscription', async () => {
   const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
     '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'user_1' } }),
+      findOne: async () => ({
+        _id: { toString: () => 'user_1' },
+        completedOnboarding: true,
+        subscriptionStatus: 'free',
+      }),
     },
-    '../models/Challenge': {
-      findOne: async () => ({ challengeType: 'daily_trivia', userId: 'user_1' }),
-    },
-    '../models/LearningProgress': {},
   });
 
   const req = {
     headers: { authorization: 'Bearer valid-token' },
     params: { challengeId: 'c1' },
-    body: { increment: 3 },
+    body: { increment: 1 },
+  };
+  const res = createMockRes();
+
+  await runRouteHandlers(handlers, req, res);
+
+  assert.equal(res.statusCode, 402);
+  assert.match(res.body.message, /active subscription/i);
+});
+
+test('challenge progress route blocks direct client mutation for subscribed users', async () => {
+  const handlers = getChallengeHandlers('/:challengeId/progress', 'put');
+  const req = {
+    headers: { authorization: 'Bearer valid-token' },
+    params: { challengeId: 'c1' },
+    body: { increment: 1 },
   };
   const res = createMockRes();
   let captured = null;
@@ -60,182 +86,11 @@ test('challenge progress route blocks direct updates for normal challenge types'
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /cannot be updated directly/i);
+  assert.match(captured.message, /Direct challenge progress updates are disabled/i);
 });
 
-test('challenge progress route allows monthly challenge updates but caps to one step', async () => {
-  let receivedIncrement = null;
-  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => ({
-        _id: { toString: () => 'user_1' },
-        totalPoints: 0,
-      }),
-    },
-    '../models/Challenge': {
-      findOne: async () => ({
-        _id: 'c1',
-        challengeType: 'monthly_build_your_life',
-        completed: false,
-        pointsEarned: 20,
-        bonusMultiplier: 1,
-        updateProgress: async (increment) => {
-          receivedIncrement = increment;
-        },
-      }),
-      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-    body: { increment: 50 },
-  };
-  const res = createMockRes();
-
-  await runRouteHandlers(handlers, req, res);
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
-  assert.equal(receivedIncrement, 1);
-});
-
-test('challenge progress route does not re-award when reward grant was already claimed concurrently', async () => {
-  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => ({
-        _id: { toString: () => 'user_1' },
-        totalPoints: 120,
-        updateStreak: () => {},
-        save: async () => {
-          throw new Error('user.save should not be called when reward was already granted');
-        },
-      }),
-    },
-    '../models/Challenge': {
-      findOne: async () => ({
-        _id: 'c1',
-        challengeType: 'monthly_build_your_life',
-        completed: false,
-        pointsEarned: 20,
-        bonusMultiplier: 2,
-        updateProgress: async function updateProgress() {
-          this.completed = true;
-        },
-      }),
-      findOneAndUpdate: async () => null,
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-    body: { increment: 1 },
-  };
-  const res = createMockRes();
-
-  await runRouteHandlers(handlers, req, res);
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.data.pointsEarned, 0);
-  assert.equal(res.body.data.totalPoints, 120);
-});
-
-test('challenge progress route rejects non-positive increments for monthly challenges', async () => {
-  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'user_1' } }),
-    },
-    '../models/Challenge': {
-      findOne: async () => ({
-        challengeType: 'monthly_build_your_life',
-        completed: false,
-      }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-    body: { increment: 0 },
-  };
-  const res = createMockRes();
-  let captured = null;
-
-  try {
-    await runRouteHandlers(handlers, req, res);
-  } catch (err) {
-    captured = err;
-  }
-
-  assert.ok(captured);
-  assert.equal(captured.statusCode, 400);
-  assert.match(captured.message, /increment must be a positive value/i);
-});
-
-test('challenge progress route returns 400 when monthly challenge is already completed', async () => {
-  const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'user_1' } }),
-    },
-    '../models/Challenge': {
-      findOne: async () => ({
-        challengeType: 'monthly_build_your_life',
-        completed: true,
-      }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-    body: { increment: 1 },
-  };
-  const res = createMockRes();
-
-  await runRouteHandlers(handlers, req, res);
-
-  assert.equal(res.statusCode, 400);
-  assert.equal(res.body.success, false);
-  assert.match(res.body.message, /already completed/i);
-});
-
-test('challenge completion route blocks direct completion for normal challenge types', async () => {
-  const handlers = getChallengeHandlers('/:challengeId/complete', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => ({ _id: { toString: () => 'user_1' } }),
-    },
-    '../models/Challenge': {
-      findOne: async () => ({ challengeType: 'daily_lesson', completed: false }),
-    },
-    '../models/LearningProgress': {},
-  });
-
+test('challenge completion route blocks direct client mutation for subscribed users', async () => {
+  const handlers = getChallengeHandlers('/:challengeId/complete', 'put');
   const req = {
     headers: { authorization: 'Bearer valid-token' },
     params: { challengeId: 'c1' },
@@ -251,108 +106,5 @@ test('challenge completion route blocks direct completion for normal challenge t
 
   assert.ok(captured);
   assert.equal(captured.statusCode, 403);
-  assert.match(captured.message, /cannot be updated directly/i);
-});
-
-test('challenge completion route awards points once for allowed monthly challenge types', async () => {
-  let saveCount = 0;
-  const user = {
-    _id: { toString: () => 'user_1' },
-    totalPoints: 100,
-    updateStreak: () => {},
-    save: async () => {
-      saveCount += 1;
-    },
-  };
-  const challenge = {
-    challengeType: 'monthly_investment_simulation',
-    completed: false,
-    targetProgress: 3,
-    currentProgress: 1,
-    pointsEarned: 40,
-    bonusMultiplier: 2,
-    updateProgress: async () => {
-      challenge.completed = true;
-      challenge.currentProgress = 3;
-    },
-  };
-
-  const handlers = getChallengeHandlers('/:challengeId/complete', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => user,
-    },
-    '../models/Challenge': {
-      findOne: async () => challenge,
-      findOneAndUpdate: async () => ({ _id: 'c1', rewardGranted: true }),
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-  };
-  const res = createMockRes();
-
-  await runRouteHandlers(handlers, req, res);
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
-  assert.equal(user.totalPoints, 180);
-  assert.equal(saveCount, 1);
-});
-
-test('challenge completion route does not re-award when reward grant was already claimed concurrently', async () => {
-  const user = {
-    _id: { toString: () => 'user_1' },
-    totalPoints: 180,
-    updateStreak: () => {},
-    save: async () => {
-      throw new Error('user.save should not be called when reward was already granted');
-    },
-  };
-  const challenge = {
-    _id: 'c1',
-    challengeType: 'monthly_investment_simulation',
-    completed: false,
-    targetProgress: 1,
-    currentProgress: 0,
-    pointsEarned: 40,
-    bonusMultiplier: 2,
-    updateProgress: async () => {
-      challenge.completed = true;
-      challenge.currentProgress = 1;
-    },
-  };
-
-  const handlers = getChallengeHandlers('/:challengeId/complete', 'put', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
-    },
-    '../models/User': {
-      findOne: async () => user,
-    },
-    '../models/Challenge': {
-      findOne: async () => challenge,
-      findOneAndUpdate: async () => null,
-    },
-    '../models/LearningProgress': {},
-  });
-
-  const req = {
-    headers: { authorization: 'Bearer valid-token' },
-    params: { challengeId: 'c1' },
-  };
-  const res = createMockRes();
-
-  await runRouteHandlers(handlers, req, res);
-
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.data.pointsEarned, 0);
-  assert.equal(res.body.data.totalPoints, 180);
+  assert.match(captured.message, /Direct challenge completion is disabled/i);
 });

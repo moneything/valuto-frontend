@@ -38,6 +38,8 @@ These routes remain reachable after sign-in even without an active subscription:
 - The paywall is no longer scoped to selected modules.
 - It applies across protected app routes.
 - Public marketing pages remain outside the paywall.
+- Paid backend data APIs also enforce the same subscription gate server-side.
+- Server-side paid access requires `subscriptionStatus` of `active` or `trialing`.
 
 ## Stripe Billing Endpoints
 
@@ -62,6 +64,13 @@ Behavior:
 - Webhook signature verification depends on raw request body handling.
 - Stripe deliveries may have no browser `Origin` header.
 
+## Contact Protection
+
+- `POST /api/contact` is public but rate limited.
+- Production contact submissions require Cloudflare Turnstile.
+- Backend env: `TURNSTILE_SECRET_KEY`.
+- Frontend env: `NEXT_PUBLIC_TURNSTILE_SITE_KEY`.
+
 ## Key Frontend Files
 
 - `frontend/proxy.ts`
@@ -73,5 +82,6 @@ Behavior:
 ## Key Backend Files
 
 - `backend/src/server.js`
+- `backend/src/middleware/auth.js`
 - `backend/src/controllers/billingController.js`
 - `backend/src/routes/billingRoutes.js`

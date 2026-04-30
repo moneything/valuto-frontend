@@ -95,9 +95,6 @@ Errors are formatted by `utils/errorHandler.js`:
 Content modules:
 - GET `/modules`
 - GET `/modules/:id`
-- POST `/modules` - Disabled for all users
-- PUT `/modules/:id` - Disabled for all users
-- DELETE `/modules/:id` - Disabled for all users
 
 Progress tracking:
 - POST `/progress` - Saves progress only; client input cannot award points or complete modules
@@ -135,16 +132,11 @@ Progress tracking:
 - GET `/all`
 - GET `/news`
 - GET `/events`
-- POST `/news` - Disabled for all users
-- POST `/events` - Disabled for all users
 
 ### Categories (`/api/categories`)
 
 - GET `/`
 - GET `/:id`
-- POST `/` - Disabled for all users
-- PUT `/:id` - Disabled for all users
-- DELETE `/:id` - Disabled for all users
 
 ### Billing (`/api/billing`)
 
@@ -177,7 +169,7 @@ Real-time trivia events are documented in `docs/SOCKETS-API.md`.
 - Same-school access is the boundary for `GET /api/user/:id/stats`.
 - Leaderboard endpoints do not expose user email addresses.
 - Challenge rewards are awarded only by verified server-side flows.
-- Category, news/event, and learning-module mutations are disabled for all app users.
+- Category, news/event, and learning-module mutation routes are not mounted.
 - Verified trivia results are deduplicated per `clerkUserId + sessionId`.
 - Contact form payloads are rate limited, captcha checked, sanitized, and validated before mail delivery is attempted.
 

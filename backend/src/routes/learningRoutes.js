@@ -15,9 +15,6 @@ const {
 const {
   getModules,
   getModule,
-  createModule,
-  updateModule,
-  deleteModule,
 } = require('../controllers/learningModuleController');
 
 const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
@@ -25,7 +22,7 @@ const { validateLearningProgress } = require('../utils/validators');
 
 /* ============================================================
  * Learning Module Content Routes
- * These handle CRUD operations for the actual lesson content
+ * These expose read-only lesson content for subscribed users
  * ============================================================ */
 
 // @route   GET /api/learning/modules
@@ -37,21 +34,6 @@ router.get('/modules', authenticateClerkUser, requireActiveSubscription, getModu
 // @desc    Get a specific learning module
 // @access  Paid platform access
 router.get('/modules/:id', authenticateClerkUser, requireActiveSubscription, getModule);
-
-// @route   POST /api/learning/modules
-// @desc    Create a new learning module
-// @access  Disabled
-router.post('/modules', authenticateClerkUser, createModule);
-
-// @route   PUT /api/learning/modules/:id
-// @desc    Update a learning module
-// @access  Disabled
-router.put('/modules/:id', authenticateClerkUser, updateModule);
-
-// @route   DELETE /api/learning/modules/:id
-// @desc    Delete a learning module
-// @access  Disabled
-router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 
 /* ============================================================
  * Learning Progress Routes (Single-module progress tracking)

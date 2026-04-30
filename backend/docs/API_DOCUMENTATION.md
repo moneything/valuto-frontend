@@ -156,7 +156,7 @@ Progress tracking:
 
 ### Webhooks (`/api/webhooks`)
 
-- POST `/clerk` - Clerk webhook receiver
+- POST `/clerk` - Clerk webhook receiver with Svix signature verification
 
 ## Socket.IO
 
@@ -172,6 +172,7 @@ Real-time trivia events are documented in `docs/SOCKETS-API.md`.
 - Category, news/event, and learning-module mutation routes are not mounted.
 - Verified trivia results are deduplicated per `clerkUserId + sessionId`.
 - Contact form payloads are rate limited, captcha checked, sanitized, and validated before mail delivery is attempted.
+- Clerk webhook delivery requires `CLERK_WEBHOOK_SECRET` on the backend.
 
 ## Operations & Testing
 

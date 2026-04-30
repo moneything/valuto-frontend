@@ -55,31 +55,7 @@ const getModule = asyncHandler(async (req, res) => {
   });
 });
 
-/* --------------------------------------------------------
- * CREATE MODULE (Teacher only)
- * -------------------------------------------------------- */
-const createModule = asyncHandler(async (req, res) => {
-  throw new AppError("Learning module creation is disabled", 403);
-});
-
-/* --------------------------------------------------------
- * UPDATE MODULE (Teacher only)
- * -------------------------------------------------------- */
-const updateModule = asyncHandler(async (req, res) => {
-  throw new AppError("Learning module updates are disabled", 403);
-});
-
-/* --------------------------------------------------------
- * DELETE MODULE (Soft delete)
- * -------------------------------------------------------- */
-const deleteModule = asyncHandler(async (req, res) => {
-  throw new AppError("Learning module deletion is disabled", 403);
-});
-
 module.exports = {
   getModules,
   getModule,
-  createModule,
-  updateModule,
-  deleteModule,
 };

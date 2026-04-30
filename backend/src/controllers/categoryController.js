@@ -40,13 +40,7 @@ const getCategory = asyncHandler(async (req, res) => {
  * @access Private
  */
 const createCategory = asyncHandler(async (req, res) => {
-  const category = await Category.create(req.body);
-
-  res.status(201).json({
-    success: true,
-    message: "Category created",
-    data: category,
-  });
+  throw new AppError("Category creation is disabled", 403);
 });
 
 /**
@@ -55,20 +49,7 @@ const createCategory = asyncHandler(async (req, res) => {
  * @access Private
  */
 const updateCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findOne({ id: req.params.id });
-
-  if (!category) {
-    throw new AppError("Category not found", 404);
-  }
-
-  Object.assign(category, req.body);
-  await category.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Category updated",
-    data: category,
-  });
+  throw new AppError("Category updates are disabled", 403);
 });
 
 /**
@@ -77,19 +58,7 @@ const updateCategory = asyncHandler(async (req, res) => {
  * @access Private
  */
 const deleteCategory = asyncHandler(async (req, res) => {
-  const category = await Category.findOne({ id: req.params.id });
-
-  if (!category) {
-    throw new AppError("Category not found", 404);
-  }
-
-  category.isActive = false;
-  await category.save();
-
-  res.status(200).json({
-    success: true,
-    message: "Category deleted",
-  });
+  throw new AppError("Category deletion is disabled", 403);
 });
 
 module.exports = {

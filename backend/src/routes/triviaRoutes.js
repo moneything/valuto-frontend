@@ -12,7 +12,7 @@ const {
   getPlatformTriviaStats,
   deleteSession,
 } = require('../controllers/triviaController');
-const { authenticateClerkUser } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 const { body, param } = require('express-validator');
 const { handleValidationErrors } = require('../utils/validators');
 
@@ -81,53 +81,53 @@ const validateSessionCreation = [
 // @route   POST /api/trivia//session/:sessionId/restart
 // @desc    Reset game progress and restart it
 // @access  Private (Teacher)
-router.post('/session/:sessionId/restart', authenticateClerkUser, restartSession);
+router.post('/session/:sessionId/restart', authenticateClerkUser, requireActiveSubscription, restartSession);
 
 
 // @route   POST /api/trivia/session
 // @desc    Create new trivia session
 // @access  Private (Teacher)
-router.post('/session', authenticateClerkUser, validateSessionCreation, createSession);
+router.post('/session', authenticateClerkUser, requireActiveSubscription, validateSessionCreation, createSession);
 
 // @route   GET /api/trivia/session/code/:joinCode
 // @desc    Get session by join code
-// @access  Public
-router.get('/session/code/:joinCode', getSessionByCode);
+// @access  Paid platform access
+router.get('/session/code/:joinCode', authenticateClerkUser, requireActiveSubscription, getSessionByCode);
 
 // @route   GET /api/trivia/session/:sessionId
 // @desc    Get session by ID
 // @access  Private
-router.get('/session/:sessionId', authenticateClerkUser, getSession);
+router.get('/session/:sessionId', authenticateClerkUser, requireActiveSubscription, getSession);
 
 // @route   GET /api/trivia/sessions
 // @desc    Get all sessions for current user
 // @access  Private
-router.get('/sessions', authenticateClerkUser, getUserSessions);
+router.get('/sessions', authenticateClerkUser, requireActiveSubscription, getUserSessions);
 
 // @route   GET /api/trivia/session/:sessionId/results
 // @desc    Get session results
 // @access  Private
-router.get('/session/:sessionId/results', authenticateClerkUser, getSessionResults);
+router.get('/session/:sessionId/results', authenticateClerkUser, requireActiveSubscription, getSessionResults);
 
 // @route   GET /api/trivia/history
 // @desc    Get user's trivia history
 // @access  Private
-router.get('/history', authenticateClerkUser, getUserHistory);
+router.get('/history', authenticateClerkUser, requireActiveSubscription, getUserHistory);
 
 // @route   GET /api/trivia/stats
 // @desc    Get user's trivia statistics
 // @access  Private
-router.get('/stats', authenticateClerkUser, getUserTriviaStats);
+router.get('/stats', authenticateClerkUser, requireActiveSubscription, getUserTriviaStats);
 
 // @route   GET /api/trivia/platform-stats
 // @desc    Get live platform trivia statistics
-// @access  Public
-router.get('/platform-stats', getPlatformTriviaStats);
+// @access  Paid platform access
+router.get('/platform-stats', authenticateClerkUser, requireActiveSubscription, getPlatformTriviaStats);
 
 // @route   DELETE /api/trivia/session/:sessionId
 // @desc    Delete session
 // @access  Private (Host)
-router.delete('/session/:sessionId', authenticateClerkUser, deleteSession);
+router.delete('/session/:sessionId', authenticateClerkUser, requireActiveSubscription, deleteSession);
 
 
 module.exports = router;

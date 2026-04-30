@@ -34,37 +34,7 @@ const getCategory = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc Create category (Admin only)
- * @route POST /api/categories
- * @access Private
- */
-const createCategory = asyncHandler(async (req, res) => {
-  throw new AppError("Category creation is disabled", 403);
-});
-
-/**
- * @desc Update category
- * @route PUT /api/categories/:id
- * @access Private
- */
-const updateCategory = asyncHandler(async (req, res) => {
-  throw new AppError("Category updates are disabled", 403);
-});
-
-/**
- * @desc Delete (soft delete)
- * @route DELETE /api/categories/:id
- * @access Private
- */
-const deleteCategory = asyncHandler(async (req, res) => {
-  throw new AppError("Category deletion is disabled", 403);
-});
-
 module.exports = {
   getCategories,
   getCategory,
-  createCategory,
-  updateCategory,
-  deleteCategory,
 };

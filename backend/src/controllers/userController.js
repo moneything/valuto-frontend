@@ -600,6 +600,18 @@ const getUserStatsById = asyncHandler(async (req, res) => {
 
   const rank = usersAbove + 1;
   const progression = buildProgressionSnapshot(targetUser, gameStats, learningStats, rank);
+  const isCurrentUser = targetUser.clerkUserId === clerkUserId;
+  const userProfile = {
+    name: targetUser.name,
+    title: targetUser.title,
+    role: targetUser.role,
+    school: targetUser.school,
+    grade: targetUser.grade,
+  };
+
+  if (isCurrentUser) {
+    userProfile.email = targetUser.email;
+  }
 
   res.status(200).json({
     success: true,
@@ -610,14 +622,7 @@ const getUserStatsById = asyncHandler(async (req, res) => {
       averageScore: progression.accuracy,
       streak: progression.streak,
       rank: progression.rank,
-      user: {
-        name: targetUser.name,
-        title: targetUser.title,
-        email: targetUser.email,
-        role: targetUser.role,
-        school: targetUser.school,
-        grade: targetUser.grade,
-      },
+      user: userProfile,
       stats: {
         totalPoints: targetUser.totalPoints,
         gamesPlayed: targetUser.gamesPlayed,

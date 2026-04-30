@@ -16,7 +16,7 @@ const {
   deleteUser,
   getUserStatsById,
 } = require('../controllers/userController');
-const { authenticateClerkUser } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 const { validateUserCreation, validateUserUpdate } = require('../utils/validators');
 
 /**
@@ -60,42 +60,42 @@ router.put('/', authenticateClerkUser, validateUserUpdate, updateUserProfile);
 // @route   GET /api/user/stats
 // @desc    Get user statistics
 // @access  Private
-router.get('/stats', authenticateClerkUser, getUserStats);
+router.get('/stats', authenticateClerkUser, requireActiveSubscription, getUserStats);
 
 // @route   GET /api/user/stats
 // @desc    Get user statistics
 // @access  Teacher
-router.get("/:id/stats", authenticateClerkUser, getUserStatsById);
+router.get("/:id/stats", authenticateClerkUser, requireActiveSubscription, getUserStatsById);
 
 // @route   POST /api/user/points
 // @desc    Add points to user
 // @access  Private
-router.post('/points', authenticateClerkUser, addPoints);
+router.post('/points', authenticateClerkUser, requireActiveSubscription, addPoints);
 
 // @route   POST /api/user/game-played
 // @desc    Increment user's game count
 // @access  Private
-router.post('/game-played', authenticateClerkUser, incrementGameCount);
+router.post('/game-played', authenticateClerkUser, requireActiveSubscription, incrementGameCount);
 
 // @route   POST /api/user/lesson-completed
 // @desc    Increment user's lesson count
 // @access  Private
-router.post('/lesson-completed', authenticateClerkUser, incrementLessonCount);
+router.post('/lesson-completed', authenticateClerkUser, requireActiveSubscription, incrementLessonCount);
 
 // @route   POST /api/user/achievement
 // @desc    Add achievement to user
 // @access  Private
-router.post('/achievement', authenticateClerkUser, addAchievement);
+router.post('/achievement', authenticateClerkUser, requireActiveSubscription, addAchievement);
 
 // @route   GET /api/user/achievements
 // @desc    Get user achievements
 // @access  Private
-router.get('/achievements', authenticateClerkUser, getAchievements);
+router.get('/achievements', authenticateClerkUser, requireActiveSubscription, getAchievements);
 
 // @route   GET /api/user/activity
 // @desc    Get user activity log
 // @access  Private
-router.get('/activity', authenticateClerkUser, getActivity);
+router.get('/activity', authenticateClerkUser, requireActiveSubscription, getActivity);
 
 // @route   DELETE /api/user
 // @desc    Delete user account (soft delete)

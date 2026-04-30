@@ -8,7 +8,7 @@ const {
   getLeaderboardWithContext,
   getLeaderboardStats,
 } = require('../controllers/leaderboardController');
-const { authenticateClerkUser, optionalAuth } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 const { validateLeaderboardParams } = require('../utils/validators');
 
 /**
@@ -19,31 +19,31 @@ const { validateLeaderboardParams } = require('../utils/validators');
 // @route   GET /api/leaderboard
 // @desc    Get global leaderboard
 // @access  Public
-router.get('/', optionalAuth, validateLeaderboardParams, getGlobalLeaderboard);
+router.get('/', authenticateClerkUser, requireActiveSubscription, validateLeaderboardParams, getGlobalLeaderboard);
 
 // @route   GET /api/leaderboard/rank
 // @desc    Get user's leaderboard rank
 // @access  Private
-router.get('/rank', authenticateClerkUser, getUserRank);
+router.get('/rank', authenticateClerkUser, requireActiveSubscription, getUserRank);
 
 // @route   GET /api/leaderboard/school/:schoolName
 // @desc    Get school leaderboard
 // @access  Public
-router.get('/school/:schoolName', optionalAuth, getSchoolLeaderboard);
+router.get('/school/:schoolName', authenticateClerkUser, requireActiveSubscription, getSchoolLeaderboard);
 
 // @route   GET /api/leaderboard/top
 // @desc    Get top performers (hall of fame)
 // @access  Public
-router.get('/top', optionalAuth, getTopPerformers);
+router.get('/top', authenticateClerkUser, requireActiveSubscription, getTopPerformers);
 
 // @route   GET /api/leaderboard/with-context
 // @desc    Get leaderboard with user context
 // @access  Private
-router.get('/with-context', authenticateClerkUser, getLeaderboardWithContext);
+router.get('/with-context', authenticateClerkUser, requireActiveSubscription, getLeaderboardWithContext);
 
 // @route   GET /api/leaderboard/stats
 // @desc    Get leaderboard statistics
 // @access  Public
-router.get('/stats', optionalAuth, getLeaderboardStats);
+router.get('/stats', authenticateClerkUser, requireActiveSubscription, getLeaderboardStats);
 
 module.exports = router;

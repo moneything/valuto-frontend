@@ -11,6 +11,7 @@ import {
  * 1) FETCH ALL MODULES
  * ============================================================ */
 export const useLearningModules = () => {
+  const { getToken } = useAuth();
   const [modules, setModules] = useState<LearningModule[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -20,7 +21,14 @@ export const useLearningModules = () => {
       setLoading(true);
       setError(null);
 
-      const result = await learningModuleAPI.getModules();
+      const token = await getToken({ template: "default" });
+      if (!token) {
+        setModules([]);
+        setError("Authentication token missing");
+        return;
+      }
+
+      const result = await learningModuleAPI.getModules(token);
 
       if (result.success && "data" in result && result.data) {
         setModules(result.data);
@@ -32,7 +40,7 @@ export const useLearningModules = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [getToken]);
 
   useEffect(() => {
     fetchModules();
@@ -50,6 +58,7 @@ export const useLearningModules = () => {
  * 2) FETCH A SINGLE MODULE
  * ============================================================ */
 export const useLearningModule = (topic: string) => {
+  const { getToken } = useAuth();
   const [module, setModule] = useState<LearningModule | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -61,7 +70,14 @@ export const useLearningModule = (topic: string) => {
       setLoading(true);
       setError(null);
 
-      const result = await learningModuleAPI.getModule(topic);
+      const token = await getToken({ template: "default" });
+      if (!token) {
+        setModule(null);
+        setError("Authentication token missing");
+        return;
+      }
+
+      const result = await learningModuleAPI.getModule(topic, token);
 
       if (result.success && "data" in result && result.data) {
         setModule(result.data);
@@ -73,7 +89,7 @@ export const useLearningModule = (topic: string) => {
     } finally {
       setLoading(false);
     }
-  }, [topic]);
+  }, [topic, getToken]);
 
   useEffect(() => {
     fetchModule();
@@ -252,6 +268,7 @@ export const useUserLearningProgress = () => {
  * 5) FETCH ALL LEARNING CATEGORIES
  * ============================================================ */
 export const useLearningCategories = () => {
+  const { getToken } = useAuth();
   const [categories, setCategories] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -261,7 +278,14 @@ export const useLearningCategories = () => {
       setLoading(true);
       setError(null);
 
-      const result = await learningModuleAPI.getCategories();
+      const token = await getToken({ template: "default" });
+      if (!token) {
+        setCategories([]);
+        setError("Authentication token missing");
+        return;
+      }
+
+      const result = await learningModuleAPI.getCategories(token);
 
       if (result.success && Array.isArray(result.data)) {
         setCategories(result.data);
@@ -273,7 +297,7 @@ export const useLearningCategories = () => {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [getToken]);
 
   useEffect(() => {
     fetchCategories();

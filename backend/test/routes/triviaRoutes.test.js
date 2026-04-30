@@ -50,6 +50,7 @@ const getSessionCreateChain = () => {
         req.auth = { userId: 'user_1' };
         next();
       },
+      requireActiveSubscription: (_req, _res, next) => next(),
     },
   });
 

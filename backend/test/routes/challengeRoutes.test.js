@@ -23,12 +23,25 @@ const clearChallengeRouteCache = () => {
   delete require.cache[require.resolve('../../src/middleware/auth')];
 };
 
-const getChallengeHandlers = (path, method, mocks = {}) => {
+const getChallengeHandlers = (path, method, options = {}) => {
+  const { subscriptionStatus = 'active', mocks = {} } = options;
   clearChallengeRouteCache();
   const router = loadWithMocks('../../src/routes/challengeRoutes', {
-    '@clerk/clerk-sdk-node': {
-      verifyToken: async () => ({ sub: 'clerk_1', email: 'user@test.com' }),
-      clerkClient: {},
+    '../middleware/auth': {
+      authenticateClerkUser: (req, _res, next) => {
+        req.clerkUser = { id: 'clerk_1' };
+        req.auth = { userId: 'clerk_1' };
+        next();
+      },
+      requireActiveSubscription: (_req, res, next) => {
+        if (subscriptionStatus !== 'active' && subscriptionStatus !== 'trialing') {
+          return res.status(402).json({
+            success: false,
+            message: 'An active subscription is required to access this resource.',
+          });
+        }
+        next();
+      },
     },
     '../models/User': {
       findOne: async () => ({
@@ -46,13 +59,7 @@ const getChallengeHandlers = (path, method, mocks = {}) => {
 
 test('challenge progress route requires an active subscription', async () => {
   const handlers = getChallengeHandlers('/:challengeId/progress', 'put', {
-    '../models/User': {
-      findOne: async () => ({
-        _id: { toString: () => 'user_1' },
-        completedOnboarding: true,
-        subscriptionStatus: 'free',
-      }),
-    },
+    subscriptionStatus: 'free',
   });
 
   const req = {

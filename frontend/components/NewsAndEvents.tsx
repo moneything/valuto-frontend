@@ -6,12 +6,14 @@ import Button from '@/components/theme/Button';
 import { motion, AnimatePresence } from 'framer-motion';
 import { fetchNewsAndEvents, NewsItem, EventItem } from '@/lib/api/news';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@clerk/nextjs';
 
 interface NewsAndEventsProps {
   className?: string;
 }
 
 export default function NewsAndEvents({ className }: NewsAndEventsProps) {
+  const { getToken } = useAuth();
   const [activeTab, setActiveTab] = useState<'news' | 'events'>('news');
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [newsLimit, setNewsLimit] = useState<number>(5);
@@ -36,7 +38,10 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
     setLoading(true);
     setError(null);
     try {
-      const data = await fetchNewsAndEvents({ newsLimit: limit });
+      const token = await getToken({ template: "default" });
+      if (!token) throw new Error('Authentication token missing');
+
+      const data = await fetchNewsAndEvents(token, { newsLimit: limit });
       setNews(data.news);
       setEvents(data.events);
       setNewsLimit(limit);
@@ -46,7 +51,7 @@ export default function NewsAndEvents({ className }: NewsAndEventsProps) {
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [getToken]);
 
   useEffect(() => {
     loadData(5);

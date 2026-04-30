@@ -442,21 +442,10 @@ const incrementLessonCount = asyncHandler(async (req, res) => {
  * @access Private
  */
 const addAchievement = asyncHandler(async (req, res) => {
-  const { userId } = req.auth;
-  const { achievementId } = req.body;
-  if (!achievementId) throw new AppError('Achievement ID is required', 400);
-
-  const user = await User.findOne({ clerkUserId: userId });
-  if (!user) throw new AppError('User profile not found', 404);
-
-  user.addAchievement(achievementId);
-  await user.save();
-
-  res.status(200).json({
-    success: true,
-    message: 'Achievement unlocked!',
-    data: { achievementId, totalAchievements: user.achievements.length },
-  });
+  throw new AppError(
+    'Direct achievement mutation is disabled. Achievements are awarded only by verified server-side flows.',
+    403
+  );
 });
 
 /**

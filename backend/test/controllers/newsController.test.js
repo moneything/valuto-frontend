@@ -108,3 +108,42 @@ test('getNewsAndEvents returns combined payload with news and formatted events',
   assert.equal(res.body.data.events[0].eventDate, sampleDate.toISOString());
 });
 
+test('createNews is disabled for all users', async () => {
+  const { createNews } = loadWithMocks('../../src/controllers/newsController', {
+    '../models/News': {},
+    '../models/Event': {},
+    '../services/newsFeedService': { fetchFinancialNews: async () => [] },
+  });
+
+  const req = { body: { title: 'New post' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await createNews(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /News creation is disabled/);
+});
+
+test('createEvent is disabled for all users', async () => {
+  const { createEvent } = loadWithMocks('../../src/controllers/newsController', {
+    '../models/News': {},
+    '../models/Event': {},
+    '../services/newsFeedService': { fetchFinancialNews: async () => [] },
+  });
+
+  const req = { body: { title: 'New event' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await createEvent(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Event creation is disabled/);
+});

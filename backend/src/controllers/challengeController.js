@@ -3,18 +3,6 @@ const User = require('../models/User');
 const LearningProgress = require('../models/LearningProgress');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
-const MANUAL_CHALLENGE_TYPES = new Set([
-  'monthly_build_your_life',
-  'monthly_build_your_business',
-  'monthly_investment_simulation',
-]);
-
-function assertManualChallenge(challenge) {
-  if (!MANUAL_CHALLENGE_TYPES.has(challenge.challengeType)) {
-    throw new AppError('This challenge cannot be updated directly', 403);
-  }
-}
-
 async function awardChallengePointsOnce(challengeId, user, points, bonusMultiplier = 1) {
   const rewardedChallenge = await Challenge.findOneAndUpdate(
     {
@@ -187,64 +175,10 @@ const getDailyChallenges = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const updateChallengeProgress = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const { challengeId } = req.params;
-  const { increment = 1 } = req.body;
-
-  // Get user
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Find challenge
-  const challenge = await Challenge.findOne({
-    _id: challengeId,
-    userId: user._id.toString(),
-  });
-
-  if (!challenge) {
-    throw new AppError('Challenge not found', 404);
-  }
-
-  assertManualChallenge(challenge);
-
-  if (challenge.completed) {
-    return res.status(400).json({
-      success: false,
-      message: 'Challenge already completed',
-    });
-  }
-
-  const wasCompleted = challenge.completed;
-  if (!Number.isFinite(Number(increment)) || Number(increment) <= 0) {
-    throw new AppError('Increment must be a positive value', 400);
-  }
-
-  // Manual challenge progress is server-capped to one step per verified action.
-  await challenge.updateProgress(1);
-
-  // If newly completed, award points
-  let awardedPoints = 0;
-  if (!wasCompleted && challenge.completed) {
-    awardedPoints = await awardChallengePointsOnce(
-      challenge._id,
-      user,
-      challenge.pointsEarned,
-      challenge.bonusMultiplier
-    );
-  }
-
-  res.status(200).json({
-    success: true,
-    message: challenge.completed ? 'Challenge completed!' : 'Progress updated',
-    data: {
-      challenge,
-      pointsEarned: awardedPoints,
-      totalPoints: user.totalPoints,
-    },
-  });
+  throw new AppError(
+    'Direct challenge progress updates are disabled. Challenges are updated only by verified server-side flows.',
+    403
+  );
 });
 
 /**
@@ -253,53 +187,10 @@ const updateChallengeProgress = asyncHandler(async (req, res) => {
  * @access  Private
  */
 const completeChallenge = asyncHandler(async (req, res) => {
-  const clerkUserId = req.clerkUser.id;
-  const { challengeId } = req.params;
-
-  // Get user
-  const user = await User.findOne({ clerkUserId });
-
-  if (!user) {
-    throw new AppError('User profile not found', 404);
-  }
-
-  // Find challenge
-  const challenge = await Challenge.findOne({
-    _id: challengeId,
-    userId: user._id.toString(),
-  });
-
-  if (!challenge) {
-    throw new AppError('Challenge not found', 404);
-  }
-
-  assertManualChallenge(challenge);
-
-  if (challenge.completed) {
-    return res.status(400).json({
-      success: false,
-      message: 'Challenge already completed',
-    });
-  }
-
-  await challenge.updateProgress(challenge.targetProgress - challenge.currentProgress);
-
-  const awardedPoints = await awardChallengePointsOnce(
-    challenge._id,
-    user,
-    challenge.pointsEarned,
-    challenge.bonusMultiplier
+  throw new AppError(
+    'Direct challenge completion is disabled. Challenges are completed only by verified server-side flows.',
+    403
   );
-
-  res.status(200).json({
-    success: true,
-    message: 'Challenge completed successfully!',
-    data: {
-      challenge,
-      pointsEarned: awardedPoints,
-      totalPoints: user.totalPoints,
-    },
-  });
 });
 
 /**

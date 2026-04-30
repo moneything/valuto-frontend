@@ -5,24 +5,45 @@ const LearningModule = require('../models/LearningModule');
 const User = require('../models/User');
 const { AppError, asyncHandler } = require('../utils/errorHandler');
 
-function normalizeQuizAnswers({ quizAnswers, responses }) {
-  if (Array.isArray(quizAnswers) && quizAnswers.length > 0) {
-    return quizAnswers.map((answer) => ({
-      question: answer.question,
+function normalizeQuizAnswers({ quizAnswers, responses }, module) {
+  const submittedAnswers = Array.isArray(responses) && responses.length > 0
+    ? responses
+    : Array.isArray(quizAnswers) && quizAnswers.length > 0
+      ? quizAnswers
+      : [];
+
+  if (!submittedAnswers.length) {
+    return { answers: [], score: null };
+  }
+
+  const moduleQuestions = Array.isArray(module.quiz?.questions)
+    ? module.quiz.questions
+    : [];
+
+  const answers = submittedAnswers.map((answer, index) => {
+    const moduleQuestion = moduleQuestions.find((question) => question.question === answer.question)
+      || moduleQuestions[index];
+    const expectedAnswer = moduleQuestion?.correctAnswer;
+    const isCorrect = expectedAnswer !== undefined
+      && Number(answer.selectedAnswer) === Number(expectedAnswer);
+
+    return {
+      question: moduleQuestion?.question || answer.question,
       selectedAnswer: answer.selectedAnswer,
-      isCorrect: !!answer.isCorrect,
-    }));
+      isCorrect,
+    };
+  });
+
+  if (!moduleQuestions.length) {
+    return { answers, score: null };
   }
 
-  if (Array.isArray(responses) && responses.length > 0) {
-    return responses.map((response) => ({
-      question: response.question,
-      selectedAnswer: response.selectedAnswer,
-      isCorrect: !!response.isCorrect,
-    }));
-  }
+  const correct = answers.filter((answer) => answer.isCorrect).length;
+  const score = answers.length > 0
+    ? Math.round((correct / answers.length) * 100)
+    : 0;
 
-  return [];
+  return { answers, score };
 }
 
 /**
@@ -42,7 +63,6 @@ const saveProgress = asyncHandler(async (req, res) => {
   const {
     moduleId,          // topic slug
     status,
-    quizScore,
     timeSpent,
     quizAnswers,
     responses,         // quiz responses with correctness
@@ -78,15 +98,8 @@ const saveProgress = asyncHandler(async (req, res) => {
   // ------------------------
   // SCORE CALCULATION LOGIC
   // ------------------------
-  let finalScore = quizScore;
-
-  // 1) Quiz (responses with isCorrect)
-  if (finalScore == null && Array.isArray(responses)) {
-    const correct = responses.filter(r => r.isCorrect).length;
-    finalScore = responses.length > 0
-      ? Math.round((correct / responses.length) * 100)
-      : 0;
-  }
+  const normalizedQuizResult = normalizeQuizAnswers({ quizAnswers, responses }, module);
+  let finalScore = normalizedQuizResult.score;
 
   // 2) Simulation result
   if (finalScore == null && simulationResult) {
@@ -104,18 +117,11 @@ const saveProgress = asyncHandler(async (req, res) => {
   }
 
   const effectiveScore = finalScore ?? null;
-  const normalizedQuizAnswers = normalizeQuizAnswers({ quizAnswers, responses });
+  const normalizedQuizAnswers = normalizedQuizResult.answers;
 
   // -----------------------
   // COMPLETION LOGIC
   // -----------------------
-  const scoreStatus =
-    effectiveScore !== null
-      ? effectiveScore >= 70
-        ? "completed"
-        : "in_progress"
-      : null;
-
   const requestedStatus = status || "in_progress";
 
   // -----------------------
@@ -126,16 +132,11 @@ const saveProgress = asyncHandler(async (req, res) => {
     moduleId: module.topic,
   });
 
-  let pointsEarned = 0;
-  let isFirstCompletion = false;
-
   const nextStatus =
-    scoreStatus ||
     (progress?.status === "completed" ? "completed" : null) ||
     (requestedStatus === "not_started" ? "not_started" : "in_progress");
 
   if (progress) {
-    const wasCompleted = progress.status === "completed";
     // ========== UPDATE EXISTING ==========
     progress.status = nextStatus;
 
@@ -154,20 +155,6 @@ const saveProgress = asyncHandler(async (req, res) => {
 
     progress.lastAccessedAt = new Date();
 
-    // Award points on FIRST completion only
-    if (nextStatus === "completed" && !progress.completedAt) {
-      progress.completedAt = new Date();
-      isFirstCompletion = true;
-
-      pointsEarned = calculatePoints(module.points, effectiveScore);
-
-      // Update user stats
-      user.lessonsCompleted += 1;
-      user.totalPoints += pointsEarned;
-      user.updateStreak();
-      await user.save();
-    }
-
     await progress.save();
 
   } else {
@@ -185,38 +172,18 @@ const saveProgress = asyncHandler(async (req, res) => {
       quizAnswers: normalizedQuizAnswers,
     });
 
-    // Award points ONLY if completed immediately
-    if (nextStatus === "completed") {
-      isFirstCompletion = true;
-      pointsEarned = calculatePoints(module.points, effectiveScore);
-
-      user.lessonsCompleted += 1;
-      user.totalPoints += pointsEarned;
-      user.updateStreak();
-      await user.save();
-    }
   }
 
   return res.status(200).json({
     success: true,
     message: "Progress saved successfully",
     data: progress,
-    pointsEarned: isFirstCompletion ? pointsEarned : 0,
+    pointsEarned: 0,
     totalPoints: user.totalPoints,
     lessonsCompleted: user.lessonsCompleted,
   });
 });
 
-
-/* --------------------------------------------------------
- * Calculate module points
- * -------------------------------------------------------- */
-function calculatePoints(basePoints = 100, score = 0) {
-  if (score >= 90) return basePoints;
-  if (score >= 80) return Math.round(basePoints * 0.9);
-  if (score >= 70) return Math.round(basePoints * 0.8);
-  return 0;
-}
 
 /* --------------------------------------------------------
  * GET Module Progress

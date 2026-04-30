@@ -218,12 +218,12 @@ class LearningModuleAPI {
    * MODULES
    * ---------------------------------------------- */
 
-  async getModules() {
-    return this.request<LearningModule[]>("/api/learning/modules");
+  async getModules(token: string) {
+    return this.authRequest<LearningModule[]>("/api/learning/modules", token);
   }
 
-  async getModule(topic: string) {
-    return this.request<LearningModule>(`/api/learning/modules/${topic}`);
+  async getModule(topic: string, token: string) {
+    return this.authRequest<LearningModule>(`/api/learning/modules/${topic}`, token);
   }
 
   /* ----------------------------------------------
@@ -256,8 +256,8 @@ class LearningModuleAPI {
   /* ----------------------------------------------
   * CATEGORIES
   * ---------------------------------------------- */
-  async getCategories() {
-    return this.request(`/api/categories`);
+  async getCategories(token: string) {
+    return this.authRequest(`/api/categories`, token);
   }
 
 }

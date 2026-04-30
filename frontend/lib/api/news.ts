@@ -26,51 +26,69 @@ export interface NewsAndEvents {
   events: EventItem[];
 }
 
+function authHeaders(token: string): HeadersInit {
+  return {
+    Authorization: `Bearer ${token}`,
+  };
+}
+
 // Fetch financial news
-export async function fetchFinancialNews(): Promise<NewsItem[]> {
+export async function fetchFinancialNews(token: string): Promise<NewsItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/news/news`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch financial news');
-    }
+    const response = await fetch(`${API_BASE_URL}/api/news/news`, {
+      headers: authHeaders(token),
+    });
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || data.error || 'Failed to fetch financial news');
+    }
+
     return data.success ? data.data : [];
   } catch (error) {
     console.error('Error fetching financial news:', error);
-    return [];
+    throw error;
   }
 }
 
 // Fetch networking events
-export async function fetchNetworkingEvents(): Promise<EventItem[]> {
+export async function fetchNetworkingEvents(token: string): Promise<EventItem[]> {
   try {
-    const response = await fetch(`${API_BASE_URL}/api/news/events`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch networking events');
-    }
+    const response = await fetch(`${API_BASE_URL}/api/news/events`, {
+      headers: authHeaders(token),
+    });
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || data.error || 'Failed to fetch networking events');
+    }
+
     return data.success ? data.data : [];
   } catch (error) {
     console.error('Error fetching networking events:', error);
-    return [];
+    throw error;
   }
 }
 
 // Fetch both news and events
-export async function fetchNewsAndEvents(params?: { newsLimit?: number; eventsLimit?: number }): Promise<NewsAndEvents> {
+export async function fetchNewsAndEvents(token: string, params?: { newsLimit?: number; eventsLimit?: number }): Promise<NewsAndEvents> {
   try {
     const query = new URLSearchParams();
     if (params?.newsLimit) query.append('newsLimit', params.newsLimit.toString());
     if (params?.eventsLimit) query.append('eventsLimit', params.eventsLimit.toString());
 
-    const response = await fetch(`${API_BASE_URL}/api/news/all${query.toString() ? `?${query.toString()}` : ''}`);
-    if (!response.ok) {
-      throw new Error('Failed to fetch news and events');
-    }
+    const response = await fetch(`${API_BASE_URL}/api/news/all${query.toString() ? `?${query.toString()}` : ''}`, {
+      headers: authHeaders(token),
+    });
     const data = await response.json();
+
+    if (!response.ok) {
+      throw new Error(data.message || data.error || 'Failed to fetch news and events');
+    }
+
     return data.success ? data.data : { news: [], events: [] };
   } catch (error) {
     console.error('Error fetching news and events:', error);
-    return { news: [], events: [] };
+    throw error;
   }
 }

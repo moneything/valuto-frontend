@@ -25,6 +25,7 @@ NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/valuto-dev
 CLERK_SECRET_KEY=sk_test_...
+CLERK_WEBHOOK_SECRET=whsec_...
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 FRONTEND_URL=http://localhost:3000
 TURNSTILE_SECRET_KEY=1x0000000000000000000000000000000AA
@@ -85,6 +86,7 @@ npm run dev
 
 - Always set `NEXT_PUBLIC_BACKEND_URL` explicitly.
 - Backend CORS depends on both `NEXT_PUBLIC_APP_URL` and `FRONTEND_URL`.
+- Clerk webhooks require `CLERK_WEBHOOK_SECRET` on the backend.
 - Stripe webhooks require `STRIPE_WEBHOOK_SECRET` on the backend.
 - Contact form captcha requires `TURNSTILE_SECRET_KEY` on the backend and `NEXT_PUBLIC_TURNSTILE_SITE_KEY` on the frontend in production.
 - Stripe webhook deliveries are server-to-server and may arrive without an `Origin` header.

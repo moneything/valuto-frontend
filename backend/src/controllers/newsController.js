@@ -99,17 +99,7 @@ const getNewsAndEvents = asyncHandler(async (req, res) => {
  * @access  Private (Admin only)
  */
 const createNews = asyncHandler(async (req, res) => {
-  const newsData = {
-    ...req.body,
-  };
-
-  const news = await News.create(newsData);
-
-  res.status(201).json({
-    success: true,
-    message: 'News article created successfully',
-    data: news,
-  });
+  throw new AppError('News creation is disabled', 403);
 });
 
 /**
@@ -118,17 +108,7 @@ const createNews = asyncHandler(async (req, res) => {
  * @access  Private (Admin only)
  */
 const createEvent = asyncHandler(async (req, res) => {
-  const eventData = {
-    ...req.body,
-  };
-
-  const event = await Event.create(eventData);
-
-  res.status(201).json({
-    success: true,
-    message: 'Event created successfully',
-    data: event,
-  });
+  throw new AppError('Event creation is disabled', 403);
 });
 
 module.exports = {

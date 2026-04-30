@@ -74,6 +74,10 @@ app.use(cors(corsOptions));
 // Stripe webhook must consume the raw body
 app.post('/api/billing/webhook', express.raw({ type: 'application/json' }), handleStripeWebhook);
 
+// Clerk webhooks must consume the raw body for Svix signature verification.
+const webhookRoutes = require("./routes/webhookRoutes");
+app.use("/api/webhooks", webhookRoutes);
+
 // Body parsing middleware
 app.use(express.json({ limit: '10mb' }));
 // app.use(express.urlencoded({ extended: true, limit: '10mb' }));
@@ -134,8 +138,6 @@ app.use("/api/categories", categoryRoutes);
 app.use('/api/billing', billingRoutes);
 app.use('/api/ai', aiRoutes);
 app.use('/api/contact', contactRoutes);
-const webhookRoutes = require("./routes/webhookRoutes");
-app.use("/api/webhooks", webhookRoutes);
 
 // ==================== ERROR HANDLING ====================
 

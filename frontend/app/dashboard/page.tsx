@@ -63,8 +63,8 @@ export default function DashboardPage() {
 
       const [response, platformResponse, leaderboardResponse] = await Promise.all([
         userApi.getStats(token),
-        triviaApi.getPlatformStats(),
-        leaderboardApi.getTop(8),
+        triviaApi.getPlatformStats(token),
+        leaderboardApi.getTop(token, 8),
       ]);
 
       if (response.success && response.data) {

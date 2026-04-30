@@ -4,8 +4,6 @@ const {
   getNews,
   getEvents,
   getNewsAndEvents,
-  createNews,
-  createEvent,
 } = require('../controllers/newsController');
 const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 
@@ -28,15 +26,5 @@ router.get('/news', authenticateClerkUser, requireActiveSubscription, getNews);
 // @desc    Get all events
 // @access  Paid platform access
 router.get('/events', authenticateClerkUser, requireActiveSubscription, getEvents);
-
-// @route   POST /api/news/news
-// @desc    Create a news article
-// @access  Disabled
-router.post('/news', authenticateClerkUser, createNews);
-
-// @route   POST /api/news/events
-// @desc    Create an event
-// @access  Disabled
-router.post('/events', authenticateClerkUser, createEvent);
 
 module.exports = router;

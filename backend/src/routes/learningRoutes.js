@@ -20,7 +20,7 @@ const {
   deleteModule,
 } = require('../controllers/learningModuleController');
 
-const { authenticateClerkUser, optionalAuth } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 const { validateLearningProgress } = require('../utils/validators');
 
 /* ============================================================
@@ -30,27 +30,27 @@ const { validateLearningProgress } = require('../utils/validators');
 
 // @route   GET /api/learning/modules
 // @desc    Get all learning modules
-// @access  Public
-router.get('/modules', getModules);
+// @access  Paid platform access
+router.get('/modules', authenticateClerkUser, requireActiveSubscription, getModules);
 
 // @route   GET /api/learning/modules/:id
 // @desc    Get a specific learning module
-// @access  Public
-router.get('/modules/:id', getModule);
+// @access  Paid platform access
+router.get('/modules/:id', authenticateClerkUser, requireActiveSubscription, getModule);
 
 // @route   POST /api/learning/modules
 // @desc    Create a new learning module
-// @access  Private (Teacher only)
+// @access  Disabled
 router.post('/modules', authenticateClerkUser, createModule);
 
 // @route   PUT /api/learning/modules/:id
 // @desc    Update a learning module
-// @access  Private (Teacher only)
+// @access  Disabled
 router.put('/modules/:id', authenticateClerkUser, updateModule);
 
 // @route   DELETE /api/learning/modules/:id
 // @desc    Delete a learning module
-// @access  Private (Teacher only)
+// @access  Disabled
 router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 
 /* ============================================================
@@ -62,31 +62,31 @@ router.delete('/modules/:id', authenticateClerkUser, deleteModule);
 // @route   POST /api/learning/progress
 // @desc    Save or update progress for a module
 // @access  Private
-router.post('/progress', authenticateClerkUser, validateLearningProgress, saveProgress);
+router.post('/progress', authenticateClerkUser, requireActiveSubscription, validateLearningProgress, saveProgress);
 
 // @route   GET /api/learning/progress/:moduleId
 // @desc    Get user's progress for a specific module
 // @access  Private
-router.get('/progress/:moduleId', authenticateClerkUser, getModuleProgress);
+router.get('/progress/:moduleId', authenticateClerkUser, requireActiveSubscription, getModuleProgress);
 
 // @route   GET /api/learning/progress
 // @desc    Get all user's learning progress
 // @access  Private
-router.get('/progress', authenticateClerkUser, getAllProgress);
+router.get('/progress', authenticateClerkUser, requireActiveSubscription, getAllProgress);
 
 // @route   PUT /api/learning/time/:moduleId
 // @desc    Update time spent on a module
 // @access  Private
-router.put('/time/:moduleId', authenticateClerkUser, updateTimeSpent);
+router.put('/time/:moduleId', authenticateClerkUser, requireActiveSubscription, updateTimeSpent);
 
 // @route   GET /api/learning/leaderboard/:moduleId
 // @desc    Get leaderboard for a module
-// @access  Public (auth optional)
-router.get('/leaderboard/:moduleId', optionalAuth, getModuleLeaderboard);
+// @access  Paid platform access
+router.get('/leaderboard/:moduleId', authenticateClerkUser, requireActiveSubscription, getModuleLeaderboard);
 
 // @route   GET /api/learning/stats
 // @desc    Get learning statistics for the authenticated user
 // @access  Private
-router.get('/stats', authenticateClerkUser, getLearningStats);
+router.get('/stats', authenticateClerkUser, requireActiveSubscription, getLearningStats);
 
 module.exports = router;

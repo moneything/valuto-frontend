@@ -1,7 +1,7 @@
 const News = require('../models/News');
 const Event = require('../models/Event');
 const { fetchFinancialNews } = require('../services/newsFeedService');
-const { AppError, asyncHandler } = require('../utils/errorHandler');
+const { asyncHandler } = require('../utils/errorHandler');
 
 /**
  * News Controller
@@ -93,28 +93,8 @@ const getNewsAndEvents = asyncHandler(async (req, res) => {
   });
 });
 
-/**
- * @desc    Create a news article
- * @route   POST /api/news/news
- * @access  Private (Admin only)
- */
-const createNews = asyncHandler(async (req, res) => {
-  throw new AppError('News creation is disabled', 403);
-});
-
-/**
- * @desc    Create an event
- * @route   POST /api/news/events
- * @access  Private (Admin only)
- */
-const createEvent = asyncHandler(async (req, res) => {
-  throw new AppError('Event creation is disabled', 403);
-});
-
 module.exports = {
   getNews,
   getEvents,
   getNewsAndEvents,
-  createNews,
-  createEvent,
 };

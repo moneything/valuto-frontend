@@ -22,6 +22,7 @@ const { handleStripeWebhook } = require('./controllers/billingController');
 
 // Initialize Express app
 const app = express();
+app.set('trust proxy', 1);
 
 // Create HTTP server
 const httpServer = http.createServer(app);

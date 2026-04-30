@@ -128,7 +128,7 @@ test('getLearningStats computes completion and score aggregates', async () => {
   assert.equal(res.body.data.averageQuizScore, 90);
 });
 
-test('saveProgress does not accept client-supplied completed status without a passing score', async () => {
+test('saveProgress does not accept client-supplied completed status', async () => {
   let savedUser = 0;
   let createdPayload = null;
 
@@ -185,6 +185,87 @@ test('saveProgress does not accept client-supplied completed status without a pa
 
   assert.equal(res.statusCode, 200);
   assert.equal(createdPayload.status, 'in_progress');
+  assert.equal(res.body.pointsEarned, 0);
+  assert.equal(res.body.lessonsCompleted, 0);
+  assert.equal(savedUser, 0);
+});
+
+test('saveProgress scores quiz responses from the module answer key', async () => {
+  let savedUser = 0;
+  let createdPayload = null;
+
+  const { saveProgress } = loadWithMocks('../../src/controllers/learningController', {
+    '../models/LearningProgress': {
+      findOne: async () => null,
+      create: async (payload) => {
+        createdPayload = payload;
+        return payload;
+      },
+    },
+    '../models/LearningModule': {
+      findOne: async () => ({
+        topic: 'budgeting',
+        title: 'Budgeting Basics',
+        points: 100,
+        quiz: {
+          questions: [
+            {
+              question: 'What should you do first?',
+              correctAnswer: 1,
+            },
+          ],
+        },
+      }),
+    },
+    '../models/User': {
+      findOne: async () => ({
+        _id: { toString: () => 'user_db_1' },
+        totalPoints: 0,
+        lessonsCompleted: 0,
+        updateStreak: () => {},
+        save: async () => {
+          savedUser += 1;
+        },
+      }),
+    },
+  });
+
+  const req = {
+    clerkUser: { id: 'clerk_1' },
+    body: {
+      moduleId: 'budgeting',
+      status: 'completed',
+      quizScore: 100,
+      responses: [
+        {
+          question: 'What should you do first?',
+          selectedAnswer: 0,
+          isCorrect: true,
+        },
+      ],
+    },
+  };
+  const res = createMockRes();
+  const originalConsoleLog = console.log;
+  const originalConsoleDir = console.dir;
+  const originalConsoleError = console.error;
+  console.log = () => {};
+  console.dir = () => {};
+  console.error = () => {};
+
+  try {
+    await saveProgress(req, res, () => {});
+  } finally {
+    console.log = originalConsoleLog;
+    console.dir = originalConsoleDir;
+    console.error = originalConsoleError;
+  }
+
+  assert.equal(res.statusCode, 200);
+  assert.equal(createdPayload.status, 'in_progress');
+  assert.equal(createdPayload.quizScore, 0);
+  assert.equal(createdPayload.quizPassed, false);
+  assert.equal(createdPayload.quizAnswers[0].isCorrect, false);
   assert.equal(res.body.pointsEarned, 0);
   assert.equal(res.body.lessonsCompleted, 0);
   assert.equal(savedUser, 0);

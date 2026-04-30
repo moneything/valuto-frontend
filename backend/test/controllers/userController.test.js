@@ -70,6 +70,24 @@ test('incrementLessonCount is disabled for direct client mutation', async () => 
   assert.match(captured.message, /Direct lesson-count mutation is disabled/i);
 });
 
+test('addAchievement is disabled for direct client mutation', async () => {
+  const { addAchievement } = loadWithMocks('../../src/controllers/userController', {
+    '../models/User': {},
+  });
+
+  const req = { auth: { userId: 'clerk_1' }, body: { achievementId: 'first_win' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await addAchievement(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Direct achievement mutation is disabled/i);
+});
+
 test('createOrUpdateUser creates user when missing', async () => {
   const createdUser = { _id: 'u1', name: 'Jane', role: 'student' };
 

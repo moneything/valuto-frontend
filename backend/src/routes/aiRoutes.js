@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { chatWithGemini } = require('../controllers/aiController');
-const { authenticateClerkUser } = require('../middleware/auth');
+const { authenticateClerkUser, requireActiveSubscription } = require('../middleware/auth');
 
 /**
  * AI Routes
@@ -11,6 +11,6 @@ const { authenticateClerkUser } = require('../middleware/auth');
 // @route   POST /api/ai/chat
 // @desc    Chat with Gemini
 // @access  Private
-router.post('/chat', authenticateClerkUser, chatWithGemini);
+router.post('/chat', authenticateClerkUser, requireActiveSubscription, chatWithGemini);
 
 module.exports = router;

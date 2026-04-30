@@ -74,6 +74,7 @@ NODE_ENV=development
 PORT=5000
 MONGODB_URI=mongodb://localhost:27017/valuto-dev
 CLERK_SECRET_KEY=sk_test_...
+CLERK_WEBHOOK_SECRET=whsec_...
 NEXT_PUBLIC_APP_URL=http://localhost:3000
 FRONTEND_URL=http://localhost:3000
 ```

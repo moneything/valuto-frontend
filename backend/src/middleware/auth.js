@@ -1,6 +1,10 @@
 // backend/src/middleware/auth.js
 const { clerkClient, verifyToken } = require('@clerk/clerk-sdk-node');
 
+function hasActiveSubscription(status) {
+  return status === 'active' || status === 'trialing';
+}
+
 /**
  * Clerk Authentication Middleware
  * Verifies Clerk JWT tokens (networkless) and attaches user information to request
@@ -176,8 +180,60 @@ const requireRole = (roles) => {
   };
 };
 
+/**
+ * Requires an authenticated user profile with an active Stripe subscription.
+ * Use after authenticateClerkUser on routes that are inside the paid platform.
+ */
+const requireActiveSubscription = async (req, res, next) => {
+  try {
+    const clerkUserId = req.clerkUser?.id || req.auth?.userId;
+
+    if (!clerkUserId) {
+      return res.status(401).json({
+        success: false,
+        message: 'Authentication required.',
+      });
+    }
+
+    const User = require('../models/User');
+    const user = await User.findOne({ clerkUserId });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User profile not found. Please complete onboarding.',
+      });
+    }
+
+    if (user.completedOnboarding === false) {
+      return res.status(403).json({
+        success: false,
+        message: 'Please complete onboarding before accessing this resource.',
+      });
+    }
+
+    if (!hasActiveSubscription(user.subscriptionStatus)) {
+      return res.status(402).json({
+        success: false,
+        message: 'An active subscription is required to access this resource.',
+      });
+    }
+
+    req.user = user;
+    next();
+  } catch (error) {
+    console.error('Subscription authorization error:', error);
+    return res.status(500).json({
+      success: false,
+      message: 'Error checking subscription access.',
+    });
+  }
+};
+
 module.exports = {
   authenticateClerkUser,
   optionalAuth,
   requireRole,
+  requireActiveSubscription,
+  hasActiveSubscription,
 };

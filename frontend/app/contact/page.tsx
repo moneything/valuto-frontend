@@ -6,11 +6,13 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { Input } from "@/components/ui/input";
 import Button from "@/components/theme/Button";
 import { Mail, School } from "lucide-react";
-import { useState } from "react";
+import Script from "next/script";
+import { useEffect, useRef, useState } from "react";
 import { useToast } from "@/hooks/use-toast";
 import { Textarea } from "@/components/ui/textarea";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:5000";
+const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY;
 const MAX_NAME_LENGTH = 80;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_SUBJECT_LENGTH = 120;
@@ -25,9 +27,31 @@ type ContactFormData = {
 
 type ContactFormErrors = Partial<Record<keyof ContactFormData, string>>;
 
+declare global {
+  interface Window {
+    turnstile?: {
+      render: (
+        container: HTMLElement,
+        options: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback": () => void;
+          "error-callback": () => void;
+        }
+      ) => string;
+      reset: (widgetId?: string) => void;
+      remove?: (widgetId: string) => void;
+    };
+  }
+}
+
 export default function Features() {
     const { toast } = useToast();
     const [sending, setSending] = useState(false);
+    const [captchaLoaded, setCaptchaLoaded] = useState(false);
+    const [turnstileToken, setTurnstileToken] = useState("");
+    const captchaContainerRef = useRef<HTMLDivElement | null>(null);
+    const turnstileWidgetIdRef = useRef<string | null>(null);
     const [formData, setFormData] = useState<ContactFormData>({
       name: "",
       email: "",
@@ -43,6 +67,28 @@ export default function Features() {
       if (errors[field]) {
         const nextErrors = validateForm({ ...formData, [field]: nextValue });
         setErrors((current) => ({ ...current, [field]: nextErrors[field] }));
+      }
+    };
+
+    useEffect(() => {
+      if (!TURNSTILE_SITE_KEY || !captchaLoaded || !captchaContainerRef.current || !window.turnstile) {
+        return;
+      }
+
+      if (turnstileWidgetIdRef.current) return;
+
+      turnstileWidgetIdRef.current = window.turnstile.render(captchaContainerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: (token) => setTurnstileToken(token),
+        "expired-callback": () => setTurnstileToken(""),
+        "error-callback": () => setTurnstileToken(""),
+      });
+    }, [captchaLoaded]);
+
+    const resetCaptcha = () => {
+      setTurnstileToken("");
+      if (turnstileWidgetIdRef.current) {
+        window.turnstile?.reset(turnstileWidgetIdRef.current);
       }
     };
 
@@ -64,6 +110,15 @@ export default function Features() {
           return;
         }
 
+        if (TURNSTILE_SITE_KEY && !turnstileToken) {
+          toast({
+            title: "Captcha required",
+            description: "Please complete the security check before sending.",
+            variant: "destructive",
+          });
+          return;
+        }
+
         setSending(true);
 
         try {
@@ -72,7 +127,10 @@ export default function Features() {
             headers: {
               "Content-Type": "application/json",
             },
-            body: JSON.stringify(sanitizedFormData),
+            body: JSON.stringify({
+              ...sanitizedFormData,
+              turnstileToken: turnstileToken || undefined,
+            }),
           });
 
           const data = await response.json();
@@ -89,12 +147,14 @@ export default function Features() {
             message: "",
           });
           setErrors({});
+          resetCaptcha();
         } catch (error) {
           toast({
             title: "Message failed",
             description: error instanceof Error ? error.message : "Please try again later.",
             variant: "destructive",
           });
+          resetCaptcha();
         } finally {
           setSending(false);
         }
@@ -102,6 +162,13 @@ export default function Features() {
 
   return (
     <>
+        {TURNSTILE_SITE_KEY ? (
+          <Script
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+            strategy="afterInteractive"
+            onLoad={() => setCaptchaLoaded(true)}
+          />
+        ) : null}
         <Header />
         <section className="section-dark py-24 lg:py-32">
             <div className="container mx-auto px-4 text-center">
@@ -170,6 +237,11 @@ export default function Features() {
                         <span>{formData.message.length}/{MAX_MESSAGE_LENGTH}</span>
                       </div>
                     </div>
+                    {TURNSTILE_SITE_KEY ? (
+                      <div className="rounded-xl border border-border/60 bg-background/60 p-3">
+                        <div ref={captchaContainerRef} />
+                      </div>
+                    ) : null}
                     <Button type="submit" size="lg" className="w-full" disabled={sending}>
                       {sending ? "Sending..." : "Send Message"}
                     </Button>

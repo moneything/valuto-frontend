@@ -61,58 +61,56 @@ test('getCategory returns 404 for unknown id', async () => {
   assert.match(captured.message, /Category not found/);
 });
 
-test('updateCategory updates fields and persists category', async () => {
-  const category = {
-    id: 'core',
-    title: 'Old',
-    saveCalled: false,
-    save: async function save() {
-      this.saveCalled = true;
-    },
-  };
+test('createCategory is disabled for all users', async () => {
+  const { createCategory } = loadWithMocks('../../src/controllers/categoryController', {
+    '../models/Category': {},
+  });
 
+  const req = { body: { id: 'core', title: 'Core' } };
+  const res = createMockRes();
+  let captured = null;
+
+  await createCategory(req, res, (err) => {
+    captured = err;
+  });
+
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Category creation is disabled/);
+});
+
+test('updateCategory is disabled for all users', async () => {
   const { updateCategory } = loadWithMocks('../../src/controllers/categoryController', {
-    '../models/Category': {
-      findOne: async () => category,
-    },
+    '../models/Category': {},
   });
 
   const req = { params: { id: 'core' }, body: { title: 'New Title' } };
   const res = createMockRes();
+  let captured = null;
 
-  await updateCategory(req, res, () => {});
+  await updateCategory(req, res, (err) => {
+    captured = err;
+  });
 
-  assert.equal(category.title, 'New Title');
-  assert.equal(category.saveCalled, true);
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
-  assert.match(res.body.message, /Category updated/);
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Category updates are disabled/);
 });
 
-test('deleteCategory soft-deletes by setting isActive false', async () => {
-  const category = {
-    id: 'core',
-    isActive: true,
-    saveCalled: false,
-    save: async function save() {
-      this.saveCalled = true;
-    },
-  };
-
+test('deleteCategory is disabled for all users', async () => {
   const { deleteCategory } = loadWithMocks('../../src/controllers/categoryController', {
-    '../models/Category': {
-      findOne: async () => category,
-    },
+    '../models/Category': {},
   });
 
   const req = { params: { id: 'core' } };
   const res = createMockRes();
+  let captured = null;
 
-  await deleteCategory(req, res, () => {});
+  await deleteCategory(req, res, (err) => {
+    captured = err;
+  });
 
-  assert.equal(category.isActive, false);
-  assert.equal(category.saveCalled, true);
-  assert.equal(res.statusCode, 200);
-  assert.equal(res.body.success, true);
+  assert.ok(captured);
+  assert.equal(captured.statusCode, 403);
+  assert.match(captured.message, /Category deletion is disabled/);
 });
-
